@@ -317,6 +317,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     <button class="navitem" data-tab="disparity">50일 이격도</button>
     <div class="navgroup">수급 · 모멘텀</div>
     <button class="navitem" data-tab="supply">신고가, 투자자별 순매수 랭킹</button>
+    <button class="navitem" data-tab="streak">수급 연속 <small>새벽</small></button>
     <button class="navitem" data-tab="krhigh">韓 60일 신고가</button>
     <button class="navitem" data-tab="ushigh">美 52주 신고가</button>
     <button class="navitem" data-tab="rs">RS 분석</button>
@@ -384,6 +385,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
         <h2>수급 · 모멘텀</h2>
         <div class="grid">
           <button class="card" data-go="supply"><h3>신고가, 투자자별 순매수 랭킹 <span class="tag">매일</span></h3><p>52주 신고가 · 거래량 급증 · 주체별 순매수/순매도</p></button>
+          <button class="card" data-go="streak"><h3>수급 연속 <span class="tag">평일 06:30</span></h3><p>사모·투신·외국인·프로그램 N거래일 연속 순매수 — 시총대비 누적 랭킹, 일자별 아카이브</p></button>
           <button class="card" data-go="krhigh"><h3>韓 60일 신고가 <span class="tag">평일 21:35</span></h3><p>장중 고가 기준 60일 신고가 · 거래대금 30억↑ — 키움 전수판정</p></button>
           <button class="card" data-go="ushigh"><h3>美 52주 신고가 <span class="tag">매일 아침</span></h3><p>미국 세션 52주 신고가 종목 — 섹터별 분류, 시총·등락</p></button>
           <button class="card" data-go="rs"><h3>RS 분석 <span class="tag">韓·美 ETF</span></h3><p>섹터·테마 ETF 상대강도 60/120/250일 + 소티노 — Norm ≥70 주도 시그널</p></button>
@@ -485,6 +487,12 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
         <div id="qtDrop" style="position:absolute;top:100%;left:0;right:0;z-index:40;display:none;background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-top:5px;box-shadow:var(--shadow);max-height:350px;overflow-y:auto"></div>
       </div>
       <div id="qtBody"><div class="empty"><b>종목을 검색해 선택하세요</b>코스피·코스닥 전 종목의 차트와 밸류에이션·컨센서스·수급을 볼 수 있습니다.</div></div>
+    </section>
+
+    <section class="panel" id="tab-streak">
+      <div class="ptitle">수급 연속 <span style="font-size:12px;font-weight:600;color:var(--dim2)">N거래일 연속 순매수 · 시총대비 누적 랭킹</span></div>
+      <div class="pdesc" id="skMeta">불러오는 중…</div>
+      <div id="skBody"></div>
     </section>
 
     <section class="panel" id="tab-krhigh">
@@ -1195,6 +1203,55 @@ function memChart(hist,kind,items){
   document.getElementById('memLg').innerHTML=series.map(s=>`<i style="background:${s.color}"></i>${esc(s.label)}&nbsp;&nbsp;`).join('');
 }
 
+/* ══════════ 수급 연속 (data/streak.json — streak3_tg.py 평일 06:30) ══════════
+   텔레그램으로는 사모만 나가고, 4주체 전체 + 일자별 아카이브는 여기에만 있다. */
+let SK=null,skCat='samo',skDate=null;
+async function skLoad(){
+  const meta=document.getElementById('skMeta');
+  if(!SK){
+    try{SK=await getJson('data/streak.json');}
+    catch(e){meta.textContent='데이터가 아직 없습니다 — 평일 06:30 빌드 후 이용 가능합니다.';return;}
+    skDate=SK.base_dt;
+  }
+  skRender();
+}
+function skRender(){
+  const meta=document.getElementById('skMeta'),body=document.getElementById('skBody');
+  const dates=Object.keys(SK.history).sort().reverse();
+  if(!dates.length){meta.textContent='기록이 없습니다.';return;}
+  if(!SK.history[skDate])skDate=dates[0];
+  const e=SK.history[skDate],rows=e[skCat]||[];
+  const ymd=s=>s.slice(0,4)+'-'+s.slice(4,6)+'-'+s.slice(6);
+  const span=e.dts?`${ymd(e.dts[e.dts.length-1])} ~ ${ymd(e.dts[0])}`:ymd(skDate);
+  meta.innerHTML=`기준일 <b>${esc(ymd(skDate))}</b> · 연속 <b>${e.days}거래일</b> (${esc(span)}) · `
+    +`${esc(SK.criteria)} · ${esc(SK.updated)} 갱신`;
+  const f1=v=>v.toLocaleString('ko-KR',{minimumFractionDigits:1,maximumFractionDigits:1});
+  const cap=v=>v>=10000?(v/10000).toLocaleString('ko-KR',{maximumFractionDigits:1})+'조'
+                       :v.toLocaleString('ko-KR',{maximumFractionDigits:0})+'억';
+  body.innerHTML=`
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px">
+    <div class="rngwrap" id="skCatBar">${SK.cats.map(c=>
+      `<button class="rng${skCat===c.key?' on':''}" data-c="${c.key}">${c.icon} ${esc(c.label)} ${(e[c.key]||[]).length}</button>`).join('')}</div>
+    <div class="rngwrap" id="skDateBar" style="margin-left:auto;max-width:100%;overflow-x:auto">${
+      dates.slice(0,12).map(d=>`<button class="rng${d===skDate?' on':''}" data-d="${d}">${d.slice(4,6)}/${d.slice(6)}</button>`).join('')}</div></div>
+  <div class="rcard"><div style="overflow-x:auto"><table class="ddt"><thead><tr>
+    <th>#</th><th style="text-align:left">종목</th><th>종가</th><th>등락률</th>
+    <th>시총대비 누적</th><th>순매수</th><th>시총</th><th style="text-align:left">일별 시총대비 (과거→최근)</th>
+    </tr></thead><tbody>
+    ${rows.length?rows.map((r,i)=>`<tr><td style="color:var(--dim2)">${i+1}</td>
+      <td style="text-align:left;font-weight:700"><a href="#" data-qc="${r.code}" style="color:var(--text);text-decoration:none">${esc(r.name)}</a> <span style="font-weight:400;color:var(--dim2);font-size:11px">${r.code} · ${esc(r.mkt)}</span></td>
+      <td>${r.close.toLocaleString('ko-KR')}</td><td>${qtChg(r.ch)}</td>
+      <td class="up" style="font-weight:700">+${f1(r.sum_ratio)}%</td>
+      <td>${cap(r.sum_eok)}</td><td>${cap(r.mcap_eok)}</td>
+      <td style="text-align:left;color:var(--dim2);font-size:11.5px">${r.ratios.map(v=>f1(v)).join(' · ')}</td></tr>`).join('')
+      :'<tr><td colspan="8" style="color:var(--dim2);padding:18px">해당 종목 없음</td></tr>'}</tbody></table></div>
+    <div style="font-size:11px;color:var(--dim2);margin-top:9px">${esc(SK.note||'')} · 종목명 클릭 시 종목 분석 탭으로 이동</div></div>`;
+  document.getElementById('skCatBar').onclick=ev=>{const b=ev.target.closest('[data-c]');if(b){skCat=b.dataset.c;skRender();}};
+  document.getElementById('skDateBar').onclick=ev=>{const b=ev.target.closest('[data-d]');if(b){skDate=b.dataset.d;skRender();}};
+  body.querySelectorAll('[data-qc]').forEach(a=>a.addEventListener('click',ev=>{
+    ev.preventDefault();qtSel=a.dataset.qc;openTab('quote');qtRender();}));
+}
+
 /* ══════════ 韓 60일 신고가 (data/krhigh.json — 키움 ka10081 전수판정) ══════════ */
 let KH=null,khMkt='all',khSort='flu';
 async function khLoad(){
@@ -1881,6 +1938,7 @@ function openTab(tab){
   if(tab==='krwrap'||tab==='uswrap')loadMW(tab);
   if(tab==='quote')qtLoad();
   if(tab==='rs')rsLoad();
+  if(tab==='streak')skLoad();
   if(tab==='krhigh')khLoad();
   if(tab==='ushigh')uhLoad();
   if(tab==='raoni')raStart();
