@@ -41,6 +41,10 @@ body{background:var(--bg); color:var(--tx);
 .viewtabs button{background:none; border:none; color:var(--dim); font:inherit; font-weight:600;
   padding:6px 14px; border-radius:9px; cursor:pointer}
 .viewtabs button.on{background:var(--accent); color:#fff}
+#collapseAll{display:none; background:rgba(20,22,29,.82); border:1px solid var(--line); border-radius:12px;
+  color:var(--dim); font:inherit; font-weight:600; padding:9px 14px; cursor:pointer; backdrop-filter:blur(8px)}
+#collapseAll:hover{color:var(--tx); border-color:var(--accent)}
+#collapseAll.show{display:block}
 
 /* ── 그룹 필터 ── */
 #legend{position:fixed; left:14px; bottom:14px; z-index:20; display:flex; flex-direction:column; gap:4px;
@@ -146,10 +150,11 @@ body{background:var(--bg); color:var(--tx);
     <button id="vmap" class="on">신경망</button>
     <button id="vtl">시간선</button>
   </div>
+  <button id="collapseAll">✕ 모두 접기</button>
 </div>
 
 <div id="legend"></div>
-<div id="hint">드래그 회전 · 우클릭 드래그 이동 · 휠/핀치 줌 · 노드 클릭 상세 · 배경 클릭 해제</div>
+<div id="hint">테마 클릭 = 종목 펼치기 · 드래그 회전 · 우클릭 드래그 이동 · 휠 줌 · 배경 클릭 접기</div>
 
 <aside id="panel">
   <header>
@@ -183,7 +188,7 @@ const stockMap = {};
 const normS = s => s.replace(/[\s?]/g,'');
 for (const t of DATA.themes){
   const n = {id:'T:'+t.key, kind:'theme', name:t.name, group:t.group, ref:t,
-             deg:t.n_stocks, val: 6 + t.n_stocks*0.55};
+             deg:t.n_stocks, val: 26 + t.n_stocks*2.2};
   nodes.push(n); byId[n.id]=n;
 }
 for (const t of DATA.themes){
@@ -196,20 +201,35 @@ for (const t of DATA.themes){
         stockMap[key]=sn; nodes.push(sn); byId[sn.id]=sn;
       }
       sn.deg++; sn.themes.push({theme:t, cat:c.name, note:s.note, legacy:s.legacy, src:s.src, src_date:s.src_date});
-      links.push({source:'T:'+t.key, target:sn.id, legacy:!!s.legacy, group:t.group});
+      links.push({source:'T:'+t.key, target:sn.id, kind:'ts', legacy:!!s.legacy, group:t.group});
     }
   }
 }
-for (const k in stockMap){ const sn=stockMap[k]; sn.val = 0.8 + sn.deg*0.9; }
-document.querySelector('.brand small').textContent =
-  `테마 ${DATA.themes.length} · 종목 ${Object.keys(stockMap).length} · 연결 ${links.length} · ${DATA.updated}`;
+for (const k in stockMap){ const sn=stockMap[k]; sn.val = 1.2 + sn.deg*1.1; }
 
-/* ── 그룹 앵커: 구면 분산 (3D 성단 배치) ── */
+/* 테마-테마 메타 링크 (공유 종목 수) — 성좌의 뼈대 */
+const shared = {};
+for (const k in stockMap){
+  const th = [...new Set(stockMap[k].themes.map(e=>e.theme.key))];
+  for (let i=0;i<th.length;i++) for (let j=i+1;j<th.length;j++){
+    const kk = th[i]<th[j] ? th[i]+'|'+th[j] : th[j]+'|'+th[i];
+    shared[kk] = (shared[kk]||0)+1;
+  }
+}
+for (const kk in shared){
+  const w = shared[kk];
+  if (w < 3) continue;                       // 3종목 이상 공유하는 테마쌍만
+  const [a,b] = kk.split('|');
+  links.push({source:'T:'+a, target:'T:'+b, kind:'meta', w});
+}
+document.querySelector('.brand small').textContent =
+  `테마 ${DATA.themes.length} · 종목 ${Object.keys(stockMap).length} · 연결 ${links.filter(l=>l.kind==='ts').length} · ${DATA.updated}`;
+
+/* ── 그룹 앵커: 구면 분산 ── */
 const groups = [...new Set(DATA.themes.map(t=>t.group))];
 const ganchor = {};
 const GA_R = 3400;
 groups.forEach((g,i)=>{
-  // 피보나치 구면 분포
   const phi = Math.acos(1 - 2*(i+0.5)/groups.length);
   const th  = Math.PI*(1+Math.sqrt(5))*(i+0.5);
   ganchor[g] = {x: GA_R*Math.sin(phi)*Math.cos(th), y: GA_R*Math.sin(phi)*Math.sin(th), z: GA_R*Math.cos(phi)};
@@ -220,21 +240,28 @@ for (const n of nodes){
   n.x = a.x+(Math.random()-.5)*900; n.y = a.y+(Math.random()-.5)*900; n.z = a.z+(Math.random()-.5)*900;
 }
 
-let hoverN=null, selN=null, hiSet=null, visibleGroups=new Set(groups);
+/* ── 상태 ── */
+let hoverN=null, selN=null, hiSet=null;
+let visibleGroups=new Set(groups);
+let expanded=new Set();          // 펼친 테마 key
+let pinned=new Set();            // 개별 표시 종목 id (검색 등)
 const nbCache = {};
 function neighbors(n){
   if (nbCache[n.id]) return nbCache[n.id];
   const s = new Set([n.id]);
   for (const l of links){
+    if (l.kind!=='ts') continue;
     const a = l.source.id||l.source, b = l.target.id||l.target;
     if (a===n.id) s.add(b); else if (b===n.id) s.add(a);
   }
   return nbCache[n.id]=s;
 }
-function nodeVisible(n){
-  if (n.kind==='theme') return visibleGroups.has(n.group);
-  return n.themes.some(t=>visibleGroups.has(t.theme.group));
+function themeShown(n){ return visibleGroups.has(n.group); }
+function stockShown(n){
+  if (pinned.has(n.id)) return true;
+  return n.themes.some(e=>expanded.has(e.theme.key) && visibleGroups.has(e.theme.group));
 }
+function nodeShown(n){ return n.kind==='theme' ? themeShown(n) : stockShown(n); }
 
 /* ── 3D 그래프 ── */
 const elem = document.getElementById('stage');
@@ -242,64 +269,87 @@ const Graph = ForceGraph3D()(elem)
   .graphData({nodes, links})
   .backgroundColor('#0a0b10')
   .showNavInfo(false)
+  .nodeRelSize(6)
   .nodeVal(n=>n.val)
   .nodeOpacity(0.92)
   .nodeColor(n=>{
     const dim = hiSet && !hiSet.has(n.id);
     if (n.kind==='theme'){
       const c = GROUP_COLOR[n.group];
-      return dim ? c+'22' : c;
+      return dim ? c+'26' : c;
     }
-    if (dim) return 'rgba(120,130,150,0.10)';
+    if (dim) return 'rgba(120,130,150,0.12)';
     if (hiSet) return '#ffffff';
-    return n.deg>=2 ? 'rgba(214,225,245,0.95)' : 'rgba(150,163,190,0.7)';
+    return n.deg>=2 ? 'rgba(216,226,246,0.95)' : 'rgba(158,170,196,0.8)';
   })
-  .nodeVisibility(nodeVisible)
+  .nodeVisibility(nodeShown)
   .nodeLabel(n=> n.kind==='theme'
-      ? `<b>${n.name}</b> · ${n.deg}종목`
+      ? `<b>${n.name}</b> · ${n.deg}종목 · 클릭해 펼치기`
       : `${n.name} · ${n.deg}개 테마`)
   .nodeThreeObjectExtend(true)
   .nodeThreeObject(n=>{
-    // 라벨 스프라이트: 테마 전체 + 허브 종목(6개 테마 이상)
     const isTheme = n.kind==='theme';
-    if (!isTheme && n.deg<6) return undefined;
     const s = new SpriteText(n.name);
     s.material.depthWrite = false;
-    s.color = isTheme ? '#eef1f8' : 'rgba(190,201,224,0.85)';
-    s.textHeight = isTheme ? Math.min(64, 26 + Math.sqrt(n.deg)*3.2) : 17;
+    s.color = isTheme ? '#eef1f8' : 'rgba(196,207,229,0.9)';
+    s.textHeight = isTheme ? Math.min(120, 40 + Math.sqrt(n.deg)*5.5) : 22;
     s.fontFace = 'Pretendard, sans-serif';
     s.fontWeight = isTheme ? '700' : '500';
     s.position.y = -(Math.cbrt(n.val)*7 + s.textHeight*0.75);
-    s.__lbl = true;
+    s.visible = false;                 // 컬링 루프가 관리
+    n.__sprite = s;
     return s;
   })
   .linkColor(l=>{
+    if (l.kind==='meta'){
+      const a=l.source, b=l.target;
+      const both = hiSet && hiSet.has(a.id||a) && hiSet.has(b.id||b);
+      const sameG = a.group===b.group;
+      const col = sameG ? GROUP_COLOR[a.group] : '#7386ab';
+      if (hiSet && !both) return col+'08';
+      return col + (both ? 'cc' : (sameG?'70':'42'));
+    }
     const a=l.source, b=l.target;
-    const dim = hiSet && !(hiSet.has(a.id)&&hiSet.has(b.id));
+    const dim = hiSet && !(hiSet.has(a.id||a)&&hiSet.has(b.id||b));
     const col = GROUP_COLOR[l.group]||'#8a93a5';
-    if (dim) return col+'08';
+    if (dim) return col+'0a';
     if (hiSet) return col;
-    return col + (l.legacy?'30':'55');
+    return col + (l.legacy?'38':'66');
   })
-  .linkOpacity(0.55)
+  .linkOpacity(0.62)
   .linkWidth(l=>{
+    if (l.kind==='meta'){
+      const both = hiSet && hiSet.has(l.source.id)&&hiSet.has(l.target.id);
+      if (both) return 4;
+      return l.w>=10 ? Math.min(9, l.w*0.35) : 0;   // 강한 연결만 실린더, 나머지 1px 라인
+    }
     const dim = hiSet && !(hiSet.has(l.source.id)&&hiSet.has(l.target.id));
-    return hiSet && !dim ? 1.6 : 0;   // 0 = 1px 라인 (성능)
+    return hiSet && !dim ? 1.8 : 0;
   })
-  .linkVisibility(l=> nodeVisible(l.source.id?l.source:byId[l.source]) && nodeVisible(l.target.id?l.target:byId[l.target]))
+  .linkVisibility(l=>{
+    const a = l.source.id?l.source:byId[l.source], b = l.target.id?l.target:byId[l.target];
+    if (l.kind==='meta') return themeShown(a) && themeShown(b);
+    if (!themeShown(a) || !stockShown(b)) return false;
+    // 테마-종목 링크: 그 테마가 펼쳐졌거나, 종목이 핀/하이라이트일 때
+    return expanded.has(a.ref.key) || pinned.has(b.id) || (hiSet&&hiSet.has(b.id)&&hiSet.has(a.id));
+  })
   .enableNodeDrag(true)
   .onNodeClick(n=>select(n,true))
-  .onNodeHover(n=>{ hoverN=n; elem.style.cursor = n?'pointer':null; })
-  .onBackgroundClick(()=>clearSel())
-  .warmupTicks(60)
+  .onNodeHover(n=>{
+    if (hoverN && hoverN.__sprite && !labelOn.has(hoverN.id)) hoverN.__sprite.visible=false;
+    hoverN=n; elem.style.cursor = n?'pointer':null;
+    if (n && n.__sprite && nodeShown(n)) n.__sprite.visible=true;
+  })
+  .onBackgroundClick(()=>collapseAll())
+  .warmupTicks(70)
   .cooldownTime(9000);
 
-/* 넓게 퍼트리기: 반발력·거리 강화 */
 Graph.d3Force('charge').strength(n=>n.kind==='theme'?-2400:-130).distanceMax(6000);
-Graph.d3Force('link').distance(l=>l.legacy?430:280).strength(l=>{
-  const t = l.target.deg||1; return t>6?0.04:0.25;
-});
-/* 그룹 앵커 커스텀 포스 */
+Graph.d3Force('link').distance(l=> l.kind==='meta' ? 1500 : (l.legacy?430:280))
+  .strength(l=>{
+    if (l.kind==='meta') return 0.004 + Math.min(0.03, l.w*0.002);
+    const t = l.target.deg||1; return t>6?0.04:0.25;
+  });
 function anchorForce(alpha){
   for (const n of nodes){
     const a = anchorOf(n), k = (n.kind==='theme'?0.14:0.035)*alpha;
@@ -310,7 +360,6 @@ anchorForce.initialize = ()=>{};
 Graph.d3Force('anchor', anchorForce);
 
 /* 별 배경 */
-const THREE_ = Graph.renderer ? window.THREE : null;
 try{
   const scene = Graph.scene();
   const geo = new THREE.BufferGeometry();
@@ -320,17 +369,43 @@ try{
     pos[i*3]=r*Math.sin(ph)*Math.cos(th); pos[i*3+1]=r*Math.sin(ph)*Math.sin(th); pos[i*3+2]=r*Math.cos(ph);
   }
   geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
-  const mat = new THREE.PointsMaterial({color:0x9fb4dd, size:2.2, sizeAttenuation:false, transparent:true, opacity:0.45});
-  scene.add(new THREE.Points(geo, mat));
+  scene.add(new THREE.Points(geo, new THREE.PointsMaterial({color:0x9fb4dd, size:2.2, sizeAttenuation:false, transparent:true, opacity:0.45})));
 }catch(e){}
 
-/* 카메라 초기: 전체 뷰 */
 Graph.cameraPosition({x:0,y:0,z:8200});
 const controls = Graph.controls();
 controls.enableDamping = true; controls.dampingFactor = 0.08;
 controls.rotateSpeed = 0.6; controls.zoomSpeed = 1.1;
 controls.autoRotate = true; controls.autoRotateSpeed = 0.35;
-['pointerdown','wheel','touchstart'].forEach(ev=>elem.addEventListener(ev,()=>{controls.autoRotate=false;},{once:false}));
+['pointerdown','wheel','touchstart'].forEach(ev=>elem.addEventListener(ev,()=>{controls.autoRotate=false;}));
+
+/* ── 라벨 거리 컬링: 가까운 라벨만 표시 ── */
+const labelOn = new Set();
+const MAX_LABELS = 60;
+setInterval(()=>{
+  const cam = Graph.camera().position;
+  const cand = [];
+  for (const n of nodes){
+    if (!n.__sprite) continue;
+    const shown = nodeShown(n);
+    if (!shown){ if(n.__sprite.visible && n!==hoverN) n.__sprite.visible=false; continue; }
+    if (hiSet && !hiSet.has(n.id)){ if(n.__sprite.visible && n!==hoverN && n!==selN) n.__sprite.visible=false; continue; }
+    const d = Math.hypot(n.x-cam.x, n.y-cam.y, n.z-cam.z);
+    // 테마는 멀리서도, 종목은 가까이서만 후보
+    const maxD = n.kind==='theme' ? 14000 : 3200;
+    if (d < maxD) cand.push([d * (n.kind==='theme' ? (n.deg>=20?0.4:0.8) : 1.6), n]); // 큰 테마 우선 가중
+  }
+  cand.sort((a,b)=>a[0]-b[0]);
+  labelOn.clear();
+  const lim = hiSet ? 90 : MAX_LABELS;
+  for (let i=0;i<cand.length;i++){
+    const n = cand[i][1];
+    const on = i < lim;
+    if (on) labelOn.add(n.id);
+    n.__sprite.visible = on;
+  }
+  if (selN && selN.__sprite && nodeShown(selN)){ selN.__sprite.visible=true; labelOn.add(selN.id); }
+},260);
 
 function refreshStyles(){
   Graph.nodeColor(Graph.nodeColor());
@@ -342,24 +417,39 @@ function refreshVisibility(){
   Graph.linkVisibility(Graph.linkVisibility());
 }
 
-/* 플라이투 */
 function flyTo(n, dist){
-  const d = dist || (n.kind==='theme' ? 620 : 380);
+  const d = dist || (n.kind==='theme' ? 950 : 480);
   const len = Math.hypot(n.x,n.y,n.z)||1;
   const ratio = 1 + d/len;
   Graph.cameraPosition({x:n.x*ratio, y:n.y*ratio, z:n.z*ratio}, n, 1100);
 }
 
+/* ── 펼침/접기 ── */
+const btnCollapse = document.getElementById('collapseAll');
+function syncCollapseBtn(){ btnCollapse.classList.toggle('show', expanded.size>0 || pinned.size>0); }
+function expandTheme(t){
+  expanded.add(t.key);
+  syncCollapseBtn(); refreshVisibility();
+}
+function collapseAll(){
+  expanded.clear(); pinned.clear();
+  selN=null; hiSet=null;
+  panel.classList.remove('open');
+  syncCollapseBtn(); refreshVisibility(); refreshStyles();
+}
+btnCollapse.onclick=collapseAll;
+
 /* ── 선택/패널 ── */
 const panel=document.getElementById('panel');
-function clearSel(){ selN=null; hiSet=null; panel.classList.remove('open'); refreshStyles(); }
-document.getElementById('pclose').onclick=clearSel;
+document.getElementById('pclose').onclick=()=>{ panel.classList.remove('open'); selN=null; hiSet=null; refreshStyles(); };
 function select(n, fly=false){
+  if (n.kind==='theme') expandTheme(n.ref);
+  else pinned.add(n.id);
   selN=n; hiSet=neighbors(n);
   if (fly) flyTo(n);
   renderPanel(n); panel.classList.add('open');
   controls.autoRotate=false;
-  refreshStyles();
+  syncCollapseBtn(); refreshVisibility(); refreshStyles();
 }
 function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function renderPanel(n){
@@ -449,7 +539,7 @@ q.addEventListener('input',()=>{
   });
 });
 document.addEventListener('click',e=>{ if(!e.target.closest('#search')) hits.style.display='none'; });
-document.addEventListener('keydown',e=>{ if(e.key==='Escape'){clearSel(); hits.style.display='none';} });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){collapseAll(); hits.style.display='none';} });
 
 /* ── 타임라인 ── */
 const tlEl=document.getElementById('tl'), tlF=document.getElementById('tlfilters');
@@ -506,11 +596,12 @@ function showTL(){ tlBox.classList.add('on'); bTl.classList.add('on'); bMap.clas
   panel.classList.remove('open'); }
 bMap.onclick=showMap; bTl.onclick=showTL;
 
-/* 리사이즈 */
-addEventListener('resize',()=>Graph.width(innerWidth).height(innerHeight));
-Graph.width(innerWidth).height(innerHeight);
+function fitSize(){ Graph.width(innerWidth).height(innerHeight); }
+addEventListener('resize',fitSize);
+fitSize();
+setTimeout(fitSize,400); setTimeout(fitSize,1200); setTimeout(fitSize,3000);
 
-setTimeout(()=>{ document.getElementById('loading').style.display='none'; }, 1200);
+setTimeout(()=>{ document.getElementById('loading').style.display='none'; }, 1600);
 })();
 </script>
 </body>
