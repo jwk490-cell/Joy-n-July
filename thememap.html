@@ -3,13 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>관련주 신경망 맵 — 테마·종목 커넥톰</title>
+<title>관련주 신경망 맵 — 테마·종목 3D 커넥톰</title>
 <link rel="stylesheet" as="style" crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<script src="https://cdn.jsdelivr.net/npm/d3-dispatch@3"></script>
-<script src="https://cdn.jsdelivr.net/npm/d3-quadtree@3"></script>
-<script src="https://cdn.jsdelivr.net/npm/d3-timer@3"></script>
-<script src="https://cdn.jsdelivr.net/npm/d3-force@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/3d-force-graph@1.73.4/dist/3d-force-graph.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three-spritetext@1.8.2/dist/three-spritetext.min.js"></script>
 <style>
 :root{
   --bg:#0a0b10; --panel:#14161d; --panel2:#1b1e27; --line:#262a35;
@@ -20,8 +19,6 @@ html,body{height:100%; overflow:hidden}
 body{background:var(--bg); color:var(--tx);
   font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif; font-size:13px}
 #stage{position:fixed; inset:0}
-canvas{display:block; cursor:grab}
-canvas.dragging{cursor:grabbing}
 
 /* ── 상단 바 ── */
 #topbar{position:fixed; top:0; left:0; right:0; z-index:20; display:flex; align-items:center;
@@ -137,12 +134,12 @@ canvas.dragging{cursor:grabbing}
 </head>
 <body>
 
-<div id="loading"><div class="pulse"></div>신경망 로딩중…</div>
+<div id="loading"><div class="pulse"></div>3D 신경망 로딩중…</div>
 
-<div id="stage"><canvas id="cv"></canvas></div>
+<div id="stage"></div>
 
 <div id="topbar">
-  <div class="brand">관련주 신경망 맵 <small>@one_going 아카이브 · 테마 ↔ 종목 커넥톰</small></div>
+  <div class="brand">관련주 신경망 맵 <small>@one_going 아카이브 · 테마 ↔ 종목 3D 커넥톰</small></div>
   <div id="search"><input id="q" type="text" placeholder="테마·종목 검색  (예: 로봇, 삼성전기)" autocomplete="off">
     <div id="hits"></div></div>
   <div class="viewtabs">
@@ -152,7 +149,7 @@ canvas.dragging{cursor:grabbing}
 </div>
 
 <div id="legend"></div>
-<div id="hint">드래그 이동 · 휠/핀치 줌 · 노드 클릭 상세 · 배경 더블클릭 전체보기</div>
+<div id="hint">드래그 회전 · 우클릭 드래그 이동 · 휠/핀치 줌 · 노드 클릭 상세 · 배경 클릭 해제</div>
 
 <aside id="panel">
   <header>
@@ -182,11 +179,11 @@ const res = await fetch('data/thememap.json'); const DATA = await res.json();
 
 /* ── 그래프 구성 ── */
 const nodes = [], links = [], byId = {};
-const stockMap = {}; // normName -> node
+const stockMap = {};
 const normS = s => s.replace(/[\s?]/g,'');
 for (const t of DATA.themes){
   const n = {id:'T:'+t.key, kind:'theme', name:t.name, group:t.group, ref:t,
-             deg:t.n_stocks, r: 7 + Math.sqrt(t.n_stocks)*1.55};
+             deg:t.n_stocks, val: 6 + t.n_stocks*0.55};
   nodes.push(n); byId[n.id]=n;
 }
 for (const t of DATA.themes){
@@ -195,7 +192,7 @@ for (const t of DATA.themes){
       const key = normS(s.name);
       let sn = stockMap[key];
       if (!sn){
-        sn = {id:'S:'+key, kind:'stock', name:s.name.trim(), themes:[], deg:0, r:0};
+        sn = {id:'S:'+key, kind:'stock', name:s.name.trim(), themes:[], deg:0, val:1};
         stockMap[key]=sn; nodes.push(sn); byId[sn.id]=sn;
       }
       sn.deg++; sn.themes.push({theme:t, cat:c.name, note:s.note, legacy:s.legacy, src:s.src, src_date:s.src_date});
@@ -203,263 +200,166 @@ for (const t of DATA.themes){
     }
   }
 }
-for (const k in stockMap){ const sn=stockMap[k]; sn.r = 2.2 + Math.sqrt(sn.deg)*1.5; }
+for (const k in stockMap){ const sn=stockMap[k]; sn.val = 0.8 + sn.deg*0.9; }
 document.querySelector('.brand small').textContent =
   `테마 ${DATA.themes.length} · 종목 ${Object.keys(stockMap).length} · 연결 ${links.length} · ${DATA.updated}`;
 
-/* ── 그룹 앵커 (클러스터 배치) ── */
+/* ── 그룹 앵커: 구면 분산 (3D 성단 배치) ── */
 const groups = [...new Set(DATA.themes.map(t=>t.group))];
 const ganchor = {};
+const GA_R = 3400;
 groups.forEach((g,i)=>{
-  const a = (i/groups.length)*Math.PI*2 - Math.PI/2;
-  ganchor[g] = {x: Math.cos(a)*1350, y: Math.sin(a)*1100};
+  // 피보나치 구면 분포
+  const phi = Math.acos(1 - 2*(i+0.5)/groups.length);
+  const th  = Math.PI*(1+Math.sqrt(5))*(i+0.5);
+  ganchor[g] = {x: GA_R*Math.sin(phi)*Math.cos(th), y: GA_R*Math.sin(phi)*Math.sin(th), z: GA_R*Math.cos(phi)};
 });
+function anchorOf(n){ return ganchor[n.kind==='theme' ? n.group : n.themes[0].theme.group]; }
 for (const n of nodes){
-  const g = n.kind==='theme' ? n.group : n.themes[0].theme.group;
-  n.x = (ganchor[g].x||0) + (Math.random()-.5)*400;
-  n.y = (ganchor[g].y||0) + (Math.random()-.5)*400;
+  const a = anchorOf(n);
+  n.x = a.x+(Math.random()-.5)*900; n.y = a.y+(Math.random()-.5)*900; n.z = a.z+(Math.random()-.5)*900;
 }
-
-/* ── 시뮬레이션 ── */
-const sim = d3.forceSimulation(nodes)
-  .force('link', d3.forceLink(links).id(d=>d.id)
-      .distance(l=>l.legacy?130:85).strength(l=>l.target.deg>6?0.10:0.32))
-  .force('charge', d3.forceManyBody().strength(d=>d.kind==='theme'?-850:-46).theta(0.95).distanceMax(1900))
-  .force('collide', d3.forceCollide(d=>d.r+3).iterations(1))
-  .force('gx', d3.forceX(d=>ganchor[d.kind==='theme'?d.group:d.themes[0].theme.group].x).strength(d=>d.kind==='theme'?0.11:0.025))
-  .force('gy', d3.forceY(d=>ganchor[d.kind==='theme'?d.group:d.themes[0].theme.group].y).strength(d=>d.kind==='theme'?0.11:0.025))
-  .alphaDecay(0.018).velocityDecay(0.32);
-
-/* ── 캔버스 & 뷰 ── */
-const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
-let W,H,DPR;
-function resize(){ DPR=Math.min(devicePixelRatio||1,2); W=innerWidth; H=innerHeight;
-  cv.width=W*DPR; cv.height=H*DPR; cv.style.width=W+'px'; cv.style.height=H+'px'; }
-resize(); addEventListener('resize',()=>{resize(); draw();});
-
-let view = {x:0, y:0, k:0.30};       // 월드→스크린: s = (w - v)*k + 센터
-function toScreen(x,y){ return [(x-view.x)*view.k + W/2, (y-view.y)*view.k + H/2]; }
-function toWorld(sx,sy){ return [(sx-W/2)/view.k + view.x, (sy-H/2)/view.k + view.y]; }
-
-/* 글로우 스프라이트 */
-function makeGlow(color, size){
-  const c = document.createElement('canvas'); c.width=c.height=size*2;
-  const g = c.getContext('2d');
-  const gr = g.createRadialGradient(size,size,0,size,size,size);
-  gr.addColorStop(0, color+'cc'); gr.addColorStop(0.35, color+'55'); gr.addColorStop(1, color+'00');
-  g.fillStyle=gr; g.fillRect(0,0,size*2,size*2); return c;
-}
-const glows = {}; for (const g in GROUP_COLOR) glows[g] = makeGlow(GROUP_COLOR[g], 64);
-
-/* 배경 별 */
-const stars = Array.from({length:170},()=>({x:(Math.random()-.5)*4600,y:(Math.random()-.5)*3800,
-  s:Math.random()*1.4+.3, tw:Math.random()*Math.PI*2}));
 
 let hoverN=null, selN=null, hiSet=null, visibleGroups=new Set(groups);
+const nbCache = {};
 function neighbors(n){
+  if (nbCache[n.id]) return nbCache[n.id];
   const s = new Set([n.id]);
   for (const l of links){
-    if (l.source.id===n.id) s.add(l.target.id);
-    else if (l.target.id===n.id) s.add(l.source.id);
+    const a = l.source.id||l.source, b = l.target.id||l.target;
+    if (a===n.id) s.add(b); else if (b===n.id) s.add(a);
   }
-  return s;
+  return nbCache[n.id]=s;
 }
 function nodeVisible(n){
   if (n.kind==='theme') return visibleGroups.has(n.group);
   return n.themes.some(t=>visibleGroups.has(t.theme.group));
 }
 
-let tick=0;
-function draw(){
-  tick++;
-  ctx.setTransform(DPR,0,0,DPR,0,0);
-  ctx.clearRect(0,0,W,H);
-  const k=view.k;
-
-  // 별 배경
-  for (const st of stars){
-    const [sx,sy]=toScreen(st.x,st.y);
-    if (sx<-10||sx>W+10||sy<-10||sy>H+10) continue;
-    const a = .25 + .2*Math.sin(tick*.02+st.tw);
-    ctx.fillStyle=`rgba(150,170,220,${a})`;
-    ctx.fillRect(sx,sy,st.s,st.s);
-  }
-
-  // 링크
-  ctx.lineCap='round';
-  for (const l of links){
+/* ── 3D 그래프 ── */
+const elem = document.getElementById('stage');
+const Graph = ForceGraph3D()(elem)
+  .graphData({nodes, links})
+  .backgroundColor('#0a0b10')
+  .showNavInfo(false)
+  .nodeVal(n=>n.val)
+  .nodeOpacity(0.92)
+  .nodeColor(n=>{
+    const dim = hiSet && !hiSet.has(n.id);
+    if (n.kind==='theme'){
+      const c = GROUP_COLOR[n.group];
+      return dim ? c+'22' : c;
+    }
+    if (dim) return 'rgba(120,130,150,0.10)';
+    if (hiSet) return '#ffffff';
+    return n.deg>=2 ? 'rgba(214,225,245,0.95)' : 'rgba(150,163,190,0.7)';
+  })
+  .nodeVisibility(nodeVisible)
+  .nodeLabel(n=> n.kind==='theme'
+      ? `<b>${n.name}</b> · ${n.deg}종목`
+      : `${n.name} · ${n.deg}개 테마`)
+  .nodeThreeObjectExtend(true)
+  .nodeThreeObject(n=>{
+    // 라벨 스프라이트: 테마 전체 + 허브 종목(6개 테마 이상)
+    const isTheme = n.kind==='theme';
+    if (!isTheme && n.deg<6) return undefined;
+    const s = new SpriteText(n.name);
+    s.material.depthWrite = false;
+    s.color = isTheme ? '#eef1f8' : 'rgba(190,201,224,0.85)';
+    s.textHeight = isTheme ? Math.min(64, 26 + Math.sqrt(n.deg)*3.2) : 17;
+    s.fontFace = 'Pretendard, sans-serif';
+    s.fontWeight = isTheme ? '700' : '500';
+    s.position.y = -(Math.cbrt(n.val)*7 + s.textHeight*0.75);
+    s.__lbl = true;
+    return s;
+  })
+  .linkColor(l=>{
     const a=l.source, b=l.target;
-    if (!nodeVisible(a)||!nodeVisible(b)) continue;
     const dim = hiSet && !(hiSet.has(a.id)&&hiSet.has(b.id));
-    const [x1,y1]=toScreen(a.x,a.y), [x2,y2]=toScreen(b.x,b.y);
-    if (Math.max(x1,x2)<-40||Math.min(x1,x2)>W+40||Math.max(y1,y2)<-40||Math.min(y1,y2)>H+40) continue;
     const col = GROUP_COLOR[l.group]||'#8a93a5';
-    let alpha = dim? 0.025 : (l.legacy? 0.10 : 0.20);
-    if (hiSet && !dim) alpha = l.legacy? 0.4 : 0.65;
-    ctx.strokeStyle = col + Math.round(alpha*255).toString(16).padStart(2,'0');
-    ctx.lineWidth = Math.max(0.4, (hiSet&&!dim?1.4:0.7)*k);
-    // 곡선 (유기적)
-    const mx=(x1+x2)/2, my=(y1+y2)/2, dx=x2-x1, dy=y2-y1;
-    const bend = 0.13;
-    ctx.beginPath(); ctx.moveTo(x1,y1);
-    ctx.quadraticCurveTo(mx-dy*bend, my+dx*bend, x2,y2); ctx.stroke();
-  }
+    if (dim) return col+'08';
+    if (hiSet) return col;
+    return col + (l.legacy?'30':'55');
+  })
+  .linkOpacity(0.55)
+  .linkWidth(l=>{
+    const dim = hiSet && !(hiSet.has(l.source.id)&&hiSet.has(l.target.id));
+    return hiSet && !dim ? 1.6 : 0;   // 0 = 1px 라인 (성능)
+  })
+  .linkVisibility(l=> nodeVisible(l.source.id?l.source:byId[l.source]) && nodeVisible(l.target.id?l.target:byId[l.target]))
+  .enableNodeDrag(true)
+  .onNodeClick(n=>select(n,true))
+  .onNodeHover(n=>{ hoverN=n; elem.style.cursor = n?'pointer':null; })
+  .onBackgroundClick(()=>clearSel())
+  .warmupTicks(60)
+  .cooldownTime(9000);
 
-  // 노드
+/* 넓게 퍼트리기: 반발력·거리 강화 */
+Graph.d3Force('charge').strength(n=>n.kind==='theme'?-2400:-130).distanceMax(6000);
+Graph.d3Force('link').distance(l=>l.legacy?430:280).strength(l=>{
+  const t = l.target.deg||1; return t>6?0.04:0.25;
+});
+/* 그룹 앵커 커스텀 포스 */
+function anchorForce(alpha){
   for (const n of nodes){
-    if (!nodeVisible(n)) continue;
-    const [sx,sy]=toScreen(n.x,n.y);
-    const rr = n.r*k;
-    if (sx<-60||sx>W+60||sy<-60||sy>H+60) continue;
-    const dim = hiSet && !hiSet.has(n.id);
-    if (n.kind==='theme'){
-      const col = GROUP_COLOR[n.group];
-      const gl = glows[n.group];
-      const gs = rr*5.2;
-      ctx.globalAlpha = dim? .07 : .8;
-      ctx.drawImage(gl, sx-gs/2, sy-gs/2, gs, gs);
-      ctx.globalAlpha = dim? .18 : 1;
-      ctx.fillStyle=col;
-      ctx.beginPath(); ctx.arc(sx,sy,Math.max(rr,2.5),0,7); ctx.fill();
-      ctx.fillStyle='rgba(255,255,255,.92)';
-      ctx.beginPath(); ctx.arc(sx,sy,Math.max(rr*.38,1),0,7); ctx.fill();
-      ctx.globalAlpha=1;
-    } else {
-      const bridge = n.deg>=2;
-      let col = dim? 'rgba(120,130,150,.10)' : (bridge? 'rgba(210,222,245,.9)':'rgba(150,163,190,.65)');
-      if (hiSet && !dim) col = '#ffffff';
-      ctx.fillStyle=col;
-      ctx.beginPath(); ctx.arc(sx,sy,Math.max(rr,1.1),0,7); ctx.fill();
-    }
-    if (n===hoverN || n===selN){
-      ctx.strokeStyle='#fff'; ctx.lineWidth=1.5;
-      ctx.beginPath(); ctx.arc(sx,sy,Math.max(rr,3)+3.5,0,7); ctx.stroke();
-    }
-  }
-
-  // 라벨
-  ctx.textAlign='center'; ctx.textBaseline='top';
-  for (const n of nodes){
-    if (!nodeVisible(n)) continue;
-    const dim = hiSet && !hiSet.has(n.id);
-    if (dim && n!==selN) continue;
-    const [sx,sy]=toScreen(n.x,n.y);
-    if (sx<-80||sx>W+80||sy<-40||sy>H+60) continue;
-    if (n.kind==='theme'){
-      // 시맨틱 줌: 멀리서는 큰 테마만, 가까울수록 작은 테마 라벨 등장
-      const need = n.deg>=30?0.10 : n.deg>=15?0.22 : n.deg>=8?0.34 : 0.5;
-      if (k<need && !(n===hoverN||n===selN||(hiSet&&hiSet.has(n.id)))) continue;
-      const fs = Math.min(16, Math.max(10.5, 11*Math.sqrt(k)+3));
-      ctx.font=`700 ${fs}px Pretendard,\'Pretendard Variable\',sans-serif`;
-      ctx.fillStyle = 'rgba(8,9,14,.75)';
-      ctx.fillText(n.name, sx+1, sy+n.r*k+4+1);
-      ctx.fillStyle = hiSet&&!dim ? '#fff' : 'rgba(233,235,238,.92)';
-      ctx.fillText(n.name, sx, sy+n.r*k+4);
-    } else {
-      const show = (k>1.15) || (hiSet&&hiSet.has(n.id)&&k>0.45) || n===hoverN || n===selN || (k>0.7&&n.deg>=6);
-      if (!show) continue;
-      const fs = Math.min(12.5, Math.max(9, 9*k));
-      ctx.font=`500 ${fs}px Pretendard,\'Pretendard Variable\',sans-serif`;
-      ctx.fillStyle='rgba(8,9,14,.7)';
-      ctx.fillText(n.name, sx+1, sy+n.r*k+3+1);
-      ctx.fillStyle = hiSet&&hiSet.has(n.id) ? 'rgba(255,255,255,.95)':'rgba(180,192,214,.78)';
-      ctx.fillText(n.name, sx, sy+n.r*k+3);
-    }
+    const a = anchorOf(n), k = (n.kind==='theme'?0.14:0.035)*alpha;
+    n.vx += (a.x-n.x)*k; n.vy += (a.y-n.y)*k; n.vz += (a.z-n.z)*k;
   }
 }
-sim.on('tick', draw);
-let anim = requestAnimationFrame(function loop(){ if (sim.alpha()<0.03) draw(); anim=requestAnimationFrame(loop); });
+anchorForce.initialize = ()=>{};
+Graph.d3Force('anchor', anchorForce);
 
-/* ── 인터랙션 ── */
-let dragging=null, panning=false, lastP=null, moved=0;
-function pick(sx,sy){
-  const [wx,wy]=toWorld(sx,sy);
-  let best=null, bd=1e9;
-  for (const n of nodes){
-    if (!nodeVisible(n)) continue;
-    const d = Math.hypot(n.x-wx,n.y-wy);
-    const hit = Math.max(n.r+4, 9/view.k);
-    if (d<hit && d<bd){best=n; bd=d;}
+/* 별 배경 */
+const THREE_ = Graph.renderer ? window.THREE : null;
+try{
+  const scene = Graph.scene();
+  const geo = new THREE.BufferGeometry();
+  const N=900, pos=new Float32Array(N*3);
+  for (let i=0;i<N;i++){
+    const r = 6500+Math.random()*5500, ph=Math.acos(2*Math.random()-1), th=Math.random()*6.283;
+    pos[i*3]=r*Math.sin(ph)*Math.cos(th); pos[i*3+1]=r*Math.sin(ph)*Math.sin(th); pos[i*3+2]=r*Math.cos(ph);
   }
-  return best;
+  geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  const mat = new THREE.PointsMaterial({color:0x9fb4dd, size:2.2, sizeAttenuation:false, transparent:true, opacity:0.45});
+  scene.add(new THREE.Points(geo, mat));
+}catch(e){}
+
+/* 카메라 초기: 전체 뷰 */
+Graph.cameraPosition({x:0,y:0,z:8200});
+const controls = Graph.controls();
+controls.enableDamping = true; controls.dampingFactor = 0.08;
+controls.rotateSpeed = 0.6; controls.zoomSpeed = 1.1;
+controls.autoRotate = true; controls.autoRotateSpeed = 0.35;
+['pointerdown','wheel','touchstart'].forEach(ev=>elem.addEventListener(ev,()=>{controls.autoRotate=false;},{once:false}));
+
+function refreshStyles(){
+  Graph.nodeColor(Graph.nodeColor());
+  Graph.linkColor(Graph.linkColor());
+  Graph.linkWidth(Graph.linkWidth());
 }
-cv.addEventListener('pointerdown',e=>{
-  cv.setPointerCapture(e.pointerId);
-  moved=0; lastP=[e.clientX,e.clientY];
-  const n = pick(e.clientX,e.clientY);
-  if (n){ dragging=n; n.fx=n.x; n.fy=n.y; sim.alphaTarget(0.12).restart(); }
-  else { panning=true; cv.classList.add('dragging'); }
-});
-cv.addEventListener('pointermove',e=>{
-  if (dragging){
-    const [wx,wy]=toWorld(e.clientX,e.clientY);
-    dragging.fx=wx; dragging.fy=wy; moved+=Math.hypot(e.clientX-lastP[0],e.clientY-lastP[1]); lastP=[e.clientX,e.clientY];
-  } else if (panning){
-    view.x -= (e.clientX-lastP[0])/view.k; view.y -= (e.clientY-lastP[1])/view.k;
-    moved+=Math.hypot(e.clientX-lastP[0],e.clientY-lastP[1]); lastP=[e.clientX,e.clientY]; draw();
-  } else {
-    const n = pick(e.clientX,e.clientY);
-    if (n!==hoverN){ hoverN=n; cv.style.cursor = n?'pointer':'grab'; draw(); }
-  }
-});
-cv.addEventListener('pointerup',e=>{
-  if (dragging){
-    const n=dragging; dragging=null; n.fx=null; n.fy=null; sim.alphaTarget(0);
-    if (moved<5) select(n);
-  } else if (panning){
-    panning=false; cv.classList.remove('dragging');
-    if (moved<5){ clearSel(); }
-  }
-});
-cv.addEventListener('dblclick',e=>{ e.preventDefault(); flyTo(0,0,0.30); });
-cv.addEventListener('wheel',e=>{
-  e.preventDefault();
-  const f = Math.exp(-e.deltaY*0.0016);
-  const [wx,wy]=toWorld(e.clientX,e.clientY);
-  view.k = Math.min(6, Math.max(0.05, view.k*f));
-  const [nx,ny]=toWorld(e.clientX,e.clientY);
-  view.x += wx-nx; view.y += wy-ny;
-  draw();
-},{passive:false});
-/* 핀치 줌 */
-let pinch=null;
-cv.addEventListener('touchstart',e=>{ if(e.touches.length===2){ pinch={d:tdist(e),k:view.k,c:tcent(e)}; } },{passive:true});
-cv.addEventListener('touchmove',e=>{
-  if (pinch && e.touches.length===2){
-    e.preventDefault();
-    const [wx,wy]=toWorld(pinch.c[0],pinch.c[1]);
-    view.k = Math.min(6, Math.max(0.05, pinch.k * tdist(e)/pinch.d));
-    const [nx,ny]=toWorld(pinch.c[0],pinch.c[1]);
-    view.x+=wx-nx; view.y+=wy-ny; draw();
-  }
-},{passive:false});
-cv.addEventListener('touchend',()=>{pinch=null;});
-function tdist(e){return Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);}
-function tcent(e){return [(e.touches[0].clientX+e.touches[1].clientX)/2,(e.touches[0].clientY+e.touches[1].clientY)/2];}
+function refreshVisibility(){
+  Graph.nodeVisibility(Graph.nodeVisibility());
+  Graph.linkVisibility(Graph.linkVisibility());
+}
 
-/* 플라이투 (구글어스 느낌) */
-let flyReq=null;
-function flyTo(x,y,k,ms=900){
-  cancelAnimationFrame(flyReq);
-  const s={x:view.x,y:view.y,k:view.k}, t0=performance.now();
-  const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
-  (function step(now){
-    const p=Math.min(1,(now-t0)/ms), e=ease(p);
-    view.x=s.x+(x-s.x)*e; view.y=s.y+(y-s.y)*e;
-    view.k=s.k*Math.pow(k/s.k,e);
-    draw();
-    if(p<1) flyReq=requestAnimationFrame(step);
-  })(t0);
+/* 플라이투 */
+function flyTo(n, dist){
+  const d = dist || (n.kind==='theme' ? 620 : 380);
+  const len = Math.hypot(n.x,n.y,n.z)||1;
+  const ratio = 1 + d/len;
+  Graph.cameraPosition({x:n.x*ratio, y:n.y*ratio, z:n.z*ratio}, n, 1100);
 }
 
 /* ── 선택/패널 ── */
 const panel=document.getElementById('panel');
-function clearSel(){ selN=null; hiSet=null; panel.classList.remove('open'); draw(); }
+function clearSel(){ selN=null; hiSet=null; panel.classList.remove('open'); refreshStyles(); }
 document.getElementById('pclose').onclick=clearSel;
 function select(n, fly=false){
   selN=n; hiSet=neighbors(n);
-  if (fly) flyTo(n.x, n.y, Math.max(view.k, n.kind==='theme'?0.75:1.4));
-  renderPanel(n); panel.classList.add('open'); draw();
+  if (fly) flyTo(n);
+  renderPanel(n); panel.classList.add('open');
+  controls.autoRotate=false;
+  refreshStyles();
 }
 function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function renderPanel(n){
@@ -525,7 +425,7 @@ for (const g of groups){
     else if (visibleGroups.has(g)){ visibleGroups.delete(g); if(!visibleGroups.size) visibleGroups=new Set(groups); }
     else visibleGroups.add(g);
     lg.querySelectorAll('.lg').forEach((el,i)=>el.classList.toggle('off',!visibleGroups.has(groups[i])));
-    draw();
+    refreshVisibility();
   };
   lg.appendChild(d);
 }
@@ -606,8 +506,11 @@ function showTL(){ tlBox.classList.add('on'); bTl.classList.add('on'); bMap.clas
   panel.classList.remove('open'); }
 bMap.onclick=showMap; bTl.onclick=showTL;
 
-/* 초기 정착 후 로딩 해제 */
-setTimeout(()=>{ document.getElementById('loading').style.display='none'; flyTo(0,0,0.20,1400); }, 900);
+/* 리사이즈 */
+addEventListener('resize',()=>Graph.width(innerWidth).height(innerHeight));
+Graph.width(innerWidth).height(innerHeight);
+
+setTimeout(()=>{ document.getElementById('loading').style.display='none'; }, 1200);
 })();
 </script>
 </body>
