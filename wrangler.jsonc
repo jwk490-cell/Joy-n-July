@@ -2,6 +2,11 @@
   "name": "research-lab",
   "main": "worker.js",
   "compatibility_date": "2026-08-01",
+  // BASIC_PASS is intentionally NOT here — it must be a dashboard Secret
+  // (plain-text vars not listed in this file are wiped on every deploy).
+  "vars": {
+    "BASIC_USER": "researchlab"
+  },
   "assets": {
     "directory": ".",
     "binding": "ASSETS",
