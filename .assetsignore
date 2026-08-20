@@ -1,0 +1,8 @@
+.git
+.gitignore
+.assetsignore
+worker.js
+wrangler.jsonc
+node_modules
+publish.ps1
+publish.sh
