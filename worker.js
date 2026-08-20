@@ -27,6 +27,8 @@ export default {
       headers: {
         "WWW-Authenticate": 'Basic realm="Research Lab", charset="UTF-8"',
         "Cache-Control": "no-store",
+        // Temporary diagnostic: shows whether env vars are configured (not their values).
+        "X-Auth-Config": `user=${user ? "set" : "missing"}; pass=${pass ? "set" : "missing"}`,
       },
     });
   },
