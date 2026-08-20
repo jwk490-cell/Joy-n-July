@@ -338,6 +338,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     <div class="navgroup">리서치</div>
     <button class="navitem" data-tab="telegram">텔레그램 채널 요약</button>
     <button class="navitem" data-tab="taerin">태린이아빠</button>
+    <button class="navitem" data-tab="thememap">관련주 신경망 맵</button>
     <button class="navitem" data-tab="deepresearch">심층 리서치</button>
     <button class="navitem" data-tab="leadflow">변동성 로테이션</button>
     <button class="navitem" data-tab="rstime">RS 타임머신</button>
@@ -423,6 +424,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
         <div class="grid">
           <button class="card" data-go="telegram"><h3>텔레그램 채널 요약 <span class="tag">매시간</span></h3><p>18개 채널 당일 게시글 자동 수집 — 최신순 피드</p></button>
           <button class="card" data-go="taerin"><h3>태린이아빠 <span class="tag">피드</span></h3><p>태린이아빠 채널 아카이브</p></button>
+          <button class="card" data-go="thememap"><h3>관련주 신경망 맵 <span class="tag">인터랙티브</span></h3><p>고잉 채널 관련주 정리 249장 → 테마 131개 × 종목 1,305개 커넥톰 — 줌·검색·시간선</p></button>
           <button class="card" data-go="deepresearch"><h3>심층 리서치 <span class="tag">리포트</span></h3><p>종목·산업 심층 리서치 아카이브</p></button>
           <button class="card" data-go="backlog"><h3>수주잔고 <span class="tag soon">준비중</span></h3><p>수주잔고 급증 기업 트래킹 — 수집 방식 설계 중</p></button>
         </div>
@@ -591,6 +593,10 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
         <div class="tglist" id="tgList"></div>
         <div class="tgfeed" id="tgFeed"></div>
       </div>
+    </section>
+
+    <section class="panel embed" id="tab-thememap">
+      <iframe data-src="thememap.html" title="관련주 신경망 맵"></iframe>
     </section>
 
     <section class="panel embed" id="tab-taerin">
