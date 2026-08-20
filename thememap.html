@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>관련주 신경망 맵 — 테마·종목 3D 커넥톰</title>
+<title>관련주 신경망 맵 — 테마·종목 커넥톰</title>
 <link rel="stylesheet" as="style" crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/3d-force-graph@1.73.4/dist/3d-force-graph.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three-spritetext@1.8.2/dist/three-spritetext.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-dispatch@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-quadtree@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-timer@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-force@3"></script>
 <style>
 :root{
   --bg:#0a0b10; --panel:#14161d; --panel2:#1b1e27; --line:#262a35;
@@ -19,6 +20,8 @@ html,body{height:100%; overflow:hidden}
 body{background:var(--bg); color:var(--tx);
   font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif; font-size:13px}
 #stage{position:fixed; inset:0}
+canvas{display:block; cursor:grab}
+canvas.dragging{cursor:grabbing}
 
 /* ── 상단 바 ── */
 #topbar{position:fixed; top:0; left:0; right:0; z-index:20; display:flex; align-items:center;
@@ -138,12 +141,12 @@ body{background:var(--bg); color:var(--tx);
 </head>
 <body>
 
-<div id="loading"><div class="pulse"></div>3D 신경망 로딩중…</div>
+<div id="loading"><div class="pulse"></div>신경망 로딩중…</div>
 
-<div id="stage"></div>
+<div id="stage"><canvas id="cv"></canvas></div>
 
 <div id="topbar">
-  <div class="brand">관련주 신경망 맵 <small>@one_going 아카이브 · 테마 ↔ 종목 3D 커넥톰</small></div>
+  <div class="brand">관련주 신경망 맵 <small>@one_going 아카이브 · 테마 ↔ 종목 커넥톰</small></div>
   <div id="search"><input id="q" type="text" placeholder="테마·종목 검색  (예: 로봇, 삼성전기)" autocomplete="off">
     <div id="hits"></div></div>
   <div class="viewtabs">
@@ -154,7 +157,7 @@ body{background:var(--bg); color:var(--tx);
 </div>
 
 <div id="legend"></div>
-<div id="hint">테마 클릭 = 종목 펼치기 · 드래그 회전 · 우클릭 드래그 이동 · 휠 줌 · 배경 클릭 접기</div>
+<div id="hint">테마 클릭 = 종목 펼치기 · 드래그 이동 · 휠/핀치 줌 · 배경 클릭 접기 · 더블클릭 전체보기</div>
 
 <aside id="panel">
   <header>
@@ -179,6 +182,8 @@ const GROUP_COLOR = {
   "바이오·헬스":"#5ad6e8", "정치·이벤트":"#ff8a5c", "소비·엔터·기타":"#c88ae0", "기타":"#8a93a5"
 };
 const CAT_COLOR = {"매크로":"#4d7df5","실적":"#2fd1a8","정책·정치":"#ff8a5c","산업이벤트":"#9d6bff","휴장":"#8a93a5","기타":"#c88ae0","테마맵":"#f2d24b"};
+/* 선은 전부 옅은 회색 계열 — 흰 라벨을 가리지 않게 */
+const LINE = (a)=>`rgba(158,168,188,${a})`;
 
 const res = await fetch('data/thememap.json'); const DATA = await res.json();
 
@@ -188,7 +193,7 @@ const stockMap = {};
 const normS = s => s.replace(/[\s?]/g,'');
 for (const t of DATA.themes){
   const n = {id:'T:'+t.key, kind:'theme', name:t.name, group:t.group, ref:t,
-             deg:t.n_stocks, val: 26 + t.n_stocks*2.2};
+             deg:t.n_stocks, r: 8 + Math.sqrt(t.n_stocks)*1.9};
   nodes.push(n); byId[n.id]=n;
 }
 for (const t of DATA.themes){
@@ -197,7 +202,7 @@ for (const t of DATA.themes){
       const key = normS(s.name);
       let sn = stockMap[key];
       if (!sn){
-        sn = {id:'S:'+key, kind:'stock', name:s.name.trim(), themes:[], deg:0, val:1};
+        sn = {id:'S:'+key, kind:'stock', name:s.name.trim(), themes:[], deg:0, r:0};
         stockMap[key]=sn; nodes.push(sn); byId[sn.id]=sn;
       }
       sn.deg++; sn.themes.push({theme:t, cat:c.name, note:s.note, legacy:s.legacy, src:s.src, src_date:s.src_date});
@@ -205,9 +210,9 @@ for (const t of DATA.themes){
     }
   }
 }
-for (const k in stockMap){ const sn=stockMap[k]; sn.val = 1.2 + sn.deg*1.1; }
+for (const k in stockMap){ const sn=stockMap[k]; sn.r = 2.6 + Math.sqrt(sn.deg)*1.7; }
 
-/* 테마-테마 메타 링크 (공유 종목 수) — 성좌의 뼈대 */
+/* 테마-테마 메타 링크 (공유 종목 수 3개 이상) */
 const shared = {};
 for (const k in stockMap){
   const th = [...new Set(stockMap[k].themes.map(e=>e.theme.key))];
@@ -218,40 +223,39 @@ for (const k in stockMap){
 }
 for (const kk in shared){
   const w = shared[kk];
-  if (w < 3) continue;                       // 3종목 이상 공유하는 테마쌍만
+  if (w < 3) continue;
   const [a,b] = kk.split('|');
   links.push({source:'T:'+a, target:'T:'+b, kind:'meta', w});
 }
 document.querySelector('.brand small').textContent =
   `테마 ${DATA.themes.length} · 종목 ${Object.keys(stockMap).length} · 연결 ${links.filter(l=>l.kind==='ts').length} · ${DATA.updated}`;
 
-/* ── 그룹 앵커: 구면 분산 ── */
+/* ── 그룹 앵커 ── */
 const groups = [...new Set(DATA.themes.map(t=>t.group))];
 const ganchor = {};
-const GA_R = 3400;
 groups.forEach((g,i)=>{
-  const phi = Math.acos(1 - 2*(i+0.5)/groups.length);
-  const th  = Math.PI*(1+Math.sqrt(5))*(i+0.5);
-  ganchor[g] = {x: GA_R*Math.sin(phi)*Math.cos(th), y: GA_R*Math.sin(phi)*Math.sin(th), z: GA_R*Math.cos(phi)};
+  const a = (i/groups.length)*Math.PI*2 - Math.PI/2;
+  ganchor[g] = {x: Math.cos(a)*1500, y: Math.sin(a)*1200};
 });
 function anchorOf(n){ return ganchor[n.kind==='theme' ? n.group : n.themes[0].theme.group]; }
 for (const n of nodes){
   const a = anchorOf(n);
-  n.x = a.x+(Math.random()-.5)*900; n.y = a.y+(Math.random()-.5)*900; n.z = a.z+(Math.random()-.5)*900;
+  n.x = a.x + (Math.random()-.5)*500;
+  n.y = a.y + (Math.random()-.5)*500;
 }
 
 /* ── 상태 ── */
 let hoverN=null, selN=null, hiSet=null;
 let visibleGroups=new Set(groups);
-let expanded=new Set();          // 펼친 테마 key
-let pinned=new Set();            // 개별 표시 종목 id (검색 등)
+let expanded=new Set();
+let pinned=new Set();
 const nbCache = {};
 function neighbors(n){
   if (nbCache[n.id]) return nbCache[n.id];
   const s = new Set([n.id]);
   for (const l of links){
     if (l.kind!=='ts') continue;
-    const a = l.source.id||l.source, b = l.target.id||l.target;
+    const a=l.source.id||l.source, b=l.target.id||l.target;
     if (a===n.id) s.add(b); else if (b===n.id) s.add(a);
   }
   return nbCache[n.id]=s;
@@ -263,193 +267,255 @@ function stockShown(n){
 }
 function nodeShown(n){ return n.kind==='theme' ? themeShown(n) : stockShown(n); }
 
-/* ── 3D 그래프 ── */
-const elem = document.getElementById('stage');
-const Graph = ForceGraph3D()(elem)
-  .graphData({nodes, links})
-  .backgroundColor('#0a0b10')
-  .showNavInfo(false)
-  .nodeRelSize(6)
-  .nodeVal(n=>n.val)
-  .nodeOpacity(0.92)
-  .nodeColor(n=>{
+/* ── 시뮬레이션 ── */
+const sim = d3.forceSimulation(nodes)
+  .force('link', d3.forceLink(links).id(d=>d.id)
+      .distance(l=> l.kind==='meta' ? 620 : (l.legacy?150:95))
+      .strength(l=>{
+        if (l.kind==='meta') return 0.006 + Math.min(0.04, l.w*0.003);
+        return (l.target.deg>6)?0.08:0.3;
+      }))
+  .force('charge', d3.forceManyBody().strength(d=>d.kind==='theme'?-950:-42).theta(0.95).distanceMax(2200))
+  .force('collide', d3.forceCollide(d=>d.r+4).iterations(1))
+  .force('gx', d3.forceX(d=>anchorOf(d).x).strength(d=>d.kind==='theme'?0.10:0.03))
+  .force('gy', d3.forceY(d=>anchorOf(d).y).strength(d=>d.kind==='theme'?0.10:0.03))
+  .alphaDecay(0.018).velocityDecay(0.32);
+
+/* ── 캔버스 & 뷰 ── */
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+let W,H,DPR;
+function resize(){ DPR=Math.min(devicePixelRatio||1,2); W=innerWidth; H=innerHeight;
+  cv.width=W*DPR; cv.height=H*DPR; cv.style.width=W+'px'; cv.style.height=H+'px'; }
+resize(); addEventListener('resize',()=>{resize(); draw();});
+setTimeout(()=>{resize(); draw();},400); setTimeout(()=>{resize(); draw();},1500);
+
+let view = {x:0, y:0, k:0.34};
+function toScreen(x,y){ return [(x-view.x)*view.k + W/2, (y-view.y)*view.k + H/2]; }
+function toWorld(sx,sy){ return [(sx-W/2)/view.k + view.x, (sy-H/2)/view.k + view.y]; }
+
+function makeGlow(color, size){
+  const c = document.createElement('canvas'); c.width=c.height=size*2;
+  const g = c.getContext('2d');
+  const gr = g.createRadialGradient(size,size,0,size,size,size);
+  gr.addColorStop(0, color+'b8'); gr.addColorStop(0.35, color+'44'); gr.addColorStop(1, color+'00');
+  g.fillStyle=gr; g.fillRect(0,0,size*2,size*2); return c;
+}
+const glows = {}; for (const g in GROUP_COLOR) glows[g] = makeGlow(GROUP_COLOR[g], 64);
+
+const stars = Array.from({length:170},()=>({x:(Math.random()-.5)*5200,y:(Math.random()-.5)*4200,
+  s:Math.random()*1.4+.3, tw:Math.random()*Math.PI*2}));
+
+let tick=0;
+function draw(){
+  tick++;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  ctx.clearRect(0,0,W,H);
+  const k=view.k;
+
+  for (const st of stars){
+    const [sx,sy]=toScreen(st.x,st.y);
+    if (sx<-10||sx>W+10||sy<-10||sy>H+10) continue;
+    const a = .22 + .18*Math.sin(tick*.02+st.tw);
+    ctx.fillStyle=`rgba(150,170,220,${a})`;
+    ctx.fillRect(sx,sy,st.s,st.s);
+  }
+
+  /* ── 링크: 전부 옅은 회색 ── */
+  ctx.lineCap='round';
+  for (const l of links){
+    const a=l.source, b=l.target;
+    if (l.kind==='meta'){
+      if (!themeShown(a)||!themeShown(b)) continue;
+      const both = hiSet && hiSet.has(a.id)&&hiSet.has(b.id);
+      if (hiSet && !both) continue;                       // 하이라이트 중엔 무관한 뼈대 숨김
+      const alpha = both? .4 : Math.min(.16, .05 + l.w*.008);
+      ctx.strokeStyle = LINE(alpha);
+      ctx.lineWidth = Math.max(.5, Math.min(4, .5 + l.w*.14)*k);
+    } else {
+      if (!themeShown(a) || !stockShown(b)) continue;
+      const on = expanded.has(a.ref.key) || pinned.has(b.id) || (hiSet&&hiSet.has(b.id)&&hiSet.has(a.id));
+      if (!on) continue;
+      const hi = hiSet && hiSet.has(a.id)&&hiSet.has(b.id);
+      if (hiSet && !hi) continue;
+      ctx.strokeStyle = LINE(hi? .42 : (l.legacy? .09 : .15));
+      ctx.lineWidth = Math.max(.4, (hi?1.3:.7)*k);
+    }
+    const [x1,y1]=toScreen(a.x,a.y), [x2,y2]=toScreen(b.x,b.y);
+    if (Math.max(x1,x2)<-40||Math.min(x1,x2)>W+40||Math.max(y1,y2)<-40||Math.min(y1,y2)>H+40) continue;
+    const mx=(x1+x2)/2, my=(y1+y2)/2, dx=x2-x1, dy=y2-y1;
+    ctx.beginPath(); ctx.moveTo(x1,y1);
+    ctx.quadraticCurveTo(mx-dy*0.12, my+dx*0.12, x2,y2); ctx.stroke();
+  }
+
+  /* ── 노드 ── */
+  for (const n of nodes){
+    if (!nodeShown(n)) continue;
+    const [sx,sy]=toScreen(n.x,n.y);
+    const rr = n.r*k;
+    if (sx<-60||sx>W+60||sy<-60||sy>H+60) continue;
     const dim = hiSet && !hiSet.has(n.id);
     if (n.kind==='theme'){
-      const c = GROUP_COLOR[n.group];
-      return dim ? c+'26' : c;
+      const col = GROUP_COLOR[n.group];
+      const gs = rr*5;
+      ctx.globalAlpha = dim? .06 : .75;
+      ctx.drawImage(glows[n.group], sx-gs/2, sy-gs/2, gs, gs);
+      ctx.globalAlpha = dim? .15 : 1;
+      ctx.fillStyle=col;
+      ctx.beginPath(); ctx.arc(sx,sy,Math.max(rr,3),0,7); ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,.92)';
+      ctx.beginPath(); ctx.arc(sx,sy,Math.max(rr*.36,1.2),0,7); ctx.fill();
+      ctx.globalAlpha=1;
+    } else {
+      let col = dim? 'rgba(120,130,150,.10)' : (n.deg>=2? 'rgba(214,224,246,.92)':'rgba(160,172,198,.72)');
+      if (hiSet && !dim) col = '#ffffff';
+      ctx.fillStyle=col;
+      ctx.beginPath(); ctx.arc(sx,sy,Math.max(rr,1.4),0,7); ctx.fill();
     }
-    if (dim) return 'rgba(120,130,150,0.12)';
-    if (hiSet) return '#ffffff';
-    return n.deg>=2 ? 'rgba(216,226,246,0.95)' : 'rgba(158,170,196,0.8)';
-  })
-  .nodeVisibility(nodeShown)
-  .nodeLabel(n=> n.kind==='theme'
-      ? `<b>${n.name}</b> · ${n.deg}종목 · 클릭해 펼치기`
-      : `${n.name} · ${n.deg}개 테마`)
-  .nodeThreeObjectExtend(true)
-  .nodeThreeObject(n=>{
-    const isTheme = n.kind==='theme';
-    const s = new SpriteText(n.name);
-    s.material.depthWrite = false;
-    s.color = isTheme ? '#eef1f8' : 'rgba(196,207,229,0.9)';
-    s.textHeight = isTheme ? Math.min(120, 40 + Math.sqrt(n.deg)*5.5) : 22;
-    s.fontFace = 'Pretendard, sans-serif';
-    s.fontWeight = isTheme ? '700' : '500';
-    s.position.y = -(Math.cbrt(n.val)*7 + s.textHeight*0.75);
-    s.visible = false;                 // 컬링 루프가 관리
-    n.__sprite = s;
-    return s;
-  })
-  .linkColor(l=>{
-    if (l.kind==='meta'){
-      const a=l.source, b=l.target;
-      const both = hiSet && hiSet.has(a.id||a) && hiSet.has(b.id||b);
-      const sameG = a.group===b.group;
-      const col = sameG ? GROUP_COLOR[a.group] : '#7386ab';
-      if (hiSet && !both) return col+'08';
-      return col + (both ? 'cc' : (sameG?'70':'42'));
+    if (n===hoverN || n===selN){
+      ctx.strokeStyle='rgba(255,255,255,.9)'; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.arc(sx,sy,Math.max(rr,3)+3.5,0,7); ctx.stroke();
     }
-    const a=l.source, b=l.target;
-    const dim = hiSet && !(hiSet.has(a.id||a)&&hiSet.has(b.id||b));
-    const col = GROUP_COLOR[l.group]||'#8a93a5';
-    if (dim) return col+'0a';
-    if (hiSet) return col;
-    return col + (l.legacy?'38':'66');
-  })
-  .linkOpacity(0.62)
-  .linkWidth(l=>{
-    if (l.kind==='meta'){
-      const both = hiSet && hiSet.has(l.source.id)&&hiSet.has(l.target.id);
-      if (both) return 4;
-      return l.w>=10 ? Math.min(9, l.w*0.35) : 0;   // 강한 연결만 실린더, 나머지 1px 라인
-    }
-    const dim = hiSet && !(hiSet.has(l.source.id)&&hiSet.has(l.target.id));
-    return hiSet && !dim ? 1.8 : 0;
-  })
-  .linkVisibility(l=>{
-    const a = l.source.id?l.source:byId[l.source], b = l.target.id?l.target:byId[l.target];
-    if (l.kind==='meta') return themeShown(a) && themeShown(b);
-    if (!themeShown(a) || !stockShown(b)) return false;
-    // 테마-종목 링크: 그 테마가 펼쳐졌거나, 종목이 핀/하이라이트일 때
-    return expanded.has(a.ref.key) || pinned.has(b.id) || (hiSet&&hiSet.has(b.id)&&hiSet.has(a.id));
-  })
-  .enableNodeDrag(true)
-  .onNodeClick(n=>select(n,true))
-  .onNodeHover(n=>{
-    if (hoverN && hoverN.__sprite && !labelOn.has(hoverN.id)) hoverN.__sprite.visible=false;
-    hoverN=n; elem.style.cursor = n?'pointer':null;
-    if (n && n.__sprite && nodeShown(n)) n.__sprite.visible=true;
-  })
-  .onBackgroundClick(()=>collapseAll())
-  .warmupTicks(70)
-  .cooldownTime(9000);
+  }
 
-Graph.d3Force('charge').strength(n=>n.kind==='theme'?-2400:-130).distanceMax(6000);
-Graph.d3Force('link').distance(l=> l.kind==='meta' ? 1500 : (l.legacy?430:280))
-  .strength(l=>{
-    if (l.kind==='meta') return 0.004 + Math.min(0.03, l.w*0.002);
-    const t = l.target.deg||1; return t>6?0.04:0.25;
-  });
-function anchorForce(alpha){
+  /* ── 라벨 (시맨틱 줌 + 개수 컬링) ── */
+  ctx.textAlign='center'; ctx.textBaseline='top';
+  let budget = hiSet? 120 : 70;
   for (const n of nodes){
-    const a = anchorOf(n), k = (n.kind==='theme'?0.14:0.035)*alpha;
-    n.vx += (a.x-n.x)*k; n.vy += (a.y-n.y)*k; n.vz += (a.z-n.z)*k;
+    if (budget<=0) break;
+    if (!nodeShown(n)) continue;
+    const dim = hiSet && !hiSet.has(n.id);
+    if (dim && n!==selN) continue;
+    const [sx,sy]=toScreen(n.x,n.y);
+    if (sx<-80||sx>W+80||sy<-40||sy>H+60) continue;
+    if (n.kind==='theme'){
+      const need = n.deg>=30?0.10 : n.deg>=15?0.20 : n.deg>=8?0.30 : 0.45;
+      if (k<need && !(n===hoverN||n===selN||(hiSet&&hiSet.has(n.id)))) continue;
+      const fs = Math.min(16, Math.max(10.5, 11*Math.sqrt(k)+3));
+      ctx.font=`700 ${fs}px Pretendard,'Pretendard Variable',sans-serif`;
+      ctx.fillStyle='rgba(8,9,14,.8)';
+      ctx.fillText(n.name, sx+1, sy+n.r*k+4+1);
+      ctx.fillStyle = hiSet&&!dim ? '#fff' : 'rgba(233,235,238,.94)';
+      ctx.fillText(n.name, sx, sy+n.r*k+4);
+      budget--;
+    } else {
+      const show = (k>0.9) || (hiSet&&hiSet.has(n.id)&&k>0.35) || n===hoverN || n===selN || (k>0.55&&n.deg>=6);
+      if (!show) continue;
+      const fs = Math.min(12.5, Math.max(9.5, 9*k));
+      ctx.font=`500 ${fs}px Pretendard,'Pretendard Variable',sans-serif`;
+      ctx.fillStyle='rgba(8,9,14,.75)';
+      ctx.fillText(n.name, sx+1, sy+n.r*k+3+1);
+      ctx.fillStyle = hiSet&&hiSet.has(n.id) ? 'rgba(255,255,255,.96)':'rgba(196,206,228,.85)';
+      ctx.fillText(n.name, sx, sy+n.r*k+3);
+      budget--;
+    }
   }
 }
-anchorForce.initialize = ()=>{};
-Graph.d3Force('anchor', anchorForce);
+sim.on('tick', draw);
+requestAnimationFrame(function loop(){ if (sim.alpha()<0.03) draw(); requestAnimationFrame(loop); });
 
-/* 별 배경 */
-try{
-  const scene = Graph.scene();
-  const geo = new THREE.BufferGeometry();
-  const N=900, pos=new Float32Array(N*3);
-  for (let i=0;i<N;i++){
-    const r = 6500+Math.random()*5500, ph=Math.acos(2*Math.random()-1), th=Math.random()*6.283;
-    pos[i*3]=r*Math.sin(ph)*Math.cos(th); pos[i*3+1]=r*Math.sin(ph)*Math.sin(th); pos[i*3+2]=r*Math.cos(ph);
-  }
-  geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
-  scene.add(new THREE.Points(geo, new THREE.PointsMaterial({color:0x9fb4dd, size:2.2, sizeAttenuation:false, transparent:true, opacity:0.45})));
-}catch(e){}
-
-Graph.cameraPosition({x:0,y:0,z:8200});
-const controls = Graph.controls();
-controls.enableDamping = true; controls.dampingFactor = 0.08;
-controls.rotateSpeed = 0.6; controls.zoomSpeed = 1.1;
-controls.autoRotate = true; controls.autoRotateSpeed = 0.35;
-['pointerdown','wheel','touchstart'].forEach(ev=>elem.addEventListener(ev,()=>{controls.autoRotate=false;}));
-
-/* ── 라벨 거리 컬링: 가까운 라벨만 표시 ── */
-const labelOn = new Set();
-const MAX_LABELS = 60;
-setInterval(()=>{
-  const cam = Graph.camera().position;
-  const cand = [];
+/* ── 인터랙션 ── */
+let dragging=null, panning=false, lastP=null, moved=0;
+function pick(sx,sy){
+  const [wx,wy]=toWorld(sx,sy);
+  let best=null, bd=1e9;
   for (const n of nodes){
-    if (!n.__sprite) continue;
-    const shown = nodeShown(n);
-    if (!shown){ if(n.__sprite.visible && n!==hoverN) n.__sprite.visible=false; continue; }
-    if (hiSet && !hiSet.has(n.id)){ if(n.__sprite.visible && n!==hoverN && n!==selN) n.__sprite.visible=false; continue; }
-    const d = Math.hypot(n.x-cam.x, n.y-cam.y, n.z-cam.z);
-    // 테마는 멀리서도, 종목은 가까이서만 후보
-    const maxD = n.kind==='theme' ? 14000 : 3200;
-    if (d < maxD) cand.push([d * (n.kind==='theme' ? (n.deg>=20?0.4:0.8) : 1.6), n]); // 큰 테마 우선 가중
+    if (!nodeShown(n)) continue;
+    const d = Math.hypot(n.x-wx,n.y-wy);
+    const hit = Math.max(n.r+4, 9/view.k);
+    if (d<hit && d<bd){best=n; bd=d;}
   }
-  cand.sort((a,b)=>a[0]-b[0]);
-  labelOn.clear();
-  const lim = hiSet ? 90 : MAX_LABELS;
-  for (let i=0;i<cand.length;i++){
-    const n = cand[i][1];
-    const on = i < lim;
-    if (on) labelOn.add(n.id);
-    n.__sprite.visible = on;
+  return best;
+}
+cv.addEventListener('pointerdown',e=>{
+  cv.setPointerCapture(e.pointerId);
+  moved=0; lastP=[e.clientX,e.clientY];
+  const n = pick(e.clientX,e.clientY);
+  if (n){ dragging=n; n.fx=n.x; n.fy=n.y; sim.alphaTarget(0.12).restart(); }
+  else { panning=true; cv.classList.add('dragging'); }
+});
+cv.addEventListener('pointermove',e=>{
+  if (dragging){
+    const [wx,wy]=toWorld(e.clientX,e.clientY);
+    dragging.fx=wx; dragging.fy=wy; moved+=Math.hypot(e.clientX-lastP[0],e.clientY-lastP[1]); lastP=[e.clientX,e.clientY];
+  } else if (panning){
+    view.x -= (e.clientX-lastP[0])/view.k; view.y -= (e.clientY-lastP[1])/view.k;
+    moved+=Math.hypot(e.clientX-lastP[0],e.clientY-lastP[1]); lastP=[e.clientX,e.clientY]; draw();
+  } else {
+    const n = pick(e.clientX,e.clientY);
+    if (n!==hoverN){ hoverN=n; cv.style.cursor = n?'pointer':'grab'; draw(); }
   }
-  if (selN && selN.__sprite && nodeShown(selN)){ selN.__sprite.visible=true; labelOn.add(selN.id); }
-},260);
+});
+cv.addEventListener('pointerup',e=>{
+  if (dragging){
+    const n=dragging; dragging=null; n.fx=null; n.fy=null; sim.alphaTarget(0);
+    if (moved<5) select(n);
+  } else if (panning){
+    panning=false; cv.classList.remove('dragging');
+    if (moved<5) collapseAll();
+  }
+});
+cv.addEventListener('dblclick',e=>{ e.preventDefault(); flyView(0,0,0.30); });
+cv.addEventListener('wheel',e=>{
+  e.preventDefault();
+  const f = Math.exp(-e.deltaY*0.0016);
+  const [wx,wy]=toWorld(e.clientX,e.clientY);
+  view.k = Math.min(6, Math.max(0.05, view.k*f));
+  const [nx,ny]=toWorld(e.clientX,e.clientY);
+  view.x += wx-nx; view.y += wy-ny;
+  draw();
+},{passive:false});
+let pinch=null;
+cv.addEventListener('touchstart',e=>{ if(e.touches.length===2){ pinch={d:tdist(e),k:view.k,c:tcent(e)}; } },{passive:true});
+cv.addEventListener('touchmove',e=>{
+  if (pinch && e.touches.length===2){
+    e.preventDefault();
+    const [wx,wy]=toWorld(pinch.c[0],pinch.c[1]);
+    view.k = Math.min(6, Math.max(0.05, pinch.k * tdist(e)/pinch.d));
+    const [nx,ny]=toWorld(pinch.c[0],pinch.c[1]);
+    view.x+=wx-nx; view.y+=wy-ny; draw();
+  }
+},{passive:false});
+cv.addEventListener('touchend',()=>{pinch=null;});
+function tdist(e){return Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);}
+function tcent(e){return [(e.touches[0].clientX+e.touches[1].clientX)/2,(e.touches[0].clientY+e.touches[1].clientY)/2];}
 
-function refreshStyles(){
-  Graph.nodeColor(Graph.nodeColor());
-  Graph.linkColor(Graph.linkColor());
-  Graph.linkWidth(Graph.linkWidth());
-}
-function refreshVisibility(){
-  Graph.nodeVisibility(Graph.nodeVisibility());
-  Graph.linkVisibility(Graph.linkVisibility());
-}
-
-function flyTo(n, dist){
-  const d = dist || (n.kind==='theme' ? 950 : 480);
-  const len = Math.hypot(n.x,n.y,n.z)||1;
-  const ratio = 1 + d/len;
-  Graph.cameraPosition({x:n.x*ratio, y:n.y*ratio, z:n.z*ratio}, n, 1100);
+let flyReq=null;
+function flyView(x,y,k,ms=900){
+  cancelAnimationFrame(flyReq);
+  const s={x:view.x,y:view.y,k:view.k}, t0=performance.now();
+  const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+  (function step(now){
+    const p=Math.min(1,(now-t0)/ms), e=ease(p);
+    view.x=s.x+(x-s.x)*e; view.y=s.y+(y-s.y)*e;
+    view.k=s.k*Math.pow(k/s.k,e);
+    draw();
+    if(p<1) flyReq=requestAnimationFrame(step);
+  })(t0);
 }
 
 /* ── 펼침/접기 ── */
 const btnCollapse = document.getElementById('collapseAll');
 function syncCollapseBtn(){ btnCollapse.classList.toggle('show', expanded.size>0 || pinned.size>0); }
-function expandTheme(t){
-  expanded.add(t.key);
-  syncCollapseBtn(); refreshVisibility();
-}
 function collapseAll(){
   expanded.clear(); pinned.clear();
   selN=null; hiSet=null;
   panel.classList.remove('open');
-  syncCollapseBtn(); refreshVisibility(); refreshStyles();
+  syncCollapseBtn(); draw();
 }
 btnCollapse.onclick=collapseAll;
 
 /* ── 선택/패널 ── */
 const panel=document.getElementById('panel');
-document.getElementById('pclose').onclick=()=>{ panel.classList.remove('open'); selN=null; hiSet=null; refreshStyles(); };
+document.getElementById('pclose').onclick=()=>{ panel.classList.remove('open'); selN=null; hiSet=null; draw(); };
 function select(n, fly=false){
-  if (n.kind==='theme') expandTheme(n.ref);
+  if (n.kind==='theme') expanded.add(n.ref.key);
   else pinned.add(n.id);
   selN=n; hiSet=neighbors(n);
-  if (fly) flyTo(n);
+  if (fly) flyView(n.x, n.y, Math.max(view.k, n.kind==='theme'?0.8:1.4));
   renderPanel(n); panel.classList.add('open');
-  controls.autoRotate=false;
-  syncCollapseBtn(); refreshVisibility(); refreshStyles();
+  syncCollapseBtn();
+  sim.alpha(0.25).restart();     // 펼친 종목들 자리 잡기
+  draw();
 }
 function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function renderPanel(n){
@@ -515,7 +581,7 @@ for (const g of groups){
     else if (visibleGroups.has(g)){ visibleGroups.delete(g); if(!visibleGroups.size) visibleGroups=new Set(groups); }
     else visibleGroups.add(g);
     lg.querySelectorAll('.lg').forEach((el,i)=>el.classList.toggle('off',!visibleGroups.has(groups[i])));
-    refreshVisibility();
+    draw();
   };
   lg.appendChild(d);
 }
@@ -596,12 +662,7 @@ function showTL(){ tlBox.classList.add('on'); bTl.classList.add('on'); bMap.clas
   panel.classList.remove('open'); }
 bMap.onclick=showMap; bTl.onclick=showTL;
 
-function fitSize(){ Graph.width(innerWidth).height(innerHeight); }
-addEventListener('resize',fitSize);
-fitSize();
-setTimeout(fitSize,400); setTimeout(fitSize,1200); setTimeout(fitSize,3000);
-
-setTimeout(()=>{ document.getElementById('loading').style.display='none'; }, 1600);
+setTimeout(()=>{ document.getElementById('loading').style.display='none'; flyView(0,0,0.24,1400); }, 900);
 })();
 </script>
 </body>
