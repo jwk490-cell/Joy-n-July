@@ -1,0 +1,378 @@
+<!DOCTYPE html><html lang="ko" class="ht-chem"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>에너지/화학 가격 동향</title>
+<style>
+:root{--bg:#0f1115;--panel:#171a21;--panel2:#1e222b;--ink:#e9ecf1;--sub:#a4adbd;--dim2:#6d7480;
+--line:#2a2f3a;--gold:#4d7df5;--up:#f04452;--dn:#3485fa;
+--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;
+--grid:#242832;--axis:#3a4050;}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);
+font-family:'Pretendard','Malgun Gothic',-apple-system,sans-serif;letter-spacing:-.01em;font-size:13px}
+.wrap{max-width:1420px;margin:0 auto;padding:22px 20px 60px}
+h1{font-size:24px;font-weight:800;margin:0 0 4px}
+.sub{color:var(--sub);font-size:13.5px;margin-bottom:8px}
+.meta{color:var(--sub);font-size:12px}.meta b{color:var(--ink)}
+.num{font-variant-numeric:tabular-nums}
+.up{color:var(--up)}.dn{color:var(--dn)}.flat{color:var(--sub)}
+
+/* ── 필터 행 ── */
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:16px 0 14px}
+.seg{display:flex;background:var(--panel2);border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.seg button{background:none;border:0;color:var(--sub);padding:7px 12px;font-size:12.5px;cursor:pointer;font-family:inherit}
+.seg button.on{background:var(--gold);color:#0f1115;font-weight:700}
+.seg button:disabled{opacity:.35;cursor:default}
+input#q{background:var(--panel2);color:var(--ink);border:1px solid var(--line);
+border-radius:9px;padding:7px 11px;font-size:12.5px;outline:none;min-width:190px;font-family:inherit}
+input#q:focus{border-color:var(--gold)}
+.cnt{color:var(--sub);font-size:12px;margin-left:auto}
+
+/* ── 큰 차트 ── */
+.big{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px 18px 10px;margin-bottom:20px}
+.bighead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:2px}
+.bigname{font-size:17px;font-weight:800}
+.bigunit{color:var(--sub);font-size:12px}
+.biglast{margin-left:auto;font-size:13px;color:var(--sub)}
+.biglast b{font-size:17px;color:var(--ink)}
+.cmp{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 4px;align-items:center}
+.cmp .lbl{color:var(--dim2);font-size:11.5px}
+.chip{border:1px solid var(--line);background:var(--panel2);color:var(--sub);border-radius:999px;
+padding:3px 10px;font-size:11.5px;cursor:pointer;font-family:inherit}
+.chip.on{border-color:var(--gold);color:var(--ink);background:rgba(77,125,245,.12)}
+.chip .sw{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
+#bigchart{position:relative}
+#bigchart svg{display:block;width:100%}
+#tip{position:absolute;pointer-events:none;background:#12141a;border:1px solid var(--axis);
+border-radius:9px;padding:8px 11px;font-size:12px;display:none;z-index:5;min-width:150px;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+#tip .td{color:var(--sub);font-size:11px;margin-bottom:4px}
+#tip .tr{display:flex;align-items:center;gap:7px;margin-top:2px}
+#tip .tr i{width:12px;height:2.5px;border-radius:2px;flex:none}
+#tip .tr b{margin-left:auto;font-size:12.5px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;padding:6px 2px 8px;font-size:11.5px;color:var(--sub)}
+.legend span i{display:inline-block;width:16px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+
+/* ── 그룹/카드 그리드 ── */
+.gtitle{font-size:14px;font-weight:800;margin:22px 0 9px;color:var(--ink)}
+.gtitle small{color:var(--dim2);font-weight:500;margin-left:7px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:10px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 13px 9px;
+cursor:pointer;text-align:left;font-family:inherit;color:var(--ink);transition:border-color .12s}
+.card:hover{border-color:var(--gold)}
+.card.on{border-color:var(--gold);background:#191e2c}
+.cname{font-size:12.5px;font-weight:700;display:flex;justify-content:space-between;gap:6px;align-items:baseline}
+.cname small{color:var(--dim2);font-weight:500;font-size:10.5px}
+.cval{display:flex;align-items:baseline;gap:8px;margin:3px 0 5px}
+.cval b{font-size:16px}
+.cval span{font-size:11.5px}
+.card svg{display:block;width:100%}
+
+/* ── 다운로드 ── */
+.dl{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:18px 20px;margin-top:28px;
+display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.dl .ic{font-size:30px}
+.dl .tx b{font-size:14.5px}
+.dl .tx div{color:var(--sub);font-size:12px;margin-top:3px;line-height:1.6}
+.dlbtn{margin-left:auto;background:var(--gold);color:#0f1115;font-weight:800;border:0;border-radius:10px;
+padding:11px 22px;font-size:13.5px;cursor:pointer;text-decoration:none;font-family:inherit;white-space:nowrap}
+.dlbtn:hover{filter:brightness(1.1)}
+.foot{color:var(--sub);font-size:11.5px;margin-top:22px;border-top:1px solid var(--line);padding-top:13px;line-height:1.8}
+@media(max-width:820px){.wrap{padding:16px 12px 50px}.grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}}
+</style><link rel="stylesheet" href="hub-theme.css"></head><body><div class="wrap">
+<h1>에너지/화학 가격 동향</h1>
+<div class="sub">유가 · 정제마진 · 석유화학 제품가격 시계열 — 하나증권 윤재성 일일 가격표 누적</div>
+<div class="meta" id="meta">불러오는 중…</div>
+
+<div class="bar">
+  <div class="seg" id="freq">
+    <button data-v="daily" class="on">일별</button><button data-v="weekly">주별</button>
+    <button data-v="monthly">월별</button><button data-v="quarterly">분기별</button><button data-v="yearly">연도별</button>
+  </div>
+  <div class="seg" id="range">
+    <button data-v="0" class="on">전체</button><button data-v="365">1년</button><button data-v="180">6개월</button><button data-v="90">3개월</button>
+  </div>
+  <input id="q" placeholder="품목 검색 (예: Ethylene, 가솔린)">
+  <span class="cnt" id="cnt"></span>
+</div>
+
+<div class="big">
+  <div class="bighead">
+    <span class="bigname" id="bn">—</span><span class="bigunit" id="bu"></span>
+    <span class="biglast" id="bl"></span>
+  </div>
+  <div class="cmp" id="cmp"></div>
+  <div id="bigchart"><div id="tip"></div></div>
+  <div class="legend" id="lg"></div>
+</div>
+
+<div id="groups"></div>
+
+<div class="dl">
+  <div class="ic">📥</div>
+  <div class="tx"><b>원자료 다운로드 (Excel)</b>
+    <div id="dlmeta">일별·주별·월별·분기별·연도별 5개 시트 · 전 품목 누적 시계열 · 표 게시 이후 자동 누적</div></div>
+  <a class="dlbtn" id="dlbtn" href="data/chem_prices.xlsx" download="화학제품가격_누적.xlsx">⬇ Excel 다운로드</a>
+</div>
+
+<div class="foot" id="foot">
+데이터 · 하나증권 에너지화학 윤재성 애널리스트 텔레그램 채널(<a href="https://t.me/energy_youn" target="_blank" style="color:var(--dn)">t.me/energy_youn</a>)의 일일 「화학 제품가격 동향」 표 이미지를 OCR로 추출한 시계열.<br>
+검증 · 표 내부 변동률 산술검증(11만 건) + 같은 기간을 가리키는 이미지 간 중복 관측 교차검증(기간당 최대 27회) + 스프레드 항등식(Spread = 제품 − Naphtha) 검증 통과.<br>
+단위 · 유가/OSP/정제마진 = $/bbl, 제품가격 = $/Ton · OSP·Crack 계열의 원표 변동폭은 %가 아닌 단순 증감 · 주간·월간 평균은 원자료에서 소급 확정되는 값을 우선 채택.<br>
+주별 x축 라벨은 해당 주의 마지막 날짜 근사치.
+</div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const PAL=['#3987e5','#d95926','#199e70','#c98500','#d55181'];
+const S={data:null,freq:'daily',range:0,sel:null,cmp:[],q:''};
+
+const FREQK={daily:'daily',weekly:'weekly',monthly:'monthly',quarterly:'quarterly',yearly:'yearly'};
+const FREQN={daily:'일별',weekly:'주별',monthly:'월별',quarterly:'분기별',yearly:'연도별'};
+
+/* 기간키 → Date (구간 종료일 근사) */
+function pdate(freq,p){
+  if(freq==='daily') return new Date(p[0]+'T00:00:00');
+  if(freq==='weekly') return new Date(p[2]+'T00:00:00');
+  if(freq==='monthly'){const[y,m]=p[0].split('-').map(Number);return new Date(y,m,0);}
+  if(freq==='quarterly'){const y=+p[0].slice(0,4),q=+p[0].slice(6);return new Date(y,q*3,0);}
+  return new Date(+p[0],11,31);
+}
+function plabel(freq,p){
+  if(freq==='daily')return p[0];
+  if(freq==='weekly')return p[1];
+  if(freq==='quarterly')return p[0].slice(2,4)+'년 '+p[0].slice(5);
+  if(freq==='yearly')return p[0]+'년';
+  return p[0];
+}
+function series(key){return S.data.series.find(s=>s.key===key);}
+function pts(key,freq){
+  const s=series(key); if(!s)return [];
+  let a=(s[FREQK[freq]]||[]).map(p=>({d:pdate(freq,p),lab:plabel(freq,p),v:p[p.length-1]}));
+  if(S.range>0&&a.length){
+    const cut=new Date(a[a.length-1].d); cut.setDate(cut.getDate()-S.range);
+    a=a.filter(x=>x.d>=cut);
+  }
+  return a;
+}
+function fmtv(v,unit){
+  if(v==null)return '–';
+  const a=Math.abs(v);
+  if(a>=1000)return Math.round(v).toLocaleString();
+  if(a>=100)return v.toFixed(a%1?1:0);
+  return v.toFixed(1);
+}
+function pcls(x){return x>0.001?'up':x<-0.001?'dn':'flat'}
+function psign(x){return (x>0?'+':'')+x.toFixed(1)+'%'}
+/* OSP·정제마진: 변동을 %가 아닌 단순 증감으로 (원표와 동일 — 0 근처 값이라 %가 무의미) */
+const DIFFK=new Set(['OSP_AL','OSP_AM','SimpleCrack','ComplexCrack','NaphthaCrack','GasolineCrack','KeroseneCrack','DieselCrack','BCCrack']);
+function chgTxt(key,last,prev){
+  if(prev==null||prev.v==null)return null;
+  if(DIFFK.has(key)){const d=last.v-prev.v;return {cls:pcls(d),txt:(d>0?'+':'')+d.toFixed(1)+'p'};}
+  if(!prev.v)return null;
+  const p=(last.v/prev.v-1)*100;
+  return isFinite(p)?{cls:pcls(p),txt:psign(p)}:null;
+}
+
+/* ── 스파크라인 (카드) ── */
+function spark(arr,color){
+  if(arr.length<2)return '';
+  const W=200,H=40,vs=arr.map(p=>p.v);
+  const y0=Math.min(...vs),y1=Math.max(...vs);
+  const sx=i=>i/(arr.length-1)*(W-4)+2;
+  const sy=v=>(y1===y0)?H/2:H-3-(v-y0)/(y1-y0)*(H-6);
+  const d=arr.map((p,i)=>(i?'L':'M')+sx(i).toFixed(1)+' '+sy(p.v).toFixed(1)).join(' ');
+  return `<svg viewBox="0 0 ${W} ${H}" height="${H}" preserveAspectRatio="none"><path d="${d}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>`;
+}
+
+/* ── 큰 차트 ── */
+let BIG={x:null,rows:[]};
+function niceTicks(y0,y1,n=5){
+  const span=y1-y0||1, step0=span/n, mag=Math.pow(10,Math.floor(Math.log10(step0)));
+  const step=[1,2,2.5,5,10].map(m=>m*mag).find(s=>span/s<=n)||mag*10;
+  const t0=Math.ceil(y0/step)*step, out=[];
+  for(let t=t0;t<=y1+1e-9;t+=step)out.push(+t.toFixed(6));
+  return out;
+}
+function drawBig(){
+  const keys=[S.sel,...S.cmp], su=series(S.sel);
+  const sets=keys.map(k=>({k,s:series(k),a:pts(k,S.freq)})).filter(x=>x.a.length);
+  const box=$('bigchart');
+  if(!sets.length){box.innerHTML='<div id="tip"></div><div style="padding:50px;text-align:center;color:var(--sub)">이 기간 단위 데이터가 없습니다 — 다른 단위를 선택하세요.</div>';$('lg').innerHTML='';return;}
+  const W=Math.max(box.clientWidth||1100,700),H=340,PL=64,PR=86,PT=14,PB=34;
+  const allv=sets.flatMap(x=>x.a.map(p=>p.v));
+  let y0=Math.min(...allv),y1=Math.max(...allv);
+  if(y0>0&&y0/(y1||1)<0.35)y0=0;               /* 0 기준선이 가까우면 0부터 */
+  const pad=(y1-y0)*0.06||1; y0=(y0===0?0:y0-pad); y1+=pad;
+  const t0=Math.min(...sets.flatMap(x=>x.a.length?[x.a[0].d.getTime()]:[])),
+        t1=Math.max(...sets.flatMap(x=>x.a.length?[x.a[x.a.length-1].d.getTime()]:[]));
+  const sx=t=>PL+(t1===t0?0.5:(t-t0)/(t1-t0))*(W-PL-PR);
+  const sy=v=>PT+(1-(v-y0)/(y1-y0))*(H-PT-PB);
+  let svg=`<svg viewBox="0 0 ${W} ${H}" style="height:${H}px">`;
+  /* y 그리드 + 라벨 */
+  for(const t of niceTicks(y0,y1)){
+    const y=sy(t);
+    svg+=`<line x1="${PL}" y1="${y}" x2="${W-PR}" y2="${y}" stroke="var(--grid)"/>`+
+         `<text x="${PL-8}" y="${y+3.5}" fill="#7d8695" font-size="10.5" text-anchor="end" class="num">${t>=1000?t.toLocaleString():t}</text>`;
+  }
+  /* 단위 라벨 (y축 위) */
+  svg+=`<text x="${PL-8}" y="${PT-2}" fill="#7d8695" font-size="10" text-anchor="end">${su.unit}</text>`;
+  /* x 눈금: 연도/월 경계 */
+  const days=(t1-t0)/864e5;
+  let lastLab='';
+  const t1d=new Date(t1), tS=new Date(t0);
+  if(days>330){ /* 시작 연도 라벨 */
+    svg+=`<text x="${sx(t0)}" y="${H-PB+16}" fill="#7d8695" font-size="10.5" text-anchor="start">${tS.getFullYear()}년</text>`;
+    lastLab=tS.getFullYear()+'년';
+  }
+  for(let d=new Date(t0);d<=t1d;d.setDate(d.getDate()+1)){
+    let lab=null;
+    if(days>900){ if(d.getMonth()===0&&d.getDate()<=7)lab=d.getFullYear()+'년'; }
+    else if(days>360){ if(d.getDate()<=7&&d.getMonth()%3===0)lab=(d.getMonth()===0)?d.getFullYear()+'년':(d.getMonth()+1)+'월'; }
+    else if(days>120){ if(d.getDate()<=7)lab=(d.getMonth()===0)?d.getFullYear()+'년':(d.getMonth()+1)+'월'; }
+    else { if(d.getDate()===1||d.getDate()===15)lab=(d.getMonth()+1)+'/'+d.getDate(); }
+    if(lab&&lab!==lastLab){
+      lastLab=lab; const x=sx(d.getTime());
+      if(x>PL-2&&x<W-PR+2){
+        svg+=`<line x1="${x}" y1="${PT}" x2="${x}" y2="${H-PB}" stroke="var(--grid)" stroke-dasharray="2 4"/>`+
+             `<text x="${x}" y="${H-PB+16}" fill="#7d8695" font-size="10.5" text-anchor="middle">${lab}</text>`;
+      }
+    }
+    if(days>120)d.setDate(d.getDate()+5);
+  }
+  /* 기준선(0) */
+  if(y0<0&&y1>0)svg+=`<line x1="${PL}" y1="${sy(0)}" x2="${W-PR}" y2="${sy(0)}" stroke="var(--axis)"/>`;
+  svg+=`<line x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}" stroke="var(--axis)"/>`;
+  /* 선 + 끝값 라벨 */
+  const endLabs=[];
+  sets.forEach((x,i)=>{
+    const col=PAL[i%PAL.length];
+    const d=x.a.map((p,j)=>(j?'L':'M')+sx(p.d.getTime()).toFixed(1)+' '+sy(p.v).toFixed(1)).join(' ');
+    svg+=`<path d="${d}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round"/>`;
+    const lp=x.a[x.a.length-1];
+    endLabs.push({y:sy(lp.v),x:sx(lp.d.getTime()),col,txt:fmtv(lp.v,x.s.unit)});
+  });
+  /* 끝값 라벨 겹침 방지 */
+  endLabs.sort((a,b)=>a.y-b.y);
+  for(let i=1;i<endLabs.length;i++)if(endLabs[i].y-endLabs[i-1].y<14)endLabs[i].y=endLabs[i-1].y+14;
+  endLabs.forEach(l=>{
+    svg+=`<circle cx="${l.x}" cy="${l.y<PT+4?PT+4:l.y}" r="0" fill="none"/>`+
+         `<rect x="${W-PR+5}" y="${l.y-9}" width="${PR-10}" height="16" rx="4" fill="#12141a" stroke="${l.col}" stroke-width="1"/>`+
+         `<text x="${W-PR+5+(PR-10)/2}" y="${l.y+3.5}" fill="${l.col}" font-size="11" font-weight="700" text-anchor="middle" class="num">${l.txt}</text>`;
+  });
+  /* 크로스헤어 레이어 */
+  svg+=`<line id="xh" x1="0" y1="${PT}" x2="0" y2="${H-PB}" stroke="#5a6478" stroke-width="1" style="display:none"/>`;
+  sets.forEach((x,i)=>{svg+=`<circle id="hp${i}" r="3.5" fill="${PAL[i%PAL.length]}" stroke="#12141a" stroke-width="1.5" style="display:none"/>`;});
+  svg+=`<rect id="hit" x="${PL}" y="${PT}" width="${W-PL-PR}" height="${H-PT-PB}" fill="transparent"/>`;
+  svg+='</svg>';
+  box.innerHTML='<div id="tip"></div>'+svg;
+  BIG={sets,sx,sy,W,H,PL,PR,PT,PB};
+  /* 범례 */
+  $('lg').innerHTML=sets.length>1?sets.map((x,i)=>`<span><i style="background:${PAL[i%PAL.length]}"></i>${x.s.name}</span>`).join(''):'';
+  /* 헤더 */
+  const a=sets[0].a,last=a[a.length-1],prev=a.length>1?a[a.length-2]:null;
+  const ch=chgTxt(S.sel,last,prev);
+  $('bn').textContent=su.name; $('bu').textContent=su.unit+' · '+FREQN[S.freq];
+  $('bl').innerHTML=`${last.lab} <b class="num">${fmtv(last.v,su.unit)}</b>`+
+    (ch?` <span class="${ch.cls} num">${ch.txt}</span>`:'');
+  /* 호버 */
+  const hit=box.querySelector('#hit'),xh=box.querySelector('#xh'),tip=$('tip');
+  const svgel=box.querySelector('svg');
+  function onmove(ev){
+    const r=svgel.getBoundingClientRect();
+    const mx=(ev.clientX-r.left)*(BIG.W/r.width);
+    let best=null;
+    BIG.sets.forEach((x,i)=>{
+      x.a.forEach(p=>{const px=sx(p.d.getTime());
+        if(best===null||Math.abs(px-mx)<Math.abs(best-mx))best=px;});
+    });
+    if(best===null)return;
+    xh.setAttribute('x1',best);xh.setAttribute('x2',best);xh.style.display='';
+    let rows='',dlab='';
+    BIG.sets.forEach((x,i)=>{
+      let bp=null;
+      x.a.forEach(p=>{if(bp===null||Math.abs(sx(p.d.getTime())-best)<Math.abs(sx(bp.d.getTime())-best))bp=p;});
+      const c=box.querySelector('#hp'+i);
+      if(bp&&Math.abs(sx(bp.d.getTime())-best)<1){
+        c.setAttribute('cx',sx(bp.d.getTime()));c.setAttribute('cy',sy(bp.v));c.style.display='';
+        dlab=bp.lab;
+        rows+=`<div class="tr"><i style="background:${PAL[i%PAL.length]}"></i><span>${x.s.name}</span><b class="num">${fmtv(bp.v,x.s.unit)}</b></div>`;
+      } else c.style.display='none';
+    });
+    tip.querySelector('.td')||(tip.innerHTML='<div class="td"></div><div class="body"></div>');
+    tip.querySelector('.td').textContent=dlab;
+    tip.querySelector('.body').innerHTML=rows;
+    tip.style.display='block';
+    const bx=box.getBoundingClientRect();
+    let lx=(best/BIG.W)*bx.width+14; if(lx+170>bx.width)lx-=190;
+    tip.style.left=lx+'px'; tip.style.top='18px';
+  }
+  hit.addEventListener('pointermove',onmove);
+  hit.addEventListener('pointerleave',()=>{tip.style.display='none';xh.style.display='none';
+    BIG.sets.forEach((_,i)=>box.querySelector('#hp'+i).style.display='none');});
+  /* 비교 칩 */
+  const grp=su.group, mates=S.data.series.filter(s=>s.unit===su.unit&&s.key!==S.sel);
+  $('cmp').innerHTML='<span class="lbl">비교(같은 단위):</span>'+mates.slice(0,40).map(s=>{
+    const on=S.cmp.includes(s.key), ci=S.cmp.indexOf(s.key);
+    return `<button class="chip${on?' on':''}" data-k="${s.key}">${on?`<span class="sw" style="background:${PAL[(ci+1)%PAL.length]}"></span>`:''}${s.name}</button>`;
+  }).join('');
+  $('cmp').querySelectorAll('.chip').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.k;
+    if(S.cmp.includes(k))S.cmp=S.cmp.filter(x=>x!==k);
+    else{if(S.cmp.length>=4)S.cmp.shift();S.cmp.push(k);}
+    drawBig();
+  });
+}
+
+/* ── 카드 그리드 ── */
+function drawGrid(){
+  const q=S.q.trim().toLowerCase();
+  const groups={};
+  let n=0;
+  S.data.series.forEach(s=>{
+    if(q&&!(s.name.toLowerCase().includes(q)||s.key.toLowerCase().includes(q)))return;
+    (groups[s.group]=groups[s.group]||[]).push(s); n++;
+  });
+  $('cnt').textContent=`${n}개 품목 · ${FREQN[S.freq]}`;
+  $('groups').innerHTML=Object.entries(groups).map(([g,ss])=>`
+    <div class="gtitle">${g}<small>${ss[0].unit}</small></div>
+    <div class="grid">${ss.map(s=>{
+      const a=pts(s.key,S.freq);
+      if(!a.length)return `<button class="card" data-k="${s.key}" style="opacity:.45"><div class="cname">${s.name}</div><div class="cval"><span class="flat">이 단위 데이터 없음</span></div></button>`;
+      const last=a[a.length-1],prev=a.length>1?a[a.length-2]:null;
+      const ch=chgTxt(s.key,last,prev);
+      return `<button class="card${s.key===S.sel?' on':''}" data-k="${s.key}">
+        <div class="cname">${s.name}<small class="num">${last.lab}</small></div>
+        <div class="cval"><b class="num">${fmtv(last.v,s.unit)}</b>${ch?`<span class="${ch.cls} num">${ch.txt}</span>`:''}</div>
+        ${spark(a.slice(-Math.min(a.length,120)),s.key===S.sel?'#4d7df5':'#5a6478')}
+      </button>`;
+    }).join('')}</div>`).join('');
+  $('groups').querySelectorAll('.card').forEach(b=>b.onclick=()=>{
+    S.sel=b.dataset.k;S.cmp=[];drawBig();drawGrid();
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+}
+
+(async()=>{
+  const d=await(await fetch('data/chem_prices.json?v='+Date.now())).json();
+  S.data=d;S.sel='Naphtha';
+  const dser=d.series.find(s=>s.key==='Dubai');
+  const nd=dser.daily.length,d0=dser.daily[0][0],d1=dser.daily[dser.daily.length-1][0];
+  $('meta').innerHTML=`기준 <b>${d1}</b> · 수집 <b>${d0} ~ ${d1}</b> · 품목 <b>${d.series.length}</b>개 · 갱신 ${d.updated}`;
+  drawBig();drawGrid();
+})();
+
+$('freq').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  $('freq').querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');S.freq=b.dataset.v;
+  const dis=S.freq!=='daily'&&S.freq!=='weekly';
+  $('range').querySelectorAll('button').forEach(x=>{x.disabled=dis&&x.dataset.v!=='0';});
+  if(dis){S.range=0;$('range').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.v==='0'));}
+  drawBig();drawGrid();
+});
+$('range').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  if(b.disabled)return;
+  $('range').querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');S.range=+b.dataset.v;drawBig();drawGrid();
+});
+$('q').oninput=e=>{S.q=e.target.value;drawGrid();};
+let rT;addEventListener('resize',()=>{clearTimeout(rT);rT=setTimeout(drawBig,150);});
+</script></body></html>
