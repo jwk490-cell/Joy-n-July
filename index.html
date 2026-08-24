@@ -1962,7 +1962,9 @@ function openTab(tab){
   const panel=document.getElementById('tab-'+tab);
   panel.classList.add('on');
   const f=panel.querySelector('iframe[data-src]');
-  if(f&&!f.src){f.src=f.dataset.src;}
+  // 자주 갱신되는 대시보드는 10분 단위 캐시버스터를 붙여 낡은 페이지가 남지 않게 한다
+  const FRESH={backlog:1};
+  if(f&&!f.src){f.src=f.dataset.src+(FRESH[tab]?'?v='+Math.floor(Date.now()/6e5):'');}
   if(tab==='telegram')loadTG(false);
   if(tab==='home')homeStart();
   if(tab==='krwrap'||tab==='uswrap')loadMW(tab);
