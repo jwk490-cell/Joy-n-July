@@ -36,7 +36,7 @@ tbody tr{cursor:pointer}
 .sec{color:var(--sub);font-size:11.5px}
 .up{color:var(--red)}.dn{color:var(--blue)}.flat{color:var(--sub)}
 .badge{font-size:10px;padding:2px 6px;border-radius:5px;border:1px solid;font-weight:700}
-.b-x{color:var(--teal);border-color:rgba(93,180,164,.35);background:rgba(93,180,164,.1)}
+.b-x{color:var(--sub);border-color:rgba(164,173,189,.3);background:rgba(164,173,189,.08)}
 .b-d{color:var(--purple);border-color:rgba(169,143,214,.35);background:rgba(169,143,214,.1)}
 .b-v{color:var(--gold);border-color:rgba(230,185,63,.35);background:rgba(230,185,63,.1)}
 .b-l{color:#d9925f;border-color:rgba(217,146,95,.35);background:rgba(217,146,95,.1)}
@@ -75,7 +75,7 @@ padding:5px 11px;cursor:pointer;font-size:13px}
 <div class="sub">분기별 수주잔고 추이 — 잔고가 꺾이는가, 쌓이는가</div>
 <div class="meta" id="meta">불러오는 중…</div>
 <div class="formula">📐 <b>수주잔고 = 수주총액 − 기납품액</b> — 앞으로 매출로 인식될 확정 물량. <b>QoQ</b>는 직전 분기 대비, <b>YoY</b>는 4개 분기 전 대비 증감률. <b>매출커버</b>는 최근 잔고 ÷ 직전 연매출 — 몇 년치 일감을 쥐고 있는가.<br>
-출처 · <span class="badge b-x">큐레이션</span> 검수된 시계열(4Q20~) · <span class="badge b-d">DART</span> 정기보고서 '수주상황' 표 자동 추출 · <span class="badge b-v">검증</span> 큐레이션 값이 DART 원문과 일치(±1.5%)해 자동 갱신 가능 · <span class="badge b-l">주의</span> 일부 분기에서 표를 못 찾아 규칙이 불안정.<br>
+표기 · <span class="badge b-v">검증</span> 보유 시계열이 DART 원문과 일치(±1.5%)해 규칙이 확정된 종목 — 새 분기가 자동으로 붙는다 · <span class="badge b-d">DART 자동</span> DART 원문에서만 추출한 종목 · <span class="badge b-l">주의</span> 일부 분기에서 표를 못 찾아 값이 흔들릴 수 있음 · <span class="badge b-x">미검증</span> 원문 대조가 안 돼 기존 값을 유지하는 종목.<br>
 ※ 기업마다 공시 기준(연결/별도, 부문 범위, 진행률 적용 여부)이 달라 절대 수준의 기업 간 단순 비교보다 <b>같은 기업의 시계열 방향성</b>이 유효합니다.</div>
 
 <div class="bar">
@@ -94,7 +94,7 @@ padding:5px 11px;cursor:pointer;font-size:13px}
     <button data-v="" class="on">전체</button><button data-v="KRW">원화</button><button data-v="USD">USD</button>
   </div>
   <div class="seg" id="of">
-    <button data-v="" class="on">모든 출처</button><button data-v="xlsx">큐레이션</button><button data-v="dart">DART</button>
+    <button data-v="" class="on">상태 전체</button><button data-v="ver">검증</button><button data-v="dart">DART 자동</button><button data-v="un">미검증</button>
   </div>
   <span class="cnt" id="cnt"></span>
 </div>
@@ -119,8 +119,8 @@ padding:5px 11px;cursor:pointer;font-size:13px}
 </tr></thead><tbody id="tb"></tbody></table>
 <div class="empty" id="emp" style="display:none">조건에 맞는 종목이 없습니다.</div></div>
 
-<div class="foot">데이터 · OpenDART 정기보고서(사업·반기·분기) 원문 + 검수 시계열 · 분기 라벨은 보고서 기준일(예: 반기보고서 2026.06 → 2Q26).<br>
-자동 추출은 종목별로 '어느 표의 어느 합계를 쓰는지'를 검수 값과 대조해 규칙을 고정한 뒤 적용합니다. 검증되지 않은 종목은 갱신 시 값이 흔들릴 수 있습니다.</div>
+<div class="foot">데이터 · OpenDART 정기보고서(사업·반기·분기) 원문 · 분기 라벨은 보고서 기준일(예: 반기보고서 2026.06 → 2Q26).<br>
+자동 추출은 종목별로 '어느 표의 어느 합계를 쓰는지'를 보유 실측치와 대조해 규칙을 고정한 뒤 적용합니다. 검증되지 않은 종목은 갱신 시 값이 흔들릴 수 있습니다.</div>
 </div>
 
 <div id="ov"><div class="dlg">
@@ -176,7 +176,8 @@ function derive(r){
 function filt(){
   const q=S.q.trim().toLowerCase();
   return S.rows.filter(r=>
-    (!S.sec||r.s===S.sec)&&(!S.cur||r.cur===S.cur)&&(!S.org||r.o===S.org)&&
+    (!S.sec||r.s===S.sec)&&(!S.cur||r.cur===S.cur)&&
+    (!S.org||(S.org==='ver'?r.ver:S.org==='dart'?r.o==='dart':!r.ver&&r.o!=='dart'))&&
     (!q||r.n.toLowerCase().includes(q)||(r.p||'').toLowerCase().includes(q)||(r.c||'').includes(q)));
 }
 const NL=(a,b,d)=>{const x=a==null,y=b==null;if(x&&y)return 0;if(x)return 1;if(y)return -1;return d};
@@ -232,7 +233,7 @@ function render(){
     <td class="hidemo ${r._peak<-15?'dn':'flat'}">${r._peak==null?'–':r._peak.toFixed(0)+'%'}</td>
     <td class="hidemo ${r._cov>=2?'up':'flat'}">${r._cov==null?'–':r._cov.toFixed(1)+'x'}</td>
     <td class="l">${spark(r.v)}</td>
-    <td class="hidemo"><span class="badge ${r.o==='xlsx'?'b-x':'b-d'}">${r.o==='xlsx'?'큐레이션':'DART'}</span>${r.ver?' <span class="badge b-v">검증</span>':''}${r.low?' <span class="badge b-l" title="일부 분기에서 표를 찾지 못해 규칙이 불안정할 수 있습니다">주의</span>':''}</td>
+    <td class="hidemo">${r.ver?'<span class="badge b-v">검증</span>':r.o==='dart'?'<span class="badge b-d">DART 자동</span>':'<span class="badge b-x">미검증</span>'}${r.low?' <span class="badge b-l" title="일부 분기에서 표를 찾지 못해 규칙이 불안정할 수 있습니다">주의</span>':''}</td>
   </tr>`).join('');
 }
 function chart(r){
@@ -257,8 +258,9 @@ function open_(i){
   const r=S.rows[i];
   $('dn').innerHTML=`${r.n} <span class="code">${r.c||''}</span>`;
   $('dm').innerHTML=`${r.s}${r.p?' · '+r.p:''} · 단위 ${r.u}`+(r.rev?` · ${r.revy}년 매출 ${fmt(r.rev,'KRW')}`:'')+`<br>`+
-    `출처 <span class="badge ${r.o==='xlsx'?'b-x':'b-d'}">${r.o==='xlsx'?'큐레이션 검수':'DART 자동추출'}</span>`+
-    (r.ver?' <span class="badge b-v">DART 원문 일치</span>':'')+
+    (r.ver?'<span class="badge b-v">DART 원문 일치 — 자동 갱신</span>'
+         :r.o==='dart'?'<span class="badge b-d">DART 자동추출</span>'
+         :'<span class="badge b-x">원문 대조 실패 — 기존 값 유지</span>')+
     (r.low?' <span class="badge b-l">분기 커버리지 낮음 — 값 흔들릴 수 있음</span>':'')+
     (r.rule?` <span class="code">규칙 ${r.rule}</span>`:'')+
     (r.c?` · <a href="https://dart.fss.or.kr/dsab007/main.do?textCrpNm=${encodeURIComponent(r.n)}" target="_blank" style="color:var(--blue)">DART 공시</a>`:'');
