@@ -13,6 +13,7 @@ h1{font-size:24px;font-weight:800;margin:0 0 4px}
 .formula{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);
 border-radius:10px;padding:12px 15px;font-size:12.5px;color:var(--sub);margin:13px 0 16px;line-height:1.75}
 .formula b{color:var(--ink)}
+.formula{margin:22px 0 0}
 .bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 14px}
 input,select{background:var(--panel2);color:var(--ink);border:1px solid var(--line);
 border-radius:9px;padding:7px 11px;font-size:12.5px;outline:none}
@@ -74,10 +75,6 @@ padding:5px 11px;cursor:pointer;font-size:13px}
 <h1>수주잔고 트래커</h1>
 <div class="sub">분기별 수주잔고 추이 — 잔고가 꺾이는가, 쌓이는가</div>
 <div class="meta" id="meta">불러오는 중…</div>
-<div class="formula">📐 <b>수주잔고 = 수주총액 − 기납품액</b> — 앞으로 매출로 인식될 확정 물량. <b>QoQ</b>는 직전 분기 대비, <b>YoY</b>는 4개 분기 전 대비 증감률. <b>매출커버</b>는 최근 잔고 ÷ 직전 연매출 — 몇 년치 일감을 쥐고 있는가.<br>
-표기 · <span class="badge b-v">검증</span> 보유 시계열이 DART 원문과 일치(±1.5%)해 규칙이 확정된 종목 — 새 분기가 자동으로 붙는다 · <span class="badge b-d">DART 자동</span> DART 원문에서만 추출한 종목 · <span class="badge b-l">주의</span> 일부 분기에서 표를 못 찾아 값이 흔들릴 수 있음 · <span class="badge b-x">미검증</span> 원문 대조가 안 돼 기존 값을 유지하는 종목.<br>
-※ 기업마다 공시 기준(연결/별도, 부문 범위, 진행률 적용 여부)이 달라 절대 수준의 기업 간 단순 비교보다 <b>같은 기업의 시계열 방향성</b>이 유효합니다.</div>
-
 <div class="bar">
   <input id="q" placeholder="종목명 · 제품 검색">
   <select id="sec"><option value="">전체 업종</option></select>
@@ -119,6 +116,9 @@ padding:5px 11px;cursor:pointer;font-size:13px}
 </tr></thead><tbody id="tb"></tbody></table>
 <div class="empty" id="emp" style="display:none">조건에 맞는 종목이 없습니다.</div></div>
 
+<div class="formula">📐 <b>수주잔고 = 수주총액 − 기납품액</b> — 앞으로 매출로 인식될 확정 물량. <b>QoQ</b>는 직전 분기 대비, <b>YoY</b>는 4개 분기 전 대비 증감률. <b>매출커버</b>는 최근 잔고 ÷ 직전 연매출 — 몇 년치 일감을 쥐고 있는가.<br>
+표기 · <span class="badge b-v">검증</span> 보유 시계열이 DART 원문과 일치(±1.5%)해 규칙이 확정된 종목 — 새 분기가 자동으로 붙는다 · <span class="badge b-d">DART 자동</span> DART 원문에서만 추출한 종목 · <span class="badge b-l">주의</span> 일부 분기에서 표를 못 찾아 값이 흔들릴 수 있음 · <span class="badge b-x">미검증</span> 원문 대조가 안 돼 기존 값을 유지하는 종목.<br>
+※ 기업마다 공시 기준(연결/별도, 부문 범위, 진행률 적용 여부)이 달라 절대 수준의 기업 간 단순 비교보다 <b>같은 기업의 시계열 방향성</b>이 유효합니다.</div>
 <div class="foot">데이터 · OpenDART 정기보고서(사업·반기·분기) 원문 · 분기 라벨은 보고서 기준일(예: 반기보고서 2026.06 → 2Q26).<br>
 자동 추출은 종목별로 '어느 표의 어느 합계를 쓰는지'를 보유 실측치와 대조해 규칙을 고정한 뒤 적용합니다. 검증되지 않은 종목은 갱신 시 값이 흔들릴 수 있습니다.</div>
 </div>

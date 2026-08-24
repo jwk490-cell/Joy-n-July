@@ -325,7 +325,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     <button class="navitem" data-tab="semietf">반도체 ETF 수혜</button>
     <div class="navgroup">비교 · 밸류</div>
     <button class="navitem" data-tab="caps">시총비교</button>
-    <button class="navitem" data-tab="basket7">핵심7 시총비중</button>
+    <button class="navitem" data-tab="basket7">업종 시총비중</button>
     <button class="navitem" data-tab="gap">괴리율</button>
     <button class="navitem" data-tab="etfgap">ETF 괴리율</button>
     <button class="navitem" data-tab="dd">전고대비</button>
@@ -402,7 +402,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
         <h2>비교 · 밸류 <small>삼성전자 ↔ SK하이닉스</small></h2>
         <div class="grid">
           <button class="card" data-go="caps"><h3>시총비교 <span class="tag">2010~</span></h3><p>시가총액 추이 · 격차 · 비율 · 추월 필요주가</p></button>
-          <button class="card" data-go="basket7"><h3>핵심7 시총비중 <span class="tag">스냅샷</span></h3><p>삼성전자·우 + SK하이닉스·SK스퀘어 + 정유 3사 — KOSPI 시총 대비 비중</p></button>
+          <button class="card" data-go="basket7"><h3>업종 시총비중 <span class="tag">매일 16:40</span></h3><p>KOSPI·KOSDAQ 투자포인트 기준 업종(메모리·소부장·기판·이차전지·전력기기·화장품…) 시총 대비 비중</p></button>
           <button class="card" data-go="gap"><h3>괴리율 <span class="tag">2010~</span></h3><p>삼성 보통/우선 괴리율 · SK스퀘어 NAV 할인율</p></button>
           <button class="card" data-go="etfgap"><h3>ETF 괴리율 <span class="tag">5분</span></h3><p>단일종목 레버리지·인버스 시장가 vs NAV 게이지</p></button>
           <button class="card" data-go="dd"><h3>전고대비 <span class="tag">낙폭 트래킹</span></h3><p>전고점 대비 낙폭 추이 + −15% 이상 하락 구간 기록</p></button>
@@ -547,7 +547,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     </section>
 
     <section class="panel embed" id="tab-basket7">
-      <iframe data-src="basket7.html" title="핵심7 시총비중"></iframe>
+      <iframe data-src="sectorcap.html" title="업종 시총비중"></iframe>
     </section>
 
     <section class="panel embed" id="tab-sector">
@@ -1963,7 +1963,7 @@ function openTab(tab){
   panel.classList.add('on');
   const f=panel.querySelector('iframe[data-src]');
   // 자주 갱신되는 대시보드는 10분 단위 캐시버스터를 붙여 낡은 페이지가 남지 않게 한다
-  const FRESH={backlog:1};
+  const FRESH={backlog:1,basket7:1};
   if(f&&!f.src){f.src=f.dataset.src+(FRESH[tab]?'?v='+Math.floor(Date.now()/6e5):'');}
   if(tab==='telegram')loadTG(false);
   if(tab==='home')homeStart();
