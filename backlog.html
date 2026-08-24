@@ -39,9 +39,19 @@ tbody tr{cursor:pointer}
 .b-x{color:var(--teal);border-color:rgba(93,180,164,.35);background:rgba(93,180,164,.1)}
 .b-d{color:var(--purple);border-color:rgba(169,143,214,.35);background:rgba(169,143,214,.1)}
 .b-v{color:var(--gold);border-color:rgba(230,185,63,.35);background:rgba(230,185,63,.1)}
+.b-l{color:#d9925f;border-color:rgba(217,146,95,.35);background:rgba(217,146,95,.1)}
 .streak{font-weight:700}
 svg.spark{display:block}
 .empty{padding:40px;text-align:center;color:var(--sub)}
+details#sw{margin-bottom:16px}
+details#sw>summary{cursor:pointer;color:var(--sub);font-size:12.5px;font-weight:700;
+  padding:7px 2px;list-style:none;user-select:none}
+details#sw>summary::before{content:'▸ ';color:var(--gold)}
+details#sw[open]>summary::before{content:'▾ '}
+details#sw>summary:hover{color:var(--ink)}
+.scnt{font-weight:500;color:var(--dim2,#6d7480);margin-left:6px}
+.stbl{max-height:320px}
+.stbl tbody tr{cursor:pointer}
 /* 상세 */
 #ov{position:fixed;inset:0;background:rgba(8,9,12,.72);display:none;z-index:50;overflow:auto}
 #ov.on{display:block}
@@ -65,7 +75,7 @@ padding:5px 11px;cursor:pointer;font-size:13px}
 <div class="sub">분기별 수주잔고 추이 — 잔고가 꺾이는가, 쌓이는가</div>
 <div class="meta" id="meta">불러오는 중…</div>
 <div class="formula">📐 <b>수주잔고 = 수주총액 − 기납품액</b> — 앞으로 매출로 인식될 확정 물량. <b>QoQ</b>는 직전 분기 대비, <b>YoY</b>는 4개 분기 전 대비 증감률. <b>매출커버</b>는 최근 잔고 ÷ 직전 연매출 — 몇 년치 일감을 쥐고 있는가.<br>
-출처 · <span class="badge b-x">엑셀</span> 큐레이션 시계열(4Q20~) · <span class="badge b-d">DART</span> 정기보고서 '수주상황' 표 자동 추출 · <span class="badge b-v">검증</span> 큐레이션 값이 DART 원문과 일치(±1.5%)해 자동 갱신 가능.<br>
+출처 · <span class="badge b-x">엑셀</span> 큐레이션 시계열(4Q20~) · <span class="badge b-d">DART</span> 정기보고서 '수주상황' 표 자동 추출 · <span class="badge b-v">검증</span> 큐레이션 값이 DART 원문과 일치(±1.5%)해 자동 갱신 가능 · <span class="badge b-l">주의</span> 일부 분기에서 표를 못 찾아 규칙이 불안정.<br>
 ※ 기업마다 공시 기준(연결/별도, 부문 범위, 진행률 적용 여부)이 달라 절대 수준의 기업 간 단순 비교보다 <b>같은 기업의 시계열 방향성</b>이 유효합니다.</div>
 
 <div class="bar">
@@ -88,6 +98,11 @@ padding:5px 11px;cursor:pointer;font-size:13px}
   </div>
   <span class="cnt" id="cnt"></span>
 </div>
+
+<details id="sw" open><summary>업종별 집계 <span class="scnt" id="scnt"></span></summary>
+<div class="tbl stbl"><table><thead><tr>
+  <th class="l">업종</th><th>종목</th><th>합계 잔고</th><th>QoQ</th><th>YoY</th><th class="l">추이</th>
+</tr></thead><tbody id="stb"></tbody></table></div></details>
 
 <div class="tbl"><table id="t">
 <thead><tr>
@@ -179,6 +194,30 @@ function sortRows(rs){
            name:(a,b)=>a.n.localeCompare(b.n)}[k];
   return rs.sort(f||((a,b)=>0));
 }
+function srender(){
+  const g={};
+  S.rows.filter(r=>r.cur==='KRW').forEach(r=>{ (g[r.s]=g[r.s]||[]).push(r); });
+  const out=Object.entries(g).map(([sec,rs])=>{
+    // 균형 패널: 최신 분기에 값이 있는 종목만, 전원이 보고한 분기만 합산
+    let le=-1;for(let i=S.qs.length-1;i>=0;i--){if(rs.some(r=>r.v[i]!=null)){le=i;break;}}
+    const pan=rs.filter(r=>r.v[le]!=null);
+    const sum=S.qs.map((_,i)=>{
+      const xs=pan.filter(r=>r.v[i]!=null);
+      return xs.length>=Math.ceil(pan.length*0.7)?xs.reduce((a,r)=>a+r.v[i],0):null;});
+    // 증감률은 두 분기 모두 보고한 종목만으로 비교 (구성 변화에 따른 착시 제거)
+    const pair=(i,j)=>{const c=pan.filter(r=>r.v[i]!=null&&r.v[j]!=null);
+      if(!c.length)return null;
+      return pct(c.reduce((a,r)=>a+r.v[i],0),c.reduce((a,r)=>a+r.v[j],0));};
+    let pi=-1;for(let i=le-1;i>=0;i--)if(pan.some(r=>r.v[i]!=null)){pi=i;break;}
+    return {sec,n:pan.length,tot:rs.length,v:sum,
+      last:pan.reduce((a,r)=>a+r.v[le],0),
+      qoq:pi<0?null:pair(le,pi), yoy:le>=4?pair(le,le-4):null};
+  }).filter(x=>x.last!=null).sort((a,b)=>b.last-a.last);
+  $('scnt').textContent=`${out.length}개 업종 · 원화 공시 종목 중 최신 분기 보고분만 합산(균형 패널)`;
+  $('stb').innerHTML=out.map(x=>`<tr data-s="${x.sec}">
+    <td class="l"><b>${x.sec}</b></td><td>${x.n}${x.tot>x.n?`<span class="code">/${x.tot}</span>`:''}</td><td><b>${fmt(x.last,'KRW')}</b></td>
+    ${pcell(x.qoq)}${pcell(x.yoy)}<td class="l">${spark(x.v)}</td></tr>`).join('');
+}
 function render(){
   const rs=sortRows(filt());
   $('cnt').textContent=`${rs.length}개 종목 · 최신 ${S.qs[S.qs.length-1]}`;
@@ -193,7 +232,7 @@ function render(){
     <td class="hidemo ${r._peak<-15?'dn':'flat'}">${r._peak==null?'–':r._peak.toFixed(0)+'%'}</td>
     <td class="hidemo ${r._cov>=2?'up':'flat'}">${r._cov==null?'–':r._cov.toFixed(1)+'x'}</td>
     <td class="l">${spark(r.v)}</td>
-    <td class="hidemo"><span class="badge ${r.o==='xlsx'?'b-x':'b-d'}">${r.o==='xlsx'?'엑셀':'DART'}</span>${r.ver?' <span class="badge b-v">검증</span>':''}</td>
+    <td class="hidemo"><span class="badge ${r.o==='xlsx'?'b-x':'b-d'}">${r.o==='xlsx'?'엑셀':'DART'}</span>${r.ver?' <span class="badge b-v">검증</span>':''}${r.low?' <span class="badge b-l" title="일부 분기에서 표를 찾지 못해 규칙이 불안정할 수 있습니다">주의</span>':''}</td>
   </tr>`).join('');
 }
 function chart(r){
@@ -220,6 +259,7 @@ function open_(i){
   $('dm').innerHTML=`${r.s}${r.p?' · '+r.p:''} · 단위 ${r.u}`+(r.rev?` · ${r.revy}년 매출 ${fmt(r.rev,'KRW')}`:'')+`<br>`+
     `출처 <span class="badge ${r.o==='xlsx'?'b-x':'b-d'}">${r.o==='xlsx'?'큐레이션 엑셀':'DART 자동추출'}</span>`+
     (r.ver?' <span class="badge b-v">DART 원문 일치</span>':'')+
+    (r.low?' <span class="badge b-l">분기 커버리지 낮음 — 값 흔들릴 수 있음</span>':'')+
     (r.rule?` <span class="code">규칙 ${r.rule}</span>`:'')+
     (r.c?` · <a href="https://dart.fss.or.kr/dsab007/main.do?textCrpNm=${encodeURIComponent(r.n)}" target="_blank" style="color:var(--blue)">DART 공시</a>`:'');
   $('dk').innerHTML=[['최근 잔고',fmt(r._last,r.cur)+' <span class="code">'+r._lq+'</span>',''],
@@ -247,7 +287,7 @@ function open_(i){
     ` · DART 검증 <b>${ver}</b>개 · DART 자동등록 <b>${dart}</b>개`;
   const secs=[...new Set(S.rows.map(r=>r.s))].sort();
   $('sec').innerHTML+=secs.map(s=>`<option>${s}</option>`).join('');
-  render();
+  srender();render();
 })();
 $('q').oninput=e=>{S.q=e.target.value;render()};
 $('sec').onchange=e=>{S.sec=e.target.value;render()};
@@ -258,6 +298,9 @@ document.querySelectorAll('#of button').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('#of button').forEach(x=>x.classList.remove('on'));b.classList.add('on');S.org=b.dataset.v;render();});
 document.querySelectorAll('th[data-k]').forEach(th=>th.onclick=()=>{
   S.sort=th.dataset.k;const s=$('sort');if([...s.options].some(o=>o.value===th.dataset.k))s.value=th.dataset.k;render();});
+$('stb').onclick=e=>{const tr=e.target.closest('tr');if(!tr)return;
+  S.sec=$('sec').value=(S.sec===tr.dataset.s?'':tr.dataset.s);render();
+  window.scrollTo({top:$('t').offsetTop-70,behavior:'smooth'});};
 $('tb').onclick=e=>{const tr=e.target.closest('tr');if(tr)open_(+tr.dataset.i)};
 $('xb').onclick=()=>$('ov').classList.remove('on');
 $('ov').onclick=e=>{if(e.target.id==='ov')$('ov').classList.remove('on')};
