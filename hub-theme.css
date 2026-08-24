@@ -140,3 +140,26 @@ html.ht-weekly{
 html.ht-weekly{--content-max:min(96%,1720px)}
 .ht-weekly .search-wrap{max-width:clamp(360px,42vw,720px)}
 @media (max-width:1200px){html.ht-weekly{--content-max:100%}}
+/* ht-weekly: 토스 스타일 디자인 통일 — 라운드 카드·필 칩·소프트 그리드 */
+.ht-weekly .table-wrap{border-radius:13px;border:1px solid var(--line);box-shadow:none;background:#1a1b20;overflow:hidden}
+.ht-weekly .cal-table thead th,.ht-weekly .macro-table thead th{background:#1a1b20;font-size:11px;font-weight:700;letter-spacing:.05em;color:#9aa2ad;border-right:0;border-bottom:1px solid #31343d}
+.ht-weekly .day-row>td,.ht-weekly .ir-table .ir-row>td,.ht-weekly .macro-table tbody td{border-right:0}
+.ht-weekly .day-row:nth-child(even),.ht-weekly .ir-table .ir-row:nth-child(even),.ht-weekly .macro-table tbody tr:nth-child(even){background:transparent}
+.ht-weekly .day-row:hover{background:rgba(255,255,255,.03)}
+.ht-weekly .day-row.today,.ht-weekly .day-row.today:hover{background:rgba(224,160,48,.13)}
+.ht-weekly .cal-table .week-sep td{background:#17181d;color:#9aa2ad;border-top:1px solid #31343d;border-bottom:1px solid #232530}
+.ht-weekly .tab-nav{border-bottom:0;gap:8px;margin-bottom:16px}
+.ht-weekly .tab-btn{border-radius:10px;border-bottom:0;padding:9px 18px;margin-bottom:0;font-size:13.5px}
+.ht-weekly .tab-btn:hover{background:rgba(255,255,255,.04);color:var(--ink)}
+.ht-weekly .tab-btn.active{background:var(--accent-bg);color:var(--accent);border-bottom:0}
+.ht-weekly .search-input{border-radius:10px;background:#1a1b20}
+.ht-weekly .search-input:focus{background:#1a1b20}
+.ht-weekly .search-shortcut{border-radius:6px;background:#202128}
+.ht-weekly .search-dropdown{border-radius:11px;background:#1a1b20;border:1px solid #31343d;overflow:hidden}
+.ht-weekly .today-banner{border-radius:999px;padding:4px 12px}
+.ht-weekly .detail-group{border-radius:11px;background:#17181d;border:1px solid #272930;overflow:hidden}
+.ht-weekly .detail-group-h{background:rgba(255,255,255,.02);border-bottom:1px solid #232530}
+.ht-weekly .tk-cell{border-radius:999px;background:#202128;border:1px solid #272930;padding:3px 11px}
+.ht-weekly .ir-list>li{border-radius:999px;padding:3px 11px}
+.ht-weekly .search-item-meta{border-radius:6px;background:#202128}
+.ht-weekly .col-ir-count .ir-count{border-radius:999px}
