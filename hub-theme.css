@@ -163,3 +163,11 @@ html.ht-weekly{--content-max:min(96%,1720px)}
 .ht-weekly .ir-list>li{border-radius:999px;padding:3px 11px}
 .ht-weekly .search-item-meta{border-radius:6px;background:#202128}
 .ht-weekly .col-ir-count .ir-count{border-radius:999px}
+/* ht-weekly: IPO 일정 탭 (2026-08-24 추가) */
+.ht-weekly .ipo-table .ipo-row>td{border-right:0}
+.ht-weekly .ipo-table .ipo-row:nth-child(even){background:transparent}
+.ht-weekly .ipo-table .ir-list>li{border-radius:10px;padding:7px 12px;background:#17181d;border:1px solid #272930;color:var(--ink-2)}
+.ht-weekly .ipo-kind{border-radius:999px;background:#202128;border:1px solid #31343d}
+.ht-weekly .ipo-kind.listing{background:rgba(77,125,245,.15);border-color:rgba(77,125,245,.35);color:var(--accent-deep)}
+.ht-weekly .ipo-kind.offer{background:rgba(45,212,191,.13);border-color:rgba(45,212,191,.3);color:var(--c-ir)}
+.ht-weekly .ipo-note{border-radius:10px;background:#17181d;border:1px solid #272930}
