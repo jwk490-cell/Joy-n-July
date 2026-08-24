@@ -64,7 +64,7 @@ padding:5px 11px;cursor:pointer;font-size:13px}
 <h1>수주잔고 트래커</h1>
 <div class="sub">분기별 수주잔고 추이 — 잔고가 꺾이는가, 쌓이는가</div>
 <div class="meta" id="meta">불러오는 중…</div>
-<div class="formula">📐 <b>수주잔고 = 수주총액 − 기납품액</b> — 앞으로 매출로 인식될 확정 물량. <b>QoQ</b>는 직전 분기 대비, <b>YoY</b>는 4개 분기 전 대비 증감률.<br>
+<div class="formula">📐 <b>수주잔고 = 수주총액 − 기납품액</b> — 앞으로 매출로 인식될 확정 물량. <b>QoQ</b>는 직전 분기 대비, <b>YoY</b>는 4개 분기 전 대비 증감률. <b>매출커버</b>는 최근 잔고 ÷ 직전 연매출 — 몇 년치 일감을 쥐고 있는가.<br>
 출처 · <span class="badge b-x">엑셀</span> 큐레이션 시계열(4Q20~) · <span class="badge b-d">DART</span> 정기보고서 '수주상황' 표 자동 추출 · <span class="badge b-v">검증</span> 큐레이션 값이 DART 원문과 일치(±1.5%)해 자동 갱신 가능.<br>
 ※ 기업마다 공시 기준(연결/별도, 부문 범위, 진행률 적용 여부)이 달라 절대 수준의 기업 간 단순 비교보다 <b>같은 기업의 시계열 방향성</b>이 유효합니다.</div>
 
@@ -77,6 +77,7 @@ padding:5px 11px;cursor:pointer;font-size:13px}
     <option value="size">잔고 규모 ↓</option>
     <option value="streak">연속 증가 ↓</option>
     <option value="qoqa">QoQ 감소율 ↓</option>
+    <option value="cov">매출 커버리지 ↓</option>
     <option value="name">종목명</option>
   </select>
   <div class="seg" id="cf">
@@ -97,6 +98,7 @@ padding:5px 11px;cursor:pointer;font-size:13px}
   <th data-k="yoy">YoY</th>
   <th class="hidemo" data-k="streak">연속↑</th>
   <th class="hidemo" data-k="peak">고점대비</th>
+  <th class="hidemo" data-k="cov">매출커버</th>
   <th class="l" style="cursor:default">추이</th>
   <th class="hidemo" style="cursor:default">출처</th>
 </tr></thead><tbody id="tb"></tbody></table>
@@ -154,6 +156,7 @@ function derive(r){
   const mx=Math.max(...v.filter(x=>x!=null));
   r._peak=(li<0||!mx)?null:(v[li]/mx-1)*100;
   r._lq=li<0?'':S.qs[li];
+  r._cov=(r.cur==='KRW'&&r.rev&&r._last!=null)?r._last/r.rev:null;
 }
 function filt(){
   const q=S.q.trim().toLowerCase();
@@ -170,6 +173,7 @@ function sortRows(rs){
            size:(a,b)=>NL(a._last,b._last,(b.cur==='USD'?b._last*13:b._last)-(a.cur==='USD'?a._last*13:a._last)),
            streak:(a,b)=>b._streak-a._streak||NL(a._qoq,b._qoq,b._qoq-a._qoq),
            peak:(a,b)=>NL(a._peak,b._peak,b._peak-a._peak),
+           cov:(a,b)=>NL(a._cov,b._cov,b._cov-a._cov),
            last:(a,b)=>NL(a._last,b._last,b._last-a._last),
            sec:(a,b)=>a.s.localeCompare(b.s)||a.n.localeCompare(b.n),
            name:(a,b)=>a.n.localeCompare(b.n)}[k];
@@ -187,6 +191,7 @@ function render(){
     ${pcell(r._qoq)}${pcell(r._yoy)}
     <td class="hidemo streak ${r._streak>=3?'up':''}">${r._streak||'–'}</td>
     <td class="hidemo ${r._peak<-15?'dn':'flat'}">${r._peak==null?'–':r._peak.toFixed(0)+'%'}</td>
+    <td class="hidemo ${r._cov>=2?'up':'flat'}">${r._cov==null?'–':r._cov.toFixed(1)+'x'}</td>
     <td class="l">${spark(r.v)}</td>
     <td class="hidemo"><span class="badge ${r.o==='xlsx'?'b-x':'b-d'}">${r.o==='xlsx'?'엑셀':'DART'}</span>${r.ver?' <span class="badge b-v">검증</span>':''}</td>
   </tr>`).join('');
@@ -212,7 +217,7 @@ function chart(r){
 function open_(i){
   const r=S.rows[i];
   $('dn').innerHTML=`${r.n} <span class="code">${r.c||''}</span>`;
-  $('dm').innerHTML=`${r.s}${r.p?' · '+r.p:''} · 단위 ${r.u}<br>`+
+  $('dm').innerHTML=`${r.s}${r.p?' · '+r.p:''} · 단위 ${r.u}`+(r.rev?` · ${r.revy}년 매출 ${fmt(r.rev,'KRW')}`:'')+`<br>`+
     `출처 <span class="badge ${r.o==='xlsx'?'b-x':'b-d'}">${r.o==='xlsx'?'큐레이션 엑셀':'DART 자동추출'}</span>`+
     (r.ver?' <span class="badge b-v">DART 원문 일치</span>':'')+
     (r.rule?` <span class="code">규칙 ${r.rule}</span>`:'')+
@@ -221,7 +226,8 @@ function open_(i){
     ['QoQ',r._qoq==null?'–':(r._qoq>0?'+':'')+r._qoq.toFixed(1)+'%',r._qoq>0?'up':r._qoq<0?'dn':''],
     ['YoY',r._yoy==null?'–':(r._yoy>0?'+':'')+r._yoy.toFixed(1)+'%',r._yoy>0?'up':r._yoy<0?'dn':''],
     ['연속 증가',r._streak+'분기',''],
-    ['고점 대비',r._peak==null?'–':r._peak.toFixed(1)+'%',r._peak<-15?'dn':'']]
+    ['고점 대비',r._peak==null?'–':r._peak.toFixed(1)+'%',r._peak<-15?'dn':''],
+    ['매출 커버리지',r._cov==null?'–':r._cov.toFixed(2)+'배',r._cov>=2?'up':'']]
     .map(([a,b,c])=>`<div><span>${a}</span><b class="${c}">${b}</b></div>`).join('');
   $('dc').innerHTML=chart(r);
   let rows='';

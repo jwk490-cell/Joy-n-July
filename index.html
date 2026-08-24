@@ -343,7 +343,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     <button class="navitem" data-tab="deepresearch">심층 리서치</button>
     <button class="navitem" data-tab="leadflow">변동성 로테이션</button>
     <button class="navitem" data-tab="rstime">RS 타임머신</button>
-    <button class="navitem" data-tab="backlog">수주잔고 <small>준비중</small></button>
+    <button class="navitem" data-tab="backlog">수주잔고 <small>DART</small></button>
   </nav>
 
   <!-- ───────── 메인 콘텐츠 ───────── -->
@@ -428,7 +428,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
           <button class="card" data-go="taerin"><h3>태린이아빠 <span class="tag">피드</span></h3><p>태린이아빠 채널 아카이브</p></button>
           <button class="card" data-go="thememap"><h3>관련주 신경망 맵 <span class="tag">인터랙티브</span></h3><p>고잉 채널 관련주 정리 249장 → 테마 131개 × 종목 1,305개 커넥톰 — 줌·검색·시간선</p></button>
           <button class="card" data-go="deepresearch"><h3>심층 리서치 <span class="tag">리포트</span></h3><p>종목·산업 심층 리서치 아카이브</p></button>
-          <button class="card" data-go="backlog"><h3>수주잔고 <span class="tag soon">준비중</span></h3><p>수주잔고 급증 기업 트래킹 — 수집 방식 설계 중</p></button>
+          <button class="card" data-go="backlog"><h3>수주잔고 <span class="tag">DART</span></h3><p>분기별 수주잔고 추이 — OpenDART 정기보고서 자동 추출 · QoQ·YoY·연속증가·매출 커버리지</p></button>
         </div>
       </section>
     </section>
@@ -586,10 +586,8 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
       <iframe data-src="rs_time.html" title="RS 타임머신"></iframe>
     </section>
 
-    <section class="panel" id="tab-backlog">
-      <div class="ptitle">수주잔고</div>
-      <div class="pdesc">수주잔고가 튀는 기업을 트래킹하는 툴이 들어올 자리입니다.</div>
-      <div class="empty"><b>준비 중입니다</b>데이터 수집 방식이 정해지면 이 탭에 트래킹 대시보드가 추가됩니다.</div>
+    <section class="panel embed" id="tab-backlog">
+      <iframe data-src="backlog.html" title="수주잔고 트래커"></iframe>
     </section>
 
     <section class="panel" id="tab-telegram">
