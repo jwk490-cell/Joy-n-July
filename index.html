@@ -311,6 +311,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     <button class="navitem" data-tab="term">전닉 터미널</button>
     <button class="navitem" data-tab="quote">종목 분석</button>
     <div class="navgroup">시황</div>
+    <button class="navitem" data-tab="weekly">주간 일정 <small>매주</small></button>
     <button class="navitem" data-tab="krwrap">韓 시황</button>
     <button class="navitem" data-tab="uswrap">美 시황</button>
     <button class="navitem" data-tab="sector">산업별 등락</button>
@@ -530,6 +531,10 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
       <div class="ptitle">美 시황</div>
       <div class="pdesc" id="uswrapMeta">불러오는 중…</div>
       <div class="wrapbody" id="uswrapBody"></div>
+    </section>
+
+    <section class="panel embed" id="tab-weekly">
+      <iframe data-src="weekly.html" title="주간 일정"></iframe>
     </section>
 
     <section class="panel embed" id="tab-supply">
