@@ -136,3 +136,7 @@ html.ht-weekly{
 .ht-weekly .search-item mark{color:#101014}
 .ht-weekly .table-wrap{box-shadow:0 2px 10px rgba(0,0,0,.35)}
 .ht-weekly .today-banner{color:#e6c07a;border-color:rgba(224,160,48,.35)}
+/* ht-weekly: 화면 폭에 맞춰 유동 레이아웃 (1100px 고정 해제) */
+html.ht-weekly{--content-max:min(96%,1720px)}
+.ht-weekly .search-wrap{max-width:clamp(360px,42vw,720px)}
+@media (max-width:1200px){html.ht-weekly{--content-max:100%}}
