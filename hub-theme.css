@@ -117,3 +117,22 @@ html.ht-semietf{--red:#ef4444;--blue:#5a9bd8;--mut:#9aa2ad;--acc:#4d7df5;
 .ht-export .ctt{background:rgba(18,22,31,.97)}
 .ht-export .badge.imp{color:var(--gold);border-color:rgba(77,125,245,.4)}
 .ht-export .axr{fill:#a98a5a}
+
+/* ════════ 주간 일정 (ht-weekly) — Excel 라이트 → 딥 잉크 다크 ════════ */
+html.ht-weekly{
+  --bg:#101014; --bg-soft:#17181d; --bg-soft-2:#1a1b20;
+  --bg-header:#202128;
+  --bg-today:rgba(224,160,48,.13); --bg-today-strong:rgba(224,160,48,.4);
+  --bg-weekend:#141519;
+  --ink:#e9ebee; --ink-2:#c6ccd4; --ink-3:#9aa2ad; --ink-4:#6d7480;
+  --line:#272930; --line-soft:#232530; --line-strong:#3a3d47; --line-double:#454956;
+  --accent:#4d7df5; --accent-soft:rgba(77,125,245,.28);
+  --accent-bg:rgba(77,125,245,.13); --accent-deep:#8aa8f8;
+  --c-kr:#7ea8f8; --c-us:#e0a457; --c-macro:#b08ad6; --c-ir:#2dd4bf;
+  --c-warn:#f26d6d; --c-sat:#5a9bd8; --c-sun:#f26d6d;
+}
+.ht-weekly .sticky-search{box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.ht-weekly .search-dropdown{box-shadow:0 8px 24px rgba(0,0,0,.55)}
+.ht-weekly .search-item mark{color:#101014}
+.ht-weekly .table-wrap{box-shadow:0 2px 10px rgba(0,0,0,.35)}
+.ht-weekly .today-banner{color:#e6c07a;border-color:rgba(224,160,48,.35)}
