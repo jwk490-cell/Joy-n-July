@@ -98,7 +98,7 @@ padding:5px 11px;cursor:pointer;font-size:13px}
 </div>
 
 <details id="sw" open><summary>업종별 집계 <span class="scnt" id="scnt"></span></summary>
-<div class="seg" id="gf" style="margin:2px 0 8px"><button data-v="s" class="on">거래소 업종</button><button data-v="t">테마</button></div>
+<div class="seg" id="gf" style="margin:2px 0 8px"><button data-v="s" class="on">업종</button><button data-v="t">세부 테마</button></div>
 <div class="tbl stbl"><table><thead><tr>
   <th class="l">업종</th><th>종목</th><th>합계 잔고</th><th>QoQ</th><th>YoY</th><th class="l">추이</th>
 </tr></thead><tbody id="stb"></tbody></table></div></details>
@@ -216,7 +216,7 @@ function srender(){
       last:pan.reduce((a,r)=>a+r.v[le],0),
       qoq:pi<0?null:pair(le,pi), yoy:le>=4?pair(le,le-4):null};
   }).filter(x=>x.last!=null).sort((a,b)=>b.last-a.last);
-  $('scnt').textContent=`${out.length}개 업종 · 원화 공시 종목 중 최신 분기 보고분만 합산(균형 패널)`;
+  $('scnt').textContent=`${out.length}개 업종 · 원화 공시 종목 중 최신 분기 보고분만 합산(균형 패널) · 증감률은 두 분기 모두 보고한 종목끼리 비교`;
   $('stb').innerHTML=out.map(x=>`<tr data-s="${x.sec}">
     <td class="l"><b>${x.sec}</b></td><td>${x.n}${x.tot>x.n?`<span class="code">/${x.tot}</span>`:''}</td><td><b>${fmt(x.last,'KRW')}</b></td>
     ${pcell(x.qoq)}${pcell(x.yoy)}<td class="l">${spark(x.v)}</td></tr>`).join('');
@@ -291,8 +291,8 @@ function open_(i){
     ` · DART 검증 <b>${ver}</b>개 · DART 자동등록 <b>${dart}</b>개`;
   const secs=[...new Set(S.rows.map(r=>r.s))].filter(Boolean).sort();
   const thms=[...new Set(S.rows.map(r=>r.t))].filter(Boolean).sort();
-  $('sec').innerHTML+=`<optgroup label="거래소 업종">${secs.map(x=>`<option>${x}</option>`).join('')}</optgroup>`+
-    (thms.length?`<optgroup label="테마">${thms.map(x=>`<option>${x}</option>`).join('')}</optgroup>`:'');
+  $('sec').innerHTML+=`<optgroup label="업종">${secs.map(x=>`<option>${x}</option>`).join('')}</optgroup>`+
+    (thms.length?`<optgroup label="세부 테마">${thms.map(x=>`<option>${x}</option>`).join('')}</optgroup>`:'');
   srender();render();
 })();
 $('q').oninput=e=>{S.q=e.target.value;render()};
