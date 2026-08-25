@@ -277,10 +277,17 @@ function pchart(r){
   const P=PT&&PT[r.c]; if(!P)return '';
   const ps=Object.keys(P).sort((a,b)=>(a.slice(2)-b.slice(2))||(a[0]-b[0]));
   if(ps.length<2)return '';
-  const segs=[];ps.forEach(p=>Object.keys(P[p]).forEach(g=>{if(!segs.includes(g))segs.push(g)}));
-  if(segs.length>12)return '';
+  // 최신 분기에 있는 부문만 스택으로 세우고 나머지는 '기타'로 묶는다
+  const last=P[ps[ps.length-1]]||{};
+  const keep=Object.keys(last).sort((a,b)=>last[b]-last[a]).slice(0,9);
+  const segs=keep.slice();
+  const norm={};
+  ps.forEach(p=>{const o={};Object.entries(P[p]).forEach(([g,v])=>{
+    const k=keep.includes(g)?g:'기타';o[k]=(o[k]||0)+v;});norm[p]=o;});
+  if(Object.values(norm).some(o=>o['기타']))segs.push('기타');
+  if(!segs.length)return '';
   const W=940,H=190,PB=26,PL=54;
-  const tot=ps.map(p=>segs.reduce((a,g)=>a+(P[p][g]||0),0));
+  const tot=ps.map(p=>segs.reduce((a,g)=>a+(norm[p][g]||0),0));
   const mx=Math.max(...tot); if(!mx)return '';
   const bw=(W-PL-8)/ps.length;
   let sv=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" style="display:block">`;
@@ -290,7 +297,7 @@ function pchart(r){
   ps.forEach((p,i)=>{
     const bx=PL+4+i*bw; let acc=0;
     segs.forEach((g,si)=>{
-      const v=P[p][g]; if(!v)return;
+      const v=norm[p][g]; if(!v)return;
       const h=(H-PB-14)*(v/mx), y=(H-PB)-h-acc; acc+=h;
       sv+=`<rect x="${bx}" y="${y}" width="${bw-3.5}" height="${Math.max(h,.8)}" fill="${PCOL[si%PCOL.length]}" opacity=".88"><title>${p} · ${g} · ${fmt(v,r.cur)}</title></rect>`;});
     if(i%2===0||ps.length<10)sv+=`<text x="${bx+bw/2-1.5}" y="${H-8}" fill="#7d8695" font-size="9.5" text-anchor="middle">${p}</text>`;
@@ -298,7 +305,7 @@ function pchart(r){
   sv+='</svg>';
   const lastP=ps[ps.length-1],prevP=ps[ps.length-2];
   const leg=segs.map((g,si)=>{
-    const a=P[lastP][g],b=P[prevP]&&P[prevP][g];
+    const a=norm[lastP][g],b=norm[prevP]&&norm[prevP][g];
     const d=(a!=null&&b)?((a/b-1)*100):null;
     return `<span class="lg"><i style="background:${PCOL[si%PCOL.length]}"></i>${g}
       <b>${fmt(a,r.cur)}</b>${d==null?'':` <em class="${d>0?'up':d<0?'dn':''}">${d>0?'+':''}${d.toFixed(0)}%</em>`}</span>`;}).join('');
