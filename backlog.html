@@ -266,8 +266,15 @@ function chart(r){
 }
 const PCOL=['#5a9bd8','#e0606a','#5cbf8a','#a98fd6','#e6b93f','#5db4a4','#d9925f','#8f9bb3',
             '#c77dbb','#7fa650','#b06a6a','#6f8fd0'];
+let PT=null;
+async function loadParts(){
+  if(PT)return PT;
+  try{ PT=await (await fetch('data/backlog_parts.json?v='+Date.now())).json(); }
+  catch(e){ PT={}; }
+  return PT;
+}
 function pchart(r){
-  const P=r.pt; if(!P)return '';
+  const P=PT&&PT[r.c]; if(!P)return '';
   const ps=Object.keys(P).sort((a,b)=>(a.slice(2)-b.slice(2))||(a[0]-b[0]));
   if(ps.length<2)return '';
   const segs=[];ps.forEach(p=>Object.keys(P[p]).forEach(g=>{if(!segs.includes(g))segs.push(g)}));
@@ -315,7 +322,8 @@ function open_(i){
     ['매출 커버리지',r._cov==null?'–':r._cov.toFixed(2)+'배',r._cov>=2?'up':'']]
     .map(([a,b,c])=>`<div><span>${a}</span><b class="${c}">${b}</b></div>`).join('');
   $('dc').innerHTML=chart(r);
-  $('dp').innerHTML=pchart(r);
+  $('dp').innerHTML='';
+  if(r.pt)loadParts().then(()=>{ if($('ov').classList.contains('on'))$('dp').innerHTML=pchart(r); });
   let rows='';
   for(let i=r.v.length-1;i>=0;i--){ if(r.v[i]==null)continue;
     const pi=[...Array(i).keys()].reverse().find(j=>r.v[j]!=null);
