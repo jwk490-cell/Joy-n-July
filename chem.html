@@ -354,8 +354,9 @@ function drawGrid(){
 (async()=>{
   const d=await(await fetch('data/chem_prices.json?v='+Date.now())).json();
   S.data=d;S.sel='Naphtha';
-  const dser=d.series.find(s=>s.key==='Dubai');
-  const nd=dser.daily.length,d0=dser.daily[0][0],d1=dser.daily[dser.daily.length-1][0];
+  /* 기준일 = 전 품목 일별 시계열의 최신 날짜 (품목별 결측·배제와 무관하게 최신 표 기준) */
+  const dates=d.series.flatMap(s=>s.daily.length?[s.daily[0][0],s.daily[s.daily.length-1][0]]:[]);
+  const d0=dates.reduce((a,b)=>a<b?a:b),d1=dates.reduce((a,b)=>a>b?a:b);
   $('meta').innerHTML=`기준 <b>${d1}</b> · 수집 <b>${d0} ~ ${d1}</b> · 품목 <b>${d.series.length}</b>개 · 갱신 ${d.updated}`;
   drawBig();drawGrid();
 })();
