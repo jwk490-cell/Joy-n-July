@@ -319,8 +319,8 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     <div class="navgroup">수급 · 모멘텀</div>
     <button class="navitem" data-tab="supply">신고가, 투자자별 순매수 랭킹</button>
     <button class="navitem" data-tab="streak">수급 연속 <small>새벽</small></button>
-    <button class="navitem" data-tab="krhigh">韓 신고가 (60일·52주)</button>
-    <button class="navitem" data-tab="ushigh">美 52주 신고가</button>
+    <button class="navitem" data-tab="krhigh">韓 신고가 (20·60일·52주)</button>
+    <button class="navitem" data-tab="ushigh">美 신고가 (20·60일·52주)</button>
     <button class="navitem" data-tab="rs">RS 분석</button>
     <button class="navitem" data-tab="semietf">반도체 ETF 수혜</button>
     <div class="navgroup">비교 · 밸류</div>
@@ -392,8 +392,8 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
         <div class="grid">
           <button class="card" data-go="supply"><h3>신고가, 투자자별 순매수 랭킹 <span class="tag">매일</span></h3><p>52주 신고가 · 거래량 급증 · 주체별 순매수/순매도</p></button>
           <button class="card" data-go="streak"><h3>수급 연속 <span class="tag">평일 06:30</span></h3><p>사모·투신·외국인·프로그램 N거래일 연속 순매수 — 시총대비 누적 랭킹, 일자별 아카이브</p></button>
-          <button class="card" data-go="krhigh"><h3>韓 신고가 (60일·52주) <span class="tag">평일 21:35</span></h3><p>장중 고가 기준 60일·52주 신고가 · 거래대금 30억↑ — 키움 전수판정</p></button>
-          <button class="card" data-go="ushigh"><h3>美 52주 신고가 <span class="tag">매일 아침</span></h3><p>미국 세션 52주 신고가 종목 — 섹터별 분류, 시총·등락</p></button>
+          <button class="card" data-go="krhigh"><h3>韓 신고가 (20·60일·52주) <span class="tag">평일 21:35</span></h3><p>20일·60일(장중 고가)·52주(종가) 신고가 · 거래대금 30억↑ — 키움 전수판정</p></button>
+          <button class="card" data-go="ushigh"><h3>美 신고가 (20·60일·52주) <span class="tag">매일 아침</span></h3><p>미국 세션 20일·60일·52주 신고가 종목 — 섹터별 분류, 시총·등락</p></button>
           <button class="card" data-go="rs"><h3>RS 분석 <span class="tag">韓·美 ETF</span></h3><p>섹터·테마 ETF 상대강도 60/120/250일 + 소티노 — Norm ≥70 주도 시그널</p></button>
           <button class="card" data-go="semietf"><h3>반도체 ETF 수혜 <span class="tag">장중 1시간</span></h3><p>ETF 자금 유입 ÷ 유통시총 — 매수 압력 랭킹</p></button>
         </div>
@@ -506,13 +506,13 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     </section>
 
     <section class="panel" id="tab-krhigh">
-      <div class="ptitle">韓 신고가 <span style="font-size:12px;font-weight:600;color:var(--dim2)">60일·52주 · 장중 고가 기준 · 거래대금 30억↑ · 키움 ka10081 전수판정</span></div>
+      <div class="ptitle">韓 신고가 <span style="font-size:12px;font-weight:600;color:var(--dim2)">20일·60일(장중 고가)·52주(종가) · 거래대금 30억↑ · 키움 ka10081 전수판정</span></div>
       <div class="pdesc" id="khMeta">불러오는 중…</div>
       <div id="khBody"></div>
     </section>
 
     <section class="panel" id="tab-ushigh">
-      <div class="ptitle">美 52주 신고가 <span style="font-size:12px;font-weight:600;color:var(--dim2)">최근 미국 세션 신고가 종목</span></div>
+      <div class="ptitle">美 신고가 <span style="font-size:12px;font-weight:600;color:var(--dim2)">최근 미국 세션 20일·60일·52주 신고가 종목</span></div>
       <div class="pdesc" id="uhMeta">불러오는 중…</div>
       <div id="uhBody"></div>
     </section>
@@ -1292,10 +1292,11 @@ async function khLoad(){
 }
 function khRender(){
   const meta=document.getElementById('khMeta'),body=document.getElementById('khBody');
-  const has52=!!(KH.w52&&KH.w52.kospi);
-  if(khWin==='w52'&&!has52)khWin='d60';
-  const src=khWin==='w52'?KH.w52:KH;
-  const winDays=khWin==='w52'?'250거래일(52주)':'60거래일';
+  const has52=!!(KH.w52&&KH.w52.kospi),has20=!!(KH.d20&&KH.d20.kospi);
+  if((khWin==='w52'&&!has52)||(khWin==='d20'&&!has20))khWin='d60';
+  const src=khWin==='w52'?KH.w52:khWin==='d20'?KH.d20:KH;
+  const judge=khWin==='w52'?'당일 종가가 최근 250거래일(52주) 최고 종가와 일치'
+    :`당일 장중 고가가 최근 ${khWin==='d20'?'20':'60'}거래일 최고 고가와 일치`;
   const all=[...src.kospi.map(r=>({...r,mkt:'코스피'})),...src.kosdaq.map(r=>({...r,mkt:'코스닥'}))];
   const show=(khMkt==='all'?all:all.filter(r=>r.mkt===khMkt))
     .sort((a,b)=>khSort==='flu'?b.flu-a.flu:b.val_eok-a.val_eok);
@@ -1304,6 +1305,7 @@ function khRender(){
   body.innerHTML=`
   <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px">
     <div class="rngwrap" id="khWinBar">
+      <button class="rng${khWin==='d20'?' on':''}" data-w="d20"${has20?'':' disabled title="다음 빌드부터 제공"'}>20일 신고가</button>
       <button class="rng${khWin==='d60'?' on':''}" data-w="d60">60일 신고가</button>
       <button class="rng${khWin==='w52'?' on':''}" data-w="w52"${has52?'':' disabled title="구버전 데이터 — 다음 빌드부터 제공"'}>52주 신고가</button></div>
     <div class="rngwrap" id="khMktBar">
@@ -1319,7 +1321,7 @@ function khRender(){
       <td style="text-align:left;font-weight:700"><a href="#" data-qc="${r.code}" style="color:var(--text);text-decoration:none">${esc(r.name)}</a> <span style="font-weight:400;color:var(--dim2);font-size:11px">${r.code} · ${r.mkt}</span></td>
       <td>${f0(r.close)}</td><td>${qtChg(r.flu)}</td>
       <td>${f0(r.val_eok)}억</td><td>${r.mac_eok>=10000?(r.mac_eok/10000).toLocaleString('ko-KR',{maximumFractionDigits:1})+'조':f0(r.mac_eok)+'억'}</td></tr>`).join('')}</tbody></table></div>
-    <div style="font-size:11px;color:var(--dim2);margin-top:9px">신고가 판정 = 당일 장중 고가가 최근 ${winDays} 최고 고가와 일치(키움 일봉 전수) · 종목명 클릭 시 종목 분석 탭으로 이동</div></div>`;
+    <div style="font-size:11px;color:var(--dim2);margin-top:9px">신고가 판정 = ${judge}(키움 일봉 전수) · 종목명 클릭 시 종목 분석 탭으로 이동</div></div>`;
   document.getElementById('khWinBar').onclick=e=>{const b=e.target.closest('[data-w]');if(b&&!b.disabled){khWin=b.dataset.w;khRender();}};
   document.getElementById('khMktBar').onclick=e=>{const b=e.target.closest('[data-m]');if(b){khMkt=b.dataset.m;khRender();}};
   document.getElementById('khSortBar').onclick=e=>{const b=e.target.closest('[data-s]');if(b){khSort=b.dataset.s;khRender();}};
@@ -1327,8 +1329,8 @@ function khRender(){
     e.preventDefault();qtSel=a.dataset.qc;openTab('quote');qtRender();}));
 }
 
-/* ══════════ 美 52주 신고가 (data/usnewhigh.json — TradingView 스캐너) ══════════ */
-let UH=null,uhSector='all';
+/* ══════════ 美 신고가 20일·60일·52주 (data/usnewhigh.json — TradingView 스캐너) ══════════ */
+let UH=null,uhSector='all',uhWin='w52';
 async function uhLoad(){
   const meta=document.getElementById('uhMeta');
   if(!UH){
@@ -1339,12 +1341,20 @@ async function uhLoad(){
 }
 function uhRender(){
   const meta=document.getElementById('uhMeta'),body=document.getElementById('uhBody');
-  const items=UH.items||[];
+  const has60=!!(UH.d60&&UH.d60.items),has20=!!(UH.d20&&UH.d20.items);
+  if((uhWin==='d60'&&!has60)||(uhWin==='d20'&&!has20))uhWin='w52';
+  const src=uhWin==='w52'?{items:UH.items,criteria:UH.criteria}:UH[uhWin];
+  const items=src.items||[];
   const bySec={};items.forEach(r=>{bySec[r.sector]=(bySec[r.sector]||0)+1;});
   const secs=Object.entries(bySec).sort((a,b)=>b[1]-a[1]);
+  if(uhSector!=='all'&&!bySec[uhSector])uhSector='all';
   const show=uhSector==='all'?items:items.filter(r=>r.sector===uhSector);
-  meta.innerHTML=`미국 세션 <b>${UH.session}</b> · <b>${items.length}종목</b> 신고가 · ${esc(UH.criteria)} · ${UH.updated} 갱신`;
+  meta.innerHTML=`미국 세션 <b>${UH.session}</b> · <b>${items.length}종목</b> 신고가 · ${esc(src.criteria||'')} · ${UH.updated} 갱신`;
   body.innerHTML=`
+  <div class="rngwrap" style="margin-bottom:12px" id="uhWinBar">
+    <button class="rng${uhWin==='d20'?' on':''}" data-w="d20"${has20?'':' disabled title="다음 빌드부터 제공"'}>20일 신고가</button>
+    <button class="rng${uhWin==='d60'?' on':''}" data-w="d60"${has60?'':' disabled title="다음 빌드부터 제공"'}>60일 신고가</button>
+    <button class="rng${uhWin==='w52'?' on':''}" data-w="w52">52주 신고가</button></div>
   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px" id="uhSecBar">
     <button class="rng${uhSector==='all'?' on':''}" data-sec="all" style="font-size:11.5px;padding:5px 11px">전체 ${items.length}</button>
     ${secs.map(([s,n])=>`<button class="rng${uhSector===s?' on':''}" data-sec="${esc(s)}" style="font-size:11.5px;padding:5px 11px">${esc(s)} ${n}</button>`).join('')}</div>
@@ -1357,6 +1367,7 @@ function uhRender(){
       <td style="text-align:left;color:var(--dim2);font-size:11.5px">${esc(r.industry)}</td>
       <td>${r.capB.toLocaleString('en-US')}</td>
       <td class="${r.chg>=0?'up':'down'}">${r.chg>=0?'+':''}${r.chg.toFixed(1)}%</td></tr>`).join('')}</tbody></table></div></div>`;
+  document.getElementById('uhWinBar').onclick=e=>{const b=e.target.closest('[data-w]');if(b&&!b.disabled){uhWin=b.dataset.w;uhRender();}};
   document.getElementById('uhSecBar').onclick=e=>{const b=e.target.closest('[data-sec]');if(b){uhSector=b.dataset.sec;uhRender();}};
 }
 
