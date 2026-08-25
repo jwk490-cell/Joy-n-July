@@ -42,6 +42,7 @@ tbody tr{cursor:pointer}
 .b-d{color:var(--purple);border-color:rgba(169,143,214,.35);background:rgba(169,143,214,.1)}
 .b-v{color:var(--gold);border-color:rgba(230,185,63,.35);background:rgba(230,185,63,.1)}
 .b-l{color:#d9925f;border-color:rgba(217,146,95,.35);background:rgba(217,146,95,.1)}
+.b-x2{color:var(--teal);border-color:rgba(93,180,164,.3);background:rgba(93,180,164,.08)}
 .streak{font-weight:700}
 svg.spark{display:block}
 .empty{padding:40px;text-align:center;color:var(--sub)}
@@ -68,6 +69,12 @@ padding:5px 11px;cursor:pointer;font-size:13px}
 .kpi{display:flex;gap:22px;flex-wrap:wrap;margin:14px 0 6px}
 .kpi div span{display:block;color:var(--sub);font-size:11px;margin-bottom:2px}
 .kpi div b{font-size:19px;font-weight:800}
+.psec{margin-top:18px;border-top:1px solid var(--line);padding-top:14px}
+.ptit{font-size:13px;font-weight:700;margin-bottom:8px}
+.lgs{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:9px;font-size:11.5px;color:var(--sub)}
+.lg i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.lg b{color:var(--ink);font-weight:700;margin-left:3px}
+.lg em{font-style:normal;font-weight:700}
 .dtbl{margin-top:14px;max-height:230px;overflow:auto;border:1px solid var(--line);border-radius:10px}
 .dtbl table{font-size:12px}
 .foot{color:var(--sub);font-size:11.5px;margin-top:22px;border-top:1px solid var(--line);padding-top:13px;line-height:1.8}
@@ -119,7 +126,7 @@ padding:5px 11px;cursor:pointer;font-size:13px}
 <div class="empty" id="emp" style="display:none">조건에 맞는 종목이 없습니다.</div></div>
 
 <div class="formula">📐 <b>수주잔고 = 수주총액 − 기납품액</b> — 앞으로 매출로 인식될 확정 물량. <b>QoQ</b>는 직전 분기 대비, <b>YoY</b>는 4개 분기 전 대비 증감률. <b>매출커버</b>는 최근 잔고 ÷ 직전 연매출 — 몇 년치 일감을 쥐고 있는가.<br>
-표기 · <span class="badge b-v">검증</span> 보유 시계열이 DART 원문과 일치(±1.5%)해 규칙이 확정된 종목 — 새 분기가 자동으로 붙는다 · <span class="badge b-d">DART 자동</span> DART 원문에서만 추출한 종목 · <span class="badge b-l">주의</span> 일부 분기에서 표를 못 찾아 값이 흔들릴 수 있음 · <span class="badge b-x">미검증</span> 원문 대조가 안 돼 기존 값을 유지하는 종목.<br>
+표기 · <span class="badge b-v">검증</span> 보유 시계열이 DART 원문과 일치(±1.5%)해 규칙이 확정된 종목 — 새 분기가 자동으로 붙는다 · <span class="badge b-d">DART 자동</span> DART 원문에서만 추출한 종목 · <span class="badge b-l">주의</span> 일부 분기에서 표를 못 찾아 값이 흔들릴 수 있음 · <span class="badge b-x">미검증</span> 원문 대조가 안 돼 기존 값을 유지하는 종목 · <span class="badge b-x2">교차확인</span> 같은 공시를 독립적으로 파싱한 외부 자료와 최신 분기 값이 일치.<br>
 ※ 기업마다 공시 기준(연결/별도, 부문 범위, 진행률 적용 여부)이 달라 절대 수준의 기업 간 단순 비교보다 <b>같은 기업의 시계열 방향성</b>이 유효합니다.</div>
 <div class="foot">데이터 · OpenDART 정기보고서(사업·반기·분기) 원문 · 분기 라벨은 보고서 기준일(예: 반기보고서 2026.06 → 2Q26).<br>
 자동 추출은 종목별로 '어느 표의 어느 합계를 쓰는지'를 보유 실측치와 대조해 규칙을 고정한 뒤 적용합니다. 검증되지 않은 종목은 갱신 시 값이 흔들릴 수 있습니다.</div>
@@ -130,6 +137,7 @@ padding:5px 11px;cursor:pointer;font-size:13px}
     <button class="x" id="xb">닫기 ✕</button></div>
   <div class="kpi" id="dk"></div>
   <div id="dc"></div>
+  <div id="dp"></div>
   <div class="dtbl" id="dt"></div>
 </div></div>
 
@@ -235,7 +243,7 @@ function render(){
     <td class="hidemo ${r._peak<-15?'dn':'flat'}">${r._peak==null?'–':r._peak.toFixed(0)+'%'}</td>
     <td class="hidemo ${r._cov>=2?'up':'flat'}">${r._cov==null?'–':r._cov.toFixed(1)+'x'}</td>
     <td class="l">${spark(r.v)}</td>
-    <td class="hidemo">${r.ver?'<span class="badge b-v">검증</span>':r.o==='dart'?'<span class="badge b-d">DART 자동</span>':'<span class="badge b-x">미검증</span>'}${r.low?' <span class="badge b-l" title="일부 분기에서 표를 찾지 못해 규칙이 불안정할 수 있습니다">주의</span>':''}</td>
+    <td class="hidemo">${r.ver?'<span class="badge b-v">검증</span>':r.o==='dart'?'<span class="badge b-d">DART 자동</span>':'<span class="badge b-x">미검증</span>'}${r.low?' <span class="badge b-l" title="일부 분기에서 표를 찾지 못해 규칙이 불안정할 수 있습니다">주의</span>':''}${r.x&&!r.ver?' <span class="badge b-x2" title="다른 곳에서 독립적으로 추출한 값과 최신 분기가 일치">교차확인</span>':''}</td>
   </tr>`).join('');
 }
 function chart(r){
@@ -256,6 +264,39 @@ function chart(r){
   });
   return s+'</svg>';
 }
+const PCOL=['#5a9bd8','#e0606a','#5cbf8a','#a98fd6','#e6b93f','#5db4a4','#d9925f','#8f9bb3',
+            '#c77dbb','#7fa650','#b06a6a','#6f8fd0'];
+function pchart(r){
+  const P=r.pt; if(!P)return '';
+  const ps=Object.keys(P).sort((a,b)=>(a.slice(2)-b.slice(2))||(a[0]-b[0]));
+  if(ps.length<2)return '';
+  const segs=[];ps.forEach(p=>Object.keys(P[p]).forEach(g=>{if(!segs.includes(g))segs.push(g)}));
+  if(segs.length>12)return '';
+  const W=940,H=190,PB=26,PL=54;
+  const tot=ps.map(p=>segs.reduce((a,g)=>a+(P[p][g]||0),0));
+  const mx=Math.max(...tot); if(!mx)return '';
+  const bw=(W-PL-8)/ps.length;
+  let sv=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" style="display:block">`;
+  for(let g=0;g<=4;g++){const y=(H-PB)-(H-PB-14)*g/4;
+    sv+=`<line x1="${PL}" y1="${y}" x2="${W-4}" y2="${y}" stroke="#242832"/>`+
+        `<text x="${PL-6}" y="${y+3.5}" fill="#7d8695" font-size="10" text-anchor="end">${fmt(mx*g/4,r.cur)}</text>`;}
+  ps.forEach((p,i)=>{
+    const bx=PL+4+i*bw; let acc=0;
+    segs.forEach((g,si)=>{
+      const v=P[p][g]; if(!v)return;
+      const h=(H-PB-14)*(v/mx), y=(H-PB)-h-acc; acc+=h;
+      sv+=`<rect x="${bx}" y="${y}" width="${bw-3.5}" height="${Math.max(h,.8)}" fill="${PCOL[si%PCOL.length]}" opacity=".88"><title>${p} · ${g} · ${fmt(v,r.cur)}</title></rect>`;});
+    if(i%2===0||ps.length<10)sv+=`<text x="${bx+bw/2-1.5}" y="${H-8}" fill="#7d8695" font-size="9.5" text-anchor="middle">${p}</text>`;
+  });
+  sv+='</svg>';
+  const lastP=ps[ps.length-1],prevP=ps[ps.length-2];
+  const leg=segs.map((g,si)=>{
+    const a=P[lastP][g],b=P[prevP]&&P[prevP][g];
+    const d=(a!=null&&b)?((a/b-1)*100):null;
+    return `<span class="lg"><i style="background:${PCOL[si%PCOL.length]}"></i>${g}
+      <b>${fmt(a,r.cur)}</b>${d==null?'':` <em class="${d>0?'up':d<0?'dn':''}">${d>0?'+':''}${d.toFixed(0)}%</em>`}</span>`;}).join('');
+  return `<div class="psec"><div class="ptit">부문별 구성 <span class="code">${lastP} 기준 · QoQ</span></div>${sv}<div class="lgs">${leg}</div></div>`;
+}
 function open_(i){
   const r=S.rows[i];
   $('dn').innerHTML=`${r.n} <span class="code">${r.c||''}</span>`;
@@ -274,6 +315,7 @@ function open_(i){
     ['매출 커버리지',r._cov==null?'–':r._cov.toFixed(2)+'배',r._cov>=2?'up':'']]
     .map(([a,b,c])=>`<div><span>${a}</span><b class="${c}">${b}</b></div>`).join('');
   $('dc').innerHTML=chart(r);
+  $('dp').innerHTML=pchart(r);
   let rows='';
   for(let i=r.v.length-1;i>=0;i--){ if(r.v[i]==null)continue;
     const pi=[...Array(i).keys()].reverse().find(j=>r.v[j]!=null);
