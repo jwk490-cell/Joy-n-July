@@ -116,6 +116,7 @@ padding:11px 22px;font-size:13.5px;cursor:pointer;text-decoration:none;font-fami
 데이터 · 하나증권 에너지화학 윤재성 애널리스트 텔레그램 채널(<a href="https://t.me/energy_youn" target="_blank" style="color:var(--dn)">t.me/energy_youn</a>)의 일일 「화학 제품가격 동향」 표 이미지를 OCR로 추출한 시계열.<br>
 검증 · 표 내부 변동률 산술검증(11만 건) + 같은 기간을 가리키는 이미지 간 중복 관측 교차검증(기간당 최대 27회) + 스프레드 항등식(Spread = 제품 − Naphtha) 검증 통과.<br>
 단위 · 유가/OSP/정제마진 = $/bbl, 제품가격 = $/Ton · OSP·Crack 계열의 원표 변동폭은 %가 아닌 단순 증감 · 주간·월간 평균은 원자료에서 소급 확정되는 값을 우선 채택.<br>
+원표가 특정 블록을 미갱신(전일 값 그대로)한 채 게시된 날은 해당 값을 배제하고 다음날 표로 보충 · 배제로 빈 WTI 일별은 야후 CL=F 종가로 백필(2년 488일 대조 평균오차 0.03$ 검증) · Dubai는 표와 일치하는 공개 소스가 없어(스왑 기반 추정) 백필하지 않음.<br>
 주별 x축 라벨은 해당 주의 마지막 날짜 근사치.
 </div>
 </div>
