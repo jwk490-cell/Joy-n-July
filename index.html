@@ -75,6 +75,17 @@ main{flex:1;min-width:0;overflow-y:auto}
 .panel.on{display:block}
 .panel.embed{padding:0;max-width:none;margin:0}
 .panel.embed iframe{display:block;width:100%;height:calc(100vh - 99px);border:0;background:var(--bg)}
+/* ── Locked 섹션 ── */
+.lockgate{display:flex;align-items:center;justify-content:center;height:calc(100vh - 99px)}
+.lockcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:34px 40px;text-align:center;max-width:340px}
+.lockico{font-size:34px;margin-bottom:10px}
+.locktitle{font-weight:700;font-size:16px;margin-bottom:4px}
+.lockdesc{color:var(--faint);font-size:12.5px;margin-bottom:14px}
+.lockform{display:flex;gap:8px;justify-content:center}
+.lockpw{background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px;width:170px}
+.lockbtn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer}
+.lockbtn:disabled{opacity:.5;cursor:wait}
+.lockmsg{color:#e5484d;font-size:12px;margin-top:10px;min-height:16px}
 .ptitle{font-size:20px;font-weight:800;letter-spacing:-.02em}
 .ptitle span{color:var(--faint)!important}
 .pdesc{color:var(--sub);font-size:13px;margin:7px 0 22px}
@@ -345,6 +356,9 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     <button class="navitem" data-tab="leadflow">변동성 로테이션</button>
     <button class="navitem" data-tab="rstime">RS 타임머신</button>
     <button class="navitem" data-tab="backlog">수주잔고 <small>DART</small></button>
+    <div class="navgroup">Locked</div>
+    <button class="navitem" data-tab="rrgsec">RRG 로테이션 · 업종 <small>🔒</small></button>
+    <button class="navitem" data-tab="rrgstk">RRG 로테이션 · 종목 <small>🔒</small></button>
   </nav>
 
   <!-- ───────── 메인 콘텐츠 ───────── -->
@@ -594,6 +608,34 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
 
     <section class="panel embed" id="tab-backlog">
       <iframe data-src="backlog.html" title="수주잔고 트래커"></iframe>
+    </section>
+
+    <section class="panel embed lockp" id="tab-rrgsec" data-enc="locked/rrg.enc">
+      <div class="lockgate">
+        <div class="lockcard">
+          <div class="lockico">🔒</div>
+          <div class="locktitle">RRG 로테이션 · 업종</div>
+          <div class="lockdesc">잠긴 콘텐츠입니다. 비밀번호를 입력하세요.</div>
+          <form class="lockform"><input type="password" class="lockpw" placeholder="비밀번호" autocomplete="current-password">
+          <button type="submit" class="lockbtn">열기</button></form>
+          <div class="lockmsg"></div>
+        </div>
+      </div>
+      <iframe title="RRG 로테이션 · 업종" style="display:none"></iframe>
+    </section>
+
+    <section class="panel embed lockp" id="tab-rrgstk" data-enc="locked/rrg-stock.enc">
+      <div class="lockgate">
+        <div class="lockcard">
+          <div class="lockico">🔒</div>
+          <div class="locktitle">RRG 로테이션 · 종목</div>
+          <div class="lockdesc">잠긴 콘텐츠입니다. 비밀번호를 입력하세요.</div>
+          <form class="lockform"><input type="password" class="lockpw" placeholder="비밀번호" autocomplete="current-password">
+          <button type="submit" class="lockbtn">열기</button></form>
+          <div class="lockmsg"></div>
+        </div>
+      </div>
+      <iframe title="RRG 로테이션 · 종목" style="display:none"></iframe>
     </section>
 
     <section class="panel" id="tab-telegram">
@@ -1998,8 +2040,55 @@ function openTab(tab){
   if(tab==='term')termStart();
   if(tab==='ram')ramLoad();
   if(tab==='deepresearch')drLoad();
+  if(tab==='rrgsec'||tab==='rrgstk')lockInit(tab);
   document.getElementById('nav').classList.remove('open');
   history.replaceState(null,'','#'+tab);
+}
+
+/* ── Locked 섹션: 비밀번호 → PBKDF2/AES-GCM 복호화 → blob iframe ── */
+async function lockDecrypt(pw,buf){
+  const u8=new Uint8Array(buf);
+  if(u8.length<33||u8[0]!==82||u8[1]!==82||u8[2]!==71||u8[3]!==49)throw new Error('잘못된 파일 형식');
+  const salt=u8.slice(4,20),nonce=u8.slice(20,32),ct=u8.slice(32);
+  const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']);
+  const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:200000,hash:'SHA-256'},km,
+    {name:'AES-GCM',length:256},false,['decrypt']);
+  const gz=await crypto.subtle.decrypt({name:'AES-GCM',iv:nonce},key,ct);
+  return await new Response(new Response(gz).body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+}
+async function lockOpen(tab,pw){
+  const panel=document.getElementById('tab-'+tab);
+  if(panel.dataset.unlocked)return;
+  const gate=panel.querySelector('.lockgate'),msg=panel.querySelector('.lockmsg'),
+        btn=panel.querySelector('.lockbtn'),frame=panel.querySelector('iframe');
+  btn.disabled=true;msg.textContent='여는 중…';msg.style.color='var(--faint)';
+  try{
+    const r=await fetch(panel.dataset.enc+'?v='+Math.floor(Date.now()/6e5));
+    if(!r.ok)throw new Error('파일 로드 실패 ('+r.status+')');
+    const html=await lockDecrypt(pw,await r.arrayBuffer());
+    frame.src=URL.createObjectURL(new Blob([html],{type:'text/html'}));
+    frame.style.display='block';gate.style.display='none';
+    panel.dataset.unlocked='1';
+    sessionStorage.setItem('rl-lock-pw',pw);
+  }catch(e){
+    msg.style.color='#e5484d';
+    msg.textContent=(e&&(e.name==='OperationError'))?'비밀번호가 올바르지 않습니다.':('오류: '+(e.message||e));
+    sessionStorage.removeItem('rl-lock-pw');
+  }
+  btn.disabled=false;
+}
+function lockInit(tab){
+  const panel=document.getElementById('tab-'+tab);
+  if(!panel.dataset.wired){
+    panel.dataset.wired='1';
+    panel.querySelector('.lockform').addEventListener('submit',ev=>{
+      ev.preventDefault();
+      const pw=panel.querySelector('.lockpw').value;
+      if(pw)lockOpen(tab,pw);
+    });
+  }
+  const saved=sessionStorage.getItem('rl-lock-pw');
+  if(saved&&!panel.dataset.unlocked)lockOpen(tab,saved);
 }
 items.forEach(btn=>btn.addEventListener('click',()=>openTab(btn.dataset.tab)));
 document.querySelectorAll('[data-go]').forEach(c=>c.addEventListener('click',()=>openTab(c.dataset.go)));
