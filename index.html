@@ -70,6 +70,28 @@ nav .sbrand span{font-size:12px;color:var(--faint)}
 .navitem small{font-size:11px;color:var(--faint);font-weight:400}
 .navitem .ico{display:none}
 
+/* ── 탭 보관 (사이드바 맨 아래 토글 그룹) ── */
+.archhead{display:flex;align-items:center;gap:6px;width:100%;margin-top:18px;padding:10px 12px 6px;border:none;
+  background:transparent;color:var(--faint);font-family:inherit;font-size:11px;font-weight:700;letter-spacing:.04em;
+  border-top:1px solid var(--line);cursor:pointer;text-align:left}
+.archhead:hover{color:var(--sub)}
+.archhead .arr{display:inline-block;transition:transform .15s}
+.archhead.open .arr{transform:rotate(90deg)}
+.archlist{display:none}
+.archhead.open+.archlist{display:block}
+.archlist .navitem{opacity:.7}
+.archmanage{display:block;width:100%;margin-top:16px;padding:7px 12px;border:none;background:transparent;
+  color:var(--faint);font-family:inherit;font-size:11.5px;border-radius:10px;cursor:pointer;text-align:left}
+.archmanage:hover{background:var(--accent-soft);color:var(--sub)}
+body.archedit .archmanage{color:var(--accent);font-weight:600}
+.archhint{display:none;padding:4px 12px 0;font-size:11px;color:var(--faint);line-height:1.5}
+body.archedit .archhint{display:block}
+body.archedit nav .navitem{outline:1px dashed var(--accent-line);outline-offset:-1px}
+body.archedit nav .navitem::after{content:'보관';font-size:10px;color:var(--faint);flex:none;margin-left:6px}
+body.archedit .archlist .navitem::after{content:'꺼내기';color:var(--accent)}
+body.archedit nav .navitem[data-tab="home"]{outline:none;opacity:.4}
+body.archedit nav .navitem[data-tab="home"]::after{content:''}
+
 main{flex:1;min-width:0;overflow-y:auto}
 .panel{display:none;padding:14px 28px 64px;max-width:1140px;margin:0 auto}
 .panel.on{display:block}
@@ -359,6 +381,10 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     <div class="navgroup">Locked</div>
     <button class="navitem" data-tab="rrgsec">수급 로테이션 맵 (업종) <small>🔒</small></button>
     <button class="navitem" data-tab="rrgstk">수급 로테이션 맵 (종목) <small>🔒</small></button>
+    <button class="archhead" id="archHead" type="button" style="display:none"><span class="arr">▸</span> 보관 <span id="archCnt"></span></button>
+    <div class="archlist" id="archList"></div>
+    <button class="archmanage" id="archManage" type="button">⚙ 보관 관리</button>
+    <div class="archhint">탭을 클릭하면 보관 ↔ 해제됩니다. (홈 제외)</div>
   </nav>
 
   <!-- ───────── 메인 콘텐츠 ───────── -->
@@ -2093,6 +2119,78 @@ function lockInit(tab){
 items.forEach(btn=>btn.addEventListener('click',()=>openTab(btn.dataset.tab)));
 document.querySelectorAll('[data-go]').forEach(c=>c.addEventListener('click',()=>openTab(c.dataset.go)));
 if(location.hash)openTab(location.hash.slice(1));
+
+/* ── 탭 보관: 비밀번호(Locked와 동일, ~/.rrg_lock_pass) 검증 후 편집, 목록은 localStorage ── */
+const ARCH_SALT='rl-arch-v1',
+      ARCH_HASH='7df365301bd29faf8421ea70bee0df161f96eb56a25917921e77bae8fc92e8e5', // rrg_publish.py가 비번 변경 시 동기화
+      archNav=document.getElementById('nav'),
+      archHead=document.getElementById('archHead'),
+      archList=document.getElementById('archList'),
+      archManage=document.getElementById('archManage'),
+      archOrder=Array.from(archNav.children);           // 사이드바 원래 순서 (복원용)
+let archSet=new Set(),archEdit=false;
+try{const s=JSON.parse(localStorage.getItem('rl-archived'));if(Array.isArray(s))archSet=new Set(s);}catch(_){}
+function archApply(){
+  archOrder.forEach(el=>archNav.appendChild(el));       // 전부 원위치 후 보관분만 아래로
+  const archived=[];
+  archNav.querySelectorAll('.navitem[data-tab]').forEach(b=>{
+    if(b.dataset.tab!=='home'&&archSet.has(b.dataset.tab))archived.push(b);
+  });
+  archived.forEach(b=>archList.appendChild(b));
+  archNav.querySelectorAll('.navgroup').forEach(g=>{    // 전부 보관돼 비어버린 그룹 라벨 숨김
+    let el=g.nextElementSibling,has=false;
+    while(el&&!el.classList.contains('navgroup')&&!el.classList.contains('archhead')){
+      if(el.classList.contains('navitem')){has=true;break}
+      el=el.nextElementSibling;
+    }
+    g.style.display=has?'':'none';
+  });
+  archHead.style.display=archived.length?'':'none';
+  if(!archived.length)archHead.classList.remove('open');
+  document.getElementById('archCnt').textContent=archived.length||'';
+  document.querySelectorAll('.card[data-go]').forEach(c=>{c.style.display=archSet.has(c.dataset.go)?'none':'';});
+  document.querySelectorAll('#tab-home .section').forEach(s=>{
+    const cards=s.querySelectorAll('.card[data-go]');
+    if(cards.length)s.style.display=Array.from(cards).some(c=>c.style.display!=='none')?'':'none';
+  });
+}
+archHead.addEventListener('click',()=>archHead.classList.toggle('open'));
+archNav.addEventListener('click',e=>{                   // 편집 모드: 클릭=보관 토글 (capture로 openTab 차단)
+  if(!archEdit)return;
+  const b=e.target.closest('.navitem');if(!b)return;
+  e.preventDefault();e.stopPropagation();
+  const t=b.dataset.tab;if(!t||t==='home')return;
+  archSet.has(t)?archSet.delete(t):archSet.add(t);
+  localStorage.setItem('rl-archived',JSON.stringify([...archSet]));
+  archApply();
+  if(archSet.size)archHead.classList.add('open');
+},true);
+async function archHash(pw){
+  const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(ARCH_SALT+'|'+pw));
+  return Array.from(new Uint8Array(d)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+archManage.addEventListener('click',async()=>{
+  if(archEdit){
+    archEdit=false;document.body.classList.remove('archedit');
+    archManage.textContent='⚙ 보관 관리';return;
+  }
+  let ok=sessionStorage.getItem('rl-arch-ok')==='1';
+  if(!ok){
+    const saved=sessionStorage.getItem('rl-lock-pw');   // Locked 탭에서 이미 입력한 비번 재활용
+    if(saved&&(await archHash(saved))===ARCH_HASH)ok=true;
+  }
+  if(!ok){
+    const pw=window.prompt('보관 관리 비밀번호');
+    if(pw==null||pw==='')return;
+    if((await archHash(pw))!==ARCH_HASH){alert('비밀번호가 올바르지 않습니다.');return;}
+    ok=true;
+  }
+  sessionStorage.setItem('rl-arch-ok','1');
+  archEdit=true;document.body.classList.add('archedit');
+  archManage.textContent='✓ 보관 관리 종료';
+  archHead.classList.add('open');
+});
+archApply();
 
 /* ── 심층 리서치: data/research.json 렌더 ── */
 var drLoaded=false;
