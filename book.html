@@ -90,14 +90,14 @@ mark{background:rgba(224,160,48,.35);color:inherit;border-radius:3px}
   5분마다 변화를 감지해 스스로 다시 제본된다. (2026-06-11 개장 이후)</div>
   <div class="stats">
     <div class="stat"><b>78</b><span>기록된 날</span></div>
-    <div class="stat"><b>16,895</b><span>총 커밋 (자동 발행 포함)</span></div>
+    <div class="stat"><b>16,898</b><span>총 커밋 (자동 발행 포함)</span></div>
     <div class="stat"><b>123</b><span>작업 항목</span></div>
-    <div class="stat"><b>38</b><span>허브 탭</span></div>
+    <div class="stat"><b>39</b><span>허브 탭</span></div>
     <div class="stat"><b>54/57</b><span>가동 봇</span></div>
     <div class="stat"><b>38</b><span>기록 챕터</span></div>
     <div class="stat"><b>42</b><span>심층 리서치</span></div>
-    <div class="stat"><b>404</b><span>수록 소스 파일</span></div>
-    <div class="stat"><b>64,071</b><span>코드 라인</span></div>
+    <div class="stat"><b>405</b><span>수록 소스 파일</span></div>
+    <div class="stat"><b>64,895</b><span>코드 라인</span></div>
   </div>
 </div>
 <div class="topnav">
@@ -145,6 +145,7 @@ mark{background:rgba(224,160,48,.35);color:inherit;border-radius:3px}
 <li>수출입데이터</li>
 <li>대만 테크 실적 모음</li>
 <li>에너지/화학 가격 동향</li>
+<li>글로벌 크레딧·유동성</li>
 </ul></div>
 <div class="tabcard" data-s><b>리서치</b><ul>
 <li>텔레그램 채널 요약</li>
@@ -743,7 +744,14 @@ Content-Type: application/json
 </ul>
 <p><b>봇 소유자 잠금 (2026-08-05):</b> 공용 모듈 <code>~/수급html/bot_guard.py</code> — <code>bot_guard.blocked(token, owner_chat_id, msg)</code> 가 소유자(6159848417 @j_1ne) 외 DM을 차단하고 발신자에게 <code>🚫 접근 차단됨</code> 회신 + 소유자에게 <code>⚠️ 무단 접근 차단 · 이름 (id) — 파일/메시지</code> 보고(발신자·봇당 하루 1회, 상태 <code>_bot_guard_state.json</code>). 채널/그룹 메시지는 False 반환해 각 스크립트 필터가 담당. 적용된 DM 수신봇 7개: earnings_watch, supply_watch, prog_watch, us_wrap_watch, us_ec/ec_watch, zoom_session/zoom_watch(Windows 전담), _share/supply_watch. export_watch(로컬 폴더 감시)·butler_watch(채널 구독)는 수신 대상 아님. 새 수신봇을 만들면 이 가드를 반드시 붙일 것. 자세한 실적봇 규칙은 <a class="wl" href="#ch-earnings-notion-daily">earnings-notion-daily</a>.</p>
 <p><b>주의:</b> Windows 원본 PC는 살아있고 전 작업 disable 상태 — 이중 실행(같은 텔레그램 채널 중복 전송, 유저세션 충돌) 금지가 최우선 규칙이었음. Windows 봇을 되켜려면 맥 crontab에서 해당 봇을 먼저 빼야 함.</p></div></details>
-<details class="ch" id="ch-worklog-book" data-s><summary><b>작업기록 북 (수급 연구실 작업기)</b><span class="d">작업기록 북 — 전 산출물을 site/book.html 한 권으로 자동 제본, 크론 #71 매일 08:10·22:10</span><span class="t">2026-08-27</span></summary><div class="body"><p>공자 요청(2026-08-27): "나와 만들어낸 모든 것, 특히 수급html의 모든 작업을 하나의 책처럼 엮고 매일 누적하라."</p>
+<details class="ch" id="ch-worklog-book" data-s><summary><b>작업기록 북 (수급 연구실 작업기)</b><span class="d">작업기록 북 — 전 산출물+전체 소스 설계도를 site/book.html 한 권으로 자동 제본, 크론 #71 5분 변경감지</span><span class="t">2026-08-27</span></summary><div class="body"><p>공자 요청(2026-08-27): "나와 만들어낸 모든 것, 특히 수급html의 모든 작업을 하나의 책처럼 엮고 매일 누적하라." + "실시간 모니터링, 한 글자도 놓치지 말고, 책만 가져가면 다른 데서 그 이상을 재구현할 수 있게."</p>
+<h4>v2 — 설계도(재구현 키트) &amp; 실시간</h4>
+<ul>
+<li><b>제6부 설계도</b>: 수급html+sector-report+site 인프라의 코드 전량(404파일 ~2.6MB, .py/.sh/.bat/.ps1/.vbs+주요 config)을 원문 수록. <code>REDACT</code> 정규식 4종이 텔레그램 봇토큰·API키·비밀값 할당·40+자리 hex를 «REDACTED» 마스킹 — **zoom_session·us_ec·telegram-digest의 lockdown/*.py 등 6개 파일에 봇토큰 하드코딩 실재**, 제본 후 출력에서 토큰 패턴 grep=0 검증 필수. cred/token/session/env 파일명은 수록 자체를 제외.</li>
+<li><b>재구현 가이드</b>(BOOTSTRAP_MD 상수): 계정·키 표 → 디렉토리 → 사이트 → 크론 편성 뼈대(21:00 update.py가 원천) → 무인 3종 → 첫 가동일 검증 → 컨벤션.</li>
+<li><b>--watch</b>: 입력 지문(book_digest.json — 전 소스 mtime+site git HEAD) 동일하면 무출력 종료. 크론 */5분 + 22:10 강제 1회. site 봇 커밋이 잦아 실질 상시 재제본(회당 0.8초)이며 이것이 의도된 실시간성.</li>
+<li>tmp는 site 밖(<code>_book.html.tmp</code>)에 써야 git_guard가 반쯤 쓴 파일을 줍지 않는다.</li>
+</ul>
 <h4>구조 — 전부 기존 산출물에서 파생, 수동 상태 없음</h4>
 <ul>
 <li>빌더: <code>수급html/book_build.py</code> → 출력 <code>site/book.html</code> (허브 <code>작업 기록</code> 탭, data-tab=worklog, FRESH 캐시버스터 적용). push는 <a class="wl" href="#ch-git-guard-dual-repo">git-guard-dual-repo</a>.</li>
@@ -752,7 +760,7 @@ Content-Type: application/json
 <li><b>허브 지도</b> = site/index.html 사이드바 navgroup/navitem 자동 추출.</li>
 <li><b>연대기</b> = site 저장소 git log 전체를 매회 재파생 (증분 상태 파일 없음 → 드리프트 불가). <code>AUTO_PATTERNS</code>에 걸리는 자동 발행 커밋(raoni feed 등 ~2만 건)은 일별 건수로 접고, 나머지 수동 작업 커밋만 펼친다. <b>새 봇이 자체 커밋 메시지를 갖게 되면 AUTO_PATTERNS에 패턴 추가 필수</b> — 안 하면 연대기가 그 봇 커밋으로 도배된다.</li>
 <li><b>손메모</b>: <code>수급html/book_notes.json</code> <code>{"YYYY-MM-DD": "메모"}</code> 를 만들면 해당 날짜에 하이라이트 박스로 표시 (선택, 현재 미사용).</li>
-<li>크론 #71: 매일 08:10(밤사이 미국 봇 커밋 반영)·22:10(당일 마감 반영), 로그 logs/book.log.</li>
+<li>크론 #71: */5분 <code>--watch</code> 변경감지 + 22:10 강제 전체 제본, 로그 logs/book.log.</li>
 </ul>
 <h4>Why</h4>
 <p>git 커밋 16,900건 중 자동 발행이 98%라 raw 히스토리는 못 읽는다. 노이즈 패턴 20종을 접으니 수동 작업 ~250건이 곧 연대기가 됐다.</p>
@@ -823,8 +831,8 @@ Content-Type: application/json
 </ul></div></details>
 <h2 class="part" id="chron">제4부 · 연대기 <small>site 저장소 전체 히스토리 — 매일 자동 누적</small></h2>
 <div class="partdesc">사람 손으로 만든 작업은 전부 펼치고, 봇의 자동 발행은 건수로 접었다. 최신이 위.</div>
-<details class="mon" open><summary>2026년 08월<small>작업 44건 · 자동 발행 8,528건</small></summary>
-<div class="day" data-s><div class="dh">2026-08-27 (목)<small>자동 발행 228건</small></div>
+<details class="mon" open><summary>2026년 08월<small>작업 44건 · 자동 발행 8,531건</small></summary>
+<div class="day" data-s><div class="dh">2026-08-27 (목)<small>자동 발행 231건</small></div>
 <ul>
 <li>작업기록 북 창간 — 전 산출물을 한 권으로 제본하는 book.html + 허브 '작업 기록' 탭 (book_build.py, 크론 #71 매일 08:10·22:10 자동 누적)</li>
 <li>supply: 탭명 → 투자자별 수급/거래량 증감, 세부탭 [투자자별 수급→거래량 급증] 2개만 노출(신고가 임시 숨김)</li>
@@ -1136,7 +1144,7 @@ Content-Type: application/json
 <li>새 봇을 만들면: crontab.txt에 번호 주석 → 메모리 기록 작성 → 자체 커밋 메시지가 있으면 book_build.py <code>AUTO_PATTERNS</code> 추가. 이 세 가지가 책을 정확하게 유지한다.</li>
 <li>데이터 검증은 항상 독립 소스 교차확인(RRG 역산 RMSE, 오실레이터 corr 1.0, 정배열 수기 대조 방식 — 제3부 각 챕터 참조).</li>
 </ul></div></details>
-<h3>수급html <small style='color:var(--dim2)'>(392개 파일 · 2,563KB)</small></h3>
+<h3>수급html <small style='color:var(--dim2)'>(393개 파일 · 2,604KB)</small></h3>
 <details class="src" data-s><summary><b>_archive_basket7_build.py</b><span class="d"></span><span class="t">269줄 · 12KB · 2026-08-12</span></summary><pre># -*- coding: utf-8 -*-
 """
 핵심 7종목(삼성전자·삼성전자우·SK하이닉스·SK스퀘어·S-Oil·SK이노베이션·GS)의
@@ -3484,7 +3492,7 @@ def blocked(token, owner, msg, bot=""):
     _save(st)
     return True
 </pre></details>
-<details class="src" data-s><summary><b>build.py</b><span class="d"></span><span class="t">693줄 · 34KB · 2026-08-27</span></summary><pre># -*- coding: utf-8 -*-
+<details class="src" data-s><summary><b>build.py</b><span class="d"></span><span class="t">842줄 · 42KB · 2026-08-27</span></summary><pre># -*- coding: utf-8 -*-
 """
 raw_cache.json -&gt; index.html (3섹션 탭 대시보드)
   1) 투자자별 순매수 랭킹 (외국인/사모/연금/투신 × 코스피/코스닥/전체 × 1/5/10/30/60거래일)
@@ -3506,6 +3514,7 @@ COMBOS = {"st": ["사모", "투신"], "stp": ["사모", "투신", "연금"],
           "stpf": ["사모", "투신", "연금", "외국인"]}
 PROG_CACHE = os.path.join(HERE, "prog_streak_cache.json")
 PROG_KEEP_DAYS = 70   # streak3_tg.py와 공유 — 두 값 중 큰 쪽이 실효 보관 일수
+MAP_RAT = 100   # 섹터 맵 포함 범위: 시총대비 비율 상위 100 (2026-08-27 사용자 지정)
 MARKETS = ["코스피", "코스닥", "전체"]
 MK_MAP = {"코스피": "KOSPI", "코스닥": "KOSDAQ"}
 MK_SHORT = {"KOSPI": "K", "KOSDAQ": "Q"}
@@ -3597,6 +3606,24 @@ def main():
     if OFFSET:
         print(f"[정산 롤백] 당일 미정산 → OFFSET={OFFSET}, 기준일={base_dt}")
 
+    # 커스텀 업종 분류 (sector_groups.json — sectorcap 탭과 공유, 투자포인트 기준)
+    # override(코드) → wics_map(종목명→WICS)→fallback → '기타'
+    with open(os.path.join(HERE, "sector_groups.json"), encoding="utf-8") as f:
+        sgcfg = json.load(f)
+    GROUPS = sgcfg["groups"]
+    gidx = {g: i for i, g in enumerate(GROUPS)}
+    g_etc = gidx.get("기타", len(GROUPS) - 1)
+    sg_ov = {k.split()[0]: v for k, v in sgcfg["override"].items()}
+    sg_fb = sgcfg["fallback"]
+    try:
+        with open(os.path.join(HERE, "wics_map.json"), encoding="utf-8") as f:
+            wics = json.load(f)["map"]
+    except Exception:
+        wics = {}
+    def group_of(code, name):
+        g = sg_ov.get(code) or sg_fb.get(wics.get(name, ""))
+        return gidx.get(g, g_etc)
+
     # 프로그램 수급 (ka90004) — 기준일 정렬 거래일 목록으로 캐시 채움
     ref_days = max(data.values(), key=len)[OFFSET:]
     dts_global = [d["dt"] for d in ref_days[:PERIODS[-1]]]
@@ -3640,7 +3667,8 @@ def main():
         chg = round((close0 / closes[1] - 1) * 100, 2) if len(closes) &gt; 1 and closes[1] &gt; 0 else 0.0
         stocks[code] = {"name": meta["name"], "market": meta["market"], "gc": gc,
                         "per": per, "vol_t": vol_t, "vol_p": vol_p, "val_t": val_t,
-                        "closes": closes, "ch": chg, "mc": round(mcap / 1e8)}
+                        "closes": closes, "ch": chg, "mc": round(mcap / 1e8),
+                        "grp": group_of(code, meta["name"])}
 
     if args.debug_code:
         s = stocks.get(args.debug_code)
@@ -3684,7 +3712,7 @@ def main():
                [(c, s) for c, s in stocks.items() if s["market"] == MK_MAP[market]]
         sec2[market] = {}
         for N in PERIODS:
-            blk = {"순매수": {}, "순매도": {}, "공통": {}, "금액": {},
+            blk = {"순매수": {}, "순매도": {}, "공통": {}, "금액": {}, "맵": {},
                    "prog_days": prog_avail.get(N, 0)}
             for inv in SEC2INV:
                 rows = []
@@ -3693,7 +3721,7 @@ def main():
                     if not v: continue
                     rows.append({"c": c, "n": s["name"], "m": MK_SHORT[s["market"]],
                                  "v": round(v[0], 2), "r": round(v[1], 3), "g": s["gc"],
-                                 "ch": s["ch"], "mc": s["mc"]})
+                                 "ch": s["ch"], "mc": s["mc"], "sg": s["grp"]})
                 buy = sorted([r for r in rows if r["r"] &gt; 0], key=lambda r: r["r"], reverse=True)[:TOP2]
                 sell = sorted([r for r in rows if r["r"] &lt; 0], key=lambda r: r["r"])[:TOP2]
                 blk["순매수"][inv] = buy
@@ -3702,6 +3730,14 @@ def main():
                     abuy = sorted([r for r in rows if r["v"] &gt; 0], key=lambda r: r["v"], reverse=True)[:TOP2]
                     asell = sorted([r for r in rows if r["v"] &lt; 0], key=lambda r: r["v"])[:TOP2]
                     blk["금액"][inv] = {"순매수": abuy, "순매도": asell}
+                # 섹터 맵: 시총대비 비율 상위 100 (방향별)
+                mp = {}
+                for side, sign in (("순매수", 1), ("순매도", -1)):
+                    p2 = [r for r in rows if r["r"] * sign &gt; 0 and r["v"] * sign &gt; 0]
+                    b = sorted(p2, key=lambda r: r["r"] * sign, reverse=True)[:MAP_RAT]
+                    mp[side] = [{"c": r["c"], "n": r["n"], "r": r["r"], "v": r["v"],
+                                 "g": r["sg"], "ch": r["ch"]} for r in b]
+                blk["맵"][inv] = mp
             # 공통: 조합 주체 전원이 같은 방향
             for key, invs in COMBOS.items():
                 comm_buy, comm_sell = [], []
@@ -3781,7 +3817,7 @@ def main():
     payload = {
         "base_dt": base_dt, "fetched_at": cache.get("fetched_at", ""),
         "periods": PERIODS, "investors": [i[0] for i in INVESTORS],
-        "sec2inv": SEC2INV, "markets": MARKETS,
+        "sec2inv": SEC2INV, "markets": MARKETS, "groups": GROUPS,
         "sec1": sec1, "sec2": sec2, "sec3": sec3, "sec4": sec4, "sec5common": sec5common,
         "volup": {"ratio": VOLUP_RATIO, "min_val_eok": VOLUP_MIN_VAL // 100},
         "newhigh": {"days": NH_DAYS, "min_val_eok": NH_MIN_VAL // 100},
@@ -3846,6 +3882,19 @@ body{background:var(--bg);color:var(--txt);font-family:"Pretendard Variable",Pre
 .grid{display:grid;gap:9px}
 .g5{grid-template-columns:repeat(auto-fit,minmax(278px,1fr))}
 .g5i{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.mapcard{grid-column:2/-1;display:flex;flex-direction:column}
+@media(max-width:760px){.mapcard{grid-column:auto;min-height:480px}}
+.mapbox{position:relative;flex:1;min-height:440px;overflow:hidden}
+.msec{position:absolute;border:1px solid rgba(6,9,15,.9);overflow:hidden}
+.mseclab{position:absolute;left:0;top:0;width:100%;z-index:2;font-size:9.5px;font-weight:700;color:#b9c7dc;
+  padding:1px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:rgba(6,9,15,.55);pointer-events:none}
+.mtile{position:absolute;overflow:hidden;border:1px solid rgba(6,9,15,.55);cursor:pointer;
+  font-size:10px;line-height:1.2;padding:2px 3px;color:#eaf3ff;text-shadow:0 1px 2px rgba(0,0,0,.45)}
+.mtile b{font-weight:700;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mtile:hover{filter:brightness(1.25)}
+.btn.mini{padding:3px 8px;font-size:10.5px}
+.mtip{position:fixed;z-index:50;background:#0d1320;border:1px solid var(--line);border-radius:8px;
+  padding:8px 11px;font-size:11px;pointer-events:none;display:none;box-shadow:0 8px 24px rgba(0,0,0,.55);line-height:1.55}
 .g4{grid-template-columns:repeat(auto-fit,minmax(286px,1fr))}
 .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .g2{grid-template-columns:repeat(auto-fit,minmax(520px,1fr))}
@@ -3925,7 +3974,7 @@ tr:hover td{background:rgba(255,255,255,.025)}
     &lt;span class="glabel" style="margin-left:8px"&gt;방향&lt;/span&gt;&lt;div class="group" id="g2Side"&gt;&lt;/div&gt;
     &lt;span class="glabel" style="margin-left:8px"&gt;공통 주체&lt;/span&gt;&lt;div class="group" id="g2Combo"&gt;&lt;/div&gt;
   &lt;/div&gt;
-  &lt;div id="sec2top"&gt;&lt;/div&gt;
+  &lt;div class="grid g5i" id="sec2top" style="margin-bottom:9px"&gt;&lt;/div&gt;
   &lt;div class="grid g5i" id="grid2"&gt;&lt;/div&gt;
   &lt;div class="grid g2" id="grid2amt" style="margin-top:9px"&gt;&lt;/div&gt;
 &lt;/div&gt;
@@ -4036,14 +4085,16 @@ function render5(){
 }
 
 /* ===== 섹션 2 ===== */
+const MAPINV_LBL={"사모":"사모","투신":"투신","연금":"연금","외인":"외국인","프램":"프로그램"};
+let s2map={inv:"사모"};
 function render2top(){
-  // 공통 순매수/순매도 (주체 조합 선택) — 기간·방향 토글 연동
+  // 좌: 공통 순매수/순매도 (주체 조합 선택) · 우: 시총대비 순매수 맵 — 기간·방향·시장 토글 연동
   const invs=COMBO_INVS[s2.combo];
   const rows=((D.sec2[s2.mkt][s2.per]["공통"][COMBO_KEY[s2.combo]]||{})[s2.side])||[];
   let body;
   if(!rows.length) body='&lt;div class="empty"&gt;공통 '+s2.side+' 종목 없음&lt;/div&gt;';
   else body=tableHead('&lt;th class="c1"&gt;#&lt;/th&gt;&lt;th class="c2"&gt;종목&lt;/th&gt;'
-      +invs.map(v=&gt;'&lt;th style="width:64px"&gt;'+v+'&lt;/th&gt;').join('')+'&lt;th style="width:64px"&gt;합계&lt;/th&gt;')
+      +invs.map(v=&gt;'&lt;th style="width:52px"&gt;'+v+'&lt;/th&gt;').join('')+'&lt;th style="width:52px"&gt;합계&lt;/th&gt;')
     +rows.map((r,i)=&gt;'&lt;tr&gt;&lt;td class="'+(i&lt;3?"rk top":"rk")+'"&gt;'+(i+1)+'&lt;/td&gt;'
       +'&lt;td class="nm"&gt;'+nmLink(r)+'&lt;/td&gt;'
       +r.rs.map(x=&gt;'&lt;td style="color:'+ratCls(x)+';font-weight:700"&gt;'+fmtRat(x)+'&lt;/td&gt;').join('')
@@ -4051,8 +4102,114 @@ function render2top(){
   const bcls=s2.side==="순매도"?"badge sell":"badge comm";
   document.getElementById("sec2top").innerHTML=
     '&lt;div class="card hl"&gt;&lt;h3&gt;'+s2.combo.replace(/\+/g,"·")+' 공통 '+s2.side
-    +' &lt;span class="'+bcls+'"&gt;'+s2.mkt+' · '+s2.per+'거래일 · '+rows.length+'종목&lt;/span&gt;&lt;/h3&gt;'+body+'&lt;/div&gt;';
+    +' &lt;span class="'+bcls+'"&gt;'+s2.mkt+' · '+s2.per+'거래일 · '+rows.length+'종목&lt;/span&gt;&lt;/h3&gt;'+body+'&lt;/div&gt;'
+    +'&lt;div class="card hl mapcard"&gt;&lt;h3&gt;&lt;span&gt;시총대비 '+s2.side+' 맵'
+    +' &lt;span style="color:var(--dim2);font-weight:400;font-size:10px"&gt;크기=금액 · 색=시총대비&lt;/span&gt;&lt;/span&gt;'
+    +'&lt;span style="display:flex;align-items:center;gap:7px"&gt;&lt;span class="group" id="gMapInv"&gt;&lt;/span&gt;'
+    +'&lt;span class="'+bcls+'"&gt;'+s2.mkt+' · '+s2.per+'거래일&lt;/span&gt;&lt;/span&gt;&lt;/h3&gt;'
+    +'&lt;div class="mapbox" id="mapbox"&gt;&lt;/div&gt;&lt;/div&gt;';
+  const g=document.getElementById("gMapInv");
+  Object.keys(MAPINV_LBL).forEach(l=&gt;{
+    const b=document.createElement("button");
+    b.className="btn mini"+(MAPINV_LBL[l]===s2map.inv?" on":"");
+    b.textContent=l;
+    b.onclick=()=&gt;{s2map.inv=MAPINV_LBL[l];
+      [...g.children].forEach(x=&gt;x.classList.toggle("on",MAPINV_LBL[x.textContent]===s2map.inv));
+      renderMap();};
+    g.appendChild(b);
+  });
+  renderMap();
 }
+
+/* ── squarified treemap (외부 라이브러리 없음) ── */
+function tmWorst(row,sumA,len){
+  let mx=0,mn=Infinity;
+  row.forEach(a=&gt;{mx=Math.max(mx,a);mn=Math.min(mn,a);});
+  const s2v=sumA*sumA,l2=len*len;
+  return Math.max(l2*mx/s2v,s2v/(l2*mn));
+}
+function tmLayout(items,x,y,w,h){
+  // items: [{w,..}] — 가중치 내림차순 정렬 후 배치. 반환 [{it,x,y,w,h}]
+  const out=[]; if(w&lt;=1||h&lt;=1) return out;
+  items=items.filter(i=&gt;i.w&gt;0).sort((a,b)=&gt;b.w-a.w);
+  const total=items.reduce((s,i)=&gt;s+i.w,0); if(!total) return out;
+  const sc=w*h/total;
+  let idx=0,X=x,Y=y,W=w,H=h;
+  while(idx&lt;items.length&amp;&amp;W&gt;0.5&amp;&amp;H&gt;0.5){
+    const len=Math.min(W,H);
+    let areas=[items[idx].w*sc],sum=areas[0],wst=tmWorst(areas,sum,len),j=idx+1;
+    while(j&lt;items.length){
+      const a=items[j].w*sc,ns=sum+a,nw=tmWorst(areas.concat([a]),ns,len);
+      if(nw&gt;wst) break;
+      areas.push(a);sum=ns;wst=nw;j++;
+    }
+    const thick=sum/len; let off=0;
+    for(let k=idx;k&lt;j;k++){
+      const l=items[k].w*sc/thick;
+      if(W&gt;=H) out.push({it:items[k],x:X,y:Y+off,w:thick,h:l});
+      else     out.push({it:items[k],x:X+off,y:Y,w:l,h:thick});
+      off+=l;
+    }
+    if(W&gt;=H){X+=thick;W-=thick;}else{Y+=thick;H-=thick;}
+    idx=j;
+  }
+  return out;
+}
+let MAPMODE="ratio";   // "ratio"=크기 시총대비 비율 / "amt"=크기 순매수 금액
+let TIP=null;
+function mapTip(e,r,gi){
+  if(!TIP){TIP=document.createElement("div");TIP.className="mtip";document.body.appendChild(TIP);}
+  TIP.innerHTML='&lt;b&gt;'+r.n+'&lt;/b&gt; &lt;span style="color:var(--dim2)"&gt;'+D.groups[gi]+'&lt;/span&gt;&lt;br&gt;'
+    +'등락률 &lt;b style="color:'+ratCls(r.ch)+'"&gt;'+fmtPct(r.ch)+'&lt;/b&gt; · '
+    +'순매수/시총 &lt;b style="color:'+ratCls(r.r)+'"&gt;'+fmtRat(r.r)+'&lt;/b&gt;&lt;br&gt;'
+    +'금액 &lt;b&gt;'+fmtNet(Math.round(r.v))+'&lt;/b&gt;';
+  TIP.style.display='block';
+  const vw=window.innerWidth;
+  TIP.style.left=Math.min(e.clientX+14,vw-230)+'px';
+  TIP.style.top=(e.clientY+16)+'px';
+}
+function renderMap(){
+  const box=document.getElementById("mapbox"); if(!box) return;
+  box.innerHTML="";
+  const rows=(((D.sec2[s2.mkt][s2.per]["맵"]||{})[s2map.inv]||{})[s2.side])||[];
+  const W=box.clientWidth,H=box.clientHeight;
+  if(!rows.length||W&lt;60||H&lt;60){box.innerHTML='&lt;div class="empty"&gt;데이터 없음&lt;/div&gt;';return;}
+  const by={};
+  rows.forEach(r=&gt;{(by[r.g]=by[r.g]||[]).push(r);});
+  const tw=r=&gt;MAPMODE==="amt"?Math.abs(r.v):Math.abs(r.r);   // 타일 가중치
+  const grps=Object.entries(by).map(([g,list])=&gt;(
+    {g:+g,list,w:list.length}));                              // 섹터 블록 = 종목 수
+  const rs=rows.map(r=&gt;Math.abs(r.r)).sort((a,b)=&gt;a-b);
+  const cap=Math.max(rs[Math.floor(rs.length*0.9)]||0.3,0.05);
+  const sell=s2.side==="순매도";
+  const col=t=&gt;{const a=(0.16+0.74*t).toFixed(2);
+    return sell?'rgba(229,72,77,'+a+')':'rgba(46,194,126,'+a+')';};
+  const SEH=13;
+  tmLayout(grps.map(gr=&gt;({w:gr.w,gr})),0,0,W,H).forEach(sr=&gt;{
+    const gr=sr.it.gr;
+    const sec=document.createElement("div"); sec.className="msec";
+    sec.style.cssText='left:'+sr.x+'px;top:'+sr.y+'px;width:'+sr.w+'px;height:'+sr.h+'px';
+    const hasLab=sr.h&gt;30&amp;&amp;sr.w&gt;44;
+    if(hasLab){const lab=document.createElement("div");lab.className="mseclab";
+      lab.textContent=D.groups[gr.g];sec.appendChild(lab);}
+    const iy=hasLab?SEH:0;
+    tmLayout(gr.list.map(r=&gt;({w:tw(r),r})),0,iy,sr.w,sr.h-iy).forEach(tr=&gt;{
+      const r=tr.it.r;
+      const d=document.createElement("div"); d.className="mtile";
+      const t=Math.min(1,Math.abs(r.r)/cap);
+      d.style.cssText='left:'+tr.x+'px;top:'+tr.y+'px;width:'+tr.w+'px;height:'+tr.h+'px;background:'+col(t);
+      if(tr.w&gt;50&amp;&amp;tr.h&gt;28) d.innerHTML='&lt;b&gt;'+r.n+'&lt;/b&gt;'+fmtRat(r.r);
+      else if(tr.w&gt;38&amp;&amp;tr.h&gt;13) d.innerHTML='&lt;b&gt;'+r.n+'&lt;/b&gt;';
+      d.onclick=()=&gt;window.open('https://finance.naver.com/item/main.naver?code='+r.c,'_blank','noopener');
+      d.onmousemove=e=&gt;mapTip(e,r,gr.g);
+      d.onmouseleave=()=&gt;{if(TIP)TIP.style.display='none';};
+      sec.appendChild(d);
+    });
+    box.appendChild(sec);
+  });
+}
+let _mapRz=null;
+window.addEventListener("resize",()=&gt;{clearTimeout(_mapRz);_mapRz=setTimeout(()=&gt;{if(TAB==="sec2")renderMap();},150);});
 function render2(){
   render2top();
   const grid=document.getElementById("grid2"); grid.innerHTML="";
@@ -8850,6 +9007,637 @@ def main():
 if __name__ == "__main__":
     main()
 </pre></details>
+<details class="src" data-s><summary><b>cds_build.py</b><span class="d">빅테크 5Y CDS 프리미엄 — site/cds.html 생성 (credit.html 통합 탭의 CDS 서브탭).</span><span class="t">631줄 · 31KB · 2026-08-27</span></summary><pre># -*- coding: utf-8 -*-
+"""빅테크 5Y CDS 프리미엄 — site/cds.html 생성 (credit.html 통합 탭의 CDS 서브탭).
+
+  데이터: upperlimitprice.github.io/dashboards/cds.html (ICE 정산가+DTCC 신고 병합, 평일 07:10 KST 갱신)
+  을 미러링해 cds_history.json에 **누적**. 원본은 과거 데이터를 버리므로(2026-08-27 확인:
+  2025-11 ORCL 히스토리 소실) 우리 쪽 누적본이 시간이 갈수록 원본보다 길어진다.
+  CRWV는 원본 통합 JSON에 없어 개별 패널의 현재값+마지막 관측일 라벨을 파싱해 누적.
+
+  업그레이드(원본 대비):
+    · 로그스케일 토글 — CRWV(700bp+) 포함 9종 통합 비교
+    · 결측 구간 점선 표시, 계열별 stale 배지, 모바일 터치·더블클릭 리셋
+    · 이상 징후 경보: 다수 기업 동일값 / 1일 급등 / 스테일 → 텔레그램(중복 발송 가드)
+    · 기업별 패널에 주가(yfinance) 오버레이 + cds_events.json 이벤트 주석
+  실행: 평일 07:15 (crontab #71, us_liq_build.py와 체인). push는 git_guard. FAB 탭 'credit'.
+
+사용: .venv/bin/python3 cds_build.py [--backfill] [--no-tg]
+  --backfill: 원본 repo의 과거 커밋 전체에서 히스토리 일회성 복원 (GitHub API)
+"""
+import sys, io, os, re, json, time, argparse, datetime, subprocess
+
+if hasattr(sys.stdout, "buffer") and (sys.stdout.encoding or "").lower() not in ("utf-8", "utf8"):
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+HIST = os.path.join(HERE, "cds_history.json")
+EVENTS = os.path.join(HERE, "cds_events.json")
+OUT = os.path.join(HERE, "site", "cds.html")
+SRC = "https://upperlimitprice.github.io/dashboards/cds.html"
+TICKERS = ["MSFT", "GOOGL", "AMZN", "META", "NVDA", "DELL", "IBM", "ORCL", "CRWV"]
+COLORS = {"MSFT": "#58a6ff", "GOOGL": "#3fb950", "AMZN": "#ffa657", "META": "#bc8cff",
+          "NVDA": "#39d2c0", "DELL": "#d29922", "IBM": "#8b949e", "ORCL": "#f85149", "CRWV": "#ff7b72"}
+NAMES = {"MSFT": "마이크로소프트", "GOOGL": "알파벳", "AMZN": "아마존", "META": "메타",
+         "NVDA": "엔비디아", "DELL": "델", "IBM": "IBM", "ORCL": "오라클", "CRWV": "코어위브"}
+# ICE Clear Credit 공개 정산가(www.ice.com/cds-settlement-prices)의 계약 티커.
+# instrumentName 예: MSFT.SNRFOR.USD.XR14.100.2031-06-20 (선순위·USD·XR14·쿠폰bp·5Y IMM 만기)
+ICE_URL = "https://www.ice.com/api/cds-settlement-prices/icc-single-names"
+ICE_MAP = {"MSFT": "MSFT", "GOOGL": "ALPHINC", "AMZN": "AMZN", "META": "METAPL", "NVDA": "NVIDIA",
+           "DELL": "DELLN", "IBM": "IBM", "ORCL": "ORCLE", "CRWV": "COREWEI"}
+
+
+def price_to_spread(price, coupon_bp, T, r):
+    """ICE 정산가(100 기준 클린가) → par spread bp. ISDA flat-hazard 근사(회수율 40%).
+    검산: 2026-08-26 DELL 100쿠폰 101.5733 → 63.4bp (원본 63.0), MSFT 102.2791 → 47.0bp (원본 46.7)."""
+    import math
+    up = (100.0 - float(price)) / 100.0        # 보장매수자 지불 upfront 비율
+    s = max(coupon_bp + up * 10000 / 4.3, 1.0)
+    for _ in range(50):
+        lam = s / 10000.0 / 0.6
+        a = (1 - math.exp(-(r + lam) * T)) / (r + lam)   # RPV01 연속 근사
+        s_new = coupon_bp + up * 10000 / a
+        if abs(s_new - s) &lt; 0.01:
+            break
+        s = max(s_new, 0.5)
+    return round(s, 1)
+
+
+def fetch_ice(hist):
+    """ICE 공개 정산가 최신일 → hist['ice']에 누적. CRWV 포함 9종 독립 채널."""
+    try:
+        rows = json.loads(http_get(ICE_URL))
+    except Exception as e:
+        print(f"  ICE 실패(건너뜀): {e}")
+        return 0
+    # 할인율: FRED DGS5 최신
+    r = 0.04
+    try:
+        csv = http_get("https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS5").decode()
+        for ln in reversed(csv.splitlines()):
+            v = ln.split(",")[-1].strip()
+            if v not in (".", "", "DGS5"):
+                r = float(v) / 100.0
+                break
+    except Exception:
+        pass
+    rev = {v: k for k, v in ICE_MAP.items()}
+    best = {}   # ticker → (coupon, row) — 쿠폰 100 우선
+    for row in rows:
+        parts = row.get("instrumentName", "").split(".")
+        if len(parts) &lt; 6 or parts[1] != "SNRFOR" or parts[2] != "USD":
+            continue
+        t = rev.get(parts[0])
+        if not t:
+            continue
+        cpn = int(parts[4])
+        if t not in best or (cpn == 100 and best[t][0] != 100):
+            best[t] = (cpn, row)
+    n = 0
+    ice = hist.setdefault("ice", {})
+    for t, (cpn, row) in best.items():
+        d = row["clearingDate"]
+        mat = datetime.date.fromisoformat(row["instrumentName"].split(".")[-1])
+        T = max((mat - datetime.date.fromisoformat(d)).days / 365.25, 0.5)
+        s = price_to_spread(row["eodPrice"], cpn, T, r)
+        cur = ice.setdefault(t, {})
+        rec = {"p": float(row["eodPrice"]), "c": cpn, "s": s}
+        if cur.get(d) != rec:
+            cur[d] = rec
+            n += 1
+    print(f"  ICE: {len(best)}종 (r={r*100:.2f}%) 신규/변경 {n}건")
+    return n
+
+
+def http_get(url, tries=3, timeout=60):
+    for i in range(tries):
+        r = subprocess.run(["curl", "-sfLg", "--max-time", str(timeout), url], capture_output=True)
+        if r.returncode == 0 and r.stdout:
+            return r.stdout
+        if i == tries - 1:
+            raise RuntimeError(f"curl 실패({r.returncode}): {url.split('?')[0]}")
+        time.sleep(3 * (i + 1))
+
+
+def parse_page(html):
+    """원본 HTML → (asof, {ticker:{date:bp}}, crwv_point, panel_meta)."""
+    m = re.search(r"기준일\s*(\d{4}-\d{2}-\d{2})", html)
+    asof = m.group(1) if m else None
+    out = {}
+    m = re.search(r"&lt;script id='cdsd' type='application/json'&gt;(.*?)&lt;/script&gt;", html, re.S) \
+        or re.search(r'&lt;script id="cdsd" type="application/json"&gt;(.*?)&lt;/script&gt;', html, re.S)
+    if m:
+        cdsd = json.loads(m.group(1))
+        for t, mp in cdsd.get("series", {}).items():
+            out[t] = {d: float(v) for d, v in mp.items()}
+    # CRWV: 패널의 현재값 + X축 마지막 라벨(마지막 관측일)
+    crwv = None
+    pm = re.search(r"class='pnl'&gt;&lt;div class='ph'&gt;&lt;b&gt;[^&lt;]*\(CRWV\)&lt;/b&gt;&lt;span class='pv'&gt;([\d.,]+)bp&lt;/span&gt;(.*?)&lt;/svg&gt;",
+                   html, re.S)
+    if pm and asof:
+        val = float(pm.group(1).replace(",", ""))
+        labels = re.findall(r"text-anchor='middle'&gt;(\d{2})/(\d{2})&lt;/text&gt;", pm.group(2))
+        if labels:
+            mm, dd = labels[-1]
+            y = int(asof[:4])
+            if f"{mm}-{dd}" &gt; asof[5:]:  # 연말 랩어라운드
+                y -= 1
+            crwv = (f"{y}-{mm}-{dd}", val)
+    return asof, out, crwv
+
+
+def load_hist():
+    if os.path.exists(HIST):
+        return json.load(open(HIST, encoding="utf-8"))
+    return {"series": {}, "asof": None, "alert_state": {}}
+
+
+def merge(hist, parsed, crwv):
+    n = 0
+    for t, mp in parsed.items():
+        cur = hist["series"].setdefault(t, {})
+        for d, v in mp.items():
+            if cur.get(d) != v:
+                cur[d] = v
+                n += 1
+    if crwv:
+        cur = hist["series"].setdefault("CRWV", {})
+        if cur.get(crwv[0]) != crwv[1]:
+            cur[crwv[0]] = crwv[1]
+            n += 1
+    return n
+
+
+def backfill(hist):
+    """원본 repo 과거 커밋 전체에서 cds.html을 꺼내 누적 (일회성)."""
+    print("  백필: 커밋 목록 조회")
+    shas = []
+    for page in (1, 2, 3):
+        d = json.loads(http_get(
+            f"https://api.github.com/repos/upperlimitprice/dashboards/commits?path=cds.html&amp;per_page=100&amp;page={page}"))
+        if not d:
+            break
+        shas += [(c["sha"], c["commit"]["committer"]["date"]) for c in d]
+        if len(d) &lt; 100:
+            break
+    print(f"  커밋 {len(shas)}개")
+    for sha, cdate in reversed(shas):   # 과거 → 최신 순으로 병합
+        try:
+            html = http_get(f"https://raw.githubusercontent.com/upperlimitprice/dashboards/{sha}/cds.html").decode()
+            asof, parsed, crwv = parse_page(html)
+            n = merge(hist, parsed, crwv)
+            print(f"  {sha[:8]} {cdate[:10]} asof={asof} +{n}")
+            time.sleep(0.4)
+        except Exception as e:
+            print(f"  {sha[:8]} 실패: {e}")
+
+
+def fetch_prices():
+    import yfinance as yf
+    start = (datetime.date.today() - datetime.timedelta(days=430)).isoformat()
+    end = (datetime.date.today() + datetime.timedelta(days=1)).isoformat()
+    df = yf.download(TICKERS, start=start, end=end, progress=False, auto_adjust=True,
+                     group_by="ticker", threads=True)
+    out = {}
+    for t in TICKERS:
+        try:
+            s = df[t]["Close"].dropna()
+            out[t] = [(d.strftime("%Y-%m-%d"), round(float(v), 2)) for d, v in s.items()]
+        except Exception:
+            out[t] = []
+    print(f"  주가: {', '.join(f'{t}:{len(v)}' for t, v in out.items())}")
+    return out
+
+
+def biz_gap(d1, d2):
+    """d1&lt;d2 사이 영업일 수(대략) — stale 판정용."""
+    a = datetime.date.fromisoformat(d1); b = datetime.date.fromisoformat(d2)
+    n, cur = 0, a
+    while cur &lt; b:
+        cur += datetime.timedelta(days=1)
+        if cur.weekday() &lt; 5:
+            n += 1
+    return n
+
+
+def detect_anomalies(hist, asof):
+    S = hist["series"]
+    alerts = []
+    # ① 다수 기업 동일값 (최신 공통 날짜)
+    last_common = None
+    for t in S:
+        if t == "CRWV" or not S[t]:
+            continue
+        d = max(S[t])
+        last_common = max(last_common, d) if last_common else d
+    if last_common:
+        groups = {}
+        for t in S:
+            v = S[t].get(last_common)
+            if v is not None:
+                groups.setdefault(v, []).append(t)
+        for v, ts in groups.items():
+            if len(ts) &gt;= 4:
+                alerts.append({"k": f"same:{last_common}:{v}", "sev": "warn",
+                               "msg": f"{last_common} {len(ts)}개 기업 동일값 {v}bp ({'·'.join(ts)}) — 소스 계보 점검 필요"})
+    # ② 1일 급등/급락 ≥15%
+    for t in S:
+        obs = sorted(S[t].items())
+        if len(obs) &lt; 2:
+            continue
+        (d0, v0), (d1, v1) = obs[-2], obs[-1]
+        if v0 &gt; 0 and abs(v1 - v0) / v0 &gt;= 0.15:
+            alerts.append({"k": f"jump:{t}:{d1}", "sev": "hot",
+                           "msg": f"{t} 1일 {v1-v0:+.1f}bp ({(v1-v0)/v0*100:+.0f}%) → {v1}bp"})
+    # ③ 스테일 (페이지 기준일 대비 5영업일+)
+    if asof:
+        for t in S:
+            if not S[t]:
+                continue
+            last = max(S[t])
+            g = biz_gap(last, asof)
+            if g &gt;= 5:
+                alerts.append({"k": f"stale:{t}:{last}", "sev": "warn",
+                               "msg": f"{t} 마지막 관측 {last} — {g}영업일 경과 (스테일)"})
+    return alerts
+
+
+def send_telegram(lines):
+    env = {}
+    try:
+        for ln in open(os.path.join(HERE, "telegram-digest", ".env"), encoding="utf-8"):
+            ln = ln.strip()
+            if ln and not ln.startswith("#") and "=" in ln:
+                k, v = ln.split("=", 1)
+                env[k.strip()] = v.strip().strip('"').strip("'")
+    except Exception:
+        return False
+    tok = env.get("SCREENER_BOT_TOKEN", ""); cid = env.get("SCREENER_CHAT_ID") or env.get("TELEGRAM_CHAT_ID", "")
+    if not (tok and cid):
+        return False
+    import requests
+    text = "🛰 CDS 모니터 경보\n" + "\n".join("· " + x for x in lines)
+    try:
+        r = requests.post(f"https://api.telegram.org/bot{tok}/sendMessage",
+                          json={"chat_id": cid, "text": text}, timeout=20)
+        return r.ok
+    except Exception:
+        return False
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--backfill", action="store_true")
+    ap.add_argument("--no-tg", action="store_true")
+    args = ap.parse_args()
+
+    hist = load_hist()
+    if args.backfill:
+        backfill(hist)
+    print("① 원본 미러")
+    html = http_get(SRC).decode()
+    asof, parsed, crwv = parse_page(html)
+    if not parsed:
+        raise SystemExit("원본 파싱 실패 — 구조 변경 여부 확인 필요")
+    n = merge(hist, parsed, crwv)
+    hist["asof"] = asof
+    print(f"  기준일 {asof} · 신규/변경 {n}건 · 누적 " +
+          ", ".join(f"{t}:{len(hist['series'].get(t, {}))}" for t in TICKERS))
+
+    print("② 주가 (yfinance)")
+    prices = fetch_prices()
+
+    print("③ 이상 징후")
+    alerts = detect_anomalies(hist, asof)
+    seen = set(hist.get("alert_state", {}).get("sent", []))
+    fresh = [a for a in alerts if a["k"] not in seen]
+    for a in alerts:
+        print(f"  [{a['sev']}] {a['msg']}")
+    if fresh and not args.no_tg:
+        if send_telegram([a["msg"] for a in fresh]):
+            print(f"  텔레그램 발송 {len(fresh)}건")
+    hist["alert_state"] = {"sent": [a["k"] for a in alerts][-200:], "at": datetime.datetime.now().isoformat()}
+
+    with open(HIST, "w", encoding="utf-8") as f:
+        json.dump(hist, f, ensure_ascii=False, separators=(",", ":"))
+
+    events = []
+    if os.path.exists(EVENTS):
+        try:
+            events = json.load(open(EVENTS, encoding="utf-8"))
+        except Exception as e:
+            print(f"  이벤트 파일 오류(무시): {e}")
+
+    page = render(hist, prices, alerts, events)
+    os.makedirs(os.path.dirname(OUT), exist_ok=True)
+    with open(OUT, "w", encoding="utf-8") as f:
+        f.write(page)
+    print(f"④ 완료 → {OUT} ({len(page)/1024:.0f}KB)")
+
+
+def render(hist, prices, alerts, events):
+    S = {t: sorted(hist["series"].get(t, {}).items()) for t in TICKERS}
+    asof = hist["asof"] or "?"
+    # 요약
+    movers = []
+    for t in TICKERS:
+        obs = S[t]
+        if len(obs) &gt;= 2:
+            movers.append((t, obs[-1][1], obs[-1][1] - obs[-2][1]))
+    movers.sort(key=lambda x: -abs(x[2]))
+    top = movers[0] if movers else ("-", 0, 0)
+    hi = max(movers, key=lambda x: x[1]) if movers else ("-", 0, 0)
+    lo = min(movers, key=lambda x: x[1]) if movers else ("-", 0, 0)
+    summary = (f"기준일 {asof}. 전일 최대 변동 {top[0]} {top[2]:+.1f}bp → {top[1]:.1f}bp. "
+               f"레벨 최고 {hi[0]} {hi[1]:.1f}bp · 최저 {lo[0]} {lo[1]:.1f}bp. "
+               f"경보 {len(alerts)}건. CDS 상승 = 시장이 보는 신용위험(부도 보험료) 확대.")
+    alert_html = ""
+    if alerts:
+        rows = "".join(f"&lt;div class='al {a['sev']}'&gt;{a['msg']}&lt;/div&gt;" for a in alerts)
+        alert_html = f"&lt;div class='alerts'&gt;&lt;b&gt;⚠ 이상 징후&lt;/b&gt;{rows}&lt;/div&gt;"
+    # 최신 표
+    trows = ""
+    for t in TICKERS:
+        obs = S[t]
+        if not obs:
+            continue
+        d, v = obs[-1]
+        d1 = v - obs[-2][1] if len(obs) &gt;= 2 else 0
+        stale = biz_gap(d, asof) &gt;= 5 if asof != "?" else False
+        cls = "up" if d1 &gt; 0 else ("dn" if d1 &lt; 0 else "")
+        trows += (f"&lt;tr&gt;&lt;td&gt;&lt;span class='sw' style='background:{COLORS[t]}'&gt;&lt;/span&gt;{t}&lt;/td&gt;"
+                  f"&lt;td class='num'&gt;{v:,.1f}&lt;/td&gt;&lt;td class='num {cls}'&gt;{d1:+.1f}&lt;/td&gt;"
+                  f"&lt;td class='num sm'&gt;{d[5:]}{' &lt;span class=stale&gt;스테일&lt;/span&gt;' if stale else ''}&lt;/td&gt;&lt;/tr&gt;")
+    payload = {"asof": asof, "gen": datetime.datetime.now().strftime("%Y-%m-%d %H:%M KST"),
+               "tickers": TICKERS, "colors": COLORS, "names": NAMES,
+               "series": {t: S[t] for t in TICKERS}, "prices": prices, "events": events}
+    data = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+    return HTML_TMPL.replace("__SUMMARY__", summary).replace("__ALERTS__", alert_html) \
+        .replace("__TROWS__", trows).replace("__ASOF__", asof) \
+        .replace("__GEN__", payload["gen"]).replace("__DATA__", data)
+
+
+HTML_TMPL = """&lt;!doctype html&gt;&lt;html lang="ko"&gt;&lt;head&gt;&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width,initial-scale=1"&gt;
+&lt;title&gt;빅테크 CDS&lt;/title&gt;
+&lt;style&gt;
+:root{--bg:#0d1117;--card:#161b22;--line:#21262d;--txt:#e6edf3;--sub:#8b949e;--faint:#6e7681;
+--red:#f85149;--grn:#3fb950;--blu:#58a6ff;--org:#ffa657;--gold:#e3b341}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font:14px/1.55 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",sans-serif;padding:18px 20px 60px}
+.wrap{max-width:1180px;margin:0 auto}
+h1{font-size:19px;margin-bottom:2px}
+.sub{color:var(--sub);font-size:12px;margin-bottom:10px}
+.brief{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:10px;padding:12px 16px;margin:10px 0 12px;font-size:13.5px;color:#d5dce4}
+.alerts{background:#2b1c1c;border:1px solid #5a2a2a;border-radius:10px;padding:11px 14px;margin-bottom:12px;font-size:13px}
+.alerts b{color:var(--org)}
+.al{margin-top:5px;color:#e0b9b3}.al.hot{color:var(--red);font-weight:600}
+.duo{display:grid;grid-template-columns:1fr 250px;gap:14px;align-items:start;margin-bottom:14px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.panel h2{font-size:14px;margin-bottom:8px}
+.panel h2 small{color:var(--faint);font-weight:400;font-size:11px}
+.btns{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px;align-items:center}
+.btns button{background:#1c2330;border:1px solid var(--line);color:var(--sub);border-radius:7px;padding:4px 10px;font-size:12px;cursor:pointer}
+.btns button.on{background:#13233a;border-color:var(--blu);color:var(--txt);font-weight:700}
+.btns .gap{width:10px}
+.btns label{font-size:11.5px;color:var(--sub);display:flex;align-items:center;gap:4px;cursor:pointer}
+.chartbox{position:relative}
+.chartbox svg{width:100%;display:block;touch-action:pan-y}
+.tip{position:absolute;pointer-events:none;background:#1c2330f0;border:1px solid #3a4150;border-radius:8px;padding:7px 10px;font-size:12px;display:none;z-index:5;min-width:140px}
+.tip b{font-size:11.5px;color:var(--sub)}
+.tip .row{display:flex;gap:8px;align-items:baseline;white-space:nowrap}
+.tip .dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
+.tip .dt{color:var(--faint);font-size:10.5px;margin-left:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:#1c2330;color:var(--sub);font-weight:600;padding:5px 7px;text-align:left}
+th.num,td.num{text-align:right;font-variant-numeric:tabular-nums}
+td{padding:5px 7px;border-top:1px solid var(--line)}
+td.sm{font-size:11px;color:var(--faint)}
+.sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:baseline}
+.up{color:var(--red)}.dn{color:var(--blu)}
+.stale{color:var(--org);font-size:10px;border:1px solid #5a4a2a;border-radius:8px;padding:0 5px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ph{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.ph b{font-size:13.5px}.pv{font-size:16px;font-weight:800}
+.bgs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px}
+.bg{font-size:11px;border-radius:6px;padding:1px 7px;background:#1c2330;color:var(--sub)}
+.bg.bu{background:#3d1d1d;color:var(--red)}.bg.bd{background:#152744;color:var(--blu)}
+.foot{color:var(--faint);font-size:11.5px;margin-top:18px;line-height:1.7}
+@media(max-width:980px){.duo{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;div class="wrap"&gt;
+&lt;h1&gt;빅테크 5Y CDS 프리미엄&lt;/h1&gt;
+&lt;div class="sub"&gt;단위 bp · 기준일 __ASOF__ (미국 현지) · CDS 상승 = 신용위험 확대 · 생성 __GEN__ · 원본 미러 + 자체 누적&lt;/div&gt;
+&lt;div class="brief"&gt;__SUMMARY__&lt;/div&gt;
+__ALERTS__
+&lt;div class="duo"&gt;
+&lt;div class="panel"&gt;&lt;h2&gt;통합 차트 &lt;small&gt;드래그 확대 · 더블클릭 초기화 · 로그축이면 CRWV 포함 비교 가능&lt;/small&gt;&lt;/h2&gt;
+ &lt;div class="btns" id="zb"&gt;&lt;/div&gt;
+ &lt;div class="btns"&gt;&lt;span style="font-size:11.5px;color:var(--faint)"&gt;축:&lt;/span&gt;
+  &lt;button id="scLin" class="on"&gt;선형&lt;/button&gt;&lt;button id="scLog"&gt;로그&lt;/button&gt;&lt;span class="gap"&gt;&lt;/span&gt;
+  &lt;label id="crwvWrap"&gt;&lt;input type="checkbox" id="crwvChk"&gt; CRWV 포함(선형)&lt;/label&gt;&lt;/div&gt;
+ &lt;div class="chartbox" id="mainc"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="panel"&gt;&lt;h2&gt;최신 스프레드&lt;/h2&gt;
+ &lt;table&gt;&lt;tr&gt;&lt;th&gt;기업&lt;/th&gt;&lt;th class="num"&gt;bp&lt;/th&gt;&lt;th class="num"&gt;전일&lt;/th&gt;&lt;th class="num"&gt;기준&lt;/th&gt;&lt;/tr&gt;__TROWS__&lt;/table&gt;
+ &lt;div style="font-size:10.5px;color:var(--faint);margin-top:7px"&gt;전일 = 직전 관측치 대비. 스테일 = 5영업일+ 미갱신&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2 style="font-size:15px;margin:4px 0 10px"&gt;기업별 추이 &lt;small style="color:var(--faint);font-weight:400;font-size:11px"&gt;CDS(좌) + 주가(우, 회색) · 붉은점 최고 · 파란점 최저 · 세로선 이벤트&lt;/small&gt;&lt;/h2&gt;
+&lt;div class="grid" id="panels"&gt;&lt;/div&gt;
+&lt;div class="foot"&gt;
+소스: upperlimitprice 대시보드(ICE 정산가+DTCC 신고 병합)를 평일 아침 미러링해 자체 누적 — 원본이 버리는 과거 데이터도 보존. 주가는 Yahoo Finance 수정종가.&lt;br&gt;
+주의: CDS 계약은 통화·선순위·재구성 조항까지 고정해야 비교 가능하나 원본의 계약 사양·병합 규칙은 비공개 — 절대 레벨보다 &lt;b&gt;방향·상대 비교&lt;/b&gt; 중심으로 해석. 여러 기업이 같은 값을 공유하는 날은 소스 계보 이상 가능성(경보 자동 감지). 결측 구간은 점선.
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;script id="D" type="application/json"&gt;__DATA__&lt;/script&gt;
+&lt;script&gt;
+const D=JSON.parse(document.getElementById('D').textContent);
+const F={t:d=&gt;Date.UTC(+d.slice(0,4),+d.slice(5,7)-1,+d.slice(8))};
+const fmt=(v,dec)=&gt;v.toLocaleString('en-US',{minimumFractionDigits:dec??1,maximumFractionDigits:dec??1});
+function nearest(p,t){let lo=0,hi=p.length-1;while(hi-lo&gt;1){const m=(lo+hi)&gt;&gt;1;(F.t(p[m][0])&lt;t)?lo=m:hi=m}
+ return (Math.abs(F.t(p[lo][0])-t)&lt;=Math.abs(F.t(p[hi][0])-t))?p[lo]:p[hi]}
+function seg(points,X,Y,gapDays){
+ const solid=[],dash=[];let cur=[];
+ for(const p of points){
+  if(cur.length){const prev=cur[cur.length-1];
+   if((F.t(p[0])-F.t(prev[0]))/864e5&gt;gapDays){solid.push(cur);dash.push([prev,p]);cur=[]}}
+  cur.push(p)}
+ if(cur.length)solid.push(cur);
+ const pl=a=&gt;a.map(p=&gt;X(F.t(p[0])).toFixed(1)+','+Y(p[1]).toFixed(1)).join(' ');
+ return {solid:solid.map(pl),dash:dash.map(pl)}}
+
+/* 범용 단일밴드 차트 (선형/로그, L/R 축, 이벤트 마크, 도트) */
+function chart(el,cfg){
+ const W=cfg.W||1000,H=cfg.H||380,L=52,R=cfg.endLabels?86:(cfg.hasR?56:16),T=14,B=26;
+ const state={x0:cfg.x0,x1:cfg.x1};
+ el.innerHTML='';const box=document.createElement('div');box.className='chartbox';el.appendChild(box);
+ const tip=document.createElement('div');tip.className='tip';
+ const tr=cfg.log?(v=&gt;Math.log10(Math.max(v,0.1))):(v=&gt;v);
+ function draw(){
+  const x0=state.x0,x1=state.x1,pw=W-L-R,ph=H-T-B;
+  const X=t=&gt;L+pw*(t-x0)/(x1-x0||1);
+  const vis=side=&gt;cfg.series.filter(s=&gt;(s.side||'L')===side)
+    .flatMap(s=&gt;s.p.filter(p=&gt;{const t=F.t(p[0]);return t&gt;=x0&amp;&amp;t&lt;=x1}).map(p=&gt;tr2(s)(p[1])));
+  const tr2=s=&gt;(s.side||'L')==='L'?tr:(v=&gt;v);
+  const dom=side=&gt;{const v=vis(side);if(!v.length)return null;
+    let lo=Math.min(...v),hi=Math.max(...v);const r=(hi-lo)||Math.abs(hi)||1;
+    return[lo-r*0.07,hi+r*0.07]};
+  const dl=dom('L'),dr=dom('R');
+  let svg=`&lt;svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="aspect-ratio:${W}/${H}"&gt;`;
+  if(dl)for(let i=0;i&lt;=4;i++){const vv=dl[0]+(dl[1]-dl[0])*i/4,y=T+ph-ph*i/4;
+   const lab=cfg.log?fmt(Math.pow(10,vv),vv&gt;2?0:1):fmt(vv,cfg.decL??0);
+   svg+=`&lt;line x1="${L}" x2="${W-R}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#21262d"/&gt;`+
+        `&lt;text x="${L-6}" y="${(y+3).toFixed(1)}" font-size="10" fill="#6e7681" text-anchor="end"&gt;${lab}&lt;/text&gt;`}
+  if(dr)for(let i=0;i&lt;=4;i++){const vv=dr[0]+(dr[1]-dr[0])*i/4,y=T+ph-ph*i/4;
+   svg+=`&lt;text x="${W-R+6}" y="${(y+3).toFixed(1)}" font-size="10" fill="#6e7681" text-anchor="start"&gt;${fmt(vv,0)}&lt;/text&gt;`}
+  for(const ev of (cfg.marks||[])){const t=F.t(ev.d);if(t&lt;x0||t&gt;x1)continue;
+   svg+=`&lt;line x1="${X(t).toFixed(1)}" x2="${X(t).toFixed(1)}" y1="${T}" y2="${T+ph}" stroke="#e3b341" stroke-dasharray="3 4" opacity=".55"/&gt;`+
+        `&lt;text x="${(X(t)+3).toFixed(1)}" y="${T+11}" font-size="9.5" fill="#e3b341" opacity=".9"&gt;${ev.label}&lt;/text&gt;`}
+  for(const s of cfg.series){
+   const d=(s.side||'L')==='L'?dl:dr;if(!d)continue;
+   const trf=tr2(s);
+   const Y=v=&gt;T+ph-ph*(trf(v)-d[0])/(d[1]-d[0]||1);
+   const pts=s.p.filter(p=&gt;{const t=F.t(p[0]);return t&gt;=x0&amp;&amp;t&lt;=x1});
+   if(pts.length&lt;2)continue;
+   const sg=seg(pts,X,Y,cfg.gapDays||9);
+   for(const pl of sg.solid)svg+=`&lt;polyline points="${pl}" fill="none" stroke="${s.c}" stroke-width="${s.w||2}" opacity="${s.o||1}"/&gt;`;
+   for(const pl of sg.dash)svg+=`&lt;polyline points="${pl}" fill="none" stroke="${s.c}" stroke-width="1.2" stroke-dasharray="3 4" opacity=".55"/&gt;`;
+   if(s.dots){
+    let mn=pts[0],mx=pts[0];for(const p of pts){if(p[1]&lt;mn[1])mn=p;if(p[1]&gt;mx[1])mx=p}
+    svg+=`&lt;circle cx="${X(F.t(mx[0])).toFixed(1)}" cy="${Y(mx[1]).toFixed(1)}" r="3.4" fill="#f85149"/&gt;`+
+         `&lt;circle cx="${X(F.t(mn[0])).toFixed(1)}" cy="${Y(mn[1]).toFixed(1)}" r="3.4" fill="#58a6ff"/&gt;`+
+         `&lt;circle cx="${X(F.t(pts[pts.length-1][0])).toFixed(1)}" cy="${Y(pts[pts.length-1][1]).toFixed(1)}" r="3.6" fill="#e6edf3"/&gt;`}
+  }
+  if(cfg.endLabels){ // 오른쪽 끝 라벨 (겹침 회피)
+   const ends=[];
+   for(const s of cfg.series){
+    if((s.side||'L')!=='L')continue;
+    const d=dl,trf=tr2(s);if(!d)continue;
+    const pts=s.p.filter(p=&gt;{const t=F.t(p[0]);return t&gt;=x0&amp;&amp;t&lt;=x1});
+    if(!pts.length)continue;const lp=pts[pts.length-1];
+    ends.push({n:s.n,c:s.c,v:lp[1],y:T+ph-ph*(trf(lp[1])-d[0])/(d[1]-d[0]||1)})}
+   ends.sort((a,b)=&gt;a.y-b.y);
+   let prev=-99;for(const e2 of ends){e2.y=Math.max(e2.y,14,prev+13);prev=e2.y}
+   const over=ends.length?ends[ends.length-1].y-(H-10):0;
+   if(over&gt;0)for(const e2 of ends)e2.y-=over;
+   for(const e2 of ends)svg+=`&lt;text x="${W-R+4}" y="${e2.y.toFixed(1)}" font-size="10.5" font-weight="700" fill="${e2.c}"&gt;${e2.n} ${fmt(e2.v,1)}&lt;/text&gt;`}
+  const yrs=(x1-x0)/864e5/365,n=6;
+  for(let i=0;i&lt;=n;i++){const t=x0+(x1-x0)*i/n,d2=new Date(t);
+   const lab=yrs&gt;1.6?String(d2.getUTCFullYear()):String(d2.getUTCMonth()+1).padStart(2,'0')+'/'+String(d2.getUTCDate()).padStart(2,'0');
+   svg+=`&lt;text x="${X(t).toFixed(1)}" y="${H-8}" font-size="10" fill="#6e7681" text-anchor="middle"&gt;${lab}&lt;/text&gt;`}
+  svg+=`&lt;rect id="sel" x="0" y="${T}" width="0" height="${ph}" fill="#58a6ff22" stroke="#58a6ff55" style="display:none"/&gt;&lt;/svg&gt;`;
+  box.innerHTML=svg;box.appendChild(tip);
+  attach(box.querySelector('svg'),X,pw);
+ }
+ function attach(svgEl,X,pw){
+  const toVB=e=&gt;{const r=svgEl.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width*W}};
+  let drag=null;
+  svgEl.addEventListener('pointerdown',e=&gt;{drag={x0:toVB(e).x,px:e.clientX};svgEl.setPointerCapture(e.pointerId);tip.style.display='none'});
+  svgEl.addEventListener('pointermove',e=&gt;{
+   const v=toVB(e);
+   if(drag){const sel=svgEl.querySelector('#sel'),a=Math.min(drag.x0,v.x),b=Math.max(drag.x0,v.x);
+    sel.style.display='';sel.setAttribute('x',a);sel.setAttribute('width',b-a);return}
+   const t=state.x0+(state.x1-state.x0)*(v.x-L)/(pw||1);
+   if(t&lt;state.x0||t&gt;state.x1){tip.style.display='none';return}
+   let rows='',hd='';
+   const list=[];
+   for(const s of cfg.series){
+    const pts=s.p.filter(p=&gt;{const tt=F.t(p[0]);return tt&gt;=state.x0&amp;&amp;tt&lt;=state.x1});
+    if(!pts.length)continue;const p=nearest(pts,t);if(!hd)hd=p[0];
+    list.push({s,p})}
+   list.sort((a,b)=&gt;((b.s.side||'L')==='L'?b.p[1]:-1e18)-((a.s.side||'L')==='L'?a.p[1]:-1e18));
+   for(const {s,p} of list)
+    rows+=`&lt;div class="row"&gt;&lt;span class="dot" style="background:${s.c}"&gt;&lt;/span&gt;${s.n} &lt;b style="color:#e6edf3"&gt;${fmt(p[1],s.dec??1)}${s.u||''}&lt;/b&gt;&lt;span class="dt"&gt;${p[0].slice(5)}&lt;/span&gt;&lt;/div&gt;`;
+   tip.innerHTML=`&lt;b&gt;${hd}&lt;/b&gt;`+rows;tip.style.display='block';
+   const r=svgEl.getBoundingClientRect();
+   let tx=e.clientX-r.left+14;if(tx+165&gt;r.width)tx=e.clientX-r.left-175;
+   tip.style.left=tx+'px';tip.style.top=Math.max(4,e.clientY-r.top-20)+'px';
+  });
+  svgEl.addEventListener('pointerleave',()=&gt;{tip.style.display='none'});
+  svgEl.addEventListener('pointerup',e=&gt;{
+   const v=toVB(e);const sel=svgEl.querySelector('#sel');sel.style.display='none';
+   if(!drag)return;
+   const moved=Math.abs(e.clientX-drag.px),toLeft=v.x&lt;drag.x0;
+   const a=Math.min(drag.x0,v.x),b=Math.max(drag.x0,v.x);drag=null;
+   if(moved&lt;10)return;
+   if(toLeft){state.x0=cfg.x0;state.x1=cfg.x1;draw();if(cfg.onReset)cfg.onReset();return}
+   const t0=state.x0+(state.x1-state.x0)*(a-L)/(pw||1),t1=state.x0+(state.x1-state.x0)*(b-L)/(pw||1);
+   if(t1&gt;t0){state.x0=Math.max(cfg.x0,t0);state.x1=Math.min(cfg.x1,t1);draw()}
+  });
+  svgEl.addEventListener('dblclick',()=&gt;{state.x0=cfg.x0;state.x1=cfg.x1;draw();if(cfg.onReset)cfg.onReset()});
+ }
+ draw();
+ return {setDomain(a,b){state.x0=a;state.x1=b;draw()},state};
+}
+
+/* ─── 통합 차트 ─── */
+let logMode=false,crwvOn=false,main=null,curBtn=0;
+const allDates=Object.values(D.series).flatMap(a=&gt;a.map(p=&gt;p[0]));
+const firstT=Math.min(...allDates.map(F.t)),lastT=Math.max(...allDates.map(F.t));
+function mainSeries(){
+ return D.tickers.filter(t=&gt;D.series[t].length&gt;=2&amp;&amp;(t!=='CRWV'||logMode||crwvOn))
+  .map(t=&gt;({n:t,c:D.colors[t],u:'bp',w:t==='ORCL'||t==='CRWV'?2.4:1.8,p:D.series[t]}));
+}
+const BTNS=[['전체',null],['1y',365],['6m',182],['3m',91],['1m',30]];
+function domainFor(i){const dd=BTNS[i][1];return dd?Math.max(firstT,lastT-dd*864e5):firstT}
+function renderMain(){
+ main=chart(document.getElementById('mainc'),
+  {W:1000,H:400,x0:firstT,x1:lastT,log:logMode,gapDays:9,endLabels:true,hasR:true,
+   series:mainSeries(),decL:0,
+   onReset:()=&gt;setBtn(0,false)});
+ if(curBtn&gt;0)main.setDomain(domainFor(curBtn),lastT);
+}
+const zb=document.getElementById('zb');
+function setBtn(i,apply=true){curBtn=i;
+ zb.querySelectorAll('button').forEach((b,j)=&gt;b.classList.toggle('on',j===i));
+ if(apply)main.setDomain(domainFor(i),lastT)}
+BTNS.forEach(([lab],i)=&gt;{const b=document.createElement('button');b.textContent=lab;if(i===0)b.className='on';
+ b.onclick=()=&gt;setBtn(i);zb.appendChild(b)});
+document.getElementById('scLin').onclick=()=&gt;{logMode=false;tgl();renderMain()};
+document.getElementById('scLog').onclick=()=&gt;{logMode=true;tgl();renderMain()};
+function tgl(){document.getElementById('scLin').classList.toggle('on',!logMode);
+ document.getElementById('scLog').classList.toggle('on',logMode);
+ document.getElementById('crwvWrap').style.display=logMode?'none':'flex'}
+document.getElementById('crwvChk').onchange=e=&gt;{crwvOn=e.target.checked;renderMain()};
+renderMain();
+
+/* ─── 기업별 패널 ─── */
+const panels=document.getElementById('panels');
+function badge(obs,daysBack){
+ if(obs.length&lt;2)return null;
+ const [dl,vl]=obs[obs.length-1];
+ let base=null;
+ if(daysBack===0)base=obs[obs.length-2][1];
+ else{const tgt=new Date(F.t(dl)-daysBack*864e5).toISOString().slice(0,10);
+  for(let i=obs.length-1;i&gt;=0;i--)if(obs[i][0]&lt;=tgt){base=obs[i][1];break}}
+ if(base===null||base===0)return null;
+ const d=vl-base;return {bp:d,pct:d/base*100}}
+const BL=[['1일',0],['1주',7],['1달',30],['3달',91]];
+for(const t of D.tickers){
+ const obs=D.series[t];if(!obs.length)continue;
+ const el=document.createElement('div');el.className='panel';
+ const [dl,vl]=obs[obs.length-1];
+ let bg='';
+ for(const [lab,db] of BL){const b=badge(obs,db);
+  if(b)bg+=`&lt;span class="bg ${b.bp&gt;0?'bu':b.bp&lt;0?'bd':''}"&gt;${lab} ${b.bp&gt;0?'+':''}${fmt(b.bp,1)}bp (${b.pct&gt;0?'+':''}${fmt(b.pct,1)}%)&lt;/span&gt;`}
+ el.innerHTML=`&lt;div class="ph"&gt;&lt;b&gt;${D.names[t]} (${t})&lt;/b&gt;&lt;span class="pv" style="color:${D.colors[t]}"&gt;${fmt(vl,1)}bp&lt;/span&gt;&lt;/div&gt;
+  &lt;div class="bgs"&gt;${bg}&lt;/div&gt;&lt;div id="p_${t}"&gt;&lt;/div&gt;
+  &lt;div style="font-size:10.5px;color:var(--faint);margin-top:3px"&gt;${obs[0][0]} ~ ${dl} · ${obs.length}개 관측&lt;/div&gt;`;
+ panels.appendChild(el);
+ const px=(D.prices[t]||[]).filter(p=&gt;F.t(p[0])&gt;=F.t(obs[0][0]));
+ const marks=(D.events||[]).filter(e=&gt;e.t==='*'||e.t===t);
+ chart(document.getElementById('p_'+t),
+  {W:520,H:230,x0:F.t(obs[0][0]),x1:F.t(dl),gapDays:9,hasR:px.length&gt;1,marks,
+   series:[{n:'CDS',c:D.colors[t],u:'bp',w:2,p:obs,dots:true}]
+    .concat(px.length&gt;1?[{n:'주가',c:'#6e7681',u:'$',w:1.3,o:.8,side:'R',p:px,dec:2}]:[])});
+}
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"""
+
+
+if __name__ == "__main__":
+    main()
+</pre></details>
 <details class="src" data-s><summary><b>chart_images.py</b><span class="d">종목별 3-시리즈 차트 PNG 생성 (텔레그램 sendPhoto용).</span><span class="t">163줄 · 6KB · 2026-07-27</span></summary><pre># -*- coding: utf-8 -*-
 """종목별 3-시리즈 차트 PNG 생성 (텔레그램 sendPhoto용).
 좌축(원): 현재주가(검정 선) + 목표가 컨센 평균선(파란 점선) + 목표가 최저~최고 밴드(파란 음영, 한경컨센서스)
@@ -9202,7 +9990,7 @@ def extract_from_header(text, header_prefix):
     "date":  "2026-07-21",
     "notes":  "15:00~15:15 회사 전체 개요(Overview) 설명, 15:15부터 Q\u0026A 세션 시작. 사용자 강조: Q\u0026A가 가장 중요 — 모든 문답을 빠짐없이 Q) 질문/답변 형태로 정리할 것.\n[15:40] 참고자료: 교보증권 리포트 2건(2026-07-03, 2026-02-04 인뎁스) 텍스트 전량 포함 - 수치·명칭 교정용. IR자료 2026(발표 앞부분 사용 자료)는 이미지 기반이라 텍스트 미추출, Overview 파트는 전사 기반으로 정리할 것."
 }</pre></details>
-<details class="src" data-s><summary><b>crontab.txt</b><span class="d">===== 수급html 자동화 (Windows→맥 이관, 이관진행.md 참조) =====</span><span class="t">194줄 · 21KB · 2026-08-27</span></summary><pre># ===== 수급html 자동화 (Windows→맥 이관, 이관진행.md 참조) =====
+<details class="src" data-s><summary><b>crontab.txt</b><span class="d">===== 수급html 자동화 (Windows→맥 이관, 이관진행.md 참조) =====</span><span class="t">200줄 · 22KB · 2026-08-27</span></summary><pre># ===== 수급html 자동화 (Windows→맥 이관, 이관진행.md 참조) =====
 # 표준 인터프리터: /Users/1ne/수급html/.venv/bin/python3
 # ⚠️ macOS 키체인은 cron(로그인 세션 밖)에서 접근 불가 → 모든 자격증명은 파일 폴백 사용
 #    키움 .kiwoom_env / claude .claude_env / git ~/.git-credentials (전부 600)
@@ -9395,6 +10183,12 @@ def extract_from_header(text, header_prefix):
 #    --watch는 입력 지문(book_digest.json)이 같으면 무출력 종료. push는 git_guard
 */5 * * * * cd /Users/1ne/수급html &amp;&amp; .venv/bin/python3 book_build.py --watch &gt;&gt; /Users/1ne/수급html/logs/book.log 2&gt;&amp;1
 10 22 * * * cd /Users/1ne/수급html &amp;&amp; .venv/bin/python3 book_build.py &gt;&gt; /Users/1ne/수급html/logs/book.log 2&gt;&amp;1
+
+# 72 글로벌 크레딧·유동성 (평일 07:15) — us_liq_build.py(FRED WALCL·WRESBAL / FiscalData TGA 당일종가 / RRPONTSYD
+#    / SOFR-IORB / yfinance DXY·유가·SPX·KOSPI → site/usliq.html) → cds_build.py(upperlimitprice CDS 미러
+#    → cds_history.json 누적 + 이상징후 텔레그램 경보 + 주가 오버레이 → site/cds.html)
+#    원본 07:10 KST 갱신 직후. 허브는 credit.html 통합 탭(서브탭 2개). push는 git_guard, FAB 탭 'credit'
+15 7 * * 1-5 cd /Users/1ne/수급html &amp;&amp; .venv/bin/python3 us_liq_build.py &gt;&gt; /Users/1ne/수급html/logs/usliq.log 2&gt;&amp;1 &amp;&amp; .venv/bin/python3 cds_build.py &gt;&gt; /Users/1ne/수급html/logs/cds.log 2&gt;&amp;1
 </pre></details>
 <details class="src" data-s><summary><b>daily_close.py</b><span class="d"></span><span class="t">109줄 · 4KB · 2026-08-05</span></summary><pre># -*- coding: utf-8 -*-
 """
@@ -26077,7 +26871,7 @@ xlsxwriter==3.2.9
 yfinance==1.5.1
 yt-dlp==2026.7.4
 </pre></details>
-<details class="src" data-s><summary><b>rl_refresh_poll.py</b><span class="d"></span><span class="t">181줄 · 9KB · 2026-08-27</span></summary><pre># -*- coding: utf-8 -*-
+<details class="src" data-s><summary><b>rl_refresh_poll.py</b><span class="d"></span><span class="t">183줄 · 9KB · 2026-08-27</span></summary><pre># -*- coding: utf-8 -*-
 """
 #69 Research Lab 수동 갱신 폴러 — 사이트의 '갱신' 버튼(Worker 큐)을 1분마다 확인해
 탭별 갱신 체인을 즉시 실행하고 결과를 큐에 보고한다.
@@ -26147,6 +26941,8 @@ TAB_JOBS = {
     "trade10":   _JUSIK,
     "taiwan":    _JUSIK,
     "chem":      _j([(os.path.join(HERE, "energy_price"), [PY, "update_daily.py"])], ["site/data/chem_prices.json"], 900),
+    "credit":    _j([(HERE, [PY, "us_liq_build.py"]), (HERE, [PY, "cds_build.py"])],
+                    ["site/usliq.html", "site/cds.html"], 1200),
     "telegram":  _j([(DIGEST, [DGPY, "collect_today_feed.py"])], ["site/data/telegram.json"], 900),
     "taerin":    _j([(DIGEST, [DGPY, "taerin_publish.py"])], [], 900),  # 산출물은 별도 repo(taerin)
     "thememap":  _j([(DIGEST, [DGPY, "build_thememap.py"])], ["site/data/thememap.json"], 1200),
@@ -30111,315 +30907,342 @@ def main():
 if __name__ == "__main__":
     sys.exit(main())
 </pre></details>
-<details class="src" data-s><summary><b>sector_groups.json</b><span class="d"></span><span class="t">309줄 · 13KB · 2026-08-24</span></summary><pre>{
-  "_readme": "sectorcap_build.py 업종 분류 정의. groups=업종 목록(색상 배정 canonical order, 표시는 시총순). fallback=KRX 산업분류(sector-report/theme_map.json)→커스텀 업종 자동 매핑(꼬리 종목용). override=투자포인트 기준 수동 분류 — 키는 '코드 종목명'(이름은 사람 읽기용, 빌드는 앞 6자리+α 코드만 사용), 폴백보다 우선. 신규상장·미분류는 '기타'로 빠지며 빌드 로그에 경고.",
-  "groups": [
-    "반도체 메모리", "반도체 소부장", "반도체 기판", "반도체 설계·파운드리",
-    "이차전지", "전력기기·전선", "원전·발전설비", "신재생·수소",
-    "조선·기자재", "방산·우주", "자동차·부품", "기계·건설기계", "로봇",
-    "제약·바이오", "의료기기·미용의료", "화장품",
-    "인터넷·플랫폼", "게임", "엔터·콘텐츠", "SW·AI·IT서비스",
-    "전자부품·하드웨어", "디스플레이",
-    "은행·금융지주", "증권", "보험", "기타 금융", "지주·복합",
-    "정유", "화학·소재", "철강·비철", "음식료·담배",
-    "유통·의류·소비재", "건설·건자재", "통신", "유틸리티·가스",
-    "운송·물류", "여행·레저", "기타"
-  ],
-  "fallback": {
-    "반도체와반도체장비": "반도체 소부장",
-    "전기장비": "전력기기·전선",
-    "전동기, 발전기 및 전기 변환 · 공급 · 제어 장치 제조업": "전력기기·전선",
-    "기타 전기장비 제조업": "전력기기·전선",
-    "전기제품": "이차전지",
-    "제약": "제약·바이오",
-    "생물공학": "제약·바이오",
-    "생명과학도구및서비스": "제약·바이오",
-    "건강관리업체및서비스": "제약·바이오",
-    "건강관리기술": "의료기기·미용의료",
-    "건강관리장비와용품": "의료기기·미용의료",
-    "화장품": "화장품",
-    "우주항공과국방": "방산·우주",
-    "조선": "조선·기자재",
-    "에너지장비및서비스": "조선·기자재",
-    "자동차": "자동차·부품",
-    "자동차부품": "자동차·부품",
-    "게임엔터테인먼트": "게임",
-    "방송과엔터테인먼트": "엔터·콘텐츠",
-    "광고": "엔터·콘텐츠",
-    "출판": "엔터·콘텐츠",
-    "레저용장비와제품": "여행·레저",
-    "호텔,레스토랑,레저": "여행·레저",
-    "은행": "은행·금융지주",
-    "증권": "증권",
-    "손해보험": "보험",
-    "생명보험": "보험",
-    "카드": "기타 금융",
-    "기타 금융업": "기타 금융",
-    "기타금융": "기타 금융",
-    "창업투자": "기타 금융",
-    "금융지원 서비스업": "기타 금융",
-    "복합기업": "지주·복합",
-    "IT서비스": "SW·AI·IT서비스",
-    "소프트웨어": "SW·AI·IT서비스",
-    "양방향미디어와서비스": "인터넷·플랫폼",
-    "인터넷과카탈로그소매": "인터넷·플랫폼",
-    "컴퓨터와주변기기": "전자부품·하드웨어",
-    "사무용전자제품": "전자부품·하드웨어",
-    "핸드셋": "전자부품·하드웨어",
-    "전자장비와기기": "전자부품·하드웨어",
-    "전자부품 제조업": "전자부품·하드웨어",
-    "전자제품": "전자부품·하드웨어",
-    "통신장비": "전자부품·하드웨어",
-    "디스플레이패널": "디스플레이",
-    "디스플레이장비및부품": "디스플레이",
-    "화학": "화학·소재",
-    "기타 화학제품 제조업": "화학·소재",
-    "포장재": "화학·소재",
-    "종이와목재": "화학·소재",
-    "석유와가스": "정유",
-    "철강": "철강·비철",
-    "비철금속": "철강·비철",
-    "식품": "음식료·담배",
-    "음료": "음식료·담배",
-    "담배": "음식료·담배",
-    "식품과기본식료품소매": "음식료·담배",
-    "백화점과일반상점": "유통·의류·소비재",
-    "판매업체": "유통·의류·소비재",
-    "전문소매": "유통·의류·소비재",
-    "무역회사와판매업체": "유통·의류·소비재",
-    "섬유,의류,신발,호화품": "유통·의류·소비재",
-    "가정용품": "유통·의류·소비재",
-    "가정용기기와용품": "유통·의류·소비재",
-    "가구": "유통·의류·소비재",
-    "기타 전문 도매업": "유통·의류·소비재",
-    "건설": "건설·건자재",
-    "토목 건설업": "건설·건자재",
-    "건축자재": "건설·건자재",
-    "건축제품": "건설·건자재",
-    "기계": "기계·건설기계",
-    "도로와철도운송": "운송·물류",
-    "항공화물운송과물류": "운송·물류",
-    "해운사": "운송·물류",
-    "항공사": "운송·물류",
-    "운송인프라": "운송·물류",
-    "무선통신서비스": "통신",
-    "다각화된통신서비스": "통신",
-    "전기유틸리티": "유틸리티·가스",
-    "가스유틸리티": "유틸리티·가스",
-    "복합유틸리티": "유틸리티·가스",
-    "가스 제조 및 배관공급업": "유틸리티·가스",
-    "교육서비스": "기타",
-    "상업서비스와공급품": "기타",
-    "다각화된소비자서비스": "기타",
-    "부동산": "기타"
-  },
-  "override": {
-    "005930 삼성전자": "반도체 메모리",
-    "005935 삼성전자우": "반도체 메모리",
-    "000660 SK하이닉스": "반도체 메모리",
-    "402340 SK스퀘어": "반도체 메모리",
-
-    "000990 DB하이텍": "반도체 설계·파운드리",
-    "108320 LX세미콘": "반도체 설계·파운드리",
-    "440110 파두": "반도체 설계·파운드리",
-    "080220 제주반도체": "반도체 설계·파운드리",
-    "399720 가온칩스": "반도체 설계·파운드리",
-    "490470 세미파이브": "반도체 설계·파운드리",
-    "200710 에이디테크놀로지": "반도체 설계·파운드리",
-    "445090 에이직랜드": "반도체 설계·파운드리",
-    "394280 오픈엣지테크놀로지": "반도체 설계·파운드리",
-    "094360 칩스앤미디어": "반도체 설계·파운드리",
-    "452430 사피엔반도체": "반도체 설계·파운드리",
-    "094170 동운아나텍": "반도체 설계·파운드리",
-
-    "195870 해성디에스": "반도체 기판",
-    "007660 이수페타시스": "반도체 기판",
-    "353200 대덕전자": "반도체 기판",
-    "007810 코리아써키트": "반도체 기판",
-    "008060 대덕": "반도체 기판",
-    "011790 SKC": "반도체 기판",
-    "222800 심텍": "반도체 기판",
-    "036710 심텍홀딩스": "반도체 기판",
-    "420770 기가비스": "반도체 기판",
-    "356860 티엘비": "반도체 기판",
-    "219130 타이거일렉": "반도체 기판",
-    "323280 태성": "반도체 기판",
-    "161580 필옵틱스": "반도체 기판",
-
-    "014680 한솔케미칼": "반도체 소부장",
-    "159010 아스플로": "반도체 소부장",
-    "140860 파크시스템스": "반도체 소부장",
-    "281740 레이크머티리얼즈": "반도체 소부장",
-    "104830 원익머트리얼즈": "반도체 소부장",
-    "036830 솔브레인홀딩스": "반도체 소부장",
-
-    "051910 LG화학": "이차전지",
-    "051915 LG화학우": "이차전지",
-    "003670 포스코퓨처엠": "이차전지",
-    "020150 롯데에너지머티리얼즈": "이차전지",
-    "336370 솔루스첨단소재": "이차전지",
-    "005070 코스모신소재": "이차전지",
-    "005420 코스모화학": "이차전지",
-    "093370 후성": "이차전지",
-    "001570 금양": "이차전지",
-    "457190 이수스페셜티케미컬": "이차전지",
-    "086520 에코프로": "이차전지",
-    "078600 대주전자재료": "이차전지",
-    "121600 나노신소재": "이차전지",
-    "114190 강원에너지": "이차전지",
-    "107640 한중엔시에스": "이차전지",
-
-    "042370 비츠로테크": "전력기기·전선",
-    "060370 LS마린솔루션": "전력기기·전선",
-
-    "034020 두산에너빌리티": "원전·발전설비",
-    "052690 한전기술": "원전·발전설비",
-    "051600 한전KPS": "원전·발전설비",
-    "100840 SNT에너지": "원전·발전설비",
-    "032820 우리기술": "원전·발전설비",
-    "083650 비에이치아이": "원전·발전설비",
-    "036190 금화피에스시": "원전·발전설비",
-
-    "009830 한화솔루션": "신재생·수소",
-    "112610 씨에스윈드": "신재생·수소",
-    "475150 SK이터닉스": "신재생·수소",
-    "322000 HD현대에너지솔루션": "신재생·수소",
-    "100090 SK오션플랜트": "신재생·수소",
-    "010060 OCI홀딩스": "신재생·수소",
-    "336260 두산퓨얼셀": "신재생·수소",
-    "271940 일진하이솔루스": "신재생·수소",
-    "126340 비나텍": "신재생·수소",
-    "044490 태웅": "신재생·수소",
-    "018000 유니슨": "신재생·수소",
-    "389260 대명에너지": "신재생·수소",
-
-    "014620 성광벤드": "조선·기자재",
-    "023160 태광": "조선·기자재",
-    "013030 하이록코리아": "조선·기자재",
-    "452280 한선엔지니어링": "조선·기자재",
-    "033500 동성화인텍": "조선·기자재",
-
-    "003570 SNT다이내믹스": "방산·우주",
-    "064960 SNT모티브": "방산·우주",
-    "295310 에이치브이엠": "방산·우주",
-    "189300 인텔리안테크": "방산·우주",
-
-    "454910 두산로보틱스": "로봇",
-    "277810 레인보우로보틱스": "로봇",
-    "108490 로보티즈": "로봇",
-    "388720 유일로보틱스": "로봇",
-    "090710 휴림로봇": "로봇",
-    "090360 로보스타": "로봇",
-    "466100 클로봇": "로봇",
-    "056080 유진로봇": "로봇",
-    "348340 뉴로메카": "로봇",
-    "117730 티로보틱스": "로봇",
-    "389500 에스비비테크": "로봇",
-    "475400 씨메스로보틱스": "로봇",
-    "484810 티엑스알로보틱스": "로봇",
-    "459510 나우로보틱스": "로봇",
-    "160190 하이젠알앤엠": "로봇",
-    "319400 현대무벡스": "로봇",
-    "439960 코스모로보틱스": "로봇",
-    "455900 엔젤로보틱스": "로봇",
-    "058610 에스피지": "로봇",
-
-    "082270 젬백스": "제약·바이오",
-    "024850 HLB이노베이션": "제약·바이오",
-    "028300 HLB": "제약·바이오",
-    "067630 HLB생명과학": "제약·바이오",
-    "140410 메지온": "제약·바이오",
-    "048410 현대바이오": "제약·바이오",
-    "290690 아리바이오홀딩스": "제약·바이오",
-    "052020 에스티큐브": "제약·바이오",
-    "950160 코오롱티슈진": "제약·바이오",
-    "950220 네오이뮨텍": "제약·바이오",
-    "950200 소마젠": "제약·바이오",
-    "950260 인제니아테라퓨틱스(Reg.S)": "제약·바이오",
-    "950210 프레스티지바이오파마": "제약·바이오",
-    "005690 파미셀": "제약·바이오",
-    "0120G0 삼양바이오팜": "제약·바이오",
-
-    "096530 씨젠": "의료기기·미용의료",
-    "206640 바디텍메드": "의료기기·미용의료",
-    "950130 엑세스바이오": "의료기기·미용의료",
-
-    "257720 실리콘투": "화장품",
-    "251970 펌텍코리아": "화장품",
-    "950140 잉글우드랩": "화장품",
-    "900300 오가닉티코스메틱": "화장품",
-    "900310 컬러레이": "화장품",
-
-    "376300 디어유": "엔터·콘텐츠",
-
-    "377300 카카오페이": "인터넷·플랫폼",
-    "143240 사람인": "인터넷·플랫폼",
-
-    "108860 셀바스AI": "SW·AI·IT서비스",
-    "477850 마키나락스": "SW·AI·IT서비스",
-    "060900 에이전트AI": "SW·AI·IT서비스",
-    "203650 드림시큐리티": "SW·AI·IT서비스",
-
-    "001820 삼화콘덴서": "전자부품·하드웨어",
-    "178920 PI첨단소재": "전자부품·하드웨어",
-    "043260 성호전자": "전자부품·하드웨어",
-
-    "024110 기업은행": "은행·금융지주",
-    "323410 카카오뱅크": "은행·금융지주",
-    "279570 케이뱅크": "은행·금융지주",
-    "006220 제주은행": "은행·금융지주",
-
-    "00680K 미래에셋증권2우B": "증권",
-
-    "034730 SK": "지주·복합",
-    "006120 SK디스커버리": "지주·복합",
-    "036530 SNT홀딩스": "지주·복합",
-    "000210 DL": "지주·복합",
-    "00104K CJ4우(전환)": "지주·복합",
-
-    "298020 효성티앤씨": "화학·소재",
-
-    "000670 영풍": "철강·비철",
-
-    "004970 신라교역": "음식료·담배",
-    "030720 동원수산": "음식료·담배",
-    "900340 윙입푸드": "음식료·담배",
-    "054050 NH농우바이오": "음식료·담배",
-
-    "005090 SGC에너지": "유틸리티·가스",
-    "053050 지에스이": "유틸리티·가스",
-    "0001A0 덕양에너젠": "유틸리티·가스",
-
-    "950170 JTC": "유통·의류·소비재",
-    "014470 부방": "유통·의류·소비재",
-    "001000 신라섬유": "유통·의류·소비재",
-
-    "950190 고스트스튜디오": "게임",
-
-    "900260 로스웰": "자동차·부품",
-    "900140 엘브이엠씨홀딩스": "자동차·부품",
-
-    "178320 서진시스템": "이차전지",
-    "446540 메가터치": "이차전지",
-    "437730 삼현": "로봇",
-    "489790 한화비전": "반도체 소부장",
-    "383310 에코프로에이치엔": "반도체 소부장",
-    "127120 제이에스링크": "철강·비철",
-    "0011T0 채비": "자동차·부품",
-    "121800 비덴트": "기타 금융",
-
-    "036800 나이스정보통신": "SW·AI·IT서비스",
-    "030190 NICE평가정보": "기타 금융",
-    "034950 한국기업평가": "기타 금융",
-    "123890 한국자산신탁": "기타 금융",
-    "900290 GRT": "화학·소재",
-
-    "065350 신성델타테크": "기타",
-    "012750 에스원": "기타",
-    "215200 메가스터디교육": "기타"
-  }
-}
-</pre></details>
+<details class="src" data-s><summary><b>sector_groups.json</b><span class="d"></span><span class="t">336줄 · 14KB · 2026-08-27</span></summary><pre>{
+ "_readme": "sectorcap_build.py 업종 분류 정의. groups=업종 목록(색상 배정 canonical order, 표시는 시총순). fallback=KRX 산업분류(sector-report/theme_map.json)→커스텀 업종 자동 매핑(꼬리 종목용). override=투자포인트 기준 수동 분류 — 키는 '코드 종목명'(이름은 사람 읽기용, 빌드는 앞 6자리+α 코드만 사용), 폴백보다 우선. 신규상장·미분류는 '기타'로 빠지며 빌드 로그에 경고.",
+ "groups": [
+  "반도체 메모리",
+  "반도체 소부장",
+  "반도체 기판",
+  "반도체 설계·파운드리",
+  "이차전지",
+  "전력기기·전선",
+  "원전·발전설비",
+  "신재생·수소",
+  "조선·기자재",
+  "방산·우주",
+  "자동차·부품",
+  "기계·건설기계",
+  "로봇",
+  "제약·바이오",
+  "의료기기·미용의료",
+  "화장품",
+  "인터넷·플랫폼",
+  "게임",
+  "엔터·콘텐츠",
+  "SW·AI·IT서비스",
+  "전자부품·하드웨어",
+  "디스플레이",
+  "은행·금융지주",
+  "증권",
+  "보험",
+  "기타 금융",
+  "지주·복합",
+  "정유",
+  "화학·소재",
+  "철강·비철",
+  "음식료·담배",
+  "유통·의류·소비재",
+  "건설·건자재",
+  "통신",
+  "유틸리티·가스",
+  "운송·물류",
+  "여행·레저",
+  "기타"
+ ],
+ "fallback": {
+  "반도체와반도체장비": "반도체 소부장",
+  "전기장비": "전력기기·전선",
+  "전동기, 발전기 및 전기 변환 · 공급 · 제어 장치 제조업": "전력기기·전선",
+  "기타 전기장비 제조업": "전력기기·전선",
+  "전기제품": "이차전지",
+  "제약": "제약·바이오",
+  "생물공학": "제약·바이오",
+  "생명과학도구및서비스": "제약·바이오",
+  "건강관리업체및서비스": "제약·바이오",
+  "건강관리기술": "의료기기·미용의료",
+  "건강관리장비와용품": "의료기기·미용의료",
+  "화장품": "화장품",
+  "우주항공과국방": "방산·우주",
+  "조선": "조선·기자재",
+  "에너지장비및서비스": "조선·기자재",
+  "자동차": "자동차·부품",
+  "자동차부품": "자동차·부품",
+  "게임엔터테인먼트": "게임",
+  "방송과엔터테인먼트": "엔터·콘텐츠",
+  "광고": "엔터·콘텐츠",
+  "출판": "엔터·콘텐츠",
+  "레저용장비와제품": "여행·레저",
+  "호텔,레스토랑,레저": "여행·레저",
+  "은행": "은행·금융지주",
+  "증권": "증권",
+  "손해보험": "보험",
+  "생명보험": "보험",
+  "카드": "기타 금융",
+  "기타 금융업": "기타 금융",
+  "기타금융": "기타 금융",
+  "창업투자": "기타 금융",
+  "금융지원 서비스업": "기타 금융",
+  "복합기업": "지주·복합",
+  "IT서비스": "SW·AI·IT서비스",
+  "소프트웨어": "SW·AI·IT서비스",
+  "양방향미디어와서비스": "인터넷·플랫폼",
+  "인터넷과카탈로그소매": "인터넷·플랫폼",
+  "컴퓨터와주변기기": "전자부품·하드웨어",
+  "사무용전자제품": "전자부품·하드웨어",
+  "핸드셋": "전자부품·하드웨어",
+  "전자장비와기기": "전자부품·하드웨어",
+  "전자부품 제조업": "전자부품·하드웨어",
+  "전자제품": "전자부품·하드웨어",
+  "통신장비": "전자부품·하드웨어",
+  "디스플레이패널": "디스플레이",
+  "디스플레이장비및부품": "디스플레이",
+  "화학": "화학·소재",
+  "기타 화학제품 제조업": "화학·소재",
+  "포장재": "화학·소재",
+  "종이와목재": "화학·소재",
+  "석유와가스": "정유",
+  "철강": "철강·비철",
+  "비철금속": "철강·비철",
+  "식품": "음식료·담배",
+  "음료": "음식료·담배",
+  "담배": "음식료·담배",
+  "식품과기본식료품소매": "음식료·담배",
+  "백화점과일반상점": "유통·의류·소비재",
+  "판매업체": "유통·의류·소비재",
+  "전문소매": "유통·의류·소비재",
+  "무역회사와판매업체": "유통·의류·소비재",
+  "섬유,의류,신발,호화품": "유통·의류·소비재",
+  "가정용품": "유통·의류·소비재",
+  "가정용기기와용품": "유통·의류·소비재",
+  "가구": "유통·의류·소비재",
+  "기타 전문 도매업": "유통·의류·소비재",
+  "건설": "건설·건자재",
+  "토목 건설업": "건설·건자재",
+  "건축자재": "건설·건자재",
+  "건축제품": "건설·건자재",
+  "기계": "기계·건설기계",
+  "도로와철도운송": "운송·물류",
+  "항공화물운송과물류": "운송·물류",
+  "해운사": "운송·물류",
+  "항공사": "운송·물류",
+  "운송인프라": "운송·물류",
+  "무선통신서비스": "통신",
+  "다각화된통신서비스": "통신",
+  "전기유틸리티": "유틸리티·가스",
+  "가스유틸리티": "유틸리티·가스",
+  "복합유틸리티": "유틸리티·가스",
+  "가스 제조 및 배관공급업": "유틸리티·가스",
+  "교육서비스": "기타",
+  "상업서비스와공급품": "기타",
+  "다각화된소비자서비스": "기타",
+  "부동산": "기타"
+ },
+ "override": {
+  "005930 삼성전자": "반도체 메모리",
+  "005935 삼성전자우": "반도체 메모리",
+  "000660 SK하이닉스": "반도체 메모리",
+  "402340 SK스퀘어": "반도체 메모리",
+  "000990 DB하이텍": "반도체 설계·파운드리",
+  "108320 LX세미콘": "반도체 설계·파운드리",
+  "440110 파두": "반도체 설계·파운드리",
+  "080220 제주반도체": "반도체 설계·파운드리",
+  "399720 가온칩스": "반도체 설계·파운드리",
+  "490470 세미파이브": "반도체 설계·파운드리",
+  "200710 에이디테크놀로지": "반도체 설계·파운드리",
+  "445090 에이직랜드": "반도체 설계·파운드리",
+  "394280 오픈엣지테크놀로지": "반도체 설계·파운드리",
+  "094360 칩스앤미디어": "반도체 설계·파운드리",
+  "452430 사피엔반도체": "반도체 설계·파운드리",
+  "094170 동운아나텍": "반도체 설계·파운드리",
+  "195870 해성디에스": "반도체 기판",
+  "007660 이수페타시스": "반도체 기판",
+  "353200 대덕전자": "반도체 기판",
+  "007810 코리아써키트": "반도체 기판",
+  "008060 대덕": "반도체 기판",
+  "011790 SKC": "반도체 기판",
+  "222800 심텍": "반도체 기판",
+  "036710 심텍홀딩스": "반도체 기판",
+  "420770 기가비스": "반도체 기판",
+  "356860 티엘비": "반도체 기판",
+  "219130 타이거일렉": "반도체 기판",
+  "323280 태성": "반도체 기판",
+  "161580 필옵틱스": "반도체 기판",
+  "014680 한솔케미칼": "반도체 소부장",
+  "159010 아스플로": "반도체 소부장",
+  "140860 파크시스템스": "반도체 소부장",
+  "281740 레이크머티리얼즈": "반도체 소부장",
+  "104830 원익머트리얼즈": "반도체 소부장",
+  "036830 솔브레인홀딩스": "반도체 소부장",
+  "051910 LG화학": "이차전지",
+  "051915 LG화학우": "이차전지",
+  "003670 포스코퓨처엠": "이차전지",
+  "020150 롯데에너지머티리얼즈": "이차전지",
+  "336370 솔루스첨단소재": "이차전지",
+  "005070 코스모신소재": "이차전지",
+  "005420 코스모화학": "이차전지",
+  "093370 후성": "이차전지",
+  "001570 금양": "이차전지",
+  "457190 이수스페셜티케미컬": "이차전지",
+  "086520 에코프로": "이차전지",
+  "078600 대주전자재료": "이차전지",
+  "121600 나노신소재": "이차전지",
+  "114190 강원에너지": "이차전지",
+  "107640 한중엔시에스": "이차전지",
+  "042370 비츠로테크": "전력기기·전선",
+  "060370 LS마린솔루션": "전력기기·전선",
+  "034020 두산에너빌리티": "원전·발전설비",
+  "052690 한전기술": "원전·발전설비",
+  "051600 한전KPS": "원전·발전설비",
+  "100840 SNT에너지": "원전·발전설비",
+  "032820 우리기술": "원전·발전설비",
+  "083650 비에이치아이": "원전·발전설비",
+  "036190 금화피에스시": "원전·발전설비",
+  "009830 한화솔루션": "신재생·수소",
+  "112610 씨에스윈드": "신재생·수소",
+  "475150 SK이터닉스": "신재생·수소",
+  "322000 HD현대에너지솔루션": "신재생·수소",
+  "100090 SK오션플랜트": "신재생·수소",
+  "010060 OCI홀딩스": "신재생·수소",
+  "336260 두산퓨얼셀": "신재생·수소",
+  "271940 일진하이솔루스": "신재생·수소",
+  "126340 비나텍": "신재생·수소",
+  "044490 태웅": "신재생·수소",
+  "018000 유니슨": "신재생·수소",
+  "389260 대명에너지": "신재생·수소",
+  "014620 성광벤드": "조선·기자재",
+  "023160 태광": "조선·기자재",
+  "013030 하이록코리아": "조선·기자재",
+  "452280 한선엔지니어링": "조선·기자재",
+  "033500 동성화인텍": "조선·기자재",
+  "003570 SNT다이내믹스": "방산·우주",
+  "064960 SNT모티브": "방산·우주",
+  "295310 에이치브이엠": "방산·우주",
+  "189300 인텔리안테크": "방산·우주",
+  "454910 두산로보틱스": "로봇",
+  "277810 레인보우로보틱스": "로봇",
+  "108490 로보티즈": "로봇",
+  "388720 유일로보틱스": "로봇",
+  "090710 휴림로봇": "로봇",
+  "090360 로보스타": "로봇",
+  "466100 클로봇": "로봇",
+  "056080 유진로봇": "로봇",
+  "348340 뉴로메카": "로봇",
+  "117730 티로보틱스": "로봇",
+  "389500 에스비비테크": "로봇",
+  "475400 씨메스로보틱스": "로봇",
+  "484810 티엑스알로보틱스": "로봇",
+  "459510 나우로보틱스": "로봇",
+  "160190 하이젠알앤엠": "로봇",
+  "319400 현대무벡스": "로봇",
+  "439960 코스모로보틱스": "로봇",
+  "455900 엔젤로보틱스": "로봇",
+  "058610 에스피지": "로봇",
+  "082270 젬백스": "제약·바이오",
+  "024850 HLB이노베이션": "제약·바이오",
+  "028300 HLB": "제약·바이오",
+  "067630 HLB생명과학": "제약·바이오",
+  "140410 메지온": "제약·바이오",
+  "048410 현대바이오": "제약·바이오",
+  "290690 아리바이오홀딩스": "제약·바이오",
+  "052020 에스티큐브": "제약·바이오",
+  "950160 코오롱티슈진": "제약·바이오",
+  "950220 네오이뮨텍": "제약·바이오",
+  "950200 소마젠": "제약·바이오",
+  "950260 인제니아테라퓨틱스(Reg.S)": "제약·바이오",
+  "950210 프레스티지바이오파마": "제약·바이오",
+  "005690 파미셀": "제약·바이오",
+  "0120G0 삼양바이오팜": "제약·바이오",
+  "096530 씨젠": "의료기기·미용의료",
+  "206640 바디텍메드": "의료기기·미용의료",
+  "950130 엑세스바이오": "의료기기·미용의료",
+  "257720 실리콘투": "화장품",
+  "251970 펌텍코리아": "화장품",
+  "950140 잉글우드랩": "화장품",
+  "900300 오가닉티코스메틱": "화장품",
+  "900310 컬러레이": "화장품",
+  "376300 디어유": "엔터·콘텐츠",
+  "377300 카카오페이": "인터넷·플랫폼",
+  "143240 사람인": "인터넷·플랫폼",
+  "108860 셀바스AI": "SW·AI·IT서비스",
+  "477850 마키나락스": "SW·AI·IT서비스",
+  "060900 에이전트AI": "SW·AI·IT서비스",
+  "203650 드림시큐리티": "SW·AI·IT서비스",
+  "001820 삼화콘덴서": "전자부품·하드웨어",
+  "178920 PI첨단소재": "전자부품·하드웨어",
+  "043260 성호전자": "전자부품·하드웨어",
+  "024110 기업은행": "은행·금융지주",
+  "323410 카카오뱅크": "은행·금융지주",
+  "279570 케이뱅크": "은행·금융지주",
+  "006220 제주은행": "은행·금융지주",
+  "00680K 미래에셋증권2우B": "증권",
+  "034730 SK": "지주·복합",
+  "006120 SK디스커버리": "지주·복합",
+  "036530 SNT홀딩스": "지주·복합",
+  "000210 DL": "지주·복합",
+  "00104K CJ4우(전환)": "지주·복합",
+  "298020 효성티앤씨": "화학·소재",
+  "000670 영풍": "철강·비철",
+  "004970 신라교역": "음식료·담배",
+  "030720 동원수산": "음식료·담배",
+  "900340 윙입푸드": "음식료·담배",
+  "054050 NH농우바이오": "음식료·담배",
+  "005090 SGC에너지": "유틸리티·가스",
+  "053050 지에스이": "유틸리티·가스",
+  "0001A0 덕양에너젠": "유틸리티·가스",
+  "950170 JTC": "유통·의류·소비재",
+  "014470 부방": "유통·의류·소비재",
+  "001000 신라섬유": "유통·의류·소비재",
+  "950190 고스트스튜디오": "게임",
+  "900260 로스웰": "자동차·부품",
+  "900140 엘브이엠씨홀딩스": "자동차·부품",
+  "178320 서진시스템": "이차전지",
+  "446540 메가터치": "이차전지",
+  "437730 삼현": "로봇",
+  "489790 한화비전": "전자부품·하드웨어",
+  "383310 에코프로에이치엔": "반도체 소부장",
+  "127120 제이에스링크": "철강·비철",
+  "0011T0 채비": "자동차·부품",
+  "121800 비덴트": "기타 금융",
+  "036800 나이스정보통신": "SW·AI·IT서비스",
+  "030190 NICE평가정보": "기타 금융",
+  "034950 한국기업평가": "기타 금융",
+  "123890 한국자산신탁": "기타 금융",
+  "900290 GRT": "화학·소재",
+  "065350 신성델타테크": "기타",
+  "012750 에스원": "SW·AI·IT서비스",
+  "215200 메가스터디교육": "기타",
+  "210980 SK디앤디": "건설·건자재",
+  "049720 고려신용정보": "기타 금융",
+  "0218L0 네오뷰": "디스플레이",
+  "417030 니어스랩": "방산·우주",
+  "377450 리파인": "기타 금융",
+  "0039P0 매드업": "SW·AI·IT서비스",
+  "0088M0 메쥬": "의료기기·미용의료",
+  "005360 모나미": "유통·의류·소비재",
+  "0126Z0 삼성에피스홀딩스": "제약·바이오",
+  "0015N0 아로마티카": "화장품",
+  "0011A0 액스비스": "이차전지",
+  "0156T0 에이치엘지노믹스": "제약·바이오",
+  "0009K0 에임드바이오": "제약·바이오",
+  "0004V0 엔비알모션": "자동차·부품",
+  "043910 자연과환경": "건설·건자재",
+  "0082N0 카나프테라퓨틱스": "제약·바이오",
+  "0117P0 피스피스스튜디오": "유통·의류·소비재",
+  "034830 한국토지신탁": "기타 금융",
+  "0220W0 한화머시너리앤서비스홀딩스": "지주·복합",
+  "0155E0 해치텍": "반도체 설계·파운드리",
+  "090850 현대이지웰": "SW·AI·IT서비스",
+  "041020 폴라리스오피스": "SW·AI·IT서비스",
+  "066430 아이로보틱스": "로봇",
+  "094940 푸른로보틱스": "로봇",
+  "095910 에스에너지": "신재생·수소",
+  "046120 오르비텍": "원전·발전설비",
+  "419050 삼기에너지솔루션즈": "이차전지",
+  "048770 TPC로보틱스": "로봇",
+  "007820 엠엑스로보틱스": "로봇",
+  "017550 수산세보틱스": "로봇"
+ }
+}</pre></details>
 <details class="src" data-s><summary><b>sectorcap_build.py</b><span class="d"></span><span class="t">371줄 · 18KB · 2026-08-24</span></summary><pre># -*- coding: utf-8 -*-
 """
 KOSPI·KOSDAQ 업종별 시가총액 비중 — 투자포인트 기준 커스텀 업종 분류.
@@ -35217,7 +36040,7 @@ def main():
 if __name__ == "__main__":
     main()
 </pre></details>
-<details class="src" data-s><summary><b>us_liq_build.py</b><span class="d">美 유동성 대시보드 — site/usliq.html 생성 (credit.html 통합 탭의 유동성 서브탭).</span><span class="t">577줄 · 32KB · 2026-08-27</span></summary><pre># -*- coding: utf-8 -*-
+<details class="src" data-s><summary><b>us_liq_build.py</b><span class="d">美 유동성 대시보드 — site/usliq.html 생성 (credit.html 통합 탭의 유동성 서브탭).</span><span class="t">579줄 · 32KB · 2026-08-27</span></summary><pre># -*- coding: utf-8 -*-
 """美 유동성 대시보드 — site/usliq.html 생성 (credit.html 통합 탭의 유동성 서브탭).
 
   유동성지수_B(d) = 연준총자산_M(직전 수요일, forward-fill)/1000 − TGA_B(d) − ON RRP_B(d)
@@ -35305,9 +36128,11 @@ def fetch_tga(start=START):
     for r in rows:
         at, rd = r["account_type"], r["record_date"].replace("-", "")
         if at == "Treasury General Account (TGA) Closing Balance":
-            v = r.get("open_today_bal")          # 신포맷: 종가가 open_today_bal 필드에 들어옴
+            v = r.get("open_today_bal")          # 신포맷(2022-04~): 종가가 open_today_bal 필드에 들어옴
+        elif at == "Treasury General Account (TGA)":
+            v = r.get("close_today_bal")         # 전환기(2021-10~2022-04) — 원본 대시보드의 193일 공백 구간
         elif at == "Federal Reserve Account":
-            v = r.get("close_today_bal")         # 구포맷(~2022-04)
+            v = r.get("close_today_bal")         # 구포맷(~2021-10)
         else:
             continue
         if v not in (None, "null", ""):
@@ -35337,10 +36162,10 @@ def fetch_yf(tickers, start):
 
 def fetch_auctions():
     try:
+        today = datetime.date.today().isoformat()
         d = json.loads(http_get(
             "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/upcoming_auctions"
-            "?sort=auction_date&amp;page[size]=60"))
-        today = datetime.date.today().isoformat()
+            f"?filter=auction_date:gte:{today}&amp;sort=auction_date&amp;page[size]=60"))
         lim = (datetime.date.today() + datetime.timedelta(days=24)).isoformat()
         out = []
         for r in d["data"]:
@@ -62245,8 +63070,8 @@ def main():
 if __name__ == "__main__":
     main()
 </pre></details>
-<h3>site 인프라 <small style='color:var(--dim2)'>(6개 파일 · 189KB)</small></h3>
-<details class="src" data-s><summary><b>index.html</b><span class="d">menuBtn{display:none}</span><span class="t">2,436줄 · 168KB · 2026-08-27</span></summary><pre>&lt;!DOCTYPE html&gt;
+<h3>site 인프라 <small style='color:var(--dim2)'>(6개 파일 · 190KB)</small></h3>
+<details class="src" data-s><summary><b>index.html</b><span class="d">menuBtn{display:none}</span><span class="t">2,443줄 · 169KB · 2026-08-27</span></summary><pre>&lt;!DOCTYPE html&gt;
 &lt;html lang="ko"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8"&gt;
@@ -62619,6 +63444,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     &lt;button class="navitem" data-tab="trade10"&gt;수출입데이터&lt;/button&gt;
     &lt;button class="navitem" data-tab="taiwan"&gt;대만 테크 실적 모음&lt;/button&gt;
     &lt;button class="navitem" data-tab="chem"&gt;에너지/화학 가격 동향&lt;/button&gt;
+    &lt;button class="navitem" data-tab="credit"&gt;글로벌 크레딧·유동성&lt;/button&gt;
     &lt;div class="navgroup"&gt;리서치&lt;/div&gt;
     &lt;button class="navitem" data-tab="telegram"&gt;텔레그램 채널 요약&lt;/button&gt;
     &lt;button class="navitem" data-tab="taerin"&gt;태린이아빠&lt;/button&gt;
@@ -62712,6 +63538,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
           &lt;button class="card" data-go="trade10"&gt;&lt;h3&gt;수출입데이터 &lt;span class="tag"&gt;관세청 월별&lt;/span&gt;&lt;/h3&gt;&lt;p&gt;디램·변압기·화장품 등 19품목 월별 수출 — 연도별 추이·국가별 비중&lt;/p&gt;&lt;/button&gt;
           &lt;button class="card" data-go="taiwan"&gt;&lt;h3&gt;대만 테크 실적 모음 &lt;span class="tag"&gt;매일 21:50&lt;/span&gt;&lt;/h3&gt;&lt;p&gt;AI 반도체 밸류체인 128종목 월별 매출·전년비 (MOPS 의무공시)&lt;/p&gt;&lt;/button&gt;
           &lt;button class="card" data-go="chem"&gt;&lt;h3&gt;에너지/화학 가격 동향 &lt;span class="tag"&gt;2024.1~&lt;/span&gt;&lt;/h3&gt;&lt;p&gt;유가·정제마진·석유화학 50품목 일별 시계열 — 하나증권 윤재성 가격표 누적 · Excel 다운로드&lt;/p&gt;&lt;/button&gt;
+          &lt;button class="card" data-go="credit"&gt;&lt;h3&gt;글로벌 크레딧·유동성 &lt;span class="tag"&gt;평일 07:15&lt;/span&gt;&lt;/h3&gt;&lt;p&gt;美 순유동성(연준−TGA−RRP)·지준금·QT 시나리오 + 빅테크 5Y CDS 누적 추적·경보&lt;/p&gt;&lt;/button&gt;
         &lt;/div&gt;
       &lt;/section&gt;
 
@@ -62878,6 +63705,10 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
 
     &lt;section class="panel embed" id="tab-chem"&gt;
       &lt;iframe data-src="chem.html" title="에너지/화학 가격 동향"&gt;&lt;/iframe&gt;
+    &lt;/section&gt;
+
+    &lt;section class="panel embed" id="tab-credit"&gt;
+      &lt;iframe data-src="credit.html" title="글로벌 크레딧 · 유동성"&gt;&lt;/iframe&gt;
     &lt;/section&gt;
 
     &lt;section class="panel embed" id="tab-leadflow"&gt;
@@ -64600,6 +65431,7 @@ const RR_TABS={
   etfgap:{m:'l'}, basket7:{m:'a',eta:'~5분'}, semiexport:{m:'a',eta:'~2분'},
   export:{m:'a',eta:'~1분 (신규 월 데이터는 엑셀 수동 반입)'}, corpexport:{m:'a',eta:'~3분'},
   trade10:{m:'a',eta:'~3분'}, taiwan:{m:'a',eta:'~3분'}, chem:{m:'a',eta:'~1분'},
+  credit:{m:'a',eta:'~3분'},
   telegram:{m:'a',eta:'~2분'}, taerin:{m:'a',eta:'~2분'}, thememap:{m:'a',eta:'~3분'},
   deepresearch:{m:'x',note:'심층 리서치는 Claude 세션에서 발행합니다'},
   leadflow:{m:'a',eta:'~5분'}, rstime:{m:'a',eta:'~10분'},
@@ -65209,7 +66041,7 @@ if (-not $NoPush) {
 - [주도 섹터·주도주 탭](leaders-tab.md) — #69 leaders_build.py 21:35 체인, upperlimitprice 방법론 자체 구현, Locked leaders.enc, 탑픽→수급지속 대체
 - [수동 갱신 버튼](manual-refresh-button.md) — 전 탭 FAB, Worker DO 큐+폴러 #70(1분), 비번 매회 입력, Python-urllib UA 403 함정
 - [RRG 알고리즘](rrg-algorithm.md) — 업종·종목판 완전 역산, cron #65 21:35, Locked 섹션(AES), 시그널 백테스트=풀평균 대비 알파(rrg_backtest.py, 선점후보 최강·개선→주도 마이너스)
-- [작업기록 북](worklog-book.md) — 전 산출물 site/book.html 자동 제본, 크론 #71 08:10·22:10, 새 봇 커밋은 AUTO_PATTERNS 추가 필수
+- [작업기록 북](worklog-book.md) — 전 산출물+전체 소스 설계도(비밀값 마스킹) site/book.html 자동 제본, 크론 #71 5분 변경감지, 새 봇 커밋은 AUTO_PATTERNS 추가 필수
 </pre></details>
 <h2 class="part" id="legacy">부록 · 산출물 아카이브 <small>수급html 루트 파일 스캔</small></h2>
 <div class="partdesc">맥 이관(2026-08-05) 전 Windows 시절 산출물은 파일명 속 날짜(월일)가 실제 제작일이다.</div>
@@ -65220,8 +66052,8 @@ if (-not $NoPush) {
 <tr data-s><td>RRG_수급_종목.html</td><td>4,670KB</td><td>2026-08-27</td></tr>
 <tr data-s><td>RRG_알고리즘_검증.md</td><td>8KB</td><td>2026-08-26</td></tr>
 <tr data-s><td>RS_타임머신.html</td><td>4,281KB</td><td>2026-08-27</td></tr>
-<tr data-s><td>index.html</td><td>736KB</td><td>2026-08-27</td></tr>
-<tr data-s><td>osc_dashboard.html</td><td>1,373KB</td><td>2026-08-26</td></tr>
+<tr data-s><td>index.html</td><td>1,843KB</td><td>2026-08-27</td></tr>
+<tr data-s><td>osc_dashboard.html</td><td>1,378KB</td><td>2026-08-27</td></tr>
 <tr data-s><td>변동성_로테이션_트래커.html</td><td>275KB</td><td>2026-08-26</td></tr>
 <tr data-s><td>수급빈집.html</td><td>871KB</td><td>2026-08-26</td></tr>
 <tr data-s><td>이격도.html</td><td>43KB</td><td>2026-08-26</td></tr>
@@ -65405,7 +66237,7 @@ if (-not $NoPush) {
 <tr data-s><td>투자판단을_위한_철학_매뉴얼.html</td><td>44KB</td><td>2026-07-27</td></tr>
 <tr data-s><td>하이닉스CapEx_에코플랜트_브리지_0630.html</td><td>34KB</td><td>2026-07-27</td></tr>
 </table></div></div></details>
-<div class="foot">이 책은 book_build.py(크론 #71)가 5분마다 변화를 감지해 다시 엮는다 · 마지막 제본 2026-08-27 15:23 · 공자 &amp; Claude</div>
+<div class="foot">이 책은 book_build.py(크론 #71)가 5분마다 변화를 감지해 다시 엮는다 · 마지막 제본 2026-08-27 15:35 · 공자 &amp; Claude</div>
 </div><script>
 const q=document.getElementById('q');let _qt;
 q.addEventListener('input',()=>{clearTimeout(_qt);_qt=setTimeout(()=>{
