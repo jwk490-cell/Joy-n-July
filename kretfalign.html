@@ -12,8 +12,19 @@ h2{font-size:17px;font-weight:800;margin:30px 0 10px}
 .sub{color:var(--sub);font-size:14px;margin-bottom:6px}
 .meta{color:var(--sub);font-size:12.5px}.meta b{color:var(--ink)}
 .formula{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);
-border-radius:10px;padding:13px 16px;font-size:13px;color:var(--sub);margin:14px 0 20px;line-height:1.7}
+border-radius:10px;padding:13px 16px;font-size:13px;color:var(--sub);margin:26px 0 0;line-height:1.7}
 .formula b{color:var(--ink)}
+.brief{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--teal);
+border-radius:10px;padding:14px 17px;margin:14px 0 20px}
+.brief .bt{font-size:13px;font-weight:800;margin-bottom:7px}
+.brief p{margin:0 0 6px;font-size:13px;color:var(--sub);line-height:1.75}
+.brief p:last-of-type{margin-bottom:0}
+.brief b{color:var(--ink)}
+.gchips{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.gchip{font-size:11.5px;color:var(--sub);background:var(--panel2);border:1px solid var(--line);
+border-radius:999px;padding:4px 11px}
+.gchip b{color:var(--gold)}
+.gchip .tks{color:var(--ink);font-weight:600}
 .stats{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 20px}
 .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 20px;min-width:150px}
 .stat .lbl{font-size:12px;color:var(--sub);margin-bottom:4px}
@@ -44,9 +55,8 @@ tr:hover td{background:rgba(255,255,255,.03)}
 <h1>韓 ETF 정배열 트래커</h1>
 <div class="sub">국내 섹터·테마 ETF의 이동평균 정배열 진입·유지 현황 — 추세의 '구조'가 완성된 곳을 찾는다</div>
 <div class="meta" id="meta"></div>
-<div class="formula">📐 <b>완전 정배열 = 현재가 &gt; 4주 &gt; 13주 &gt; 26주 &gt; 52주</b> · <b>이평 정배열 = 4주 &gt; 13주 &gt; 26주 &gt; 52주</b> (가격이 4주선 아래로 눌려도 이평 구조는 유지)<br>
-4주=<b>20일</b> · 13주=<b>65일</b> · 26주=<b>130일</b> · 52주=<b>260일</b> 단순이동평균(SMA, 분배금 수정종가) · 유지일은 조건 연속 충족 <b>거래일</b> 수.
-완전 정배열 신규 진입(NEW)과 장기 유지 종목의 눌림(이평 정배열엔 있는데 완전 정배열엔 없는 ETF)을 함께 본다.</div>
+
+<div class="brief" id="brief"></div>
 
 <div class="stats" id="stats"></div>
 
@@ -59,6 +69,10 @@ tr:hover td{background:rgba(255,255,255,.03)}
 
 <h2>📈 이평 정배열 <span style="color:var(--sub);font-size:12.5px;font-weight:600">4주 &gt; 13주 &gt; 26주 &gt; 52주 · 🔥=완전 정배열 동시 충족</span></h2>
 <div id="tblMa"></div>
+
+<div class="formula">📐 <b>완전 정배열 = 현재가 &gt; 4주 &gt; 13주 &gt; 26주 &gt; 52주</b> · <b>이평 정배열 = 4주 &gt; 13주 &gt; 26주 &gt; 52주</b> (가격이 4주선 아래로 눌려도 이평 구조는 유지)<br>
+4주=<b>20일</b> · 13주=<b>65일</b> · 26주=<b>130일</b> · 52주=<b>260일</b> 단순이동평균(SMA, 분배금 수정종가) · 유지일은 조건 연속 충족 <b>거래일</b> 수.
+완전 정배열 신규 진입(NEW)과 장기 유지 종목의 눌림(이평 정배열엔 있는데 완전 정배열엔 없는 ETF)을 함께 본다.</div>
 
 <div class="foot" id="foot"></div>
 </div>
@@ -73,6 +87,47 @@ document.getElementById('stats').innerHTML=`
   <div class="stat"><div class="lbl">📈 이평 정배열</div><div class="val" style="color:var(--blue)">${rowsMa.length}<small> / ${D.total}</small></div></div>
   <div class="stat"><div class="lbl">오늘 신규 완전 정배열</div><div class="val">${rowsFull.filter(r=>r.full.days===1).length}<small> 개</small></div></div>
   <div class="stat"><div class="lbl">눌림 (이평O · 완전X)</div><div class="val">${rowsMa.filter(r=>!r.full.days).length}<small> 개</small></div></div>`;
+// ── 상단 요약: ETF→테마 그룹 매핑으로 문장 자동 생성 (매일 데이터에서 재작성) ──
+const GROUPS={
+ '반도체':['091160','396500'],
+ '2차전지':['305720','364980'],
+ '자동차':['091180','466930'],
+ '금융':['091170','466940','102970','140700'],
+ '철강·화학':['117680','117460'],
+ '건설·기계':['117700','102960'],
+ '조선':['466920','494670'],
+ '방산·우주':['449450','463250'],
+ '원자력':['434730','433500'],
+ '로봇·AI':['445290','469070'],
+ 'IT·인터넷':['139260','266370','157490','365000'],
+ '게임':['300950','364990'],
+ '엔터·미디어':['228810','395290'],
+ '여행·레저':['228800','388280'],
+ '화장품':['228790','0008T0'],
+ '바이오·헬스케어':['244580','364970','261070','143860','266420'],
+ '소비재·운송·리츠':['266410','140710','329200'],
+ '신재생·수소':['385510','367770','457990','381560']};
+const GOF={};Object.entries(GROUPS).forEach(([g,l])=>l.forEach(t=>GOF[t]=g));
+(function(){
+  const gs=Object.keys(GROUPS).map(g=>{
+    const full=rowsFull.filter(r=>GOF[r.tk]===g),ma=rowsMa.filter(r=>GOF[r.tk]===g);
+    return {g,full,ma,tot:GROUPS[g].length};
+  }).filter(o=>o.full.length).sort((a,b)=>b.full.length-a.full.length||b.full[0].full.days-a.full[0].full.days);
+  const nmList=(rs,n)=>rs.slice(0,n).map(r=>r.nm).join(' · ');
+  const el=document.getElementById('brief');
+  if(!gs.length){el.innerHTML='<div class="bt">📝 오늘의 요약</div><p>현재 완전 정배열 조건을 충족하는 ETF가 없습니다.</p>';return;}
+  const [g1,g2]=gs;const lf=rowsFull[0],lm=rowsMa[0];
+  const B=D.breadth,n=B.full.length,d5=n>5?B.full[n-1]-B.full[n-6]:0;
+  const trend=d5>0?`최근 5거래일 사이 완전 정배열이 <b>+${d5}종</b> 늘며 확산 중`:d5<0?`최근 5거래일 사이 완전 정배열이 <b>${d5}종</b> 줄며 좁아지는 중`:`최근 5거래일 완전 정배열 개수는 정체`;
+  const news=rowsFull.filter(r=>r.full.days<=2);
+  const pull=rowsMa.filter(r=>!r.full.days);
+  let html=`<div class="bt">📝 오늘의 요약 <span style="font-weight:600;color:var(--sub)">${fmtD(D.asof)} 종가 기준 자동 생성</span></div>`;
+  html+=`<p>완전 정배열의 무게중심은 <b>${g1.g}</b>(${g1.full.length}/${g1.tot}종${g2?`)과 <b>${g2.g}</b>(${g2.full.length}/${g2.tot}종`:''}). 최장수는 <b>${lf.nm}</b>(${GOF[lf.tk]}) <b>${lf.full.days}거래일</b>이고, 이평 구조 기준으론 <b>${lm.nm}</b>이 <b>${lm.ma.days}거래일</b>째다. ${trend}.</p>`;
+  if(news.length)html+=`<p>신규 진입(2거래일 이내)은 <b>${nmList(news,5)}</b>${news.length>5?` 등 ${news.length}종`:` ${news.length}종`} — ${[...new Set(news.map(r=>GOF[r.tk]))].slice(0,3).join('·')} 쪽으로 온기가 번지는 흐름.</p>`;
+  if(pull.length)html+=`<p>이평 정배열은 살아있는데 가격이 4주선 아래로 눌린 ETF는 <b>${nmList(pull,4)}</b>${pull.length>4?` 등 ${pull.length}종`:` ${pull.length}종`} — 장기 추세 유지 속 단기 조정 그룹으로, 완전 정배열 복귀 여부를 관찰.</p>`;
+  html+=`<div class="gchips">`+gs.map(o=>`<span class="gchip">${o.g} <b>${o.full.length}</b>/${o.tot} <span class="tks">${o.full.slice(0,2).map(r=>`${r.nm} ${r.full.days}일`).join(' · ')}${o.full.length>2?' …':''}</span></span>`).join('')+`</div>`;
+  el.innerHTML=html;
+})();
 const chg=v=>`<span class="${v>0?'pos':v<0?'neg':''}">${v>0?'+':''}${v.toFixed(2)}%</span>`;
 const gap=v=>`<span class="${v>0?'pos':v<0?'neg':''}">${v>0?'+':''}${v.toFixed(1)}%</span>`;
 function tbl(rows,key){
