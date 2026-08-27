@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="ko" class="ht-credit"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>글로벌 크레딧 · 유동성</title>
+<style>
+:root{--bg:#0f1115;--panel:#171a21;--ink:#e9ecf1;--sub:#a4adbd;--line:#2a2f3a;--gold:#e6b93f}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:'Pretendard','Malgun Gothic',-apple-system,sans-serif;letter-spacing:-.01em;display:flex;flex-direction:column}
+.tabs{display:flex;gap:4px;padding:8px 14px 0;border-bottom:1px solid var(--line);background:var(--bg);flex:none}
+.tab{appearance:none;background:none;border:0;border-bottom:2px solid transparent;color:var(--sub);
+font:inherit;font-size:13.5px;font-weight:700;padding:9px 14px 10px;cursor:pointer;white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab.on{color:var(--gold);border-bottom-color:var(--gold)}
+.frames{flex:1;min-height:0;position:relative}
+.frames iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--bg);display:none}
+.frames iframe.on{display:block}
+</style><link rel="stylesheet" href="hub-theme.css"></head><body>
+<div class="tabs">
+  <button class="tab on" data-v="usliq">美 유동성</button>
+  <button class="tab" data-v="cds">빅테크 CDS</button>
+</div>
+<div class="frames">
+  <iframe data-v="usliq" data-src="usliq.html" title="美 유동성"></iframe>
+  <iframe data-v="cds" data-src="cds.html" title="빅테크 CDS"></iframe>
+</div>
+<script>
+const tabs=[...document.querySelectorAll('.tab')],frames=[...document.querySelectorAll('.frames iframe')];
+function show(v){
+  tabs.forEach(t=>t.classList.toggle('on',t.dataset.v===v));
+  frames.forEach(f=>{
+    const on=f.dataset.v===v;
+    f.classList.toggle('on',on);
+    if(on&&!f.src)f.src=f.dataset.src;   // 첫 진입 시에만 로드
+  });
+  try{localStorage.setItem('credit-view',v)}catch(e){}
+}
+tabs.forEach(t=>t.addEventListener('click',()=>show(t.dataset.v)));
+let v='usliq';try{const s=localStorage.getItem('credit-view');if(s&&frames.some(f=>f.dataset.v===s))v=s}catch(e){}
+show(v);
+</script></body></html>
