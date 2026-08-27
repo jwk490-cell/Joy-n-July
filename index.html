@@ -356,6 +356,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     <button class="navitem" data-tab="ushigh">美 신고가 (20·60일·52주)</button>
     <button class="navitem" data-tab="rs">RS 분석</button>
     <button class="navitem" data-tab="semietf">반도체 ETF 수혜</button>
+    <button class="navitem" data-tab="kralign">韓 정배열 (수급150)</button>
     <button class="navitem" data-tab="usalign">美 ETF 정배열</button>
     <div class="navgroup">비교 · 밸류</div>
     <button class="navitem" data-tab="caps">시총비교</button>
@@ -437,6 +438,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
           <button class="card" data-go="ushigh"><h3>美 신고가 (20·60일·52주) <span class="tag">매일 아침</span></h3><p>미국 세션 20일·60일·52주 신고가 종목 — 섹터별 분류, 시총·등락</p></button>
           <button class="card" data-go="rs"><h3>RS 분석 <span class="tag">韓·美 ETF</span></h3><p>섹터·테마 ETF 상대강도 60/120/250일 + 소티노 — Norm ≥70 주도 시그널</p></button>
           <button class="card" data-go="semietf"><h3>반도체 ETF 수혜 <span class="tag">장중 1시간</span></h3><p>ETF 자금 유입 ÷ 유통시총 — 매수 압력 랭킹</p></button>
+          <button class="card" data-go="kralign"><h3>韓 정배열 (수급150) <span class="tag">평일 21:45</span></h3><p>수급 상위 150종목 — 완전(현재가&gt;4주&gt;13주&gt;26주&gt;52주)·이평 정배열 유지일 + 외인/기관 토글</p></button>
           <button class="card" data-go="usalign"><h3>美 ETF 정배열 <span class="tag">매일 아침</span></h3><p>섹터·테마 ETF 96종 — 완전(Price&gt;4W&gt;13W&gt;26W&gt;52W)·이평 정배열 유지일 랭킹 + 브레드스</p></button>
         </div>
       </section>
@@ -584,6 +586,10 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
 
     <section class="panel embed" id="tab-supply">
       <iframe data-src="supply.html" title="수급 대시보드"></iframe>
+    </section>
+
+    <section class="panel embed" id="tab-kralign">
+      <iframe data-src="maalign.html" title="韓 정배열 (수급150)"></iframe>
     </section>
 
     <section class="panel embed" id="tab-usalign">
