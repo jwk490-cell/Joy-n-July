@@ -90,14 +90,14 @@ mark{background:rgba(224,160,48,.35);color:inherit;border-radius:3px}
   5분마다 변화를 감지해 스스로 다시 제본된다. (2026-06-11 개장 이후)</div>
   <div class="stats">
     <div class="stat"><b>78</b><span>기록된 날</span></div>
-    <div class="stat"><b>16,905</b><span>총 커밋 (자동 발행 포함)</span></div>
+    <div class="stat"><b>16,909</b><span>총 커밋 (자동 발행 포함)</span></div>
     <div class="stat"><b>124</b><span>작업 항목</span></div>
     <div class="stat"><b>39</b><span>허브 탭</span></div>
     <div class="stat"><b>54/57</b><span>가동 봇</span></div>
     <div class="stat"><b>39</b><span>기록 챕터</span></div>
     <div class="stat"><b>42</b><span>심층 리서치</span></div>
     <div class="stat"><b>405</b><span>수록 소스 파일</span></div>
-    <div class="stat"><b>64,937</b><span>코드 라인</span></div>
+    <div class="stat"><b>64,941</b><span>코드 라인</span></div>
   </div>
 </div>
 <div class="topnav">
@@ -847,8 +847,8 @@ Content-Type: application/json
 </ul></div></details>
 <h2 class="part" id="chron">제4부 · 연대기 <small>site 저장소 전체 히스토리 — 매일 자동 누적</small></h2>
 <div class="partdesc">사람 손으로 만든 작업은 전부 펼치고, 봇의 자동 발행은 건수로 접었다. 최신이 위.</div>
-<details class="mon" open><summary>2026년 08월<small>작업 45건 · 자동 발행 8,537건</small></summary>
-<div class="day" data-s><div class="dh">2026-08-27 (목)<small>자동 발행 237건</small></div>
+<details class="mon" open><summary>2026년 08월<small>작업 45건 · 자동 발행 8,541건</small></summary>
+<div class="day" data-s><div class="dh">2026-08-27 (목)<small>자동 발행 241건</small></div>
 <ul>
 <li>supply: 시총대비 순매수 섹터 맵 추가 — 비율 상위100 treemap(크기·색=비율, 블록=종목 수), 공통 표 1열 폭 정렬</li>
 <li>작업기록 북 창간 — 전 산출물을 한 권으로 제본하는 book.html + 허브 '작업 기록' 탭 (book_build.py, 크론 #71 매일 08:10·22:10 자동 누적)</li>
@@ -3509,7 +3509,7 @@ def blocked(token, owner, msg, bot=""):
     _save(st)
     return True
 </pre></details>
-<details class="src" data-s><summary><b>build.py</b><span class="d"></span><span class="t">843줄 · 42KB · 2026-08-27</span></summary><pre># -*- coding: utf-8 -*-
+<details class="src" data-s><summary><b>build.py</b><span class="d"></span><span class="t">847줄 · 42KB · 2026-08-27</span></summary><pre># -*- coding: utf-8 -*-
 """
 raw_cache.json -&gt; index.html (3섹션 탭 대시보드)
   1) 투자자별 순매수 랭킹 (외국인/사모/연금/투신 × 코스피/코스닥/전체 × 1/5/10/30/60거래일)
@@ -4112,12 +4112,12 @@ function render2top(){
   let body;
   if(!rows.length) body='&lt;div class="empty"&gt;공통 '+s2.side+' 종목 없음&lt;/div&gt;';
   else body=tableHead('&lt;th class="c1"&gt;#&lt;/th&gt;&lt;th class="c2"&gt;종목&lt;/th&gt;'
-      +'&lt;th style="width:52px"&gt;등락률&lt;/th&gt;&lt;th style="width:58px"&gt;시총&lt;/th&gt;&lt;th&gt;섹터/테마&lt;/th&gt;')
+      +'&lt;th&gt;섹터/테마&lt;/th&gt;&lt;th style="width:52px"&gt;등락률&lt;/th&gt;&lt;th style="width:58px"&gt;시총&lt;/th&gt;')
     +rows.map((r,i)=&gt;'&lt;tr&gt;&lt;td class="'+(i&lt;3?"rk top":"rk")+'"&gt;'+(i+1)+'&lt;/td&gt;'
       +'&lt;td class="nm"&gt;'+nmLink(r)+'&lt;/td&gt;'
+      +'&lt;td style="color:var(--dim2);font-size:11px;white-space:nowrap"&gt;'+(D.groups[r.sg]||"기타")+'&lt;/td&gt;'
       +'&lt;td class="rat" style="color:'+ratCls(r.ch)+'"&gt;'+fmtPct(r.ch)+'&lt;/td&gt;'
-      +'&lt;td class="net"&gt;'+fmtCap(r.mc)+'&lt;/td&gt;'
-      +'&lt;td style="color:var(--dim2);font-size:11px;white-space:nowrap"&gt;'+(D.groups[r.sg]||"기타")+'&lt;/td&gt;&lt;/tr&gt;').join('')+'&lt;/tbody&gt;&lt;/table&gt;';
+      +'&lt;td class="net" style="white-space:nowrap"&gt;'+fmtCap(r.mc)+'&lt;/td&gt;&lt;/tr&gt;').join('')+'&lt;/tbody&gt;&lt;/table&gt;';
   const bcls=s2.side==="순매도"?"badge sell":"badge comm";
   document.getElementById("sec2top").innerHTML=
     '&lt;div class="card hl"&gt;&lt;h3&gt;'+s2.combo.replace(/\+/g,"·")+' 공통 '+s2.side
@@ -4191,7 +4191,11 @@ function renderMap(){
   box.innerHTML="";
   const rows=(((D.sec2[s2.mkt][s2.per]["맵"]||{})[s2map.inv]||{})[s2.side])||[];
   const W=box.clientWidth,H=box.clientHeight;
-  if(!rows.length||W&lt;60||H&lt;60){box.innerHTML='&lt;div class="empty"&gt;데이터 없음&lt;/div&gt;';return;}
+  if(!rows.length){box.innerHTML='&lt;div class="empty"&gt;데이터 없음&lt;/div&gt;';return;}
+  if(W&lt;60||H&lt;60){ // 초기 로드 직후 레이아웃 전(clientHeight 0) — 다음 프레임 재시도
+    if((renderMap._rt=(renderMap._rt||0)+1)&lt;90)requestAnimationFrame(renderMap);
+    return;}
+  renderMap._rt=0;
   const by={};
   rows.forEach(r=&gt;{(by[r.g]=by[r.g]||[]).push(r);});
   const tw=r=&gt;Math.abs(r.r);                 // 타일 크기 = 시총대비 비율 (2026-08-27 확정)
@@ -66296,7 +66300,7 @@ if (-not $NoPush) {
 <tr data-s><td>투자판단을_위한_철학_매뉴얼.html</td><td>44KB</td><td>2026-07-27</td></tr>
 <tr data-s><td>하이닉스CapEx_에코플랜트_브리지_0630.html</td><td>34KB</td><td>2026-07-27</td></tr>
 </table></div></div></details>
-<div class="foot">이 책은 book_build.py(크론 #71)가 5분마다 변화를 감지해 다시 엮는다 · 마지막 제본 2026-08-27 15:45 · 공자 &amp; Claude</div>
+<div class="foot">이 책은 book_build.py(크론 #71)가 5분마다 변화를 감지해 다시 엮는다 · 마지막 제본 2026-08-27 15:55 · 공자 &amp; Claude</div>
 </div><script>
 const q=document.getElementById('q');let _qt;
 q.addEventListener('input',()=>{clearTimeout(_qt);_qt=setTimeout(()=>{
