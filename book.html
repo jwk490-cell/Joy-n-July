@@ -1,0 +1,1271 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>작업기 — 공자 &amp; Claude</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css">
+<style>
+:root{--bg:#101014;--panel:#1a1b20;--panel2:#202128;--line:#272930;--line2:#31343d;
+--txt:#e9ebee;--dim:#9aa2ad;--dim2:#6d7480;--accent:#4d7df5;--teal:#2dd4bf;
+--green:#22c55e;--red:#ef4444;--warn:#e0a030;--purple:#b08ad6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:"Pretendard Variable",Pretendard,"Malgun Gothic","Segoe UI",-apple-system,sans-serif;font-size:13.5px;line-height:1.65}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+code{background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:12px;font-family:ui-monospace,Menlo,monospace}
+pre{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto;font-size:12px;font-family:ui-monospace,Menlo,monospace;margin:10px 0}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px 80px}
+.cover{padding:64px 0 36px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.cover .kicker{color:var(--teal);font-weight:700;letter-spacing:.14em;font-size:12px}
+.cover h1{font-size:34px;letter-spacing:-.02em;margin:10px 0 8px;font-weight:800}
+.cover .sub{color:var(--dim);font-size:14px;max-width:640px}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:10px 16px;min-width:104px}
+.stat b{display:block;font-size:20px;font-variant-numeric:tabular-nums}
+.stat span{color:var(--dim);font-size:11.5px}
+.topnav{position:sticky;top:0;z-index:9;background:rgba(16,16,20,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;gap:4px;align-items:center;padding:8px 0;margin-bottom:26px;flex-wrap:wrap}
+.topnav a{color:var(--dim);padding:6px 11px;border-radius:9px;font-size:12.5px;font-weight:600}
+.topnav a:hover{background:var(--panel2);color:var(--txt);text-decoration:none}
+#q{margin-left:auto;background:var(--panel);border:1px solid var(--line2);border-radius:9px;color:var(--txt);padding:6px 12px;font-size:12.5px;width:190px;outline:none}
+#q:focus{border-color:var(--accent)}
+h2.part{font-size:21px;margin:52px 0 6px;letter-spacing:-.01em}
+h2.part small{color:var(--dim2);font-weight:500;font-size:12.5px;margin-left:8px}
+.partdesc{color:var(--dim);font-size:13px;margin-bottom:16px}
+h3{font-size:15px;margin:20px 0 8px}
+h4{font-size:13.5px;margin:14px 0 6px;color:#c6ccd4}
+h5{font-size:12.5px;margin:12px 0 4px;color:var(--dim)}
+ul,ol{padding-left:20px;margin:6px 0}
+li{margin:3px 0}
+p{margin:7px 0}
+.tw{overflow-x:auto;margin:10px 0}
+table{border-collapse:collapse;font-size:12.5px;min-width:50%}
+th,td{border:1px solid var(--line);padding:5px 10px;text-align:left;vertical-align:top}
+th{background:var(--panel2);font-weight:700}
+details.ch{background:var(--panel);border:1px solid var(--line);border-radius:13px;margin:10px 0;overflow:hidden}
+details.ch>summary{cursor:pointer;padding:13px 16px;list-style:none;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+details.ch>summary::-webkit-details-marker{display:none}
+details.ch>summary:hover{background:var(--panel2)}
+details.ch>summary b{font-size:14px}
+details.ch>summary .d{color:var(--dim);font-size:12px;flex:1;min-width:200px}
+details.ch>summary .t{color:var(--dim2);font-size:11px;font-variant-numeric:tabular-nums}
+details.ch .body{padding:4px 18px 16px;border-top:1px solid var(--line)}
+.badge{display:inline-block;border-radius:6px;padding:1px 7px;font-size:10.5px;font-weight:700;vertical-align:1px}
+.b-run{background:rgba(34,197,94,.14);color:var(--green)}
+.b-pause{background:rgba(224,160,48,.16);color:var(--warn)}
+.b-stop{background:rgba(239,68,68,.14);color:var(--red)}
+.b-mem{background:rgba(45,212,191,.13);color:var(--teal)}
+.mon{background:var(--panel);border:1px solid var(--line);border-radius:13px;margin:10px 0;overflow:hidden}
+.mon>summary{cursor:pointer;padding:12px 16px;list-style:none;font-weight:700;font-size:14px}
+.mon>summary::-webkit-details-marker{display:none}
+.mon>summary small{color:var(--dim2);font-weight:500;margin-left:10px;font-size:11.5px}
+.day{padding:10px 18px 12px;border-top:1px solid var(--line)}
+.day .dh{font-weight:700;font-size:12.5px;color:var(--teal);margin-bottom:5px}
+.day .dh small{color:var(--dim2);font-weight:500;margin-left:8px}
+.day ul{margin:2px 0}
+.day li{font-size:12.8px}
+.day li .n{color:var(--dim2);font-size:11px}
+.note{background:rgba(77,125,245,.08);border:1px solid rgba(77,125,245,.25);border-radius:9px;padding:7px 11px;margin:6px 0;font-size:12.5px}
+.tabgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.tabcard{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:12px 15px}
+.tabcard b{font-size:13px;color:var(--teal)}
+.tabcard ul{list-style:none;padding:6px 0 0;margin:0}
+.tabcard li{padding:2px 0;font-size:12.5px;border-bottom:1px dashed var(--line);color:#c6ccd4}
+.tabcard li:last-child{border-bottom:0}
+.foot{margin-top:70px;padding-top:16px;border-top:1px solid var(--line);color:var(--dim2);font-size:11.5px}
+.hid{display:none!important}
+mark{background:rgba(224,160,48,.35);color:inherit;border-radius:3px}
+</style></head><body><div class="wrap">
+<div class="cover">
+  <div class="kicker">RESEARCH LAB · WORKLOG</div>
+  <h1>수급 연구실 작업기</h1>
+  <div class="sub">공자와 Claude가 함께 만든 모든 것의 기록 — 대시보드 탭, 텔레그램 봇,
+  데이터 파이프라인, 리서치, 그리고 그것들을 굴리는 무인 운영 체계.
+  이 책은 매일 밤 스스로 한 페이지씩 두꺼워진다. (2026-06-11 개장 이후)</div>
+  <div class="stats">
+    <div class="stat"><b>78</b><span>기록된 날</span></div>
+    <div class="stat"><b>16,889</b><span>총 커밋 (자동 발행 포함)</span></div>
+    <div class="stat"><b>122</b><span>작업 항목</span></div>
+    <div class="stat"><b>38</b><span>허브 탭</span></div>
+    <div class="stat"><b>54/57</b><span>가동 봇</span></div>
+    <div class="stat"><b>38</b><span>기록 챕터</span></div>
+    <div class="stat"><b>42</b><span>심층 리서치</span></div>
+  </div>
+</div>
+<div class="topnav">
+  <a href="#map">지도</a><a href="#bots">봇</a><a href="#chapters">챕터</a>
+  <a href="#chron">연대기</a><a href="#research">리서치</a><a href="#legacy">부록</a>
+  <input id="q" type="search" placeholder="전체 검색…">
+</div>
+<h2 class="part" id="map">제1부 · 허브 지도 <small>Research Lab 탭 구성 — 사이드바에서 자동 추출</small></h2>
+<div class="partdesc">research-lab.jwk490.workers.dev 에 서빙되는 대시보드의 현재 모습.</div>
+<div class="tabgrid">
+<div class="tabcard" data-s><b>실시간</b><ul>
+<li>실시간 한국주식 5초</li>
+<li>전닉 터미널</li>
+<li>종목 분석</li>
+</ul></div>
+<div class="tabcard" data-s><b>시황</b><ul>
+<li>주간 일정 매주</li>
+<li>韓 시황</li>
+<li>美 시황</li>
+<li>산업별 등락</li>
+<li>50일 이격도</li>
+</ul></div>
+<div class="tabcard" data-s><b>수급 · 모멘텀</b><ul>
+<li>투자자별 수급/거래량 증감</li>
+<li>수급 연속 새벽</li>
+<li>韓 신고가 (20·60일·52주)</li>
+<li>美 신고가 (20·60일·52주)</li>
+<li>RS 분석</li>
+<li>반도체 ETF 수혜</li>
+<li>정배열 트래커</li>
+</ul></div>
+<div class="tabcard" data-s><b>비교 · 밸류</b><ul>
+<li>시총비교</li>
+<li>업종 시총비중</li>
+<li>괴리율</li>
+<li>ETF 괴리율</li>
+<li>전고대비</li>
+</ul></div>
+<div class="tabcard" data-s><b>매크로 데이터</b><ul>
+<li>메모리 가격</li>
+<li>반도체/전기전자 수출 추이</li>
+<li>수출 데이터</li>
+<li>기업별 수출</li>
+<li>수출입데이터</li>
+<li>대만 테크 실적 모음</li>
+<li>에너지/화학 가격 동향</li>
+</ul></div>
+<div class="tabcard" data-s><b>리서치</b><ul>
+<li>텔레그램 채널 요약</li>
+<li>태린이아빠</li>
+<li>관련주 신경망 맵</li>
+<li>심층 리서치</li>
+<li>변동성 로테이션</li>
+<li>RS 타임머신</li>
+<li>수주잔고 DART</li>
+<li>작업 기록 book</li>
+</ul></div>
+<div class="tabcard" data-s><b>Locked</b><ul>
+<li>수급 로테이션 맵 (업종) 🔒</li>
+<li>수급 로테이션 맵 (종목) 🔒</li>
+<li>주도 섹터 · 주도주 🔒</li>
+</ul></div>
+</div>
+<h2 class="part" id="bots">제2부 · 봇 레지스트리 <small>crontab.txt에서 자동 추출</small></h2>
+<div class="partdesc">번호는 Windows 시절부터 이어지는 등번호. 매일 이 편성표대로 무인 가동된다.</div>
+<div class="tw"><table><tr><th>#</th><th>이름</th><th>스케줄</th><th>상태</th><th>비고</th></tr>
+<tr data-s><td>1</td><td>KRX_RS타임머신_KR</td><td>평일 08:00~16:00 매시 — 16:00 회차가 당일 종가 확정분 수집</td><td><span class="badge b-run">가동</span></td><td>전송 없음</td></tr>
+<tr data-s><td>2</td><td>KRX_RS타임머신_US</td><td>매일 07:00</td><td><span class="badge b-run">가동</span></td><td>전송 없음</td></tr>
+<tr data-s><td>3</td><td>KRX_SK에코_뉴스</td><td>매일 07:30</td><td><span class="badge b-run">가동</span></td><td>구글뉴스 RSS + 텔레그램 전송</td></tr>
+<tr data-s><td>4</td><td>KRX_반도체수출추이</td><td>매일 08:40</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>5</td><td>KRX_수출입잠정치</td><td>매일 10:30</td><td><span class="badge b-stop">중단</span></td><td>2026-08-10 중단: 탭이 수출입데이터(#59 jusikbot_feed)로 교체됨. 코드·페이지 보존</td></tr>
+<tr data-s><td>6</td><td>KRX_기업수출</td><td>매일 11:20</td><td><span class="badge b-run">가동</span></td><td>전송 없음</td></tr>
+<tr data-s><td>7</td><td>KRX_마감시황</td><td>평일 16:20</td><td><span class="badge b-run">가동</span></td><td>kr_wrap_tg 후 韓 52주 신고가 (kr_newhigh_close, 2026-08-24 추가 — 美 체인과 동일 구조)</td></tr>
+<tr data-s><td>8</td><td>산업별등락리포트_KRX</td><td>평일 16:00, cwd=~/sector-report</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>9</td><td>KRX_프매마감</td><td>평일 16:00</td><td><span class="badge b-pause">일시중단</span></td><td>2026-08-19 사용자 요청 일시중단 (채널: 실시간 수급 봇)</td></tr>
+<tr data-s><td>10</td><td>KRX_3주체_리스트</td><td>평일 16:05</td><td><span class="badge b-run">가동</span></td><td>bat 원본대로 update.py 후 compact 전송</td></tr>
+<tr data-s><td>11</td><td>KRX_이격도_일별</td><td>평일 16:30</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>12</td><td>KRX_선물옵션수급</td><td>평일 18:30</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>13</td><td>KRX_실적정리</td><td>매일 19:00</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>14</td><td>KRX_투자자순매수랭킹</td><td>평일 21:00</td><td><span class="badge b-run">가동</span></td><td>21시대 봇들의 raw_cache 원천, 반드시 첫 순서</td></tr>
+<tr data-s><td>15</td><td>KRX_수급누적_주간</td><td>금 21:00</td><td><span class="badge b-run">가동</span></td><td>전송 없음</td></tr>
+<tr data-s><td>16</td><td>KRX_수급4투자자</td><td>평일 21:05</td><td><span class="badge b-run">가동</span></td><td>사모→투신→외국인→연기금 순</td></tr>
+<tr data-s><td>17</td><td>KRX_신고가정리</td><td>평일 21:10</td><td><span class="badge b-run">가동</span></td><td>21:00 update.py 완료 후</td></tr>
+<tr data-s><td>18</td><td>KRX_수급빈집</td><td>평일 21:15</td><td><span class="badge b-run">가동</span></td><td>텔레그램 전송 없음(HTML 생성), 21:00 update.py 캐시 사용</td></tr>
+<tr data-s><td>19</td><td>KRX_3주체_코멘트</td><td>평일 21:20</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>20</td><td>KRX_섹터로테이션</td><td>평일 21:42</td><td><span class="badge b-run">가동</span></td><td>전송 없음(site push 포함, 인증 전까지 push만 실패)</td></tr>
+<tr data-s><td>21</td><td>US_모닝시황</td><td>매일 06:25</td><td><span class="badge b-run">가동</span></td><td>bat 원본대로 us_wrap_tg 후 us_newhigh</td></tr>
+<tr data-s><td>22</td><td>JNJ_미국신고가</td><td>화~토 06:40</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>23</td><td>JNJ_장마감_올인원</td><td>평일 15:31</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>24</td><td>JNJ_한국신고가</td><td>평일 21:35</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>25</td><td>JNJ_수급재배포</td><td>평일 21:40</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>26</td><td>KRX_수급수신</td><td>'ㄱㄱ' 온디맨드, 2분</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>27</td><td>KRX_프매수신</td><td>2분</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>28</td><td>KRX_프매장중</td><td>평일 09-15시 1분</td><td><span class="badge b-pause">일시중단</span></td><td>2026-08-19 사용자 요청 일시중단 (채널: 실시간 수급 봇)</td></tr>
+<tr data-s><td>29</td><td>KRX_실적코멘트</td><td>2분</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>30</td><td>KRX_실적피드</td><td>3분</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>31</td><td>KRX_리포트정리</td><td>3분, digest venv</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>33</td><td>US_모닝시황_감시</td><td>2분</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>34</td><td>US_어닝콜봇</td><td>1분 폴링</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>35</td><td>KRX_수출대시보드_감시</td><td>평일 09:30~ 30분</td><td><span class="badge b-run">가동</span></td><td>~/Downloads 감시, cron Full Disk Access 필요</td></tr>
+<tr data-s><td>38</td><td>JNJ_라온피드</td><td>5분</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>39</td><td>JNJ_라온일봉</td><td>평일 16:10</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>40</td><td>JNJ_RS분석</td><td>평일 17:00</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>41</td><td>JNJ_종목분석</td><td>평일 16:20</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>42</td><td>JNJ_반도체ETF_장중</td><td>평일 09:05~15:05 매시</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>43</td><td>JNJ_시황업로드</td><td>30분</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>44</td><td>JNJ_TG_Feed_1H</td><td>매시, digest venv</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>45</td><td>JNJ_Taerin_30min</td><td>30분, digest venv</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>48</td><td>tosoha1_아카이브</td><td>매일 21:00</td><td><span class="badge b-run">가동</span></td><td>전송 없음</td></tr>
+<tr data-s><td>49</td><td>메르_블로그업데이트</td><td>매일 21:00</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>50</td><td>pillion21_블로그업데이트</td><td>매일 21:05</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>51</td><td>산업별등락리포트_NXT</td><td>평일 20:30, cwd=~/sector-report</td><td><span class="badge b-run">가동</span></td><td>전송 없음</td></tr>
+<tr data-s><td>52</td><td>소비재_Kbeauty아마존</td><td>매일 08:00</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>55</td><td>KRX_수급변곡_인사이트</td><td>평일 17:00 → 21:25 확정 폴백</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>55b</td><td>KRX_수급변곡_셀프피드백</td><td>평일 18:00</td><td><span class="badge b-run">가동</span></td><td>claude CLI 5-루프 자율 개선, 요약 텔레그램</td></tr>
+<tr data-s><td>57</td><td>유동회전_감시</td><td>평일 09:05~15:05 30분 돌파알림, 15:35 마감요약=동시호가 확정 직후</td><td><span class="badge b-run">가동</span></td><td></td></tr>
+<tr data-s><td>58</td><td>KRX_3일연속수급</td><td>평일 06:30</td><td><span class="badge b-run">가동</span></td><td>사모/투신/외국인/프로그램 3거래일 연속 시총대비 순매수</td></tr>
+<tr data-s><td>59</td><td>jusikbot_클론피드</td><td>매일 21:50</td><td><span class="badge b-run">가동</span></td><td>수출입데이터(관세청 월별)+대만 테크 실적 → site/data → git push</td></tr>
+<tr data-s><td>60</td><td>운용리서치_채용워치</td><td>매일 06:00·12:00</td><td><span class="badge b-run">가동</span></td><td>KOFIA 채용게시판 스크랩, 리서치/주식운용 신입·인턴 누적 다이제스트 → @j_1ne DM</td></tr>
+<tr data-s><td>61</td><td>KRX_변동성국면트래커</td><td>평일 21:50, market_cache 21:15 갱신 후</td><td><span class="badge b-run">가동</span></td><td>전송 없음(site/leadflow.html 재생성 → git_guard가 push)</td></tr>
+<tr data-s><td>66</td><td>美ETF_정배열</td><td>평일 16:50</td><td><span class="badge b-run">가동</span></td><td>섹터·테마 ETF 96종 yfinance 일봉(전일 밤 미국 세션 기준)으로</td></tr>
+<tr data-s><td>68</td><td>韓ETF_정배열</td><td>평일 16:45, 한국 장 마감 후</td><td><span class="badge b-run">가동</span></td><td>국내 섹터·테마 ETF 46종 yfinance 수정종가 일봉으로</td></tr>
+<tr data-s><td>71</td><td>작업기록_북</td><td>매일 08:10·22:10</td><td><span class="badge b-run">가동</span></td><td>공자&amp;Claude 전 산출물을 한 권으로 제본해 site/book.html 갱신</td></tr>
+</table></div>
+<h2 class="part" id="chapters">제3부 · 기록 챕터 <small>작업 기억 원문 — 새 기록이 쌓이면 자동으로 늘어난다</small></h2>
+<div class="partdesc">각 시스템이 어떻게 만들어졌고, 어떤 함정을 밟았고, 어떻게 굴러가는지에 대한 1차 기록.</div>
+<h3>Research Lab 허브 · 탭 <small style='color:var(--dim2)'>(17)</small></h3>
+<details class="ch" id="ch-backlog-tracker" data-s><summary><b>backlog-tracker</b><span class="d">수주잔고 트래커(#backlog) — DART 원문 표 파싱 + 엑셀 캘리브레이션 구조, cron #61, DART 레이트리밋 함정</span><span class="t">2026-08-25</span></summary><div class="body"><p>Research Lab <code>#backlog</code> 탭 = <code>site/backlog.html</code> + <code>site/data/backlog.json</code>, 파이프라인은 <code>/Users/1ne/수급html/backlog/</code> (README.md 있음). 2026-08-24 구축.</p>
+<p><b>핵심 설계</b>: DART는 수주잔고를 정형 API로 주지 않는다(원문 <code>document.xml</code>의 '수주상황' 표를 파싱해야 함). 기업마다 표 구조·단위·집계범위가 달라서 <b>파서는 후보를 넓게 뽑고(<code>T{표}C{열}#T|#S|#R:라벨</code>, <code>A#KRW</code>, <code>N{n}</code> 서술), 정확도는 큐레이션 엑셀 실측치와의 대조(±1.5%)로 확보</b>한다 → <code>rules.json</code>에 종목별 규칙 고정. 128종목 중 113개 자동 일치.</p>
+<ul>
+<li>엑셀(<code>수주잔고.xlsx</code>, 128종목 4Q20~2Q26)이 히스토리의 원본. DART는 ①검증 ②신규 분기 자동 추가 ③신규 기업 백필 담당.</li>
+<li>엑셀과 어긋나는 15종목(두산에너빌리티·효성중공업·GS건설 등 일부)은 회사 IR 기준 — 자동갱신 제외, 엑셀 값 유지.</li>
+<li>엑셀 단위 표기 오류는 DART 교차검증 후 <code>build_base.UNIT_FIX</code>에만 추가(AP위성 천원→원).</li>
+<li><b>전 상장사 전수 스캔</b>(<code>universe.py screen</code>, 2026-08-24): 약 2,400종목 중 <b>667개가 수주잔고 공시</b>, 백필·필터 후 <b>525종목</b> 게시(표 내부 '(단위: 백만원)' 인식 추가로 KCC건설 등 회수). 종목별 <code>list.json</code> 대신 시즌별 공시목록 일괄 페이징(시즌당 ~25콜)이 핵심 절약 포인트.</li>
+<li>업종은 <code>sector_groups.json</code>(sectorcap_build와 동일 규칙, 투자포인트 38그룹) 1순위, 거래소 업종 백업. 큐레이션 종목의 원래 테마는 <code>t</code> 필드로 보존.</li>
+<li>자동등록 필터: 커버리지&lt;60% · 최신분기 4분기 이상 지연 · 한 분기 80% 급감(=다른 표 집음) · 연매출 대비 0.05~60배 밖 → 제외. <b>완만한 감소는 실제 흐름이므로 남긴다</b>(초기엔 '최고대비 30% 미만' 기준이 고려아연·포스코퓨처엠 같은 정상 종목을 걷어냈다).</li>
+<li>cron <b>#61</b> <code>10 7 * 3,5,8,11 1</code> 신규 분기 갱신 · <b>#63</b> <code>0 2 1 3,6,9,12 *</code> 유니버스 재스캔+백필+매출+빌드.</li>
+<li>UI: 출처 표기는 검증상태(검증/DART 자동/미검증/주의)만 쓴다 — 공자가 '엑셀' 언급과 초록 배지를 명시적으로 뺐다. 설명 블록은 페이지 하단.</li>
+<li><b>원문 슬라이스 캐시</b>(<code>cache/slice/</code>, 약 350MB): 수주잔고 관련 구간만 잘라 저장. 표/서술 순번이 원문과 동일해 파서를 고쳐도 재다운로드 없이 <code>REPARSE=1</code>로 재파싱 가능. (이걸 안 만들어서 파서 고칠 때마다 1만건씩 다시 받았다.)</li>
+<li><b>부문별 분해</b>: 규칙이 <code>#T|#S</code>면 같은 표·같은 열의 <code>#R:라벨</code> 후보가 곧 부문 내역 — 추가 호출 0. 라벨은 분기마다 계층 순서가 뒤집혀서 마지막 마디만 쓴다. 454종목 확보, <code>site/data/backlog_parts.json</code>으로 분리해 상세 열 때만 로드.</li>
+<li><b>교차 대조</b>(<code>crosscheck.py</code>): upperlimitprice.github.io/dashboards/orders.html 은 같은 원문을 독립 파싱한 자료. <b>값은 안 가져오고 대조만</b> 한다(447종목 중 최신분기 344 일치 → '교차확인' 배지). 저쪽 오류 사례: 삼성전자 24조는 수주잔고가 아니라 테슬라 파운드리 <b>수주총액</b>(삼성전자는 수주잔고를 영업비밀로 생략), 피엔티·톱텍은 자릿수 오류.</li>
+<li>허브 탭 iframe에 10분 단위 캐시버스터(<code>index.html</code> FRESH 맵) — GitHub Pages 캐시 때문에 수정본이 안 보이는 사고가 있었다.</li>
+</ul>
+<p><b>함정 — DART 레이트리밋</b>: 워커 8개로 문서를 연속 다운로드하면 IP 단위로 <code>RemoteDisconnected</code>/<code>Connection reset</code>이 뜨며 <b>모든 엔드포인트가 30분 이상 막힌다</b>. <code>DART_GAP</code>(요청 간격, 기본 0.15초)·<code>WORKERS</code>≤6을 지킬 것. 일시 실패는 절대 캐시하지 말 것(<code>cache/cand/</code>에 err를 저장하면 영구 오염).</p>
+<p><b>Why:</b> 수주잔고는 정형 API가 없어 그간 수동 엑셀로만 관리됐는데, 후보 과생성 + 실측 캘리브레이션 구조로 자동화가 가능해졌다.</p>
+<p><b>How to apply:</b> 신규 기업은 <code>universe.py screen</code>이 자동 발굴하므로 수동 등록 불필요. 특정 종목만 볼 땐 <code>discover.POOL</code>에 DART 등재명을 넣는다. <a class="wl" href="#ch-research-lab-site">research-lab-site</a> · <a class="wl" href="#ch-dart-open-api">dart-open-api</a> 참조.</p></div></details>
+<details class="ch" id="ch-chem-price-tab" data-s><summary><b>chem-price-tab</b><span class="d">Research Lab 에너지/화학 가격 동향 탭 — @energy_youn 가격표 OCR 파이프라인(energy_price/), 갱신 절차, 검증 체계</span><span class="t">2026-08-25</span></summary><div class="body"><p>Research Lab <code>site/chem.html</code> 탭 (2026-08-24 구축) — 하나증권 윤재성 텔레그램 채널(@energy_youn)의 일일 「화학 제품가격 동향」 표 이미지(993×1261px, 2024-01-19~)를 OCR로 추출한 50품목 시계열. 상단 차트(일/주/월/분기/연 전환, 같은 단위 4개까지 비교, 크로스헤어 툴팁) + 하단 <code>data/chem_prices.xlsx</code> 다운로드 버튼.</p>
+<p><b>파이프라인</b> (<code>~/수급html/energy_price/</code>, 인터프리터는 <a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a>의 .venv):</p>
+<ul>
+<li>일일 증분: <code>update_daily.py</code> — 채널 신규 이미지 수집(Telethon, min_id 증분) → macOS Vision OCR 2계통(전체 이미지 <code>parse_table.py</code> + 행 스트립 확대 <code>ocr_grid.py</code>) → <code>merge_pass.work</code> 병합(both 87%) → <code>refine4.work</code> 산술보정 → <code>merged.json</code> append → <code>build_series.py</code> → <code>export_final.py</code>가 <code>site/data/chem_prices.{json,xlsx}</code> 재생성 → 신규 있으면 <code>verify_web()</code> 웹검증. 멱등, 신규 0건이어도 안전(~3초).</li>
+<li><b>cron #64 등록됨(2026-08-25)</b>: 매일 08:00 + 09:30 재시도, 로그 <code>logs/chem_price.log</code>. 표는 보통 07:45~09시 게시.</li>
+<li><b>웹검증</b>: 야후 시세로 WTI(CL=F 종가 직접, ±0.5$)·Dubai(BZ=F Brent 스프레드 ±8$) 최근 7영업일 대조 — 경고는 로그에 <code>[웹검증 경고]</code>. 야후 실패 시 조용히 스킵.</li>
+<li><b>웹 백필</b>: 미갱신 배제로 구멍 난 WTI 일별만 CL=F 종가로 채움(<code>web_fill()</code> → <code>web_fill.json</code> → build_series가 표 미관측 키에만 적용, 표 관측이 항상 우선). 근거: 2년 488일 대조 평균절대차 0.027$. <b>Dubai는 백필 금지</b> — 표의 Dubai는 네이버/오피넷 두바이 현물과 다른 시리즈(2026-08 기준 ~7.5$ 괴리, 스왑 기반 추정), 일치하는 공개 소스 없음. Crack도 소스 없음 — 둘 다 다음날 표 d2로 자연 보충.</li>
+<li>Vision OCR은 pyobjc-framework-Vision (uv로 .venv에 설치됨). tesseract/node 없음.</li>
+</ul>
+<p><b>정확도 체계 (틀리면 안 되는 데이터라 4중 검증):</b></p>
+<ol>
+<li>표 내부 산술: 각 행의 (기간1, 기간2, 변동률/증감) 3쌍이 표시 반올림 오차 내 정합해야 함 — <code>refine_pass.chg_ok</code>. OSP·Crack 9개 행은 %가 아닌 단순증감(<code>DIFF_ROWS</code>).</li>
+<li>이미지 간 교차: 같은 기간을 여러 이미지가 관측(최대 27회) — <code>build_series.py</code>가 다수결로 확정. 일별은 다수결→src신뢰(both 우선)→나중 관측(소급 정정 존중), 주/월/분기/연은 기간 종료 후 게시본(확정치) 우선.</li>
+<li>스프레드 항등식: Ethylene/HDPE-Naphtha Spread = 제품 − Naphtha.</li>
+<li>고립 스파이크 스캔 후 육안 대조.</li>
+</ol>
+<p><b>함정:</b></p>
+<ul>
+<li>Vision이 이탤릭 변동률의 <code>.1</code>을 <code>.7</code>로, 음수 부호 소실 오독 — 다중변형 재판독(<code>reread.candidates</code>) + 산술제약으로 해소, 육안 확정분은 <code>manual_fixes.json</code>(빌드 때 적용).</li>
+<li>전체 이미지 OCR은 기초유분 블록 셀을 체계적으로 누락(충전율 11~20%) → 행 스트립 확대 OCR 필수.</li>
+<li>원본 표 자체 오류 존재: 1494.jpg 헤더 '2205-04-10', 313/323.jpg 날짜 오타, 2683.jpg(2026-03-09) LLDPE 급등 등은 원본 그대로 실린 값 — manual_fixes의 <code>_why</code> 참조.</li>
+<li><b>원본 미갱신(값 하루 밀림)</b>: 애널리스트가 특정 블록(주로 유가/정제마진)을 갱신 않고 라벨만 민 채 게시하는 실수 — 2026-08-25 표(3157.jpg) 유가 9행에서 발생, 과거에도 16건. <code>build_series._drop_stale_daily</code>가 자동 감지·배제(어제와 3값 완전 동일 + 어제 d1 관측과 모순 조건). 다음날 표의 d2로 참값이 자연 보충됨. 8/24 WTI 참값 85.16(야후)로 배제 판단 확증.</li>
+<li>원자료는 주간·월간·OSP를 소급 개정함(TDI/MDI/PO/BPA 주간 확정치 등 517건) — 오류 아님.</li>
+</ul>
+<p>사이트 반영: index.html 사이드바 '매크로 데이터' 그룹 + 홈 카드. 로컬 확인은 launch.json researchlab2(8934). push는 <a class="wl" href="#ch-git-guard-dual-repo">git-guard-dual-repo</a> 감시 체계.</p></div></details>
+<details class="ch" id="ch-coverage-dashboard-reference" data-s><summary><b>coverage-dashboard-reference</b><span class="d">newsbot-3uj.pages.dev/coverage — 정적 JSON+단일 HTML 리서치 대시보드, 수급html 리팩터링의 참조 아키텍처</span><span class="t">2026-08-06</span></summary><div class="body"><p>https://newsbot-3uj.pages.dev/coverage/coverage — 다올 의료기기/화장품 커버리지 대시보드.</p>
+<p>단일 HTML 206KB(CSS·JS 전부 인라인, 외부 의존성은 Chart.js 4 CDN 하나)에 정적 JSON 11종(~730KB)을 물린 구조. DB·런타임 서버 없음, Cloudflare Pages.</p>
+<p>핵심 패턴 (2026-08-06 정밀 분석):</p>
+<ul>
+<li>Python 빌드 스크립트(build_coverage.py / build_events.py / price_snapshot.py)가 JSON을 커밋 → 브라우저는 정적 파일만 fetch. <b>시세 API 키를 브라우저에 두지 않는 구조</b></li>
+<li>3중 폴백: coverage.json→SEED_DATA / reports_index.json→reports.json→{} / prices.json→pub_close. 하단 #conn 배지가 실제 소스·기준일 노출</li>
+<li>초기 로드는 JSON 2개만, 나머지 600KB는 탭 진입·카드 펼침 시 지연 로드 (멱등 가드: GT_DRAWN / started / 캐시객체 / 싱글턴 프로미스)</li>
+<li>주간 Python 생성 HTML은 재구현 대신 iframe + <code>?embed=1</code>(자식 nav 숨김) + contentDocument.scrollHeight auto-height + weekVersion() 주단위 캐시버스팅</li>
+<li>테마: &lt;head&gt; 최상단 인라인 스크립트로 FOUC 방지, CSS 변수 2벌, CT()가 getComputedStyle로 팔레트를 읽어 Chart.js에 브리지</li>
+<li>반응형 이중 렌더: 같은 데이터로 모바일 스택 + 데스크톱 표를 둘 다 출력하고 @media로 display 스위치</li>
+</ul>
+<p>알려진 버그: 다크 테마 :root에서 <code>--down-tint:var(--down-tint)</code>, <code>--purple:var(--purple)</code> 자기참조 → 파란 계열 배지 배경 20+개가 다크 모드에서 투명. 수정은 <code>--down-tint:110,168,254; --purple:#a78bfa;</code></p>
+<p><a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a>의 봇 파이프라인 + 수급html의 300KB 데이터인라인 HTML을 "봇이 JSON 커밋 → 뷰어 HTML" 구조로 옮길 때의 참조 모델.</p></div></details>
+<details class="ch" id="ch-export-tab-pipeline" data-s><summary><b>export-tab-pipeline</b><span class="d">수출 데이터 탭(export.html)은 export_watch.py 크론이 자동 갱신 — 수동 빌드 시 hub-theme 누락 함정, 공유 패키지 제작 절차</span><span class="t">2026-08-24</span></summary><div class="body"><p>Research Lab '수출 데이터' 탭(site/export.html)은 <b>telegram-digest/export_watch.py가 자동 갱신</b>한다(크론 <code>*/30 9-18 * * 1-5</code>). 워처가 Downloads의 최신 <code>주요품목별수출정리*.xlsx</code> mtime을 export_watch_state.json과 비교 → 새 파일이면 ① build_export_html.py로 <code>주요품목 수출 대시보드 MMDD.html</code> 생성 ② daily_close.py --publish-only 호출. daily_close는 빌드를 하지 않고 <code>inject_and_copy(newest("주요품목 수출 대시보드*.html"))</code>(daily_close.py:70)로 hub-theme.css 링크 + <code>class="ht-export"</code>만 주입해 배포한다.</p>
+<p><b>함정 (2026-08-20 실수)</b>: build_export_html.py 출력물을 직접 site/export.html로 복사하면 hub-theme 링크가 빠진다. 수동 갱신 금지 — 엑셀만 Downloads에 두면 크론이 처리. 갱신 요청 시 먼저 <code>logs/export_watch.log</code>와 배포본 payload의 <code>source</code>/<code>lastUpdate</code>를 확인할 것 — 이미 처리돼 있으면 재빌드 불필요(2026-08-24 확인).</p>
+<p><b>소스 데이터 특이점</b>: 저자 워크북의 <code>총수출</code> 시트만 2025년12월에서 멈춰 있다(52행 고정, 2026-08-20·08-24 수령본 동일). 나머지 222개 시트는 정상적으로 2026년08월까지. 파이프라인 버그 아님 — 대시보드 총수출 탭이 오래된 것처럼 보이면 이것.</p>
+<p><b>공유용 패키지 절차</b> (직장 동료 공유, 2026-08-20 제작): 수출데이터/기업별수출/수출입데이터 3종을 독립형 HTML로 — ① export.html에서 "태린이아빠" 2곳(source 파일명·brandsub) 치환 ② hub-theme.css <code>&lt;style&gt;</code> 인라인 ③ tradestats.html은 fetch를 <code>window.__TRADESTATS__</code> 인라인으로 교체. corpexport·tradestats에는 개인 표기 없음.</p>
+<p><b>HSCODE 정리(태린이아빠).xlsx</b>: 2026-08-20 수령본의 '현재' 시트는 trade_corp/hscode_master.json과 완전 동일(599행 corp/item/hs/addr). 신규 시트 = 상장사 주소모음(2289사)·반도체장비 HS분류 — 파이프라인 미사용.</p>
+<p>관련: <a class="wl" href="#ch-jusikbot-clone-tabs">jusikbot-clone-tabs</a>, <a class="wl" href="#ch-research-lab-site">research-lab-site</a></p></div></details>
+<details class="ch" id="ch-jusikbot-clone-tabs" data-s><summary><b>jusikbot-clone-tabs</b><span class="d">Research Lab 수출입데이터·대만 테크 실적 탭 = jusikbot.com 클론, #59 jusikbot_feed.py 매일 21:50</span><span class="t">2026-08-10</span></summary><div class="body"><p>Research Lab(site/)의 두 탭은 jusikbot.com 클론 (2026-08-10 구축):</p>
+<ul>
+<li><b>수출입데이터</b> (tab-trade10, tradestats.html): 관세청 월별 수출입 19품목 — <code>jusikbot.com/api/trade-stats?range=5y</code> + 국가별 비중은 API에 없어서 <b>/trade-stats 페이지 RSC payload의 <code>countryBars</code>를 정규식+중괄호 카운팅으로 추출</b> (jusikbot_feed.py extract_country_bars). 품목·그룹 한글 라벨은 API에 없어 스크립트에 하드코딩.</li>
+<li><b>대만 테크 실적 모음</b> (tab-taiwan, taiwan.html): MOPS 26섹터 128종목 월별 매출 — <code>jusikbot.com/api/taiwan-revenue?range=5y</code>. 섹터 한글 라벨 하드코딩. API 매출 단위=1000 TWD, 표기 시 /1000 → 1mn TWD.</li>
+<li>수집: #59 <code>jusikbot_feed.py</code> 매일 21:50 cron → site/data/{tradestats,taiwan}.json → git push.</li>
+<li>기존 수출입 잠정치(#5 trade10/trade10.py, 매일 10:30)는 2026-08-10 cron 중단 — 코드·trade10.html 보존, 탭에서만 제거.</li>
+<li>jusikbot이 사이트 구조(RSC 키명·API 파라미터)를 바꾸면 countryBars 추출이 깨질 수 있음 — 로그 logs/jusikbot_feed.log 확인.</li>
+</ul>
+<p>관련: <a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a>, <a class="wl" href="#ch-coverage-dashboard-reference">coverage-dashboard-reference</a></p></div></details>
+<details class="ch" id="ch-kr-etf-align-tab" data-s><summary><b>kr-etf-align-tab</b><span class="d">韓 ETF 정배열 트래커 — kr_etf_align.py, site/kretfalign.html 탭, cron #68 평일 16:45, 분배금 수정종가 방식 검증</span><span class="t">2026-08-27</span></summary><div class="body"><p><b>韓 ETF 정배열 트래커</b> (2026-08-27 구축): <code>kr_etf_align.py</code> → <code>site/kretfalign.html</code> (<a class="wl" href="#ch-us-etf-align-tab">us-etf-align-tab</a> 한국판, <a class="wl" href="#ch-research-lab-site">research-lab-site</a> 허브 '수급 · 모멘텀' 그룹 <code>data-tab="kretfalign"</code> iframe 탭).</p>
+<ul>
+<li><b>판정 공식</b>: 완전 = 현재가 &gt; 4주 &gt; 13주 &gt; 26주 &gt; 52주, 이평 = 4주 &gt; 13주 &gt; 26주 &gt; 52주. 일봉 환산 SMA(20/65/130/260일) — us_align과 동일.</li>
+<li><b>데이터는 반드시 yfinance <code>auto_adjust=True</code>(분배금 수정종가)</b>: 외부 봇 샘플(2026-08-26, 4종)과 대조 결과 수정종가 방식이 3/4 완전 일치(나머지 1종 TIGER 화장품은 26주/52주 MA 0.04% 경계값 하루 차이). 네이버 siseJson 원종가는 분배금 미반영으로 경계일 2종 불일치 — 쓰지 말 것. 알파뉴메릭 코드(0008T0 등)도 <code>.KS</code> 접미로 yfinance 조회 가능.</li>
+<li>유니버스: 국내 섹터·테마 ETF 고정 46종(해외지수·레버리지·인버스·채권·배당전략 제외), 스크립트 내 KR_ETFS dict.</li>
+<li>장 마감 직후 야후 당일 봉 지연 대비 7분 간격 재시도 로직 있음. 등락 색상은 한국식(상승=빨강).</li>
+<li>cron #68: <code>45 16 * * 1-5</code>, 로그 logs/kretfalign.log(healthcheck 자동 스캔), push는 git_guard.</li>
+</ul></div></details>
+<details class="ch" id="ch-kr-ma-align-bot" data-s><summary><b>kr-ma-align-bot</b><span class="d">#67 韓 정배열 트래커 — ma_align_build.py 평일 16:25, 태린이아빠 정배열 공식 검증(일봉 20/65/130/260 SMA + NaN 통과 의미론), site/maalign.html</span><span class="t">2026-08-27</span></summary><div class="body"><p><b>韓 정배열 트래커</b> (cron #67, 2026-08-27 구축) — 태린이아빠 채널의 "완전/이평 정배열" 포맷 복제. <code>ma_align_build.py</code> 평일 16:25 (구 21:45 — 2026-08-27 KRX 마감 후 3종 일괄로 변경, 16:05 update.py 잠정치 raw_cache 사용·~16:09 완성) → <code>site/maalign.html</code>. push는 <a class="wl" href="#ch-git-guard-dual-repo">git-guard-dual-repo</a>. 美 ETF판(us_align.py, cron #66, usalign.html)은 별도 세션이 먼저 구축 — 번호 충돌 조심.</p>
+<p><b>허브 등록(2026-08-27 오후 변경)</b>: 개별 탭 <code>kralign</code>은 폐지 — <a class="wl" href="#ch-us-etf-align-tab">us-etf-align-tab</a>의 <code>site/align.html</code> 통합 래퍼("정배열 트래커" 탭, <code>data-tab="align"</code>) 첫 번째 서브탭으로 들어감. 템플릿에 '오늘의 요약'(wics_map.json 업종 그룹핑, sector 필드는 ma_align_build.py가 부착) 상단 카드 추가 — 기준 토글(기관+외국인/외국인/기관)마다 재생성.</p>
+<p><b>검증된 공식 (원문 시작일 대조 12/15 + 신규상장 3종 = 사실상 전수 일치):</b></p>
+<ul>
+<li>이평 = <b>일봉 SMA 20/65/130/260</b> (4/13/26/52주). 주봉 4/13/26/52 SMA는 2/15로 탈락.</li>
+<li>이평 정배열 = ma20&gt;ma65&gt;ma130&gt;ma260, 완전 = +현재가&gt;ma20.</li>
+<li><b>NaN 통과 의미론</b>: 이력 부족으로 계산 불가한 이평 짝은 '위반 없음' 처리 → 신규상장 직후 종목도 정배열로 집계됨(원본과 동일, KNS·니어스랩·한화머시너리 08-13/24/25 상장일부터 매치). HTML에서 상장 260일 미만은 "신규 N일" 배지.</li>
+<li>원본은 유지일 ~37거래일 캡, 우리는 무제한 소급(캐시 620일)이 차별점.</li>
+</ul>
+<p><b>유니버스</b>: 원작자 공식("수급 150등") 역산 실패 — 금액/시총대비 × 5~90일 전 조합 최대 12/19 커버. 우리 기준으로 확정: raw_cache.json 최근 20거래일 순매수 누적 상위 150, 기준 3종(외국인/기관/기외합산) HTML 토글. 시작일 자체는 유니버스 무관이라 정확.</p>
+<p><b>운영</b>: 일봉은 키움 ka10081(judo_kiwoom.fetch_daily) → <code>ma_align_cache.json</code> 증분(첫 실행 ~55초, 이후 ~1초+신규종목). raw_cache 필수 선행(16:25 실행은 16:05 update.py 잠정치, 21:00 확정치와 순위 미세 차이 가능). 거래정지(당일 캔들 없음)는 제외. 로그 <code>logs/ma_align.log</code>.</p></div></details>
+<details class="ch" id="ch-leaders-tab" data-s><summary><b>leaders-tab</b><span class="d">#69 주도 섹터·주도주 Locked 탭 — leaders_build.py 평일 21:35 체인, upperlimitprice 방법론 자체 구현(확정식+자체 배점), 탑픽→수급지속 대체</span><span class="t">2026-08-27</span></summary><div class="body"><p>Research Lab Locked 탭 "주도 섹터 · 주도주" (2026-08-27 구축). upperlimitprice leaders.html 역설계 문서(<code>~/Documents/Codex/2026-08-27/.../01-leaders-methodology.md</code>) 기반 자체 구현 — 테마는 Locked RRG 페이지 다크 토큰(#0e1117) 그대로.</p>
+<p><b>파이프라인</b>: <code>~/수급html/leaders_build.py</code> → <code>주도주_수급.html</code> → rrg_publish.py TARGETS 3번째(<code>locked/leaders.enc</code>) → index.html <code>#leaders</code> 탭(WebCrypto 복호화, <a class="wl" href="#ch-rrg-algorithm">rrg-algorithm</a> Locked 메커니즘 공유). cron #65 체인에 삽입(rrg 2종 → leaders → rrg_publish, 평일 21:35, logs/leaders.log). push는 git_guard.</p>
+<p><b>구현 분류 (방법론 문서의 확정/자체 구분 유지)</b>:</p>
+<ul>
+<li>확정식 그대로: RS30(0.5×3M+0.3×6M+0.2×12M 초과수익 백분위), 추세20(52주근접 0.6기울기+20일선3+신고가5/3), 눌림10 구간, 수급10(min(8,2+3×목록수)+변곡2−60일선2), 매수 게이트, 4상태 전이, TOP20 상태 재그룹, 섹터 배점 22/17/18/14/9/8/12.</li>
+<li>자체 배점([자체] 주석): 자금25 = avg20 백분위12+순위가점8+분출5. 섹터 정규화 = minmax/비율. 피어 ETF 매핑 PEER_ETF dict.</li>
+<li><b>탑픽 펀더5 → 수급 지속성 대체</b>(주체 3일 연속 순매수 5 / 2일 3) — 탑픽 데이터 소스 없음.</li>
+</ul>
+<p><b>데이터</b>: raw_cache.json(거래대금 top100→시총3000억+ 본주끝'0'·스팩제외 ≈90) + leaders_candles.json(ka10081 증분, ma_align_cache 시드, KEEP 400) + market_cache KOSPI + yfinance 피어(실패 시 중립6). 오실레이터·업종분류는 osc_infl_tg/sectorcap_build 검증식 인라인(임포트 시 stdout 재래핑 회피). 950260(Reg.S)·0220W0(알파뉴메릭 신규)은 일봉 부족으로 skip됨.</p>
+<p><b>상태 파일</b> <code>leaders_state.json</code>: prev_gate/prev_top20 보존으로 같은 날 재실행 멱등(홀딩/D+n 판정 안 깨짐). 첫날(0826)은 전일 상태 없어 전원 NEW — 홀딩은 2일차부터.</p></div></details>
+<details class="ch" id="ch-manual-refresh-button" data-s><summary><b>manual-refresh-button</b><span class="d">Research Lab 전 탭 수동 갱신 버튼 — Worker 큐(DO)+로컬 폴러 #70 구조, 비번 매회 입력, Cloudflare UA 차단 함정</span><span class="t">2026-08-27</span></summary><div class="body"><p>Research Lab 사이트 전 탭에 <b>수동 갱신 버튼</b>(우하단 FAB <code>↻ 수동 갱신</code>) 구축 (2026-08-27).</p>
+<p><b>구조</b> (모두 git push만으로 배포, 대시보드 작업 불필요):</p>
+<ol>
+<li><code>site/index.html</code> 하단 <code>#rlFab</code> 블록 — <code>RR_TABS</code>에 탭별 모드(<code>a</code>=자동체인/<code>l</code>=실시간/<code>x</code>=수동취합)와 예상 소요. openTab 훅 <code>rrOnTab(tab)</code>. 완료 시 75초 카운트다운 후 iframe 캐시버스트 또는 reload.</li>
+<li><code>site/worker.js</code> — <code>/api/refresh/*</code> (enqueue/status/poll/claim/report/ping). Basic Auth 우회 + CORS(github.io 허용). 큐는 <b>Durable Object</b> <code>RefreshQueue</code>(wrangler.jsonc <code>new_sqlite_classes</code> — 무료플랜 OK, KV처럼 사전 생성 불필요). 배포는 push→Workers Builds 자동. 워커 URL: <code>research-lab.jwk490.workers.dev</code> (GitHub Pages와 병행 서빙).</li>
+<li><code>rl_refresh_poll.py</code> (crontab #70, 1분) — poll→claim→<code>TAB_JOBS</code> 체인 실행→산출물 mtime으로 갱신 확인→<code>git_guard.sh</code> push→report(로그 꼬리 포함). fcntl 잠금으로 중복 방지, 큐 비면 무출력.</li>
+</ol>
+<p><b>인증</b>: 공자 요청으로 <b>비밀번호 매회 입력, 저장 금지</b>. 키 = <code>~/.rrg_lock_pass</code>(보관/Locked와 동일). worker.js <code>REFRESH_HASH</code> = sha256("rl-refresh-v1|"+pw) — <code>rrg_publish.py sync_arch_hash()</code>가 비번 변경 시 index.html ARCH_HASH와 함께 자동 동기화.</p>
+<p><b>Why:</b> 정기 크론을 기다리지 않고 누른 시점 기준 즉시 갱신하기 위해. 사이트가 정적(Pages/Worker)이라 버튼→맥 직결이 불가능해 큐 폴링 구조를 택함.</p>
+<p><b>How to apply / 함정:</b></p>
+<ul>
+<li>Cloudflare가 <code>Python-urllib</code> UA를 <b>403으로 차단</b> — 폴러는 <code>User-Agent: rl-refresh-poll/1.0</code> 필수. curl은 통과해서 원인 찾기 어려움.</li>
+<li>같은 탭 중복 요청은 워커가 dedup(기존 job 반환). running 2시간 넘으면 유령으로 보고 재큐 허용.</li>
+<li>탭 체인 매핑은 <code>rl_refresh_poll.py --list</code>로 확인. 수동취합 탭(weekly·deepresearch)은 버튼이 안 뜨고, etfgap은 실시간 표기.</li>
+<li>streak 탭은 streak3_tg 자체 가드로 신규 데이터일 때만 TG 재발송.</li>
+</ul>
+<p>관련: <a class="wl" href="#ch-research-lab-site">research-lab-site</a> <a class="wl" href="#ch-git-guard-dual-repo">git-guard-dual-repo</a> <a class="wl" href="#ch-rrg-algorithm">rrg-algorithm</a> <a class="wl" href="#ch-regime-tracker-daily">regime-tracker-daily</a></p></div></details>
+<details class="ch" id="ch-one-going-thememap" data-s><summary><b>one-going-thememap</b><span class="d">고잉 채널 관련주 신경망 맵 — Research Lab thememap.html, 데이터 파이프라인 위치와 갱신 절차, DART 연동은 2차 예정</span><span class="t">2026-08-20</span></summary><div class="body"><p><b>관련주 신경망 맵</b> (2026-08-20 1차 완성): 텔레그램 @one_going(요약하는 고잉) 채널의 관련주 정리 이미지 249장을 비전 추출해 만든 인터랙티브 커넥톰. 테마 131개 × 종목 1,305개 × 연결 3,010개 + 증시 일정 타임라인 1,336건.</p>
+<ul>
+<li><b>라이브</b>: https://jwk490-cell.github.io/research-lab/thememap.html (허브 탭 #thememap, <a class="wl" href="#ch-research-lab-site">research-lab-site</a> site 저장소)</li>
+<li><b>페이지</b>: <code>site/thememap.html</code> (d3-force CDN + 2D 캔버스, 줌/팬/드래그/검색/플라이투, 신경망/시간선 2뷰)</li>
+<li><b>UX 확정 (2026-08-20 공자 피드백)</b>: 3D(three.js) 시도 후 <b>2D로 회귀</b> 결정. 기본 뷰는 테마 131개만의 "성좌"(테마끼리 공유종목 3개↑ 메타 링크), 테마 클릭 시 종목 펼침(드릴다운), <b>선은 전부 옅은 회색</b>(흰 라벨 가리지 않게 — 색 선 금지), 라벨은 시맨틱 줌 + 개수 컬링. iframe 뷰포트 레이스 대비 지연 resize 3회 필수.</li>
+<li><b>데이터</b>: <code>site/data/thememap.json</code> — <code>telegram-digest/build_thememap.py</code>가 생성 (별칭·그룹 규칙은 <code>thememap_alias.json</code>)</li>
+<li><b>원천 산출물</b> (<code>telegram-digest/output/</code>): one_going_all_raw.json(전체 3,921 메시지 덤프) / classify_result_*.json(402장 MAP·DAILY·OTHER 판정) / extract_result_*.json(MAP 249장 테마→카테고리→종목 추출) / sched_result_*.json(일정 133장 이벤트 추출) / 이미지 one_going_all_imgs/, one_going_sched_imgs/</li>
+</ul>
+<p><b>공자 확정 규칙</b>: DAILY(일일 시세 캡처 65건) 제외 / 같은 테마 여러 버전 = 최신판 채택 + 구버전 전용 종목 합집합(legacy 플래그·점선 칩) / 일정표는 시간선 뷰로 포함.</p>
+<p><b>갱신 절차</b>: 채널 재덤프 → 신규 게시물만 분류·추출(비전 에이전트) → extract/sched result 파일에 추가 → <code>build_thememap.py</code> 실행 → site push. Telethon은 <a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a> user_session 공유(동시 실행 시 sqlite lock 재시도 필요).</p>
+<p><b>2차 예정</b>: DART API로 종목 추가 정보(재무·공시) 연동 — 1차 완성 후 진행하기로 함.</p></div></details>
+<details class="ch" id="ch-regime-tracker-daily" data-s><summary><b>regime-tracker-daily</b><span class="d">변동성 국면 로테이션 트래커 일일 자동화(#61) — 파이프라인 4단계, 동적 날짜, 21:50 크론, git_guard가 site push</span><span class="t">2026-08-21</span></summary><div class="body"><p><b>변동성 국면 로테이션 트래커</b> 일일 자동 갱신 (2026-08-21 구축, 크론 #61).</p>
+<ul>
+<li>파이프라인(순서 고정): <code>judo_flow.py</code> → <code>judo_kr_candles.py</code>(키움 ka10081) → <code>judo_regime.py</code> → <code>judo_regime_html.py</code>. 출력 = <code>변동성_로테이션_트래커.html</code> + <code>site/leadflow.html</code>(사이트 "변동성 로테이션" 탭 iframe). push는 안 함 — <a class="wl" href="#ch-git-guard-dual-repo">git-guard-dual-repo</a>의 git_guard.sh(10분마다)가 자동 커밋·푸시.</li>
+<li>날짜는 하드코딩 아님: judo_flow/judo_regime의 <code>TODAY = max(market_cache.json KOSPI 날짜)</code>, judo_kr_candles의 <code>BASE = 오늘</code>. 과거처럼 TODAY 상수를 손으로 올릴 필요 없음.</li>
+<li>크론: 평일 21:50 (<code>logs/judo_regime.log</code>). 의존 데이터 갱신 시각 — kr_raw.json = judo_rs_update --kr 매시 8~16시(16:00 회차를 이번에 추가, 당일 종가 확정분 수집), market_cache.json = binzip_update --fetch-market 21:15.</li>
+<li>국면 판정은 "마지막 완결주(거래일 4일 이상)" 기준 — 휴일 낀 주는 부분 주로 표시되고 현재 국면은 직전 완결주를 유지.</li>
+</ul></div></details>
+<details class="ch" id="ch-research-lab-site" data-s><summary><b>research-lab-site</b><span class="d">심층리서치 업로드처는 노션이 아니라 GitHub Pages research-lab 사이트 — 저장소 위치·파일 양식·research.json 갱신 절차</span><span class="t">2026-08-26</span></summary><div class="body"><p>공자가 "심층리서치해서 Research Lab 업로드"라고 하면 <b>노션이 아니라</b> https://jwk490-cell.github.io/research-lab/#deepresearch (GitHub Pages)다. 2026-08-12 동방메디컬 건에서 노션(J&amp;J &gt; 주간폴더)에 먼저 올렸다가 "아니 여기에 올리라고 노션 말고"로 정정받음.</p>
+<p><b>절차:</b></p>
+<ol>
+<li>로컬 저장소: <code>/Users/1ne/수급html/site</code> (origin = jwk490-cell/research-lab). <a class="wl" href="#ch-git-guard-dual-repo">git-guard-dual-repo</a>가 감시 중이라 파일 생성만 해도 자동커밋될 수 있음 — 커밋 로그 확인.</li>
+<li>리포트 파일: <code>research/&lt;이름&gt;_리서치_v1_&lt;yymmdd&gt;.html</code> — 최신 양식은 <code>research/OCI홀딩스_리서치_v1_260724.html</code>(다크 테마 단일 페이지, ~20KB)를 템플릿으로. 구형 115KB 탭형(SK이터닉스 v1)은 쓰지 않음.</li>
+<li>인덱스: <code>data/research.json</code>에 <code>{file, name, ticker, date, rating, call, version}</code> 항목을 <b>맨 앞에</b> 추가하고 <code>updated</code> 갱신. 이걸 안 하면 카드가 안 뜬다.</li>
+<li>검증: <code>.claude/launch.json</code>의 researchlab 계열 정적 서버(<code>python3 -m http.server --directory site</code>)로 로컬 확인 후 push. 다른 세션이 8931 점유 중이면 새 포트 구성 추가.</li>
+</ol>
+<p><b>탭 보관 기능(2026-08-26)</b>: index.html 사이드바 맨 아래 '⚙ 보관 관리' — <a class="wl" href="#ch-rrg-algorithm">rrg-algorithm</a>의 Locked 비밀번호(~/.rrg_lock_pass)와 동일 비번을 SHA-256(salt <code>rl-arch-v1|pw</code>) 해시로 검증(ARCH_HASH 상수, rrg_publish.py sync_arch_hash()가 비번 변경 시 자동 동기화). 편집 모드에서 탭 클릭=보관↔해제, 보관 탭은 사이드바 맨 아래 접이식 '보관' 토글 그룹으로 이동(홈 카드도 숨김, 빈 navgroup 라벨 숨김). 목록은 localStorage <code>rl-archived</code> — <b>브라우저별 저장</b>이라 기기 간 동기화 안 됨(전 방문자 기본값으로 굳히려면 index.html의 archApply 위 archSet 초기값 코드에 반영 필요).</p>
+<ol>
+<li>리포트 본문 구조: 결론·판정(판정 3기둥+한 문장 콜) / BM / 해자·지배구조 / 산업·경쟁 / 실적·분기 해부 / 컨센×주가·멀티플 / Peer / 밸류·시나리오(확률가중 EV) / 리스크·매매플랜·KPI / 촉매 캘린더 / 미결·데이터 계보 + foot(데이터 계보·면책). 데이터는 키움 REST(ka10001/10081/10059) 실측 + DART 원문 + 병렬 웹리서치.</li>
+</ol></div></details>
+<details class="ch" id="ch-rrg-algorithm" data-s><summary><b>rrg-algorithm</b><span class="d">upperlimitprice RRG 리버스엔지니어링 완료 — 업종판 공식 100% 확정, rrg_ref.py 재현 엔진, 키움 업종코드 23개 매핑</span><span class="t">2026-08-27</span></summary><div class="body"><p>upperlimitprice.github.io RRG 대시보드 알고리즘 리버스엔지니어링 (2026-08-24 완료).</p>
+<p><b>업종판(rrg.html, 주간) 100% 확정</b> — 20/23 업종 RMSE 0.0003(발행 반올림 오차):</p>
+<ul>
+<li>RS = 100×업종/코스피 (ISO주 마지막 거래일 종가, 진행주 포함)</li>
+<li>RS-Ratio = 100 + rolling_z(EMA(RS,span=3), win=14, <b>ddof=1</b>)</li>
+<li>RS-Momentum = 100 + rolling_z(EMA(100×ratio_t/ratio_{t-1}, 3), 14, ddof=1) — ratio 체인에서 계산</li>
+<li>JdK 원본 아닌 z-score 근사판, 1σ=1pt. pandas 기본값(ewm, rolling.std ddof1) 그대로.</li>
+</ul>
+<p><b>종목판(rrg-stock.html, 일별) — 2026-08-26 완전 크래킹</b>: ratio = <b>EMA5(100+z(RS,60,ddof0))</b> (z 먼저·스무딩 나중), mom = <b>EMA5(100+z(diff(ratio),60,ddof0))</b> — 발행값 대비 전 146종목 RMSE 0.0008(반올림 오차)=완전 일치. 크래킹 열쇠: z(r−EMA_α(r))의 α→1 극한=diff. 업종판(EMA→z·ddof1·ROC)과 종목판(z→EMA·ddof0·diff)은 서로 다른 구현임. 실가격 재현 잔차(~0.01/0.5σ)는 소스 차이(KRX OpenAPI vs 키움)로 공식 무관.</p>
+<p><b>산출물</b>: ~/수급html/rrg_ref.py (재현 엔진+--verify 사이트 대조), ~/수급html/RRG_알고리즘_검증.md.</p>
+<p><b>나만의 버전</b>: (1) rrg_supply.py → RRG_수급.html — 업종판(주간)+수급 오버레이, 60주 레이더 재생(▶/슬라이더/속도/꼬리 3~12주, BRIGHT 팔레트 밝은 꼬리). 주별 수급=raw_cache 100일→ISO주 재집계(~20주 링 커버). <b>2026-08-26 코스닥 확장: 41개 지수 = 코스피 23 + 코스닥 업종 17 + 코스닥 종합(Q101, 수급=코스닥 전종목 합산)</b>. 코스닥 키움 코드(mrkt_tp=1, 구성종목 대조 식별): 107건설 108유통 110운송창고 115음식료 116섬유의류 117종이목재 119화학 120제약 121비금속 122금속 123기계장비 124전기전자 125의료정밀 126운송장비 127기타제조 128통신 129IT서비스 (111금융=스팩덩어리·118출판 n=2·103/106/138~140 규모/소속부 제외). members 캐시 키 코스닥='Q'+코드. 벤치=코스피 통일, 라벨 * 접미, 시장 필터. (2) rrg_stock_supply.py → RRG_수급_종목.html (2026-08-26) — 종목판(일별) 사이트 공식 그대로. 베이스 임베드=<b>(시총 1000억↑&amp;거래대금 1억/일↑) ∪ upperlimitprice 146 상시 포함 ≈ 1,250종목</b>, 페이지 안 셀렉트로 시총(전체/1000억/5000억/1조)·거래대금(전체/100억/300억/1000억, 기본 100억) 클라이언트 필터링(passFilter). fetch_site_codes가 매 빌드 사이트 유니버스 갱신(실패 시 rrg_site_codes.json 캐시; 010620 HD현대미포만 raw_cache 부재 누락). UL ◆ 표식, 시장필터 'UL 커버'=필터 우회 원본 그대로. 표에 v20(거래대금억) 컬럼. <b>2026-08-26 컴팩트 개편(종목판만)</b>: 수급 링+링 주체 셀렉트·표 회전율% 컬럼 제거(사용자 요소별 선택), 인사이트를 원본 스타일 '최근 로테이션 인사이트'(사분면 분포·전이 칩·주도 상위/개선 주목/부진 경계/모멘텀 급변, 필터 연동 클라이언트 계산)+선점 후보로 통합해 맨 위 배치, 맵은 사분면 모서리→중심 그라데이션+라운드 플롯면+정수 그리드/틱+호버 opacity 트랜지션. 점 크기 고정 r=4.5(회전율 스케일링 제거), fw 배열은 툴팁용으로 유지. 빌드본 갱신은 임베드 JSON 추출→새 템플릿 재조립 방식(재빌드 불필요). ka10081 workers=3 ~2.5분 빌드·~4.7MB(gzip enc ~1.2MB). 용량: 날짜 전역인덱스 di→dts, 수급 bp 정수. 렌더: 꼬리 상위80+핀·검색만 기본(전체 옵션), 시장·사분면 필터, 90일 레이더+롤링5일 수급 링 전구간.</p>
+<p><b>Research Lab Locked 섹션(2026-08-26)</b>: rrg_publish.py — RRG 2종을 gzip→AES-256-GCM(PBKDF2-SHA256 20만회) 암호화해 site/locked/*.enc 발행(평문은 repo에 안 올라감). 포맷 'RRG1'+salt16+nonce12+ct. 비밀번호 ~/.rrg_lock_pass(600, 초기 rrglab-7b9268, 파일 수정→재실행으로 변경). index.html에 Locked navgroup+rrgsec/rrgstk 탭(표시명 "수급 로테이션 맵 (업종)/(종목)"), WebCrypto 복호화→blob iframe, sessionStorage로 세션 내 재입력 생략, 오답=GCM OperationError 처리. cron #65 체인 마지막에 rrg_publish.py 추가. push는 git_guard. 공통: 표=최신 고정(주체별 5/20일 bp), 인사이트=전이+선점 후보(개선×스마트 유입), 구성종목=ka20002 캐시 7일. rrg_ref import가 stdout 래핑하므로 재래핑 금지. <b>cron #65 평일 21:35 두 판 연속 자동 빌드</b>(raw_cache 21:00 선행, logs/rrg_daily.log). 미리보기 패널은 ~1MB 스냅샷 한계로 종목판 확인 불가(로컬 브라우저는 정상).</p>
+<p>키움 ka20009 업종코드 매핑(발행 r 대조 유일해): 005음식료담배 006섬유의류 007종이목재 008화학 009제약 010비금속 011금속 012기계장비 013전기전자 014의료정밀 015운송장비 016유통 017전기가스 018건설 019운송창고 020통신 021금융 024증권 025보험 026일반서비스 028부동산 029IT서비스 030오락문화 (001=코스피, 022 폐지·023 빈응답).</p>
+<p><b>시그널 백테스트(2026-08-27)</b>: rrg_backtest.py → rrg_backtest_stats.json — 종목판 인사이트 시그널 전부를 2023-11~2026-08(1,208종목)로 검증, 빌드 시 임베드되어 페이지 <b>맨 아래</b> 접이식 패널(🧪)+인사이트 블록 제목 인라인 성적 표기. <b>기준은 KOSPI 초과수익이 아니라 "같은 날짜 풀(거래대금100억↑) 동일가중 평균 대비 알파"</b> — 대형주 쏠림 장세로 동일가중 유니버스가 KOSPI를 상시 하회(-1.7%/20d)해 지수 대비로는 전 시그널이 드리프트에 묻힘(1차 실행에서 확인한 함정). 핵심 결과: 선점 후보 +10d +0.81%/승률47%·+20d +1.50%(최강, 단 수급 100일 표본), 개선 체류 +0.37%/10d, 부진→개선 진입 +0.43%/20d 유효 / <b>개선→주도 전이(-0.35%/10d)와 모멘텀 급등 추격(-0.30%/10d)은 마이너스</b>(주도 도달 시점엔 알파 소진, 단기과열 평균회귀), 부진 체류 -0.45%/10d 회피 유효. 일봉 캐시 rrg_bt_cache.json(당일 재사용, ~1100달력일), 재계산 ~13초/풀수집 ~6.5분. 통계 갱신은 수동 재실행(월 1회쯤 권장) — 나이틀리 빌드는 기존 JSON 그대로 임베드.</p>
+<p>함정: 신설지수 3개(부동산·IT서비스·오락문화)는 사이트 소스가 ~2024-12부터라 초기 구간 비교 불가(vintage 차이). pykrx는 KRX 개편으로 전면 고장(2026-08). 사용자 계획: 이 원리로 나만의 버전 제작 — 수급 오버레이(사모/외인/회전율) 결합이 차별점 후보. <a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a> <a class="wl" href="#ch-indicator-backtest-2026ytd">indicator-backtest-2026ytd</a></p></div></details>
+<details class="ch" id="ch-sectorcap-tab" data-s><summary><b>sectorcap-tab</b><span class="d">Research Lab #basket7 = 업종 시총비중 탭 (구 핵심7 대체), 투자포인트 기준 커스텀 업종 분류 파일과 --reclass 튜닝 절차</span><span class="t">2026-08-24</span></summary><div class="body"><p>2026-08-24, 공자 요청으로 Research Lab <code>#basket7</code> 탭을 <b>핵심7 시총비중 → KOSPI·KOSDAQ 업종 시총비중</b>으로 교체. 요구사항: "basket7 개념 없애고 전닉·이차전지·제약바이오·화장품 식으로 묶자. 반도체는 메모리(전자·닉스)/소부장/기판으로 쪼개고, 업종 애매한 기업은 웹검증해서 <b>투자포인트가 잡히는 업종</b>으로 분류."</p>
+<p><b>핵심 원칙: KRX 산업분류가 아니라 시장이 그 종목을 거래하는 테마로 분류한다.</b> 예 — 삼성전자·SK하이닉스·SK스퀘어=반도체 메모리(KRX상 전기전자/금융), LG화학·포스코퓨처엠=이차전지(KRX상 화학), 서진시스템=이차전지(ESS 함체), 삼현=로봇(방산 아님), 한화비전=반도체 소부장(자회사 한화세미텍 HBM 본더), 신성델타테크=기타(초전도체 테마라 본업 가전부품으로 못 묶음).</p>
+<p><b>파일 (전부 <code>/Users/1ne/수급html</code>)</b></p>
+<ul>
+<li><code>sectorcap_build.py</code> — 빌더. ka10099(mrkt_tp 0/10) 유니버스 + ka10001 전 종목 시총 스캔(약 4분, 2,615종목) → <code>sectorcap.json</code> + <code>site/sectorcap.html</code>.</li>
+<li><code>sector_groups.json</code> — 분류 정의. <code>override</code>(코드별 수동, 키는 "코드 종목명") &gt; <code>fallback</code>(KRX 산업분류 86종 → 커스텀 38업종) &gt; 기타. <b>분류 수정은 이 파일만 고치면 됨.</b></li>
+<li><code>sectorcap_raw.json</code> — 분류 전 시총 원본 캐시.</li>
+<li><code>_archive_basket7_build.py</code> — 구 핵심7 빌더 (보존만, 미사용). <code>site/basket7.html</code>은 커밋 5aeaa6bc로 삭제.</li>
+</ul>
+<p><b>분류 튜닝 절차 (중요):</b> 업종을 고칠 때 4분짜리 API 재스캔 하지 말 것.</p>
+<pre>
+python3 sectorcap_build.py --reclass   # raw 캐시로 재분류, 0.1초
+</pre>
+<p><code>--rebuild</code>는 집계까지 그대로 두고 HTML만 다시 찍는다.</p>
+<p><b>운영:</b> crontab #62 평일 16:40 (16:00 sector, 16:20 quote_universe, 16:30 disparity 뒤 빈 슬롯). push는 <a class="wl" href="#ch-git-guard-dual-repo">git-guard-dual-repo</a>가 처리. healthcheck는 <code>logs/*.log</code> 전수 스캔이라 등록 불필요.</p>
+<p><b>자가 보수 신호:</b> 빌드 로그에 <code>[warn] 미분류(기타): 종목명 N조</code> — 3천억 이상인데 폴백으로도 안 잡힌 신규상장·업종전환 종목. 검토 후 의도적으로 기타에 두려면 override에 명시적으로 <code>"기타"</code>를 써두면 경고가 멎는다.</p>
+<p><b>함정:</b> ka10099의 <code>upName</code>이 비는 종목이 36개 있다(기업은행·카카오뱅크·케이뱅크·제주은행·외국주 950xxx/900xxx 등). 구 basket7 빌더는 빈 upName을 걸러서 <b>KB금융·기업은행이 통째로 누락</b>됐었다 — 이 빌더는 upName 필터를 쓰지 않고 override로 잡는다. 또 ka10001은 단발 실패가 나므로(KB금융 전례) 실패분 1회 재시도 로직 필수.</p>
+<p>우선주는 코드 <code>[:5]+"0"</code>으로 본주 override를 상속한다 (005935→005930, 00680K→006800).</p></div></details>
+<details class="ch" id="ch-supply-tab-flows" data-s><summary><b>supply-tab-flows</b><span class="d">수급 탭(supply.html) 투자자별 수급 섹션 — build.py sec2 5주체 구조, 프로그램 ka90004 캐시 공유, 공통 조합 선택</span><span class="t">2026-08-27</span></summary><div class="body"><p>2026-08-27 개편. Research Lab <code>#supply</code> 탭의 '기관 수급' 섹션(sec2)을 <b>투자자별 수급(사모/투신/연금/외인/프램)</b>으로 확장. 생성 경로는 그대로: <code>~/수급html/build.py</code> → <code>index.html</code> → daily_close.py <code>inject_and_copy()</code> → <code>site/supply.html</code>.</p>
+<p><b>탭 노출</b>: 허브 탭명은 <b>투자자별 수급/거래량 증감</b>(당일 3번 개명 끝 확정). 세부 탭은 sec2(투자자별 수급, 기본)→sec3(거래량 급증) 2개만. sec4(60일 신고가)·sec5(당일)·sec1(누적)은 2026-08-27 임시 숨김(사용자 지정) — 데이터·렌더 코드는 살아있고 build.py <code>TABDEF</code> 배열에 항목 복원만 하면 됨(주석에 원래 항목 보존).</p>
+<p><b>sec2 구조 (build.py):</b></p>
+<ul>
+<li>페이로드는 <code>sec2[시장][기간]</code> 2단 키 — 시장(전체/코스피/코스닥) 토글 추가(2026-08-27 당일 2차 요청). 시장별 사전계산이라 index.html이 ~750KB로 커짐(gzip이면 무관).</li>
+<li>5주체 시총대비 순매수·순매도 Top20 — <code>SEC2INV = 사모/투신/연금/외국인/프로그램</code> 순. 그리드는 <code>.g5i</code>(minmax 340px, 종목명 잘림 방지로 g5보다 넓음).</li>
+<li>상단 공통 표(구 하단 표 이동, ★ 당일 칩 카드는 삭제): <code>COMBOS</code> = st(사모+투신) / stp(+연금) / stpf(+외국인) 3조합 버튼, 기간(1/5/10/30/60)·방향 토글 연동, 합계 열 포함. 공통 판정은 반올림 전 raw ratio 부호 기준(표시 +0.00%인데 포함되는 경우 정상).</li>
+<li>하단 절대금액 기준 Top20: 외국인·프로그램만, 방향 토글 연동 2열.</li>
+<li>프로그램 데이터가 기간보다 짧으면 배지 "집계 N/M일".</li>
+</ul>
+<p><b>프로그램 데이터 (핵심 함정):</b></p>
+<ul>
+<li>raw_cache.json(ka10059)에는 프로그램이 없음 — build.py <code>load_prog()</code>가 키움 <b>ka90004</b>로 수집, <a class="wl" href="#ch-streak3-bot">streak3-bot</a>과 <code>prog_streak_cache.json</code>을 <b>공유</b>(양쪽 모두 보관 70일, 한쪽만 줄이면 다른 쪽 데이터가 잘림). 일자별 즉시 저장이라 중단 안전, 수집 실패해도 빌드는 계속(캐시분만 사용).</li>
+<li>2026-08-27 60거래일(20260601~) 백필 완료 — ka90004는 최소 3개월 소급 조회 허용 확인. 이후 cron의 build.py(16:05, 21:00)가 당일 1일치만 추가(~30초).</li>
+<li>단위 백만원, stex_tp=3(KRX+NXT 통합) — 투자자 3종(raw_cache, KRX만)과 거래소 기준이 다름.</li>
+</ul>
+<p><b>검증 스냅샷(26/08/26 기준일):</b> 당일 외국인 금액 1위 삼성전자 +6,713억, 프로그램 1위 삼성생명 +712억. 외국인·프로그램 시총대비 상위는 거의 동일(비차익 중복) — <a class="wl" href="#ch-streak3-bot">streak3-bot</a>의 겹침 제외 판단과 같은 이유.</p></div></details>
+<details class="ch" id="ch-us-etf-align-tab" data-s><summary><b>us-etf-align-tab</b><span class="d">美 ETF 정배열 트래커 — us_align.py, site/usalign.html 탭, cron #66 평일 16:50, 일봉 환산 SMA 방식 검증</span><span class="t">2026-08-27</span></summary><div class="body"><p><b>美 ETF 정배열 트래커</b> (2026-08-27 구축): <code>us_align.py</code> → <code>site/usalign.html</code> (데이터 임베드 단일 HTML).</p>
+<p><b>통합 탭(2026-08-27 오후)</b>: 허브에는 개별 탭이 아니라 <b><code>site/align.html</code> 래퍼</b>(단일 <code>data-tab="align"</code> "정배열 트래커")가 등록돼 있고, 그 안에서 韓 종목(maalign)·韓 ETF(kretfalign)·美 ETF(usalign) 3판을 서브탭 lazy-load iframe으로 전환한다(localStorage <code>align-view</code>로 마지막 탭 기억). 3판 모두 레이아웃 통일: <b>'오늘의 요약' 맨 위, 공식·범례 설명 맨 아래, max-width 1180px 중앙 정렬, 추이(브레드스) 차트는 접기 토글(기본 접힘 — 순위표 우선, localStorage <code>{page}-chart</code> 기억)</b>. 韓 종목판 요약은 wics_map.json 업종 그룹핑(ma_align_build.py가 sector 필드 부착), ETF 2판은 템플릿 내 정적 GROUPS 매핑.</p>
+<ul>
+<li><b>판정 공식(검증됨)</b>: 완전 정배열 = Price &gt; 4W &gt; 13W &gt; 26W &gt; 52W, 이평 정배열 = 4W &gt; 13W &gt; 26W &gt; 52W. <b>주봉 리샘플이 아니라 일봉 환산 SMA(4W=20일·13W=65일·26W=130일·52W=260일)</b> — 외부 봇 샘플(2026-08-26 기준 58건)과 시작일·유지일 전건 일치 확인, 주봉 방식은 불일치.</li>
+<li>유니버스 96종 = rs_build.py US_ETFS 90종 복제 + SEA·PEJ·AMLP·ENFR·MLPX·IYZ 6종 추가. 데이터 yfinance 일봉(수정종가, 820일 조회).</li>
+<li>산출: 스트릭 테이블 2개(시작일·유지 거래일·현재가·vs4W/52W 괴리) + 최근 250거래일 브레드스 차트. 차트는 숨김 로드 시 폭 0 → 재시도 로직 있음.</li>
+<li>cron #66: <code>50 16 * * 1-5</code> (평일 16:50 — 2026-08-27 사용자 지정으로 KRX 마감 후 3종 일괄로 이동, 데이터는 전일 밤 미국 세션·금요일 세션은 월 16:50 반영). push는 git_guard, 로그 logs/usalign.log(healthcheck 자동 스캔).</li>
+</ul></div></details>
+<details class="ch" id="ch-weekly-schedule-tab" data-s><summary><b>weekly-schedule-tab</b><span class="d">Research Lab '주간 일정' 탭 — 텔레그램 15채널 수집→웹검증→weekly.html 빌드 표준 절차 (매주 일요일)</span><span class="t">2026-08-24</span></summary><div class="body"><p>Research Lab 사이트(<a class="wl" href="#ch-research-lab-site">research-lab-site</a>)에 <b>주간 일정 탭</b> 추가 (2026-08-24). <code>site/weekly.html</code> (iframe embed, nav <code>data-tab="weekly"</code>, 시황 그룹 최상단). 공자 확정 워크플로우: "채널들에서 주요 일정 정리 게시물 읽고 후보로 넣고, 웹검증 진행한 후 정리".</p>
+<p><b>매주 갱신 절차 (일요일 권장):</b></p>
+<ol>
+<li><b>텔레그램 수집</b>: <code>telegram-digest/.venv/bin/python3 collect_channel.py --channel @&lt;ch&gt; --since &lt;월요일-6일&gt;</code> 을 15개 채널에 순차 실행. 채널: globalbobo(한투 최보원·차주 지표/실적 KST정리 最良), stockhubkr, SK_Research_Asset(조준기 Week Ahead), daishinstrategy(이경민), tazastock(국내 IPO·기업이벤트 상세 最良), insidertracking(차주 KST 지표), yakjangsu(미국 주간 이벤트 심층), sceret_taver(News SOXL 주간 캘린더+컨센), shinhanresearch(플랫폼팀 엔터/게임 일정), report_figure_by_offset(<b>삼성증권 캘린더 이미지 — <code>--media</code> 필요</b>, 차주+차차주 한장 요약), mmstere, yeonsour(WEEK N 미국 실적/산업행사), ehdwl(서상영 주간이슈+요일별 일정 상세), daolresearch(월간 증시 캘린더), allbareun</li>
+<li><b>IR 일정</b>: awakeplus.co.kr IR게시판은 로그인 게이트 → <b>KIND 직접 조회</b>가 정답: <code>curl -d "method=searchIRScheduleSub&amp;currentPageSize=100&amp;pageIndex=N&amp;fromDate=..&amp;toDate=.." https://kind.krx.co.kr/corpgeneral/irschedule.do</code> (한/영 중복 행 dedupe)</li>
+<li><b>웹검증 (필수)</b>: BEA 일정(GDP·PCE), 캔자스시티 연은(잭슨홀), WebSearch(금통위·연준 연설 시간), <b>Investing.com 경제캘린더</b> — 인앱 브라우저에서 This Week 클릭 후 JS로 테이블 추출 (KST 표시됨, 컨센서스 포함). 채널 간 시간 충돌 시 공식기관 우선 (예: 삼성증권 이미지의 워시 연설 21:30은 오기 — 실제 10:00 ET=23:00 KST)</li>
+<li><b>IPO 일정 (2026-08-24 추가)</b>: 텔레그램 <code>@haan_ipo</code>(대진인베스트먼트 IPO 플랫폼) — 매일 06:30 [Daily] 게시물에 금주/전체 수요예측·청약·상장 일정, 상장 당일 종목별 공모정보(확정공모가·시총·기관경쟁률·유통물량) 상세. 증권신고서 제출건은 <code>⭐️&lt;종목&gt;</code> 게시물에 밴드·시총·주요일정. <b>일정 변경이 잦으므로 최신 Daily 우선</b> (신고서 원문 일정은 낡음), <code>38.co.kr/html/fund/index.htm?o=k</code> (EUC-KR, curl+iconv)로 청약일 교차검증.</li>
+<li><b>빌드</b>: 빌더는 스킬 원본이 아니라 <b>로컬 사본</b> <code>/Users/1ne/수급html/weekly_build/</code> (build_v2.py + template_v2.html + data_&lt;MMDD&gt;.json). 스킬 원본에 없는 <b>IPO 일정 탭</b>(3번째 탭 · <code>ipo_schedule</code> 스키마: this_week/next_week → days[] → items[{kind:상장|청약|수요예측|변경상장, text, importance}])을 추가해둠. 실행: <code>python3 build_v2.py data_0824.json /tmp/weekly_new.html</code>. 기존 HTML의 <code>&lt;script id="briefing-data"&gt;</code> JSON을 뽑아 data json으로 재활용. IPO 항목은 <code>schedule_macro</code>에 중복 기재 금지 (IPO 그룹이 캘린더 디테일에도 자동 렌더). <a class="wl" href="#ch-git-guard-dual-repo">git-guard-dual-repo</a>가 자동커밋하므로 push 확인만.</li>
+<li><b>다크 테마 주입 (빌드 후 필수)</b>: 빌드 산출물은 라이트 테마라 그대로 두면 허브와 안 맞음. <code>&lt;html lang="ko"&gt;</code> → <code>&lt;html lang="ko" class="ht-weekly"&gt;</code>, <code>&lt;/head&gt;</code> 직전에 <code>&lt;link rel="stylesheet" href="hub-theme.css"&gt;</code> 삽입. 다크 팔레트는 hub-theme.css 하단 <code>ht-weekly</code> 섹션이 :root 변수를 덮어씀 (2026-08-24 추가, 수정 불필요 — IPO 탭용 <code>.ipo-table</code>/<code>.ipo-kind</code> 다크 규칙도 하단에 있음).</li>
+</ol>
+<p>주의: 리포트_갤러리·삼성증권 캘린더는 이미지 게시라 텍스트 검색에 안 걸림 — <code>--media</code>로 받아 Read로 판독. 대신증권 채널은 별도 주간일정 포스트 없이 월요일 아침 코멘트에 이벤트 정리가 녹아있음.</p></div></details>
+<h3>텔레그램 봇 <small style='color:var(--dim2)'>(9)</small></h3>
+<details class="ch" id="ch-consensus-bot" data-s><summary><b>consensus-bot</b><span class="d">봇 #56 컨센서스 추적봇 — 2026-08-06 중단(오답노트 터미널 발행분 사용), 코드·DB는 consensus_bot/에 보존</span><span class="t">2026-08-10</span></summary><div class="body"><p>수급html/consensus_bot/ — 오답노트 터미널(@inlifebalter) 스타일 OP 컨센서스 변동 감지봇 (봇 #56). 2026-08-05 Phase 1 구현·실데이터 검증 완료.</p>
+<ul>
+<li>소스: WiseReport ajax JSON(연간 cF5002=평균+밴드, 분기는 c1050001_data flag=2&amp;frq=1 테이블 — 분기 차트류는 실적 발표 후 동결되므로 금지, (A)행으로 종목별 분기 자동 롤링). 월말 히스토리는 소급 재계산되는 근사치라 snapshot.src로 live/bf 구분, 메시지에 ≈ 표시 + KIS invest-opinion(의견/TP, NR 포함) + 한경컨센∪네이버리서치(제목). KIS estimate-perform은 한투 자체 추정치라 사용자 결정으로 제외.</li>
+<li>KIS 키: 키체인 kis-appkey/kis-secret + <b><code>~/수급html/.kis_env</code>(600) cron 폴백 필수</b> (<a class="wl" href="#ch-cron-keychain-auth">cron-keychain-auth</a> — 2026-08-06 이것 없어서 cron 의견 수집 전멸). 재생성 <code>common.py --sync-env</code>, healthcheck "KIS API" 항목이 감시.</li>
+<li>음수 주의: 컨센 밴드/평균은 음수(적자 추정)가 흔해서 <code>cur &lt; prev*0.999</code> 식 상대비교는 부등호가 뒤집힌다. <code>publish.moved()</code>(절대차/스케일) 사용 — SDI 무한 발송 사고 원인.</li>
+<li>이전 키 등록 이력: 키체인 kis-appkey/kis-secret (등록 시 시크릿의 <code>$</code>가 셸 확장으로 잘리는 사고 있었음 — 작은따옴표/pbpaste로 해결). 토큰 캐시 consensus_bot/.kis_token.json, 재발급 1분 1회.</li>
+<li>추적: 26E/27E 연간 + TRACK_QUARTER(202606, 시즌 종료 시 수동 롤링), threshold ±0.5%, QoQ/YoY 적전/흑전 표기.</li>
+<li><b>2026-08-06 중단</b>: 사용자가 오답노트 터미널(@inlifebalter) 발행분을 그대로 쓰기로 결정. crontab 4줄 주석 처리(재개 방법은 crontab.txt의 #56 블록), 코드·DB·@ConsensusUpdate_Bot 토큰 모두 보존.</li>
+<li>(중단 전 구성) @ConsensusUpdate_Bot → 공자 DM(chat_id는 .env CONSENSUS_CHAT_ID). crontab: 06:20 풀배치 / 08~18시 30분마다 intraday.py(KIS 의견 폴링→이벤트 종목만 재수집, 📝 신규리포트 알림) / 12:35·16:35 --full 스윕 / 21:05 요약. 재알림은 alert_state(±0.5% 재이탈), 📝 중복은 sent_events. 메시지 v2: 밴드 3줄(최고-컨센-최저)+Snapshot·History 26/27E. 분기 밴드는 발표 진행 분기에서 갱신 멈춤(band_asof 기준일 표기).</li>
+<li>Phase 2 백로그는 consensus_bot/PLAN.md (분기 자동 롤링, FY 롤오버, 유니버스 자동 확장 등).</li>
+</ul>
+<p>관련: <a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a></p></div></details>
+<details class="ch" id="ch-float-turn-bot" data-s><summary><b>float-turn-bot</b><span class="d">봇 #57 float_turn_tg.py — 유동시총 대비 거래대금 회전율 감시 (장중 30분 + 15:45 마감요약)</span><span class="t">2026-08-06</span></summary><div class="body"><p>봇 #57 <code>수급html/float_turn_tg.py</code> (2026-08-06 가동 시작).</p>
+<ul>
+<li>회전율 = 당일 거래대금 ÷ 유동시총(유통주식수 × 현재가) × 100</li>
+<li>후보: 키움 ka10032 거래대금상위(rkinfo 경로, 페이지네이션 최대 500/시장, 관리종목 제외) → 보통주 필터(ka10099) → 거래대금 100억↑ (2026-08-06 300억→100억 하향)</li>
+<li>보통주 필터는 <code>nh.is_common</code>/<code>nh.universe</code> 공용 사용 (2026-08-06 newhigh_list·fetch.py에 알파뉴메릭 신형코드 isalnum 허용 반영 후 자체 중복 제거)</li>
+<li>유통주식수: ka10001 <code>flo_stk</code>(천주) — <code>float_turn_cache.json</code>에 일 1회 캐시</li>
+<li>intraday 슬롯(평일 9:05~15:05 30분): 회전율 20% 돌파 신규 종목만 1회 알림 (<code>float_turn_state.json</code> 중복 가드, dry-run은 state 저장 안 함)</li>
+<li>close 슬롯(15:35, 마감 동시호가 확정 직후 최속): 회전율 상위 20종목 고정, 🌋30%↑/🔥20~30%/📈10~20%/▫️10%미만 구간 리포트</li>
+<li>1년 백테스트(2026-08-06, 후보 62종목): 15~20% 돌파가 D+5~10 지속 최상(+3.6~5.1%, 승률 58~60%), 50%↑는 D+1만 유효 후 되돌림, 음봉 돌파는 D+5 -6.7% 승률 29%로 사실상 매도신호</li>
+<li>전송: @ConsensusUpdate_Bot DM (CONSENSUS_BOT_TOKEN/CHAT_ID 재사용, 2026-08-06 공용 채널→이전). FLOATTURN_* 설정 시 우선, 최종 폴백 Saved Messages</li>
+<li>주의: <code>newhigh_list</code> 임포트 시 stdout utf-8 래핑됨 — 봇 파일에서 중복 래핑 금지 (I/O closed 에러)</li>
+</ul>
+<p>관련: <a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a> <a class="wl" href="#ch-cron-keychain-auth">cron-keychain-auth</a></p></div></details>
+<details class="ch" id="ch-fo-note-data-sources" data-s><summary><b>fo-note-data-sources</b><span class="d">선물옵션 수급봇(fo_note.py) 빈칸의 데이터 소스 조사 결과 — 키움/KRX Open API 모두 투자자별 파생 미제공 (2026-08-06 확인)</span><span class="t">2026-08-06</span></summary><div class="body"><p>fo_note.py(#12 KRX_선물옵션수급, 평일 18:30)의 <code>미니선물 / 코스닥선물 / 콜·풋옵션</code> 빈칸은 데이터 소스가 없어서 비어 있다. 2026-08-06에 소스 후보를 전수 확인한 결과:</p>
+<ul>
+<li><b>키움 REST API: 파생 자체가 없음.</b> openapi.kiwoom.com 카테고리는 OAuth / 국내주식 / 미국주식뿐. 국내선물옵션 카테고리 부재 → 투자자별 이전에 파생 TR이 존재하지 않음.</li>
+<li><b>KRX Open API(data-dbg.krx.co.kr): 투자자별 API 없음.</b> 공식 서비스 목록(openapi.krx.co.kr 서비스 목록) 전체가 "일별매매정보 / 종목기본정보 / 시세정보"뿐. 파생상품 카테고리는 선물·옵션·주식선물·주식옵션 일별매매정보 6종이며 전부 시세+미결제약정. <b>활용신청 승인으로 채워지는 건 콜/풋 줄 하나뿐이고, 그것도 "외국인"이 아니라 시장 전체 미결제약정 증감이다.</b></li>
+<li><b>KIS(한국투자) API:</b> 국내선물옵션 카테고리는 있으나 시세·주문·잔고뿐. 투자자별 TR은 국내주식(FHPTJ04040000 등)에만 존재.</li>
+<li><b>네이버 투자자별 매매동향:</b> <code>investorDealTrendDay.naver</code> 는 sosok=03(코스피200선물, 계약)만 유효. 01=코스피, 02=코스닥(금액). 04~07은 빈 응답 → 옵션·미니·코스닥선물 불가.</li>
+<li><b>data.krx.co.kr 스크래핑:</b> <code>getJsonData.cmd</code> 가 <code>400 LOGOUT</code> 반환. 실제 브라우저 동일 오리진 fetch에서도 LOGOUT → <b>Data Marketplace 로그인 세션 필수</b>로 정책이 바뀌었다. 추가로 Akamai가 python <code>requests</code>의 지문을 403으로 차단(UA 무관). <b>curl은 200 통과</b> → 스크래핑하려면 subprocess curl 또는 pycurl + 로그인 쿠키.</li>
+</ul>
+<p><b>Why:</b> 사용자가 "KRX API 활용신청 승인되면 빈칸 해결되나?"를 물었고, 답은 "콜/풋 한 줄만, 그것도 외국인 아님"이다. 같은 질문을 다시 받거나 다른 파생 수급봇을 만들 때 소스 탐색을 반복하지 않기 위해 기록.</p>
+<p><b>How to apply:</b> 미니·코스닥선물·콜풋의 *외국인* 수급이 필요하면 KRX Data Marketplace 로그인 세션 스크래핑이 유일한 무료 경로다(API 활용신청 시 이미 가입돼 있음). 자격증명은 <a class="wl" href="#ch-cron-keychain-auth">cron-keychain-auth</a> 규칙대로 600 파일 폴백으로. 그게 싫으면 양식에서 해당 칸을 빼는 게 낫다. 관련: <a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a></p></div></details>
+<details class="ch" id="ch-job-watch-bot" data-s><summary><b>job-watch-bot</b><span class="d">채용공고 워치봇 #60 job_watch_tg.py — 매일 06:00·12:00 KOFIA 스크랩, 리서치/주식운용 신입·인턴 누적 다이제스트</span><span class="t">2026-08-24</span></summary><div class="body"><p><b>#60 운용/리서치 채용 워치봇</b> (2026-08-19 생성, 사용자 이직/커리어 리서치용)</p>
+<ul>
+<li><code>~/수급html/job_watch_tg.py</code> — KOFIA 채용게시판(kofia.or.kr/brd/m_96) 1~3페이지 스크랩,</li>
+</ul>
+<p>  제목 POS/NEG/SENIOR 정규식 필터(리서치·RA·애널리스트·주식운용 포함, 펀드회계·준법·시니어급·경력전용 제외)</p>
+<ul>
+<li><b>에퀴티 하우스 30 로스터</b> (2026-08-19 추가): 스크립트 <code>HOUSES</code> 상수 — 타임폴리오·VIP·라이프·쿼드·</li>
+</ul>
+<p>  타이거·머스트·DS·빌리언폴드·코르사·더제이·씨앗 등 30개. 이 하우스들은 KOFIA 회원사명 alias 매칭으로</p>
+<p>  <b>제목 키워드 없이도 공고 포착</b>(NEG/SENIOR/경력전용만 적용, 첫날 페트라 Administrative Intern 포착 실증).</p>
+<p>  매 발송에 로스터 섹션: 상시채용(머스트=이메일, 타임폴리오·씨앗=홈페이지) / 정기(신영·한투밸류 인턴) /</p>
+<p>  공고 대기(네이버 채용검색 링크). 하우스 추가·수정은 HOUSES 편집</p>
+<ul>
+<li><b>대형 증권사 20 로스터</b> (<code>BROKERS</code> 상수, 2026-08-19 추가): 미래에셋~다올. 리서치 키워드 공고는</li>
+</ul>
+<p>  원래 전 회사 포착이므로 로스터 역할은 ① 발송문 채용페이지 링크 목록 ② 제목에 '인턴'만 있는</p>
+<p>  공고도 포착. alias는 "|" 구분 복수 지원(KB증권|케이비증권, LS증권|이베스트 등).</p>
+<p>  진행중 공고가 있는 회사는 로스터 표시에서 자동 제외. note 필드는 HTML raw 삽입이라 &amp; 이스케이프 필수</p>
+<ul>
+<li>상태 <code>job_watch_state.json</code> — 매칭 공고 <b>누적</b>(만료 포함, 표시는 마감 전만). <code>watchlist</code> 키에</li>
+</ul>
+<p>  수시 모니터링 하우스(타임폴리오·VIP·삼성증권 공채 등) 정적 HTML 라인 — 수동 편집 대상</p>
+<ul>
+<li>전송: <b>@SoBeeJae_Bot(소비재봇)</b> — 2026-08-24부터 변경. <code>bot_creds()</code>가 <code>소비재봇/config.json</code>의</li>
+</ul>
+<p>  bot_token+chat_id(6159848417 DM) 우선 로드, 없으면 기존 <code>telegram-digest/.env</code> TELEGRAM_BOT_TOKEN 폴백.</p>
+<p>  parse_mode=HTML — <b>회사명이 공고 URL 하이퍼링크</b>. 신규 건은 🆕 섹션 분리</p>
+<ul>
+<li>cron: <code>0 6,12 * * *</code> (crontab.txt #60). KOFIA 상세페이지의 <code>접수기간 YYYYMMDD~YYYYMMDD</code>로 D-day 계산</li>
+<li>KOFIA 밖 공고(신한 공채, KB증권 채용사이트 등)는 state에 <code>manual:</code> 키로 수동 추가</li>
+<li><b>홈페이지 감시 45곳</b> (<code>HOMEPAGES</code>, 2026-08-19 추가): KOFIA 밖 자체 공고 대응. fetch → 채용성</li>
+</ul>
+<p>  텍스트 추출 → state["homepage"] 스냅샷 diff → 새 문구만 🌐 섹션 알림(첫 수집은 조용히 시드,</p>
+<p>  빈 응답은 스냅샷 안 덮음). 인증서 불량 사이트가 많아 <b>verify=False + Chrome UA + http URL 유지</b> 통일.</p>
+<ul>
+<li>하우스 31곳: 채용게시판(타임폴리오·쿼드·DS·씨앗·트러스톤·신영·파인밸류·그로쓰힐·NH헤지·삼성헤지·</li>
+</ul>
+<p>    페트라) + 정적 안내(머스트·타이거·블래쉬) + 공시게시판 겸용(나머지). 수성·알펜루트·구도·오라이언 등은</p>
+<p>    채용 페이지 자체가 없어 KOFIA가 유일 채널</p>
+<ul>
+<li>증권사 14곳: <b>recruiter.co.kr(jobflex) 공통 API</b> <code>POST {sub}.recruiter.co.kr/app/jobnotice/list.json</code></li>
+</ul>
+<p>    (currentPage/pageSize form, receiptState '마감' 제외) — 미래에셋·NH·하나·교보·현대차·DB·SK·LS·iM 9곳.</p>
+<p>    한투 <code>GET recruit.truefriend.com/annoucement</code>(오타 아닌 실제 경로)·KB <code>GET careers.kbfg.com/api/career/recruites</code></p>
+<p>    JSON 값 순회. 신한(list.do)·키움(saramin)·유안타(http만, 인증서 만료)·IBK(incruit, euc-kr) HTML.</p>
+<p>    <b>직접감시 불가 5곳: 삼성(토큰)·메리츠·다올(API 미노출)·한화(인증 401)·대신(게시판 방치) → KOFIA 교차 커버</b></p>
+<ul>
+<li>배경: 2026-08-19 조사 — RA는 수시·계약직 표준, 접수기간 5~10일로 짧아 주1~2회 모니터링 필수.</li>
+</ul>
+<p>  사모운용사는 인턴(2~6개월)→전환 루트, 브이자산운용류는 자작 기업분석 리포트 제출 요구</p>
+<p><a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a> <a class="wl" href="#ch-cron-keychain-auth">cron-keychain-auth</a></p></div></details>
+<details class="ch" id="ch-kr-wrap-sikwang-bot" data-s><summary><b>kr-wrap-sikwang-bot</b><span class="d">한국 마감시황 봇 kr_wrap_tg.py — 커버 채널 15개, kr_wrap_output/ 일별 발송본, 주간 시황 정리 시 참조 소스</span><span class="t">2026-08-09</span></summary><div class="body"><p>"매일 시황 정리할 때 보는 채널들" = <code>~/수급html/kr_wrap_tg.py</code>의 CHANNELS 15개: shmstory(시황맨, 마감시황 ~15:00 핵심), hanwhastrategy(한화 투자전략), daishinstrategy(대신 전략 돌직구), ked_epic_ai(epic AI), ehdwl(사제콩이_서상영), awake_schedule, tazastock, gaoshoukorea, habit4117, balanceasset, fastest_info1, chunjonghyun, comvestment, d_ticker, HANAchina.</p>
+<ul>
+<li>파이프라인: 평일 16:20 실행 → 네이버/키움 확정시세 + telegram-digest/collect_window.py(Telethon)로 채널 수집 → claude CLI(Opus)로 작성 → USWRAP_BOT_TOKEN DM. 미국판은 us_wrap_tg.py.</li>
+<li>발송본·수집원문 보관: <code>~/수급html/kr_wrap_output/</code> (YYMMDD_한국시황.txt, YYMMDD_messages.json). 주간 시황 정리 요청 시 이 발송본 + 신한투자증권 주식시황 PDF(다운로드 폴더)를 합쳐서 쓰는 게 공자 워크플로.</li>
+<li>함정: 요약 생성 실패 시 확정시세만 발송됨(260805 사례) — 그날 상세는 messages.json에서 shmstory 마감시황을 직접 읽어 복원. 맥 이관(2026-08-05) 이전 날짜는 발송본 없음. <a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a></li>
+</ul></div></details>
+<details class="ch" id="ch-newhigh-52w-soogp-routing" data-s><summary><b>newhigh-52w-soogp-routing</b><span class="d">신고가봇 60일+52주 2버전 확장, 3주체 16:05 목록판은 @Soogp_Bot으로 전송 (2026-08-10)</span><span class="t">2026-08-25</span></summary><div class="body"><p>2026-08-10 봇 라우팅·기준 변경 2건:</p>
+<ol>
+<li><b>신고가 봇 2버전</b>: newhigh_tg.py <code>WINDOWS = [("d60","60일",60,"high"), ("w52","52주",250,"close")]</code> — ka10081 1회 조회로 동시 판정(API 부하 동일). 21:10 크론이 60일·52주 각각 버전A(테마)+버전B(상세) 총 4개 메시지 전송. krhigh.json은 kospi/kosdaq(=60일, 하위호환) + <code>w52:{kospi,kosdaq}</code> 키. Research Lab 韓 신고가 탭에 60일/52주 토글.</li>
+</ol>
+<p>   <b>52주 원칙(2026-08-12 공자 지정)</b>: ① 종가 기준 판정(당일 종가 ≥ 250거래일 최고 종가, 장중고가 무시 — 음수 등락률 원천 배제) ② 시장 구분 없이 등락률 내림차순 단일 배열 ③ 버전B 상세는 불릿 사이 빈 줄(가독성). 60일은 원래 방식(장중고가·코스피→코스닥) 유지. 종가기준 52주 ⊄ 60일이라 참고자료 수집은 두 리스트 합집합으로 변경. krhigh.json(kr_newhigh_feed.py)은 별도 — 여전히 장중고가 기준.</p>
+<ol>
+<li><b>3주체(사모·연금·투신) 공통 순매수</b>: 16:05 무코멘트 목록판(--compact-only)은 <b>@Soogp_Bot</b>(SUPPLY_BOT_TOKEN, samo_tg.bot_creds)으로 전송. 21:20 코멘트 풀버전(--full-only)은 기존 봇 유지. 수동 실행 시에도 compact는 Soogp로.</li>
+<li><b>한·미 60일/20일 교차분석</b>(2026-08-19 추가): newhigh_tg.py가 20일(장중고가) 판정을 추가로 수행(JUDGE_WINDOWS, 메시지 없음)해 60일·20일 명단을 kr_newhigh_lists.json에 저장 → 새벽 us_newhigh.py가 TradingView High.3M/High.1M(≈60일/20일)로 미국 명단을 만들어 [YYMMDD 60일/20일 신고가 교차분석] 별도 메시지를 @US_Maket_Jungri_Bot으로 전송(52주 본편 직후). YYMMDD=세션일. 양식: 🏔 공통 테마(60일) <code>테마(KR n·US n)</code> / ⛰ 공통 테마(20일) / 🇰🇷·🇺🇸 단독 강세(20일 명단 기준). 또한 美 52주 신고가 #핵심한줄 첫 불릿은 <code>- 상위테마: 상위 3개</code> 고정. fetch_newhighs()는 시그니처 유지(피드·us_wrap_tg 재사용), 내부는 fetch_newhighs_all().</li>
+<li><b>공통순매수/공통순매도 블록</b>(2026-08-11, 사용자 요청): 제목·범례 바로 아래 2줄 — 각 주체(사모/연기금/투신) 순매수 상위 20과 순매도 상위 20에서 <b>2개 주체 이상 겹치는 종목</b>을 <code>종목명(사·연·투)</code> 표기로 나열(3주체 겹침 우선, 금액순). triple_tg.py <code>common_lines()</code>/<code>insert_common()</code> — 목록판·풀버전·리스트 폴백 전부 적용, 계산 실패 시 본문 전송은 막지 않음.</li>
+</ol>
+<ol>
+<li><b>韓 52주 신고가 마감판</b>(2026-08-24 추가): kr_newhigh_close.py — 국내 마감 시황과 함께 미국판 양식([YYMMDD 금일 韓 52주 신고가] #핵심한줄/테마그룹/#한줄요약)을 @US_Maket_Jungri_Bot으로 전송. 16:20 크론에서 kr_wrap_tg.py 직후 체인(美 06:25 체인과 동일 구조). 판정은 newhigh_tg 52주 원칙과 동일(종가 기준·수정주가·거래대금 30억↑)이되, 21시 raw_cache 없이 ka10032(당일 거래대금상위 후보)→ka10081 전수 판정. <b>ka10016은 원주가 기준이라 사용 금지</b>(감자/무상증자 종목 오판 검증됨) + ETF/스팩 섞임. 발송본 kr_wrap_output/{ymd}_韓신고가.txt.</li>
+</ol>
+<ol>
+<li><b>Research Lab 신고가 탭 3윈도우 확장</b>(2026-08-25): #krhigh·#ushigh 둘 다 20일/60일/52주 토글. kr_newhigh_feed.py→krhigh.json에 <code>d20:{kospi,kosdaq}</code> 키 추가(kospi/kosdaq 최상위=60일 하위호환, w52 별도). us_newhigh_feed.py는 fetch_newhighs_all() 사용 → usnewhigh.json에 <code>d60/d20:{criteria,items}</code> 추가(items 최상위=52주 하위호환). index.html khWin/uhWin 상태 + 구 데이터엔 버튼 disabled 폴백. 봇 판정 로직은 이미 3윈도우였고(newhigh_tg JUDGE_WINDOWS, us fetch_newhighs_all) 피드·UI만 노출한 것.</li>
+</ol>
+<p><b>Why:</b> 공자가 신고가를 두 시계열 기준으로 보고 싶어했고, 3주체 목록은 사모봇 채널(@Soogp_Bot)로 모으길 원함. 국내 마감에도 미국판과 같은 52주 신고가 테마 정리를 원함(2026-08-24).</p>
+<p><b>How to apply:</b> 신고가/3주체 봇 수정 시 이 라우팅 유지. 관련: <a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a></p></div></details>
+<details class="ch" id="ch-osc-inflection-bot" data-s><summary><b>osc-inflection-bot</b><span class="d">수급×변곡 데일리 인사이트 봇(#55, osc_infl_tg.py) — 태린이아빠 수급오실레이터 공식 검증 완료(corr 1.0)와 리포트 설계</span><span class="t">2026-08-14</span></summary><div class="body"><p>2026-08-05 구축. <code>~/수급html/osc_infl_tg.py</code>, crontab #55 <b>평일 17:00</b>(fetch 4분 → --require-today 전송, 수신 ~17:05 — 사용자가 2026-08-06 "천천히 보자"며 15:45→17:00 변경) → 21:25 확정 폴백 (state 가드로 중복 방지). 로그 <code>logs/osc_infl.log</code>. 키움 ka10059는 장마감 ~10분 뒤(15:40경) 사모·투신·연기금까지 채워짐을 실측 확인(0805 15:39, 채움률 24%) — 필요시 15:45까지 앞당길 수 있음.</p>
+<p><b>태린이아빠 수급오실레이터 공식 (엑셀 3종 역공학, 두산에너빌리티 corr 1.0000 검증):</b></p>
+<ul>
+<li>norm = (기관계 5일누적 순매수 + 외국인 5일누적 순매수) ÷ 시가총액 — 퀀티와이즈 아이템 U510320/U530320 "5일누적 순매수대금(일간)"</li>
+<li>osc = [EMA12(norm) − EMA26(norm)] − EMA9(MACD) — MACD(12,26,9) 히스토그램, ×1e4 표기</li>
+<li>키움 raw_cache.json (ka10059, stex_tp=1 KRX) 일별 순매수를 5일 롤링합하면 퀀티와이즈 원본과 일치</li>
+</ul>
+<p><b>리포트 로직:</b> 상승변곡임박 = osc&lt;0 &amp; 과거 음수저점 평균 이하, %(극단)=osc/저점평균×100 (매수타점 괄호 % 의 정체 — 거래대금 증가율 아님, 사용자 초기 추정 오류였음). 하락은 대칭. 사이드별 극단순 상위 80 표시. Top20 = 사모/투신/연기금/외인 시총대비 순매수·순매도 각 20 (investor_tg 방식) + 프로그램 ka90003(경로 /api/dostk/stkinfo, 당일만 가능 → prog_top_cache.json 일별 축적, 과거일은 태그 정직 생략). 🔴=매수태그 1개 이상, 🔵=매도만. 매수타점 = 상승변곡 ∩ 사모·투신·연기금 매수 (주체수→극단순 정렬).</p>
+<p><b>섹터:</b> 네이버 업종(WICS) 스크레이핑 → <code>wics_map.json</code> 7일 캐시 (79개 업종, 4천여 종목).</p>
+<p><b>포맷/채널 (2026-08-05 확정):</b> 전송은 @Gyojiphap_Screener_Bot 전용(<code>SCREENER_BOT_TOKEN</code>), HTML parse_mode(제목·목차 볼드, 종목명 이스케이프). 제목 <code>[yymmdd 수급×변곡 인사이트]</code>, 태그 📈매수/📉매도, 섹션 🔼/🔽, 종목 한 줄씩. 매수/매도타점 라인에 원본 '거래비중' 시트 재현 컨텍스트 추가: <code>거래대금 X.X배(당일/직전5일평균) · 연사투 ±N억</code>.</p>
+<p><b>성과 모니터 (2026-08-10, 08-14 업그레이드):</b> <code>osc_perf_tg.py</code> — 최근 5거래일 (선정일 종가→현재가) + 전체 이력 D+1 종가 통계(절대·유니버스평균 대비 알파, 첫등장/재등장 분해). 수동 실행(스케줄 미등록).</p>
+<p><b>미적중 원인 분석 (2026-08-14 오후, 미적중 13건 해부):</b> ① 적중/미적중 최대 분별변수 = <b>연사투 금액</b> (적중 평균 +99.5억 vs 미적중 +31억)과 <b>익일 시장</b> (+2.5% vs +0.8%) ② 매수타점에 연사투 게이트가 없어 0813 파마리서치(연기금 태그·연사투 -107억) 통과 → D+1 -6.3% — <b>매수 게이트 추가: 연사투 ≤ -10억 제외</b> ③ 선정일 +12% 급등 픽 7건 중 5건 미적중 → <b>⚠️급등후 마커</b> 추가 ④ --list-only/--asof 재실행이 이력을 덮어쓰던 버그 수정 — <b>이력 저장은 실제 전송 성공 시에만</b> (0813 이력 실발송본으로 복원 완료). 시장 하락일 미적중은 구조적 한계(신호가 베타+모멘텀 성격)로 문서화.</p>
+<p><b>셀프 피드백 분석 (2026-08-14, 표본 매수26·매도16):</b> ① 매수 D+1 평균 +4.2%, 적중 65%, 알파적중 54% — 오른쪽 꼬리(대박)로 버는 구조 ② <b>첫 등장이 알짜</b> (평균알파 +3.2%p vs 재등장 +0.7%p), 재등장은 적중률 높지만 수익 얇음, <b>연속 4일째부터 소진</b> (0810 자이 4일째 -3.7%) ③ <b>매도타점은 절대하락 예측 실패(44%)·시장대비 약세 예측 유효(62%)</b> — 상승장에서 무력, 시장 약세 구간(0810~12)에선 적중 86%. 반영: 일일 리포트에 연속등장 N일째·⚠️소진주의(4일+) 마커, 매도타점 헤더에 "시장 대비 약세 후보" 명시. 표본 부족으로 필터링(재등장 제외 등)은 보류 — 표시만.</p>
+<p><b>자율 셀프 피드백 루프 (2026-08-14 구축):</b> <code>osc_feedback.py</code> — claude CLI 헤드리스(claude-opus-5, 구독 토큰 .claude_env)로 매일 5회 관찰→가설→검증→적용 루프. 가드레일: 실증된 개선만 적용·백업 필수·회귀(문법+--list-only+이력 md5) 실패 시 복원·전송/크레덴셜/공식/공유인프라 변경 금지·'변경 없음'도 정당한 결론. 일지 <code>osc_lab/feedback_log.md</code>(중복 시도 방지용 누적), 백업 <code>osc_lab/backups/</code>, 요약은 스크리너 채널 전송. <b>crontab 평일 18:00 등록은 사용자가 직접 실행 필요</b> (분류기가 차단): <code>crontab ~/수급html/crontab.txt</code> — crontab.txt에는 이미 라인 추가됨.</p>
+<p><b>미반영(의도적):</b> (업종) 워크북의 업종지수 오실레이터 섹션, 시총 vs 기외 20일누적 매도대금 보조차트(합산·시총과매도대금 시트 — cap_absorb 계열과 중복), 일관성 시트는 수기 매매 규칙 메모(자동화 대상 아님).</p>
+<p>검증: 20260804 기준 원본 리포트와 매수타점 5종목 완전 일치, 상승변곡 리스트 57/66 겹침. 관련: <a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a></p>
+<p><b>0806 이상샘플 역공학 (2026-08-06):</b> 사용자가 제시한 이상적 리포트로 재수렴. 확정 사실 — ① Top20 = 시총대비 비율, 주체별 매수·매도 각 20 (SAMG엔터 투신매도 비율#21이 태그 없음 = 컷 증거) ② 겹침·타점은 <b>표시 80 리스트 기준</b>(80위 밖 Top20 종목 제외 — loop-4의 확장 로직 되돌림) ③ EMA는 <b>가용 전체(100일) 번인</b>이 최적 (77일 시딩·300일 백필 모두 타점 일치도 하락 — 300일은 달바글로벌 제외엔 맞지만 샘씨엔에스를 잃음) ④ 🆕최초 마커 구현: <code>osc_infl_history.json</code>에 일별 타점 코드 저장, 최근 5개 리포트에 없으면 🆕 (30일 보관) ⑤ 잔차는 데이터 소스 차이(퀀티와이즈 vs 키움)로 인한 경계선(ratio≈100) 플립 — 완전 동일은 불가능, 매수타점 2/3 일치 + 겹침 구조 거의 동일 수준이 한계.</p>
+<p><b>루프 트레이닝 10회 (2026-08-05):</b> ① 외국인총합계 = 키움 외국인+기타외국인(natfor) — fetch.py INV_FIELDS에 natfor 추가(엘티씨 MAE 4.1억→0.03억, corr 0.9953), raw_cache는 매일 100일치 전체 재수집이라 다음 update부터 전 히스토리 반영 ② EMA는 원본처럼 최근 77세션 윈도우 시딩(OSC_WINDOW=77) ③ 겹침은 전체 변곡 리스트에서 계산 후 컷(표시 = 상위80 ∪ 겹침) ④ 전송: 429 retry_after 재시도·HTML 파싱 실패 시 플레인 폴백·4096 하드컷·메시지 간 0.5s ⑤ 매도타점 게이트: 연사투 합계 &lt;0 필수(0803 파마리서치 — 투신 매도 태그인데 합계 +153억, 익일 +3.4% 노이즈). 백테스트: 월(0803) 매수타점 4종목 → 화 평균 +17.1%(4/4), 화 타점 → 수 장중 +2.5%. 매도타점은 상승장에서 약함 — 참고용.</p></div></details>
+<details class="ch" id="ch-streak3-bot" data-s><summary><b>streak3-bot</b><span class="d">#58 streak3_tg.py 평일 06:30, 사모·투신·외국인·프로그램 3거래일 연속 시총대비 순매수 스크리너</span><span class="t">2026-08-27</span></summary><div class="body"><p>2026-08-06 신설. <code>~/수급html/streak3_tg.py</code> — 최근 N거래일(<code>DAYS</code>, 기본 5) <b>모두</b> 순매수(+)인</p>
+<p>종목을 N일 누적 시총대비 비율로 정렬. 평일 06:30 cron(#58).</p>
+<p><b>출력이 두 갈래다 (2026-08-06 사용자 지정, 승률 우선):</b></p>
+<ul>
+<li>텔레그램 = <b>사모만 상위 20</b> (<code>TG_CAT="samo"</code>, <code>TOP_N=20</code>).</li>
+</ul>
+<p>  채널 SCREENER_BOT_TOKEN(@Gyojiphap_Screener_Bot) — <a class="wl" href="#ch-osc-inflection-bot">osc-inflection-bot</a>과 같은 곳.</p>
+<p>  헤더에 <code>⭐ 타 주체 동시:</code> 한 줄로 투신/외국인/프로그램 겹침만 표기.</p>
+<ul>
+<li>Research Lab = <b>4주체 전체 + 일자별 아카이브</b> → <code>site/data/streak.json</code></li>
+</ul>
+<p>  (주체별 상위 50, 60일 보관) + <code>site/index.html</code>의 <code>수급 연속</code> 탭(nav "수급·모멘텀" 그룹,</p>
+<p>  <code>skLoad/skRender</code>, 주체 탭 + 날짜 탭). 기록이 전송보다 먼저 실행돼 전송 실패해도 남는다.</p>
+<p>  push는 kr_newhigh_feed와 동일한 add→commit→pull --rebase→push 2회 재시도 패턴.</p>
+<p>  ⚠️ site 저장소는 다른 봇들이 <code>git add -A</code>로 5분마다 커밋해서 내 변경이 남의 커밋에</p>
+<p>  묻어 들어갈 수 있다(정상 동작, 충돌 아님).</p>
+<p><b>데이터 원천 (핵심):</b></p>
+<ul>
+<li>사모/투신/외국인 = <code>raw_cache.json</code>(전날 21:00 update.py)만 읽음 → API 호출 0. 기준일은</li>
+</ul>
+<p>  investor_tg와 동일한 사모 채움률 15% 정산 게이트라 #16/#55와 같은 거래일을 본다.</p>
+<ul>
+<li>프로그램 = 키움 <b>ka90004 종목별프로그램매매현황</b> (<code>/api/dostk/stkinfo</code>, <code>dt</code>로 과거일자</li>
+</ul>
+<p>  조회 가능, 코스피 802 + 코스닥 1702행, 페이지네이션 74p·유량 5req/s라 sleep 0.35 필수).</p>
+<p>  일자별 캐시 <code>prog_streak_cache.json</code>(<b>70일 보관</b>, 2026-08-27 15→70 상향 — build.py 수급 탭의</p>
+<p>  60거래일 누적용. build.py <code>load_prog()</code>도 같은 캐시를 공유·수집하므로 두 스크립트 중 먼저 도는 쪽이 채움)</p>
+<p>  → 첫날만 3일치 ~95초, 이후 1일치 ~32초.</p>
+<p>  <b>검증:</b> ka90004 종목 합계 == ka90010 시장 총계 (26/08/05 코스피 +12,983억, 08/04 -9,579억).</p>
+<p><b>설계 판단 (되돌리지 말 것):</b></p>
+<ul>
+<li>비율은 *일별* (순매수/그날 시총)을 3일 합산. 시총이 매일 변하므로 '3일 누적/최근 시총'보다 정확.</li>
+<li>거래소 기준이 카테고리마다 다름 — 투자자 3종은 KRX(raw_cache stex_tp=1), 프로그램은</li>
+</ul>
+<p>  통합 KRX+NXT(stex_tp=3, 프매 라인 하우스 표준). 의도된 것이고 docstring에 명시. 카테고리 간 비교 금지.</p>
+<ul>
+<li>⭐복수 주체 동시 라인에서 <code>{외국인, 프로그램}</code>만 겹친 종목은 <b>제외</b>. 외국인 매매 상당분이</li>
+</ul>
+<p>  비차익 프로그램으로 집계돼 실측상 둘의 상위 리스트가 거의 동일 — 넣으면 라인이 전부 그걸로 찬다.</p>
+<ul>
+<li>필터: <b>시총 1000억↑</b>(사용자 지정 2026-08-06, 처음 500억에서 상향), N일 누적 시총대비 0.10%↑.</li>
+</ul>
+<p>  실측 종목수(26/08/05 기준): 3일 = 사모 38 / 투신 39 / 외국인 212 / 프로그램 202,</p>
+<p>  5일 = 사모 26 / 투신 19 / 외국인 186 / 프로그램 178. 유니버스 1,267종목.</p>
+<ul>
+<li>출력은 <b>1종목 1줄</b> — <code>순위. 종목명 (등락률) / 시총대비 누적 +N.N%</code>, 소수점 한 자리 고정.</li>
+</ul>
+<p>  시장구분(코스피/코스닥)·현재가·시총·일별 비율 trail은 전부 사용자 지정으로 뺐다(2026-08-06).</p>
+<p>  두 차례 형식 정리를 거쳐 확정된 양식이니 임의로 항목을 되살리지 말 것.</p>
+<p><b>3일 vs 5일 백테스트 (2026-08-06 실측, 스크립트는 scratchpad에만 있고 미보관):</b></p>
+<p>raw_cache 100거래일 중 신호일 60일, 시총 1000억↑, 같은 날 유니버스 중앙값 대비 초과수익(%).</p>
+<p>프로그램은 히스토리가 없어 제외.</p>
+<div class="tw"><table>
+<tr><th>주체</th><th>연속</th><th>일평균 종목수</th><th>+1일</th><th>+5일</th><th>+10일</th><th>승률(5일)</th></tr>
+<tr><td>사모</td><td>3일</td><td>30.9</td><td>+0.20</td><td>+0.70</td><td>+0.58</td><td>52.8%</td></tr>
+<tr><td>사모</td><td>5일</td><td>18.8</td><td>+0.27</td><td>+1.09</td><td>+2.36</td><td>55.6%</td></tr>
+<tr><td>투신</td><td>3일</td><td>32.6</td><td>-0.63</td><td>-2.22</td><td>-3.35</td><td>39.5%</td></tr>
+<tr><td>투신</td><td>5일</td><td>17.5</td><td>-0.55</td><td>-1.07</td><td>-1.45</td><td>44.3%</td></tr>
+<tr><td>외국인</td><td>3일</td><td>184.2</td><td>+0.01</td><td>-0.48</td><td>-1.44</td><td>47.1%</td></tr>
+<tr><td>외국인</td><td>5일</td><td>86.3</td><td>+0.24</td><td>+0.17</td><td>-0.67</td><td>51.4%</td></tr>
+</table></div>
+<p>결론: 5일이 전 주체·전 구간 우위 → 기본값 5. <b>투신은 3일·5일 모두 초과수익 음수(역신호)</b> —</p>
+<p>요청받은 4카테고리라 유지하되 해석 시 유의. 표본이 약 3개월 한 국면뿐이라 확정적이지 않음.</p>
+<p>사용자가 3일/5일 두 버전을 실물로 받아보고 최종 판단하겠다고 함(2026-08-06) — <b>판단 결과 확인 필요</b>.</p>
+<p><b>옵션:</b> <code>--dry-run</code> <code>--force</code>(주말·중복가드 무시) <code>--no-prog</code>(키움 호출 없이 빠른 점검) <code>--top N</code>.</p>
+<p>중복가드 <code>streak3_state.json</code>은 (base_dt, sent_on) 쌍 — 월요일엔 금요일 기준으로 한 번 더 나가는 게 정상.</p>
+<p>healthcheck는 <code>logs/streak3.log</code>를 패턴 스캔으로 자동 커버(별도 등록 불필요).</p></div></details>
+<details class="ch" id="ch-us-wrap-morning-bot" data-s><summary><b>us-wrap-morning-bot</b><span class="d">US 모닝시황 봇(us_wrap_tg.py) 발송 포맷 — 2청크, 제목 없음, 동적 섹터, 52주 신고가 섹션, 야간선물 휴장 표기</span><span class="t">2026-08-19</span></summary><div class="body"><p>US 모닝시황 봇 <code>us_wrap_tg.py</code> (매일 06:25 cron, @US_Maket_Jungri_Bot) 발송 포맷 규칙 — 2026-08-18 공자 지시로 확정.</p>
+<ul>
+<li><b>제목 한 줄 없음</b>: <code>[YYMMDD 밤사이 미국 증시]</code> 다음의 <code>: 한줄 제목</code>은 삭제, 바로 <code>&lt;요약&gt;</code>으로 시작.</li>
+<li><b>항상 2개 청크로 발송</b>: 1청크 = 제목~<code>&lt;52주 신고가&gt;</code>까지, 2청크 = <code>&lt;주요 종목 등락 코멘트&gt;</code>~끝. <code>split_two_parts()</code>가 마커 <code>&lt;주요 종목 등락 코멘트&gt;</code>에서 자름.</li>
+<li><b>워딩</b>: <code>&lt;주요 테마&gt;</code> → <code>&lt;주요 섹터&gt;</code> → <code>&lt;주요 종목 등락 코멘트&gt;</code> (SYSTEM 프롬프트 + 후처리 모두 반영).</li>
+<li><b>섹터 선정 기준</b>: 당일 이슈·목표가 변경 리포트가 있는 주목도 높은 종목 5~10개. 섹터는 고정 틀이 아니라 <b>그날 주도 테마 기준 2~5개를 동적으로 명명</b> (예: [반도체·메모리] [광통신·AI 네트워크] [에너지·정유]), 애매한 종목은 마지막 [기타]. 배치·종목 순서는 당일 영향력 순. 여러 종목 묶어 쓸 때도 종목별 등락률 각각 표기.</li>
+<li><b>종목 단위 줄바꿈</b>: 섹터 섹션 안에서 종목 사이·섹터 사이 빈 줄 1개. <code>format_sector_spacing()</code>이 강제 정규화.</li>
+<li><b>&lt;52주 신고가&gt; 섹션</b>: <code>&lt;원자재&gt;</code> 바로 아래(1청크). <code>us_newhigh.fetch_newhighs()</code>(TradingView 스캐너, 신고가봇과 동일 소스)를 임포트 재활용해 원시 목록을 LLM에 주고, 헤더는 <code>&lt;52주 신고가&gt; - 정규장 마감기준</code>, "- 섹터키워드: 기업명(+X.X%)·기업명(-X.X%)" 형식으로 3~6그룹, 그룹당 시총 상위 최대 8개, 코멘트 없이 700자 이내. <b>기업명은 영문 통용 명칭</b>(Corp/Inc 접미사 생략) + <b>정규장 마감 등락률 괄호 표기</b>(원시 목록 값 그대로), 섹터 키워드는 한글. (2026-08-19 등락률 추가) 수집 실패 시 섹션 생략.</li>
+<li><b>KOSPI200 야간선물 휴장 표기</b>: esignal 야간 캐시에 발송일 새벽 틱이 없고 전일 주간 틱도 없으면(국내 휴장) <code>(휴장)</code>, 소스 장애만이면 <code>(-)</code>. 2026-08-18(광복절 대체공휴일 다음날) <code>(-)</code> 발송을 공자가 오류로 오인한 것이 계기.</li>
+</ul>
+<p><b>주의</b>: <code>us_newhigh.py</code>는 임포트 시 stdout 재래핑을 utf-8이면 건너뛰게 수정함(2026-08-18) — 재래핑하면 공유 buffer가 닫혀 I/O 오류. 다른 봇을 임포트 재활용할 때 같은 함정 있음.</p>
+<p><b>Why:</b> 공자가 모바일에서 시황(매크로+신고가 목록)과 종목 상세(섹터)를 분리해 읽길 원함. 신고가 키워드 요약은 별도 신고가봇 상세판의 프리뷰 역할.</p>
+<p><b>How to apply:</b> us_wrap_tg.py 수정 시 이 포맷 유지. 관련: <a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a>, <a class="wl" href="#ch-newhigh-52w-soogp-routing">newhigh-52w-soogp-routing</a>, <a class="wl" href="#ch-kr-wrap-sikwang-bot">kr-wrap-sikwang-bot</a></p></div></details>
+<h3>데이터 소스 · API 연구 <small style='color:var(--dim2)'>(4)</small></h3>
+<details class="ch" id="ch-dart-open-api" data-s><summary><b>dart-open-api</b><span class="d">OpenDART API 연결 완료(2026-08-24) — 키 위치·검증된 엔드포인트·뷰어 함정 우회법</span><span class="t">2026-08-24</span></summary><div class="body"><p>OpenDART 인증키가 <code>/Users/1ne/수급html/.dart_env</code>에 <code>DART_API_KEY=&lt;40자 hex&gt;</code> 형식, 600 권한으로 저장돼 있다(2026-08-24 공자 발급). 일 20,000건 한도.</p>
+<p><b>검증된 사용 패턴</b> (화장품 밸류체인 리서치에서 실전 검증):</p>
+<ul>
+<li><code>fnlttSinglAcntAll.json</code> (corp_code, bsns_year, reprt_code=11012 반기/11013 1Q/11014 3Q/11011 사업, fs_div=CFS) — 연결 전체 재무제표. 반기보고서에서 thstrm_amount=3개월, thstrm_add_amount=누적. 계정명이 회사마다 다름("매출액" vs "수익" vs "영업손익") — 넓게 잡고 후처리.</li>
+<li><code>list.json</code> (bgn_de, end_de) — 공시목록. 자사주·합병·대량보유 스캔에 유용.</li>
+<li>주요사항 typed API: <code>tsstkDpDecsn</code>(자사주처분)·<code>tsstkAqTrctrCnsDecsn</code>(취득신탁 체결)·<code>tsstkAqTrctrCcDecsn</code>(해지)·<code>cmpMgDecsn</code>(합병결정) — status 013이면 해당 공시 없음.</li>
+<li><code>document.xml?rcept_no=</code> — 공시 원문 zip(XML). <b>dart.fss.or.kr 뷰어는 WebFetch로 셸만 나옴</b>(<a class="wl" href="#ch-kind-wisereport-scraping">kind-wisereport-scraping</a> 함정과 동일) — 원문은 반드시 이 API로.</li>
+<li><code>corpCode.xml</code> — zip 전체 매핑, 스크래치에 캐시해두고 재사용.</li>
+</ul>
+<p>corp_code 캐시: 코스맥스 01009789 · 한국콜마 00939331 · 코스메카 00763473 · 씨앤씨 01226410 · 펌텍 00761059 · 에이피알 01190568 · 아모레 00583424.</p>
+<p><b>Why:</b> 심층리서치 D2(공시 원문)가 웹 뷰어 수동 열람에서 정형 API 일괄 조회로 업그레이드 — 섹터 리서치(다종목)에서 병목 해소.</p>
+<p><b>How to apply:</b> 실행은 <code>/Users/1ne/수급html/.venv/bin/python</code>(requests 있음) 또는 표준 urllib. <a class="wl" href="#ch-research-lab-site">research-lab-site</a> 리서치 파이프라인의 표준 재무 소스로 사용.</p></div></details>
+<details class="ch" id="ch-kind-wisereport-scraping" data-s><summary><b>kind-wisereport-scraping</b><span class="d">KIND 공시검색·뷰어 스크레이핑 3단계 패턴과 네이버 컨센서스 탭=WiseReport iframe 구조, 분기 상하단 밴드의 한계</span><span class="t">2026-08-19</span></summary><div class="body"><p><b>KIND 공시 스크레이핑</b> (2026-08-09 검증, 실적발표 검증 작업에서 사용):</p>
+<ul>
+<li>검색: POST <code>kind.krx.co.kr/disclosure/details.do</code>, <code>method=searchDetailsSub</code> + <code>reportNm</code>/<code>fromDate</code>/<code>toDate</code>. <b>빈 파라미터 <code>searchMode=&amp;searchCodeType=&amp;repIsuSrtCd=</code>를 반드시 포함</b>해야 결과가 나옴 (없으면 빈 페이지). 종목코드는 숫자만이 아님('USA11' 잉글우드랩, '0126Z') — 정규식 <code>[^']+</code>로.</li>
+<li>본문 3단계: ① <code>common/disclsviewer.do?method=search&amp;acptno=…</code>에서 <code>&lt;option value='(docno)|</code> 추출 → ② POST <code>method=searchContents&amp;docNo=…</code> 응답의 <code>setPath(…)</code>에서 external URL 추출 → ③ <code>kind.krx.co.kr/external/YYYY/MM/DD/…/*.htm</code> fetch.</li>
+<li>IR개최 공시 본문: 「8. IR 자료 게재일시」 필드(한글날짜·"당일게재"·"-" 변형 있음), 결산실적공시예고: 「3. 결산실적 공시예정일」.</li>
+</ul>
+<p><b>네이버증권 컨센서스 탭 = WiseReport iframe</b>: stock.naver.com <code>/info/consensus</code>는 <code>navercomp.wisereport.co.kr/v3/company/c1050001.aspx</code> iframe. consensus_bot의 v2 ajax와 동일 백엔드(<a class="wl" href="#ch-consensus-bot">consensus-bot</a>).</p>
+<ul>
+<li>분기 컨센 평균: <code>c1050001_data.aspx?flag=2&amp;frq=1</code> (최신 유지) 또는 <code>cF5001.aspx?frq=Q</code>(주간 리비전 시계열).</li>
+<li><b>분기 최고/최저 밴드는 cF5002뿐이고 직전 분기 발표일에 동결</b> — 현행 분기(예: 2Q26)의 라이브 밴드는 네이버/WiseReport 어디에도 없음. flag=5(어닝서프라이즈)도 평균만. FnGuide comp.fnguide.com은 이 맥 IP에서 차단(에러페이지).</li>
+<li>종목명→코드: <code>ac.stock.naver.com/ac?q=…&amp;target=stock</code> 자동완성이 별칭(NC·SFA·INVENI 등)까지 정확.</li>
+</ul>
+<p><b>연간 컨센서스 테이블 (cF1001, 2026-08-19 검증 — PER/POR 계산용)</b>:</p>
+<ul>
+<li><code>navercomp.wisereport.co.kr/v2/company/ajax/cF1001.aspx?cmp_cd={code}&amp;fin_typ=0&amp;freq_typ=Y&amp;encparam={enc}&amp;id=Form1</code>. <b>encparam 필수</b> — 메인 <code>c1010001.aspx?cmp_cd=</code> HTML에서 <code>encparam: '…'</code> 정규식 추출, Referer도 메인 페이지로.</li>
+<li><b>응답 첫 테이블은 디코이</b>(현재가 숫자만 반복) — 실제 표는 두 번째. 연도 라벨은 <code>YYYY/12(\(E\))?</code> 정규식으로 전체에서 추출하면 안전(디코이에는 /12 없음). 연간 5개 실적 + 최대 3개 추정(2026E/2027E/2028E).</li>
+<li><b><code>영업이익</code> 행은 추정연도 셀이 빈칸</b> — 추정치는 <code>영업이익(발표기준)</code> 행에 있음. PER는 <code>당기순이익(지배)</code> 행 사용(자회사 상장사는 전체 당기순이익과 괴리 큼 — 디아이 26E 전체 893 vs 지배 357).</li>
+<li>freq_typ=Q로 바꾸면 분기 8개(추정 포함) — 잠정치 YoY 보정에 사용 가능.</li>
+</ul></div></details>
+<details class="ch" id="ch-kofia-freesis-api" data-s><summary><b>kofia-freesis-api</b><span class="d">금투협 FreeSIS 비공식 JSON API — 운용사별 AUM 등 통계를 curl로 직접 조회하는 방법 (엔드포인트·페이로드·컬럼 매핑)</span><span class="t">2026-08-24</span></summary><div class="body"><p>금융투자협회 종합통계(freesis.kofia.or.kr)는 eXBuilder SPA지만 백엔드 JSON API를 직접 호출 가능 (2026-08-24 확인).</p>
+<p><b>데이터 조회</b> (운용사별 AUM, 524개사 전량):</p>
+<pre>
+POST https://freesis.kofia.or.kr/meta/getMetaDataList.do
+Content-Type: application/json
+{"dmSearch":{"tmpV40":"100000000","tmpV41":"1","tmpV34":"YYYYMMDD","tmpV100":"2","tmpV102":"","tmpV5":"","tmpV20":"Y","OBJ_NM":"STATFND0200100130BO"}}
+</pre>
+<ul>
+<li>tmpV34=기준일(임의 과거 영업일 가능 → 시계열 구축 가능), tmpV100: 1=설정원본 2=순자산총액+평가액 3=펀드수, tmpV102: ""전체/국내/해외, tmpV40=단위(1억)</li>
+<li>응답 ds1[] 컬럼: TMPV1=회사명, TMPV2=주식, TMPV3=혼합주식, TMPV4=혼합채권, TMPV5=채권, TMPV6=재간접, TMPV7=단기금융(MMF), TMPV8=파생형, TMPV9=부동산, TMPV10=실물, TMPV11=특별자산, <b>TMPV12=혼합자산(한국형 헤지펀드 대표 분류)</b>, TMPV13=기관전용PEF, TMPV14=투자일임기타, <b>TMPV15=합계(AUM=펀드+일임)</b>, TMPV16=위탁운용, TMPV17=전일대비, TMPV18=전년대비, TMPV19=투자계약, TMPV20=기업성장</li>
+</ul>
+<p><b>메뉴/서비스 탐색</b>:</p>
+<ul>
+<li><code>POST /meta/getMenuData.do</code> body <code>{"dmSearchData":{"strSvrId":"MSIS00000000000000","strDivId":"","app_peron_yn":"Y","language_gb":"KOR","strGetCode":"N"}}</code> → 전체 서비스 152개 목록</li>
+<li><code>POST /meta/getSrvData.do</code> (같은 body, strSvrId=서비스ID) → 검색폼 메타 + dsGridServlet.OBJ_NM(getMetaDataList용) + dsGrid(헤더 매핑) + dsLatestDate(최신 기준일)</li>
+<li>다른 유용 서비스: STATFND0200100040(운용사별 자금유출입), STATFND0200100050(운용사별 주요판매사), STATFND0200100080(운용사별 보수·비용), STATFND0400000200(회사별 ETF규모)</li>
+</ul>
+<p><b>함정</b>: 페이지 URL(stat/FreeSIS.do?serviceId=...)을 curl하면 SPA 셸만 옴. OBJ_NM별 개별 .do 경로는 전부 에러 페이지 — 데이터는 반드시 /meta/getMetaDataList.do 하나로 통함. 요청 페이로드는 브라우저에서 XHR 후킹으로 확인한 것.</p>
+<p>활용: <a class="wl" href="#ch-research-lab-site">research-lab-site</a> 헤지펀드 하우스 맵(수급html/longshort-houses 아티팩트)의 AUM 시계열이 이 API 기반. 봇 자동화(주간 AUM 트래킹) 확장 가능.</p></div></details>
+<details class="ch" id="ch-krx-alnum-code-filter" data-s><summary><b>krx-alnum-code-filter</b><span class="d">KRX 신형 알파뉴메릭 종목코드(0015N0 등) 보통주 필터 컨벤션 — isdigit 금지, isalnum + 끝자리 '0</span><span class="t">2026-08-06</span></summary><div class="body"><p>KRX가 2025년부터 신형 알파뉴메릭 6자리 종목코드(예: 아로마티카 0015N0, 삼성에피스홀딩스 0126Z0)를 발급하면서 <code>code.isdigit()</code> 기반 보통주 필터가 신규 상장주를 누락시키는 버그 클래스가 있음.</p>
+<p><b>Why:</b> 2026-08-06 기준 코스닥 21개·코스피 2개 보통주가 알파뉴메릭 코드. 시간이 갈수록 늘어남.</p>
+<p><b>How to apply:</b> 수급html 계열 스크립트에서 종목코드 검증은 항상 <code>len(code)==6 and code.isalnum()</code>, 보통주 판별은 <code>code.endswith("0")</code> 유지(우선주는 K/L 등으로 끝남). ETF/ETN 제외는 marketName(거래소/코스닥) 검사가 담당하므로 isalnum 전환에 부작용 없음. 2026-08-06 일괄 수정 완료: newhigh_list.py, fetch.py, float_turn_tg.py, judo_kiwoom.py, _share/supply_fetch.py, kospi_sector_cap.py, build_semi_etf.py. 새 스크립트 작성 시 isdigit 쓰지 말 것.</p></div></details>
+<h3>인프라 · 무인 운영 <small style='color:var(--dim2)'>(4)</small></h3>
+<details class="ch" id="ch-cron-keychain-auth" data-s><summary><b>cron-keychain-auth</b><span class="d">macOS 키체인은 cron에서 접근 불가 — 수급html 봇 인증은 전부 600 권한 파일 폴백으로 운영</span><span class="t">2026-08-24</span></summary><div class="body"><p><b>macOS 로그인 키체인은 cron 작업에서 읽을 수 없다.</b> cron은 GUI 로그인 세션 밖의 별도</p>
+<p>보안 세션에서 돌기 때문. 사람이 터미널에서 실행하면 잘 되므로 **수동 검증으로는 드러나지</p>
+<p>않는 함정** — 2026-08-05 이관 첫날 저녁 라인 전체가 이 이유로 실패했다(키움 13개 봇 전멸,</p>
+<p>코멘트 봇 전부 리스트만 전송, git push 276회 연속 실패).</p>
+<p>봇 인증은 전부 파일 폴백(권한 600)으로 운영한다:</p>
+<ul>
+<li>키움: <code>~/수급html/.kiwoom_env</code>, <code>~/sector-report/.kiwoom_env</code> — <code>creds.py</code>가 키체인 우선, 실패 시 이 파일. 재생성 <code>python3 -c "import creds; print(creds.sync_env())"</code></li>
+<li>claude CLI: <code>~/수급html/.claude_env</code> 의 <code>CLAUDE_CODE_OAUTH_TOKEN</code> (<code>claude setup-token</code> 발급). <code>claude_cli.py</code>의 <code>_cli_env()</code>가 주입 — claude를 직접 subprocess 호출하는 코드는 반드시 <code>env=_cli_env()</code> 를 넘길 것</li>
+<li>git push: <code>~/.git-credentials</code> + <code>credential.helper=store</code>. 재설정 <code>.venv/bin/python3 setup_git_cron_auth.py</code></li>
+<li><b>erase-on-401 함정(2026-08-18)</b>: GitHub가 일시 401을 주면 git이 <code>credential reject</code>로 store 항목을 지워 파일이 0바이트가 됨 → 전 봇 push 전멸(53커밋 적체). 복구는 setup_git_cron_auth.py 한 방(키체인의 PAT는 무사했음). Claude가 직접 키체인에서 토큰을 꺼내 파일에 쓰는 명령은 권한 분류기에 막히므로 <b>반드시 이 스크립트로 복구</b>할 것. healthcheck check_git도 credential fill(키체인이 대답해 오탐) 대신 파일 내용 검사로 교체됨.</li>
+<li>DART OpenAPI: <code>~/수급html/.dart_env</code> 의 <code>DART_API_KEY</code> (키체인 service <code>dart-apikey</code>, account <code>dart</code> 병행). 2026-08-24 등록·삼성전자 기업개황 호출로 검증 완료. 40자 키, opendart.fss.or.kr</li>
+<li>KIS(한국투자, 컨센서스봇 #56): <code>~/수급html/.kis_env</code> — <code>consensus_bot/common.py</code>의 <code>keychain()</code>이 키체인 우선, 실패 시 이 파일. 재생성 <code>.venv/bin/python3 consensus_bot/common.py --sync-env</code> (2026-08-06 이 함정에 또 걸려 KIS 의견 수집이 cron에서 전멸)</li>
+</ul>
+<p><b>검증할 때는 반드시 실제 cron 잡으로 확인할 것.</b> <code>env -i</code> 로 환경변수만 비우는 것으로는</p>
+<p>키체인 세션 차이가 재현되지 않아 통과해버린다.</p>
+<p>감시: <code>healthcheck.py</code> 가 평일 14:50·매일 22:00에 인증 6종(키움·KIS·claude·git push·site</p>
+<p>저장소·Telethon)을 실제로 찔러보고 이상 시에만 텔레그램 알림. 사용자가 18시 이후 자리를 비우므로 저녁 라인 전 사전점검이 핵심.</p>
+<p><a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a></p></div></details>
+<details class="ch" id="ch-git-guard-dual-repo" data-s><summary><b>git-guard-dual-repo</b><span class="d">git_guard·healthcheck는 site + skeco-site 두 저장소 감시, skeco 뉴스는 별도 skeco-news repo, rebase 중단 복구는 continue 우선</span><span class="t">2026-08-11</span></summary><div class="body"><p>수급html에는 봇이 push하는 git 저장소가 <b>둘</b>이다: <code>site/</code>(research-lab repo, raoni_feed 등 대부분)와 <code>skeco-site/</code>(skeco-news repo, skeco_news.py 전용 — 2026-07-09 분리). 2026-08-06~08-11 skeco-site가 <code>pull --rebase</code> 중단으로 5일간 detached HEAD로 굳어 push 전멸했는데, git_guard.sh·healthcheck.py가 site만 봐서 아무도 못 잡았다.</p>
+<p><b>Why:</b> detached HEAD 위에 매일 봇 커밋이 쌓이는 구조라, 단순 <code>checkout main</code>/<code>rebase --abort</code> 복구는 쌓인 커밋을 고아로 만들어 데이터를 유실한다.</p>
+<p><b>How to apply:</b> 2026-08-11부터 git_guard.sh는 두 저장소를 모두 순회하고, rebase 중단 시 ① <code>GIT_EDITOR=true git rebase --continue</code>(정상 완결·커밋 보존) → ② abort/quit 순으로 복구, detached HEAD는 main이 조상이면 <code>checkout -B main</code>으로 fast-forward 재부착한다. healthcheck.py도 <code>check_git_repo("skeco-site")</code> 체크 추가(총 7종). 새 봇이 또 다른 repo에 push하게 되면 git_guard.sh의 REPOS 배열과 healthcheck 체크에 반드시 추가할 것. 관련: <a class="wl" href="#ch-cron-keychain-auth">cron-keychain-auth</a>, <a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a></p></div></details>
+<details class="ch" id="ch-sugeup-bot-migration" data-s><summary><b>sugeup-bot-migration</b><span class="d">수급html 자동화 봇 54개 Windows→맥미니 이관 완료 상태와 운영 규칙 (2026-08-05)</span><span class="t">2026-08-06</span></summary><div class="body"><p>2026-08-05에 Windows→맥미니 봇 이관 완료. 상세 이력은 <code>~/수급html/이관진행.md</code>.</p>
+<p><b>운영 핵심:</b></p>
+<ul>
+<li>표준 인터프리터: <code>/Users/1ne/수급html/.venv/bin/python3</code> (uv로 만든 CPython 3.12). telegram-digest는 자체 <code>.venv</code> 별도</li>
+<li>crontab은 <code>~/수급html/crontab.txt</code> 파일로 관리 → 수정 후 <code>crontab ~/수급html/crontab.txt</code> 재설치 (내 셸에서 간헐적으로 hang — 그럴 땐 사용자 터미널로)</li>
+<li>키움 자격증명: macOS 키체인 (service: kiwoom-appkey / kiwoom-secret), 로더는 <code>creds.py</code> (수급html + ~/sector-report 두 곳)</li>
+<li>claude CLI: <code>claude_cli.py</code>의 find_claude()가 <code>~/.local/bin/claude</code>(standalone) → 데스크톱 앱 번들 순 자동 탐색. 봇 모델은 전부 <b>claude-opus-5</b> (사용자 지시로 통일)</li>
+<li><b>claude CLI cron 인증 (2026-08-05 장애·수정):</b> cron은 GUI 로그인 세션 밖이라 키체인의 구독 자격증명을 못 읽어 전 봇이 "Not logged in"으로 하루 종일 실패했음(인터랙티브에선 정상). 해결: <code>claude setup-token</code>으로 만든 장기 토큰을 <code>~/수급html/.claude_env</code>에 <code>CLAUDE_CODE_OAUTH_TOKEN=...</code>으로 저장(chmod 600) → <code>claude_cli.py</code>가 자동 주입. 토큰 만료/재발급 시 같은 절차 반복</li>
+<li>텔레그램 유저세션: <code>telegram-digest/user_session.session</code> 하나를 전 Telethon 봇이 공유. 재인증은 <code>telegram-digest/relogin.py</code></li>
+<li>Research Lab: <code>~/수급html/site</code> = github.com/jwk490-cell/research-lab, push 인증은 사용자 키체인의 PAT. 배포는 <code>site/publish.sh</code> (ps1 포팅본)</li>
+<li>sector-report 폴더는 <code>~/sector-report</code> (수급html 밖, #8/#51/#42가 사용)</li>
+<li>줌세션(#32): <b>맥 이관 안 함 — Windows 전담</b> (개인정보 우려로 사용자가 맥 녹음 기능 배제 결정, 2026-08-05). 맥 crontab.txt에 주석으로만 존재. Windows <code>KRX_줌세션_감시</code>만 enable 상태</li>
+</ul>
+<p><b>봇 소유자 잠금 (2026-08-05):</b> 공용 모듈 <code>~/수급html/bot_guard.py</code> — <code>bot_guard.blocked(token, owner_chat_id, msg)</code> 가 소유자(6159848417 @j_1ne) 외 DM을 차단하고 발신자에게 <code>🚫 접근 차단됨</code> 회신 + 소유자에게 <code>⚠️ 무단 접근 차단 · 이름 (id) — 파일/메시지</code> 보고(발신자·봇당 하루 1회, 상태 <code>_bot_guard_state.json</code>). 채널/그룹 메시지는 False 반환해 각 스크립트 필터가 담당. 적용된 DM 수신봇 7개: earnings_watch, supply_watch, prog_watch, us_wrap_watch, us_ec/ec_watch, zoom_session/zoom_watch(Windows 전담), _share/supply_watch. export_watch(로컬 폴더 감시)·butler_watch(채널 구독)는 수신 대상 아님. 새 수신봇을 만들면 이 가드를 반드시 붙일 것. 자세한 실적봇 규칙은 <a class="wl" href="#ch-earnings-notion-daily">earnings-notion-daily</a>.</p>
+<p><b>주의:</b> Windows 원본 PC는 살아있고 전 작업 disable 상태 — 이중 실행(같은 텔레그램 채널 중복 전송, 유저세션 충돌) 금지가 최우선 규칙이었음. Windows 봇을 되켜려면 맥 crontab에서 해당 봇을 먼저 빼야 함.</p></div></details>
+<details class="ch" id="ch-worklog-book" data-s><summary><b>작업기록 북 (수급 연구실 작업기)</b><span class="d">작업기록 북 — 전 산출물을 site/book.html 한 권으로 자동 제본, 크론 #71 매일 08:10·22:10</span><span class="t">2026-08-27</span></summary><div class="body"><p>공자 요청(2026-08-27): "나와 만들어낸 모든 것, 특히 수급html의 모든 작업을 하나의 책처럼 엮고 매일 누적하라."</p>
+<h4>구조 — 전부 기존 산출물에서 파생, 수동 상태 없음</h4>
+<ul>
+<li>빌더: <code>수급html/book_build.py</code> → 출력 <code>site/book.html</code> (허브 <code>작업 기록</code> 탭, data-tab=worklog, FRESH 캐시버스터 적용). push는 <a class="wl" href="#ch-git-guard-dual-repo">git-guard-dual-repo</a>.</li>
+<li><b>챕터</b> = memory/*.md 원문을 미니 마크다운 렌더러로 그대로 렌더 → <b>새 메모리를 쓰면 책이 자동으로 두꺼워진다</b>. 부(部) 분류는 book_build.py의 <code>PART_MAP</code>(슬러그→부 인덱스) + 휴리스틱(-bot/-tab/reference). 새 챕터가 "기타 기록"에 떨어지면 PART_MAP에 추가할 것.</li>
+<li><b>봇 레지스트리</b> = crontab.txt의 <code># NN 이름 (스케줄)</code> 주석 자동 파싱 (중단/일시중단 상태 포함).</li>
+<li><b>허브 지도</b> = site/index.html 사이드바 navgroup/navitem 자동 추출.</li>
+<li><b>연대기</b> = site 저장소 git log 전체를 매회 재파생 (증분 상태 파일 없음 → 드리프트 불가). <code>AUTO_PATTERNS</code>에 걸리는 자동 발행 커밋(raoni feed 등 ~2만 건)은 일별 건수로 접고, 나머지 수동 작업 커밋만 펼친다. <b>새 봇이 자체 커밋 메시지를 갖게 되면 AUTO_PATTERNS에 패턴 추가 필수</b> — 안 하면 연대기가 그 봇 커밋으로 도배된다.</li>
+<li><b>손메모</b>: <code>수급html/book_notes.json</code> <code>{"YYYY-MM-DD": "메모"}</code> 를 만들면 해당 날짜에 하이라이트 박스로 표시 (선택, 현재 미사용).</li>
+<li>크론 #71: 매일 08:10(밤사이 미국 봇 커밋 반영)·22:10(당일 마감 반영), 로그 logs/book.log.</li>
+</ul>
+<h4>Why</h4>
+<p>git 커밋 16,900건 중 자동 발행이 98%라 raw 히스토리는 못 읽는다. 노이즈 패턴 20종을 접으니 수동 작업 ~250건이 곧 연대기가 됐다.</p>
+<h4>How to apply</h4>
+<ul>
+<li>새 프로젝트를 만들면 메모리부터 쓴다 → 책은 다음 제본에 자동 반영.</li>
+<li>책 확인: 허브 사이드바 리서치 그룹 "작업 기록" 탭 또는 /book.html 직접.</li>
+</ul></div></details>
+<h3>리서치 · 백테스트 <small style='color:var(--dim2)'>(2)</small></h3>
+<details class="ch" id="ch-cosmetics-valuechain-research" data-s><summary><b>cosmetics-valuechain-research</b><span class="d">화장품 밸류체인 심층리서치 v1 발행(2026-08-24) — 판정 서열·추적 게이트·재심 조건</span><span class="t">2026-08-24</span></summary><div class="body"><p>2026-08-24 Research Lab에 화장품 4부작 발행(<a class="wl" href="#ch-research-lab-site">research-lab-site</a>): 밸류체인 통합 + 코스맥스·한국콜마·코스메카 개별. 공자 탑다운(수출 Q→P, 브랜드 경쟁심화 vs ODM 고객선별권) + 권우정 세미나(260821·260625) 검증 구조.</p>
+<p><b>판정(발행 시점)</b>: 콜마 1순위(눌림 125~130k, EV +17%) ≥ 코스맥스(240~250k 대기, EV +7%) &gt; 펌텍(55~58k) &gt; 에이피알(370k 이하) &gt; 아모레 &gt; 코스메카(관망, EV -5%, 주가&gt;컨센TP) · 씨앤씨 기각 · 잉글우드랩 스페셜(공개매수가 13,000의 62%).</p>
+<p><b>추적 게이트</b> (봇/후속 세션용):</p>
+<ul>
+<li>매월 1일: 산업부·관세청 화장품 수출 — 기초 YoY +20% 하회 2연속 = 섹터 thesis break. 색조 YoY 플러스 전환 = 씨앤씨 재심 + 코스맥스 증액 신호.</li>
+<li>11월 3Q 실적: 콜마 별도 4,300억+·연우 흑자 지속(증액 게이트) / 코스맥스 한국 YoY 30%대·OPM / 코스메카 매출 2,261억+(QoQ 성장 = 프리미엄 심판).</li>
+<li>컨센 상향 정지 2개월 = 신고가권 ODM 축소 신호.</li>
+<li>연우는 2024-02 상장폐지(콜마 100%) — 종목 아님. 잉글우드랩 3차 공개매수·상폐 공시 = 스페셜 트리거.</li>
+</ul>
+<p><b>검증에서 나온 교정</b> (세미나 숫자 재인용 금지): 코스맥스 "한국 3Q +40%"는 법인 혼동(회사 가이던스 30%대, 40%는 미국) · "고점 PER 21배" 근거 불일치 · 이니스프리 세포라 1등 미확인(1Q26 1위는 rhode) · 코스메카 "4Q까지 QoQ 성장" 소통 미확인 · 미 관세는 2026-07-24부터 301조 우회 12.5%.</p></div></details>
+<details class="ch" id="ch-indicator-backtest-2026ytd" data-s><summary><b>indicator-backtest-2026ytd</b><span class="d">2026 YTD 수급·거래량 지표 64개 백테스트 결과 — 사모가 YTD 1위지만 7월부터 사망, 회전율은 상시 회피 신호</span><span class="t">2026-08-06</span></summary><div class="body"><p>2026-08-06 실행. 지표 64개 × 국면 7개 × 보유기간 5종 백테스트.</p>
+<p>리포트: <code>/Users/1ne/수급html/지표_백테스트_YTD2026.html</code>, 스크립트는 세션 스크래치패드(panel.py/signals.py/backtest.py/equity.py).</p>
+<p>데이터는 ka10059 100일창 2회(dt=오늘 + dt=20260311)로 2025-10-14~2026-08-05 수급 패널을 만들어 씀 —</p>
+<p><b>YTD 백테스트를 다시 하려면 이 2창 병합 방식이 필요</b>(raw_cache 단독은 100거래일뿐).</p>
+<p>핵심 결과 (Top20 동일가중, t+1 종가 진입, 시총 5분위 중립 초과수익):</p>
+<ul>
+<li>YTD 1위 사모_5일 +0.82%/5일, 연속3일_사모 +0.79%(승률 67.9%) — 단 7월 급락 이후 −1.0~−2.6%로 사망</li>
+<li>상시 회피 신호: <b>5일 회전율(거래대금/시총)</b> YTD −3.17%, t=−2.69로 유일한 유의 지표. 6개 국면 전부 마이너스</li>
+<li>현재 국면(7월~) 생존: 외국인 연속3일/5일누적, 수급MACD 상승변곡, 역모멘텀5일 — 전부 <b>보유 3일 이내</b>에서만</li>
+<li>60일 신고가는 4~5월 +3.17% ↔ 7월 −9.4%: 지수 추세 필터 필수</li>
+<li>기관계(orgn) 통합 5일은 −1.14% → 사모/연금/투신 분리가 맞음</li>
+<li>통제: 랜덤 Top20 = +0.01%(편향 없음), 시총상위20 = YTD +1.31%(대형주 프리미엄)</li>
+</ul>
+<p>봇 반영 백로그: <a class="wl" href="#ch-streak3-bot">streak3-bot</a> 카테고리 순서 외국인 우선, <a class="wl" href="#ch-float-turn-bot">float-turn-bot</a> 알림을 '진입'→'과열 경고'로,</p>
+<p><a class="wl" href="#ch-osc-inflection-bot">osc-inflection-bot</a> 상승변곡은 하락장 전용으로 확인됨.</p></div></details>
+<h3>노션 · 워크플로우 <small style='color:var(--dim2)'>(2)</small></h3>
+<details class="ch" id="ch-earnings-notion-daily" data-s><summary><b>earnings-notion-daily</b><span class="d">일별 실적발표 노션 업로드 워크플로 — 2Q26_실적발표 DB, earnings_day json + Send_Earning 채널 Review 리포트, 22:30 데드라인</span><span class="t">2026-08-14</span></summary><div class="body"><p>일별 <code>&lt;yymmdd&gt;_실적발표</code> 노션 페이지 업로드 워크플로 (2026-08-05부터 이 맥에서 수행).</p>
+<ul>
+<li><b>데이터</b>: <code>~/수급html/earnings_day_&lt;yymmdd&gt;.json</code> — earnings_watch.py(cron */2분)가 Send_Earning 텔레그램 채널(@shiljuck_Bot getUpdates, invite t.me/+Nna-v0vhCGNmNzg9 = chat_id 4481950300)에서 실적글을 받아 카드 누적. <a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a></li>
+<li><b>당일 자료 2종</b>: 사용자가 당일 22시까지 같은 채널에 PDF 업로드 → 봇이 <code>earnings_reports/_incoming/</code>(원본)에 저장하고 <b>Review 리포트</b>(증권사, <code>earnings_reports/&lt;코드&gt;.json</code>에 텍스트 3000자)와 <b>실적발표IR자료</b>(회사 IR)로 분류. 분류·당일 누적 카운트는 <code>earnings_docs_log.json</code>(최근 7일 유지).</li>
+<li><b>수신 확인 회신</b>(2026-08-05 추가, 사용자 승인 형식): 파일 수신 시 <b>항상 사용자 DM(@shiljuck_Bot, EARNINGS_DM=6159848417 김재원)</b> 으로 회신. 채널·DM 어디로 보내든 수집된다. 형식 — 종목별로 <code>■ 종목명 - 실적발표IR자료(누적 n건), Review 리포트(누적 m건)</code> 헤더 + 당일 누적 자료를 <b>매번 전부 다시 쌓아</b> 한 줄씩:</li>
+</ul>
+<p>  <code>26/08/05 | 유안타 | BUY | TP 540,000원 | 2Q26 Review : 우려와 달리…</code> (증권사는 '증권' 접미 제거, 없는 항목은 생략, IR자료는 브로커 자리에 <code>회사IR</code>), 마지막 줄 <code>hh:mm 수집 완료.</code></p>
+<p>  구현: <code>docs_log_bump</code>/<code>doc_line</code>/<code>build_receipt</code> + <code>extract_meta</code>(투자의견·목표주가·<code>nQnn Review:</code> 부제를 PDF 텍스트에서 파싱). 누적 로그 <code>earnings_docs_log.json</code>은 파일명 기준 dedup.</p>
+<ul>
+<li>분류 로직: <code>_guess_stock</code>(증권사이면서 상장사인 종목 중복 처리) + <code>_find_broker_txt</code>(종목명 제거 후 증권사 탐지) — 'DB하이텍' IR이 증권사 DB로 오인되던 문제 해결.</li>
+<li><b>소유자 전용 잠금</b>(2026-08-05): @shiljuck_Bot은 env <code>EARNINGS_DM</code>(6159848417 김재원) DM만 처리. 그 외 발신자는 파일 다운로드·저장·처리 전부 차단하고 발신자에게 <code>🚫 접근 차단됨</code> 회신 + 소유자에게 <code>⚠️ 무단 접근 차단</code> 보고(발신자당 1일 1회, state.blocked_seen). <code>EARNINGS_DM</code> 미설정 시 봇은 아예 종료된다 — 지우면 안 됨. butler_watch.py도 env DM 고정으로 변경. Send_Earning 채널 참여자는 봇+김재원 2명뿐(확인 완료). 과거 이대영(6584984880)이 /start해 state에 잡혀 있던 값은 소유자로 초기화함.</li>
+<li><b>노션</b>: DB <code>2Q26_실적발표</code>, 데이터소스 <code>collection://3a60299f-8d3e-8094-a602-000bfc57ae2e</code>. 속성 상회/부합/하회/기타(쉼표 나열), 본문은 종목당 콜아웃(상회→부합→하회→컨센없음 순), 말미 "첨부자료"에 당일 리포트 PDF 첨부. 양식 레퍼런스는 260730/260804 페이지.</li>
+<li><b>리포트 반영 규칙</b>: 해당 종목 Comment에 (a) 서프/쇼크/부합의 원인, (b) 일회성 vs 구조적 판별, (c) 증권사 TP·의견 변경을 명시.</li>
+<li><b>데드라인</b>: 22:30 KST. ~~예약 작업(scheduled task)을 22:05에 걸어 실행하는 방식~~ → <b>260811 사고(2026-08-11)</b>: 새 taskId로 만든 예약 작업은 도구 승인 저장소가 비어 있어, 무인 실행 시 첫 Bash 호출에서 권한 프롬프트에 걸려 밤새 굳었다(머신·cron은 정상). 페이지 미생성, 공자가 다음날 아침 수동 업로드. <b>앞으로는</b>: (a) 살아있는 자동화 세션에서 <code>run_in_background</code> 타이머(until 22:05)로 직접 수행하거나, (b) 예약 작업을 쓰려면 반드시 생성 직후 "Run now"로 도구 사전 승인을 받아둘 것. 기존 승인이 쌓인 taskId를 update로 재활용하는 것도 방법. 노란 배경 콜아웃은 사용자 수동 강조 — 생성 시엔 기본 콜아웃.</li>
+<li>19:00 텔레그램 요약봇(earnings_summary.py)은 별개로 돌고, 노션 업로드는 봇 자동화가 아니라 Claude가 수행.</li>
+<li><b>PDF 첨부 문법</b>(260813 확인): Notion MCP create-file-upload → curl POST 업로드 후, 본문에는 <code>[파일명.pdf](file-upload://id)</code> 링크 문법. <code>![...]</code> 이미지 문법은 "only image files are expected" 에러로 거부됨. 대형 페이지(166종목)는 create-pages(빈 본문+속성) 후 insert_content로 20종목 안팎씩 분할 삽입하면 안정적.</li>
+<li><b>260813처럼 사용자가 채팅으로 리포트 PDF를 직접 첨부</b>("참고로만")하는 경우: 카드 json이 본문 소스, PDF는 해당 종목 Comment에 (증권사 날짜) 표기로 TP·의견·서프/쇼크 원인·일회성/구조적 판별을 추가 반영하고 말미 첨부자료에도 올림. 사용자가 "상위에 배치할 종목" 목록을 주면 그 순서대로 페이지 최상단에 배치하고, 나머지는 상회→부합→하회→컨센없음.</li>
+<li><b>카드 생성 파이프라인</b>: 실제 공급원은 butler_watch.py(cron */3분) — @darthacking 공시 피드(t.me/s 스크래핑)에서 잠정실적 필터(컨센 있음 or 시총 1,500억+) 통과분을 earnings_gen(claude CLI 헤드리스, Opus)으로 카드화해 earnings_day json에 누적. earnings_watch.py는 Send_Earning 채널 수동 실적글+PDF 담당.</li>
+<li><b>260805 사고</b>: 이관 첫날 cron에서 claude CLI가 키체인 접근 불가 + 장기토큰 파일(<code>~/수급html/.claude_env</code>) 부재로 하루 종일 "Not logged in" — 22건 생성 실패, 카드 3건(오전 수동 백필분)만 남아 페이지가 6종목으로 축소됨. 토큰 파일은 8/6 07:31 생성되어 이후 정상. <b>이 토큰 파일 지우면 안 됨.</b></li>
+<li><b>butler_watch 실패 처리 수정(8/6)</b>: 기존엔 생성 실패해도 last_id가 전진해 실패분 영구 소실 → 성공 시에만 last_id 전진, 실패 시 break 후 다음 틱 재시도(3회 실패 시 포기), state.fail_counts로 추적하도록 고침.</li>
+<li><b>별도/연결 오파싱 함정(260812 사고, 8/13 정정)</b>: 카드가 별도 기준 수치를 집는 경우 2종 — (a) 더블유게임즈처럼 같은 날 "영업(잠정)실적"(별도)과 "연결재무제표기준영업(잠정)실적"을 둘 다 공시, (b) KT·한국콜마·한화생명처럼 반기보고서/별도 수치가 피드에 잡힘. <b>증상: 매출이 컨센 대비 -30% 이상 괴리</b>(더블유 -78%, 콜마 -48%, KT -34%). 260812 페이지에서 4종목(더블유게임즈 하회→부합, 한국콜마·케이티·한화생명 하회→상회) 정정. 검증 절차: ①뉴스로 연결 잠정 확인 ②없으면 DART 반기보고서 "2-2. 연결 포괄손익계산서"의 3개월 열(아이에스동서는 이 방법으로 연결 맞음 확인 — 매출 급감이 실제였음). 업로드 전 매출괴리 -30% 이상 종목은 반드시 연결 여부 교차 확인할 것.</li>
+</ul></div></details>
+<details class="ch" id="ch-youtube-live-notion-pipeline" data-s><summary><b>youtube-live-notion-pipeline</b><span class="d">유튜브 라이브를 실시간 전사해 노션 Zoom Session DB에 정리하는 파이프라인 (yt-dlp+mlx-whisper, 2026-08-20 검증)</span><span class="t">2026-08-20</span></summary><div class="body"><p>유튜브 라이브 "실시간으로 듣고 정리" 요청 시 검증된 파이프라인 (2026-08-20, 12차 전기본 4·5차 토론회 2회 성공):</p>
+<ul>
+<li>정부부처 라이브는 자막 트랙이 없음(hasCaptions:false) → 자막 수집 불가, 오디오 전사로 갈 것</li>
+<li>도구: <code>uv venv</code> + <code>yt-dlp mlx-whisper static-ffmpeg</code> (brew·ffmpeg 없는 맥 — static-ffmpeg가 arm64 바이너리 제공, mlx_whisper는 PATH에 ffmpeg 필요). 모델 <code>mlx-community/whisper-large-v3-turbo</code>는 HF 캐시에 이미 있음 (~/.cache/huggingface)</li>
+<li>녹음: <code>yt-dlp --live-from-start --wait-for-video 30-120 -f "bestaudio[ext=m4a]/bestaudio" --no-part</code> 백그라운드 실행 — 시작 전 대기, 놓친 앞부분도 확보. 종료 시 "Did not get any data blocks" exit 1은 정상(파일은 온전)</li>
+<li>전사: 커서(초) 유지하며 rec.m4a를 snapshot copy → ffmpeg로 [cursor, dur-20s] 구간 16k wav 추출 → mlx_whisper(language=ko, condition_on_previous_text=False). 30분 오디오 ≈ 2분 (M4)</li>
+<li>주기: <code>sleep 540</code> 백그라운드(종료 시 재호출됨)로 9분 사이클 — 전사→읽기→노션 insert_content 누적. 발언자 단위로 묶어 반영</li>
+<li>노션 <a class="wl" href="#ch-research-lab-site">research-lab-site</a> 아님: Zoom Session DB data_source_id <code>3a40299f-8d3e-80f5-9e62-000bc74c7b1a</code>, 제목만 있는 스키마. 양식: 개요·주요내용 callout(yellow_bg) + 세션별 details 토글(발제=gray_bg, 토론=blue_bg, QnA=yellow_bg), 핵심은 <code>&lt;span underline&gt;</code> 강조</li>
+<li>다음 라이브 URL은 <code>yt-dlp --flat-playlist --print</code> 로 채널 /streams 조회가 브라우저보다 빠르고 안정적</li>
+<li>STT 인명 오인식 주의(예: 라윤란/이종수→이종숙 혼용) — 확실치 않은 이름은 직함 위주로 기재</li>
+</ul></div></details>
+<h2 class="part" id="chron">제4부 · 연대기 <small>site 저장소 전체 히스토리 — 매일 자동 누적</small></h2>
+<div class="partdesc">사람 손으로 만든 작업은 전부 펼치고, 봇의 자동 발행은 건수로 접었다. 최신이 위.</div>
+<details class="mon" open><summary>2026년 08월<small>작업 43건 · 자동 발행 8,523건</small></summary>
+<div class="day" data-s><div class="dh">2026-08-27 (목)<small>자동 발행 223건</small></div>
+<ul>
+<li>supply: 탭명 → 투자자별 수급/거래량 증감, 세부탭 [투자자별 수급→거래량 급증] 2개만 노출(신고가 임시 숨김)</li>
+<li>hub: supply 탭명 → 신고가/수급 대시보드</li>
+<li>supply: 당일·누적 투자자별 랭킹 탭 임시 숨김 (sec2가 커버, 데이터 유지)</li>
+<li>supply: 투자자별 수급 탭에 시장(전체/코스피/코스닥) 선택 추가</li>
+<li>hub: supply 탭 iframe에 10분 캐시버스터 적용 (FRESH 목록 추가)</li>
+<li>supply: 투자자별 수급 탭 개편 — 5주체(사모/투신/연금/외인/프램)·공통 조합 선택·금액 기준 표</li>
+<li>韓 종목판: 제목 '韓 종목 정배열 트래커'로, 서브탭 라벨 '韓 종목'으로, 기준 토글 버튼 와이드 세그먼트 스타일</li>
+<li>정배열 3판: 개수 스탯 카드도 추이 차트 토글 안으로 이동 (기본 접힘)</li>
+<li>정배열 3판: 韓 종목판 1180px 중앙 정렬 통일, 추이 차트 접기 토글(기본 접힘, 순위표 우선)</li>
+<li>수동 갱신 버튼: worker 큐 API(Durable Object) + 전 탭 갱신 FAB (비번 매회 입력)</li>
+<li>leaders: 주도 섹터·주도주 Locked 탭 신설 (#69)</li>
+<li>semi_export: 단가 차트 바+단가YoY 선 이중축으로 변경</li>
+<li>정배열 트래커 통합 탭 — 韓 종목·韓 ETF·美 ETF 3판을 align.html 서브탭으로 합치고, 韓 2판에도 오늘의 요약 상단·설명 하단 적용</li>
+<li>usalign: 상단 섹터/테마 자동 요약 추가, 공식 설명은 하단으로 이동</li>
+<li>美 ETF 정배열 트래커 탭 추가 (usalign.html, cron #66 화~토 06:40)</li>
+</ul>
+</div>
+<div class="day" data-s><div class="dh">2026-08-25 (화)<small>자동 발행 350건</small></div>
+<ul>
+<li>backlog: 표 내부 단위 인식 보완(525종목), 부문별 분해 차트, 외부 자료 교차대조 표시</li>
+<li>newhigh tabs: add 20d/60d windows (KR d20, US d60+d20)</li>
+<li>환율×13개 섹터 심층리서치 v1 (260825): 원/달러 -11.2% 급강세, 섹터별 실적 영향·공시 민감도·업종 실측</li>
+<li>WTI 0824 웹백필(야후 CL=F, 488일 대조 검증) + 각주에 백필 규칙 명시</li>
+<li>에너지/화학 가격 동향 탭: 0824 표 반영 + 기준일 전품목 최신으로 표시</li>
+</ul>
+</div>
+<div class="day" data-s><div class="dh">2026-08-24 (월)<small>자동 발행 359건</small></div>
+<ul>
+<li>backlog: 전 상장사 스캔으로 514종목 확장, 투자포인트 업종 분류, 설명 하단 이동</li>
+<li>핵심7 시총비중 → 업종 시총비중으로 교체: 낡은 basket7 페이지 제거</li>
+<li>backlog: 출처 배지를 검증상태 표기로 정리</li>
+<li>심층리서치: 화장품 밸류체인 통합 + 코스맥스·한국콜마·코스메카 v1 (260824)</li>
+<li>주간 일정 탭 토스 스타일 통일 — 라운드 카드·필 탭/칩·소프트 그리드</li>
+<li>주간 일정 탭 유동 폭 — 1100px 고정 해제, 화면 비율 대응</li>
+<li>주간 일정 탭 다크 테마 적용 — ht-weekly hub-theme 오버라이드</li>
+<li>주간 일정 탭 추가 — 텔레그램 15채널+KIND 취합, 웹검증 (0824-0904)</li>
+</ul>
+</div>
+<div class="day" data-s><div class="dh">2026-08-21 (금)<small>자동 발행 345건</small></div>
+<ul>
+<li>leadflow: 트래커 파이프라인 동적 날짜 전환 후 재생성</li>
+<li>leadflow: 변동성 국면 로테이션 트래커 8/20 데이터 갱신</li>
+</ul>
+</div>
+<div class="day" data-s><div class="dh">2026-08-20 (목)<small>자동 발행 347건</small></div>
+<ul>
+<li>research: 시선AI(340810) 심층리서치 v1 260820</li>
+<li>export.html hub-theme 링크 복원 (daily_close 13:30 빌드본 유지)</li>
+<li>수출 데이터 탭 8월 잠정(0811 기준) 갱신</li>
+<li>Add temporary X-Auth-Config diagnostic header to 401 response</li>
+<li>Keep BASIC_USER in wrangler vars so deploys don't wipe it</li>
+<li>Switch Basic Auth to Worker + static assets (project deployed as Worker, not Pages)</li>
+<li>Add Cloudflare Pages Basic Auth middleware</li>
+<li>관련주 신경망 맵 3D 전환 — three.js 궤도 회전(뒷면·상하), 구면 성단 배치로 광역 분산, 자동회전·플라이투</li>
+<li>관련주 신경망 맵: 빌드 스크립트는 telegram-digest로 이동, 데이터 재생성</li>
+</ul>
+</div>
+<div class="day" data-s><div class="dh">2026-08-12 (수)<small>자동 발행 345건</small></div>
+<ul>
+<li>research: 네오셈 심층리서치 v1 (260812)</li>
+<li>핵심7 시총비중 탭 추가 — 삼전·삼전우·하이닉스·SK스퀘어·정유3사 KOSPI 대비 54.59% (2026-08-12 12:03)</li>
+<li>research: 동방메디컬 v1 + 정유3사 통합비교 v1 (2026-08-12)</li>
+</ul>
+</div>
+<div class="day" data-s><div class="dh">2026-08-10 (월)<small>자동 발행 341건</small></div>
+<ul>
+<li>수출입데이터(관세청 월별)·대만 테크 실적 모음 탭 신설 — jusikbot 클론</li>
+</ul>
+</div>
+</details>
+<details class="mon"><summary>2026년 07월<small>작업 70건 · 자동 발행 7,259건</small></summary>
+<div class="day" data-s><div class="dh">2026-07-24 (금)<small>자동 발행 318건</small></div>
+<ul>
+<li>OCI홀딩스 심층리서치 v1 게시 (010060)</li>
+</ul>
+</div>
+<div class="day" data-s><div class="dh">2026-07-22 (수)<small>자동 발행 333건</small></div>
+<ul>
+<li>v2 심화 게시 배치3(최종): LG이노텍·LS마린솔루션 — 18종목 전량 v2 완료</li>
+<li>v2 심화 게시 배치2: HD건설기계·RF머트리얼즈·SGC에너지·동진쎄미켐·레인보우로보틱스·이마트·GS피앤엘·성호전자</li>
+<li>v2 심화 게시 배치1: 디케이티·로보티즈·나노·SK텔레콤·SK오션플랜트·HD현대마린엔진·가온전선</li>
+<li>비츠로셀 v2 심화(다크·10탭·차트) 게시</li>
+<li>비츠로셀(082920) 리서치 v1 게시</li>
+<li>LS마린솔루션(060370) 리서치 v1 게시</li>
+<li>HD건설기계(267270) 리서치 v1 게시</li>
+<li>LG이노텍(011070) 리서치 v1 게시</li>
+<li>GS피앤엘(499790) 리서치 v1 게시</li>
+<li>이마트(139480) 리서치 v1 게시</li>
+<li>SGC에너지(005090) 리서치 v1 게시</li>
+<li>성호전자(043260) 리서치 v1 게시</li>
+<li>레인보우로보틱스(277810) 리서치 v1 게시</li>
+<li>동진쎄미켐(005290) 리서치 v1 게시</li>
+<li>HD현대마린엔진(071970) 리서치 v1 게시</li>
+<li>SK오션플랜트(100090) 리서치 v1 게시</li>
+<li>SK텔레콤(017670) 리서치 v1 게시</li>
+<li>디케이티(290550) 리서치 v1 게시</li>
+<li>가온전선(000500) 리서치 v1 게시</li>
+<li>RF머트리얼즈(327260) 리서치 v1 게시</li>
+<li>로보티즈(108490) 리서치 v1 게시</li>
+<li>나노(187790) 리서치 v1 게시</li>
+<li>심층 리서치 8종목 게시: SK이노·자이에스앤디·GS건설·티에스이·타이거일렉·샘씨엔에스·메가터치·지엔씨에너지 (워크플로우 병렬 리서치+적대적 검증)</li>
+<li>심층 리서치: SK이터닉스 v2 최신화 게시(유가發 테마 급등·밸류 부담 가중, 관망 강화)</li>
+<li>파비콘 흑백(모노크롬)으로 변경 — 차콜 배경 + 흰 상승차트</li>
+<li>사이트 파비콘 추가(액센트 블루 상승차트 아이콘) — SVG/PNG/ICO + apple-touch</li>
+<li>RS 타임머신: 월간→주간 스냅샷(82주), 현재주=당일 기준 진행중 표시</li>
+<li>RS 타임머신: 개별종목 모드 추가 (주도주 TOP40 + 떠오르는 종목, KR·US 월말 스냅샷)</li>
+<li>RS 타임머신 탭 추가 (월말 스냅샷 2025.01~ 슬라이더, KR·US ETF 상대강도)</li>
+<li>변동성 국면 로테이션 트래커로 교체 (코스피/코스닥 스프레드 국면시계+섹터RS+대형대장주 주봉)</li>
+<li>주도주 흐름 한국: 대형주 섹터 대장주(시총 표기)로 대표종목 개편</li>
+<li>주도주 흐름: 한국 월별 대표종목+주봉 캔들로 개편 (미국 유지)</li>
+<li>RS 맵 가독성 개선(버블 상한 축소·가장자리 인셋·라벨 겹침회피·사분면 옅게) + 색상 상승=Red/하락=Blue 통일(초록 제거)</li>
+<li>실시간 한국주식 탭에 지수 탭 병합(지수+종목 한 화면) · 터미널→전닉 터미널 개명</li>
+<li>홈: 코스피·코스닥 지수 카드 상단 추가(삼성·SK하이닉스 위) + DDR5 스트립 memory.json 참조 복구</li>
+<li>이엔에프테크놀로지 리서치 v1 게시</li>
+<li>주도주 흐름 탭 추가 (2025.01~현재 KR·US 월별 주도주)</li>
+<li>RS 맵 라벨: 큰 버블은 내부 중앙 배치(겹침 완화)</li>
+<li>RS 탭 상단: 섹터 로테이션 RS 맵(버블 60일x10일·시총·5일등락) + 산업 구성 표 26섹터</li>
+</ul>
+</div>
+<div class="day" data-s><div class="dh">2026-07-21 (화)<small>자동 발행 332건</small></div>
+<ul>
+<li>semi_export.json 갱신</li>
+<li>수출 추이 차트: 점 호버 툴팁(값+YoY) + 축 눈금 콤마숫자(한글 단위 제거)</li>
+<li>반도체/전기전자 수출 추이 탭: 메리츠 Tech 채널(TRASS) 품목별 수출금액·YoY·단가 시계열 14품목 2022~</li>
+<li>종목분석 탭 Valley AI 스타일 리디자인: 가격 헤더+52주바 · 서브탭 5뷰(개요/밸류/수급/재무/링크) · 투자자 순매수 60일 차트</li>
+<li>종목분석 차트 터미널화: 시고저종 레전드(크로스헤어)·MA 지표 토글·캔들/라인·1M~전체 레인지</li>
+<li>종목분석 메타 문구 정정</li>
+<li>종목분석 차트: TradingView Lightweight Charts + 전종목 일봉 2년 캔들 샤드 (KRX는 TV 호스팅 위젯 임베드 차단 확인)</li>
+<li>tv widget test (임시)</li>
+<li>韓 신고가 탭: 52주(네이버)→60일(키움 ka10081 전수판정, 신고가봇 로직 재사용)</li>
+<li>韓·美 52주 신고가 탭 + 수급 대시보드 개명(신고가·순매수 랭킹) + 수출탭 감시 자동화</li>
+</ul>
+</div>
+<div class="day" data-s><div class="dh">2026-07-20 (월)<small>자동 발행 327건</small></div>
+<ul>
+<li>한양이엔지 045100 리서치 v1 게시</li>
+<li>RS 탭: 개별 종목 주도주/떠오르는 주도주 TOP10 추가 + 태린이아빠 탭 다크 테마</li>
+<li>RS 분석 탭(韓·美 섹터 ETF 상대강도+소티노, 태린이아빠 방식) + 탭 그룹 재정비</li>
+<li>메모리 가격 탭(DRAM·NAND 현물/고정가+과거추이) + 종목 분석 탭(전종목 검색·TV차트·네이버 기본정보) + 차트 반응형</li>
+<li>시황정리 탭 제거 → 韓/美 시황 탭(마감시황 봇 출력 자동 게시)</li>
+<li>redesign: Claude Design skin — Toss-style tokens (light/dark, default dark), live home quotes + index strip, clock + theme toggle, chart palette rework; sub-pages retinted to new dark</li>
+</ul>
+</div>
+<div class="day" data-s><div class="dh">2026-07-15 (수)<small>자동 발행 304건</small></div>
+<ul>
+<li>Revise 마키나락스 리서치 with DART primary sources</li>
+<li>Add 마키나락스(477850) 딥리서치 v1 to Research Lab</li>
+</ul>
+</div>
+<div class="day" data-s><div class="dh">2026-07-14 (화)<small>자동 발행 322건</small></div>
+<ul>
+<li>research publish: 신세계 v1 (2026-07-13)</li>
+</ul>
+</div>
+<div class="day" data-s><div class="dh">2026-07-13 (월)<small>자동 발행 322건</small></div>
+<ul>
+<li>research tab: data scaffold (research.json + research/)</li>
+</ul>
+</div>
+<div class="day" data-s><div class="dh">2026-07-09 (목)<small>자동 발행 168건</small></div>
+<ul>
+<li>raoni.xyz full feature set: 지수·시총비교·괴리율·ETF괴리율·전고대비·터미널·램값 (7 tabs, HL live + Naver/DART feeds)</li>
+<li>add live 실시간 한국주식 dashboard (Hyperliquid x Upbit) — raoni-style, 5s refresh</li>
+<li>move SK에코플랜트 뉴스 to standalone site (skeco-news) — remove tab/card/panel/js + data</li>
+<li>remove 'Equity Research Terminal' from header sublabel and home hero</li>
+<li>all fonts Pretendard (universal); logo mark -&gt; logo.png image (bear), remove gold square</li>
+<li>remove all Joy and July mentions (hero eyebrow + footer)</li>
+<li>redesign: Research Lab — premium finance dark theme, restructured layout, unified dark across all dashboards</li>
+</ul>
+</div>
+<div class="day" data-s><div class="dh">2026-07-01 (수)<small>자동 발행 21건</small></div>
+<ul>
+<li>태린이아빠 탭을 전용 사이트(jwk490-cell.github.io/taerin) iframe으로 전환, 중복 이미지 제거</li>
+<li>태린이아빠 피드 갱신 (407포스트/443이미지)</li>
+<li>태린이아빠 이미지 피드 탭 추가 (게시물별 복붙 버튼, 30분 자동 갱신)</li>
+</ul>
+</div>
+</details>
+<details class="mon"><summary>2026년 06월<small>작업 9건 · 자동 발행 985건</small></summary>
+<div class="day" data-s><div class="dh">2026-06-29 (월)<small>자동 발행 23건</small></div>
+<ul>
+<li>wrap: add 6/26 market summary (circuit breaker day); refresh telegram feed</li>
+</ul>
+</div>
+<div class="day" data-s><div class="dh">2026-06-15 (월)<small>자동 발행 69건</small></div>
+<ul>
+<li>telegram feed: collect hourly instead of every 10 min</li>
+</ul>
+</div>
+<div class="day" data-s><div class="dh">2026-06-11 (목)<small>자동 발행 67건</small></div>
+<ul>
+<li>remove oscillator tab (local tool stays; site tab removed per request)</li>
+<li>market wrap: cumulative archive (latest day expanded, past trading days as toggles, keep 60 days)</li>
+<li>market wrap tab: 4-channel daily summary at 16:00 (today's wrap included)</li>
+<li>unified theme: hub-theme.css injected into all sub-pages (light palette, Pretendard 13px, rounded corners) + publish.ps1 helper</li>
+<li>logo: plain black JnJ; add oscillator + disparity tabs</li>
+<li>telegram feed: 17-channel daily feed tab (left channel list + twitter-style feed), data pipeline</li>
+<li>Joy and July Research Hub - initial site (hub + supply/sector/export dashboards)</li>
+</ul>
+</div>
+</details>
+<h2 class="part" id="research">제5부 · 심층 리서치 발행물 <small>data/research.json</small></h2>
+<div class="tw"><table><tr><th>발행일</th><th>제목</th><th>대상</th></tr>
+<tr data-s><td>2026-08-25</td><td><a href="research/환율_섹터영향_통합_v1_260825.html" target="_blank">환율 × 13개 섹터 통합 (원/달러 급변동과 실적 영향)</a></td><td>MACRO·메모리·소부장·정유화학·바이오·화장품·미용기기·기계·조선·방산·전력기기·재생E·건설원전·음식료라면</td></tr>
+<tr data-s><td>2026-08-24</td><td><a href="research/화장품밸류체인_통합_v1_260824.html" target="_blank">화장품 밸류체인 통합 (ODM·용기·브랜드 8종목)</a></td><td>192820·161890·241710·352480·251970·278470·090430</td></tr>
+<tr data-s><td>2026-08-24</td><td><a href="research/한국콜마_리서치_v1_260824.html" target="_blank">한국콜마</a></td><td>161890</td></tr>
+<tr data-s><td>2026-08-24</td><td><a href="research/코스맥스_리서치_v1_260824.html" target="_blank">코스맥스</a></td><td>192820</td></tr>
+<tr data-s><td>2026-08-24</td><td><a href="research/코스메카코리아_리서치_v1_260824.html" target="_blank">코스메카코리아</a></td><td>241710</td></tr>
+<tr data-s><td>2026-08-20</td><td><a href="research/시선AI_리서치_v1_260820.html" target="_blank">시선AI</a></td><td>340810</td></tr>
+<tr data-s><td>2026-08-12</td><td><a href="research/한화에어로스페이스_리서치_v1_260812.html" target="_blank">한화에어로스페이스</a></td><td>012450</td></tr>
+<tr data-s><td>2026-08-12</td><td><a href="research/네오셈_리서치_v1_260812.html" target="_blank">네오셈</a></td><td>253590</td></tr>
+<tr data-s><td>2026-08-12</td><td><a href="research/동방메디컬_리서치_v1_260812.html" target="_blank">동방메디컬</a></td><td>240550</td></tr>
+<tr data-s><td>2026-08-12</td><td><a href="research/정유3사_통합비교_v1_260812.html" target="_blank">정유 3사 통합비교 (GS·SK이노·S-Oil)</a></td><td>078930·096770·010950</td></tr>
+<tr data-s><td>2026-07-24</td><td><a href="research/OCI홀딩스_리서치_v1_260724.html" target="_blank">OCI홀딩스</a></td><td>010060</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/비츠로셀_리서치_v2_260722.html" target="_blank">비츠로셀</a></td><td>082920</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/LS마린솔루션_리서치_v2_260722.html" target="_blank">LS마린솔루션</a></td><td>060370</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/HD건설기계_리서치_v2_260722.html" target="_blank">HD건설기계</a></td><td>267270</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/LG이노텍_리서치_v2_260722.html" target="_blank">LG이노텍</a></td><td>011070</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/GS피앤엘_리서치_v2_260722.html" target="_blank">GS피앤엘</a></td><td>499790</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/이마트_리서치_v2_260722.html" target="_blank">이마트</a></td><td>139480</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/SGC에너지_리서치_v2_260722.html" target="_blank">SGC에너지</a></td><td>005090</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/성호전자_리서치_v2_260722.html" target="_blank">성호전자</a></td><td>043260</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/레인보우로보틱스_리서치_v2_260722.html" target="_blank">레인보우로보틱스</a></td><td>277810</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/동진쎄미켐_리서치_v2_260722.html" target="_blank">동진쎄미켐</a></td><td>005290</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/HD현대마린엔진_리서치_v2_260722.html" target="_blank">HD현대마린엔진</a></td><td>071970</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/SK오션플랜트_리서치_v2_260722.html" target="_blank">SK오션플랜트</a></td><td>100090</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/SK텔레콤_리서치_v2_260722.html" target="_blank">SK텔레콤</a></td><td>017670</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/디케이티_리서치_v2_260722.html" target="_blank">디케이티</a></td><td>290550</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/가온전선_리서치_v2_260722.html" target="_blank">가온전선</a></td><td>000500</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/RF머트리얼즈_리서치_v2_260722.html" target="_blank">RF머트리얼즈</a></td><td>327260</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/로보티즈_리서치_v2_260722.html" target="_blank">로보티즈</a></td><td>108490</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/나노_리서치_v2_260722.html" target="_blank">나노</a></td><td>187790</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/SK이노베이션_리서치_v1_260722.html" target="_blank">SK이노베이션</a></td><td>096770</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/자이에스앤디_리서치_v1_260722.html" target="_blank">자이에스앤디</a></td><td>317400</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/GS건설_리서치_v1_260722.html" target="_blank">GS건설</a></td><td>006360</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/티에스이_리서치_v1_260722.html" target="_blank">티에스이</a></td><td>131290</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/타이거일렉_리서치_v1_260722.html" target="_blank">타이거일렉</a></td><td>219130</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/샘씨엔에스_리서치_v1_260722.html" target="_blank">샘씨엔에스</a></td><td>252990</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/메가터치_리서치_v1_260722.html" target="_blank">메가터치</a></td><td>446540</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/지엔씨에너지_리서치_v1_260722.html" target="_blank">지엔씨에너지</a></td><td>119850</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/SK이터닉스_리서치_v2_260722.html" target="_blank">SK이터닉스</a></td><td>475150</td></tr>
+<tr data-s><td>2026-07-22</td><td><a href="research/이엔에프테크놀로지_리서치_v1_260722.html" target="_blank">이엔에프테크놀로지</a></td><td>102710</td></tr>
+<tr data-s><td>2026-07-20</td><td><a href="research/한양이엔지_리서치_v1_260720.html" target="_blank">한양이엔지</a></td><td>045100</td></tr>
+<tr data-s><td>2026-07-15</td><td><a href="research/마키나락스_리서치_v1_260715.html" target="_blank">마키나락스</a></td><td>477850</td></tr>
+<tr data-s><td>2026-07-13</td><td><a href="research/신세계_리서치_v1_260713.html" target="_blank">신세계</a></td><td>004170</td></tr>
+</table></div>
+<h2 class="part" id="legacy">부록 · 산출물 아카이브 <small>수급html 루트 파일 스캔</small></h2>
+<div class="partdesc">맥 이관(2026-08-05) 전 Windows 시절 산출물은 파일명 속 날짜(월일)가 실제 제작일이다.</div>
+<details class="mon" open><summary>현역 · 맥 시절 (52)</summary><div class="day"><div class="tw"><table><tr><th>파일</th><th>크기</th><th>수정일</th></tr>
+<tr data-s><td>260809_오픈웨이트모델과_전문지능_정리.md</td><td>5KB</td><td>2026-08-09</td></tr>
+<tr data-s><td>260810_AI시장맵_클라우드_온프렘_오픈웨이트.html</td><td>25KB</td><td>2026-08-10</td></tr>
+<tr data-s><td>RRG_수급.html</td><td>162KB</td><td>2026-08-26</td></tr>
+<tr data-s><td>RRG_수급_종목.html</td><td>4,670KB</td><td>2026-08-27</td></tr>
+<tr data-s><td>RRG_알고리즘_검증.md</td><td>8KB</td><td>2026-08-26</td></tr>
+<tr data-s><td>RS_타임머신.html</td><td>4,281KB</td><td>2026-08-27</td></tr>
+<tr data-s><td>index.html</td><td>736KB</td><td>2026-08-27</td></tr>
+<tr data-s><td>osc_dashboard.html</td><td>1,373KB</td><td>2026-08-26</td></tr>
+<tr data-s><td>변동성_로테이션_트래커.html</td><td>275KB</td><td>2026-08-26</td></tr>
+<tr data-s><td>수급빈집.html</td><td>871KB</td><td>2026-08-26</td></tr>
+<tr data-s><td>이격도.html</td><td>43KB</td><td>2026-08-26</td></tr>
+<tr data-s><td>텔레그램_채널_아카이버_프롬프트.md</td><td>11KB</td><td>2026-08-20</td></tr>
+<tr data-s><td>동방메디컬_컨콜노트_20260812.md</td><td>4KB</td><td>2026-08-12</td></tr>
+<tr data-s><td>미국신고가_딥리서치_260810.html</td><td>48KB</td><td>2026-08-11</td></tr>
+<tr data-s><td>반도체ETF_수혜_0805.html</td><td>37KB</td><td>2026-08-05</td></tr>
+<tr data-s><td>반도체ETF_수혜_0806.html</td><td>37KB</td><td>2026-08-06</td></tr>
+<tr data-s><td>반도체ETF_수혜_0807.html</td><td>37KB</td><td>2026-08-07</td></tr>
+<tr data-s><td>반도체ETF_수혜_0810.html</td><td>37KB</td><td>2026-08-10</td></tr>
+<tr data-s><td>반도체ETF_수혜_0811.html</td><td>37KB</td><td>2026-08-11</td></tr>
+<tr data-s><td>반도체ETF_수혜_0812.html</td><td>38KB</td><td>2026-08-12</td></tr>
+<tr data-s><td>반도체ETF_수혜_0813.html</td><td>38KB</td><td>2026-08-13</td></tr>
+<tr data-s><td>반도체ETF_수혜_0814.html</td><td>38KB</td><td>2026-08-14</td></tr>
+<tr data-s><td>반도체ETF_수혜_0817.html</td><td>37KB</td><td>2026-08-17</td></tr>
+<tr data-s><td>반도체ETF_수혜_0818.html</td><td>37KB</td><td>2026-08-18</td></tr>
+<tr data-s><td>반도체ETF_수혜_0819.html</td><td>37KB</td><td>2026-08-19</td></tr>
+<tr data-s><td>반도체ETF_수혜_0820.html</td><td>37KB</td><td>2026-08-20</td></tr>
+<tr data-s><td>반도체ETF_수혜_0821.html</td><td>38KB</td><td>2026-08-21</td></tr>
+<tr data-s><td>반도체ETF_수혜_0824.html</td><td>37KB</td><td>2026-08-24</td></tr>
+<tr data-s><td>반도체ETF_수혜_0825.html</td><td>37KB</td><td>2026-08-25</td></tr>
+<tr data-s><td>반도체ETF_수혜_0826.html</td><td>38KB</td><td>2026-08-26</td></tr>
+<tr data-s><td>반도체ETF_수혜_0827.html</td><td>37KB</td><td>2026-08-27</td></tr>
+<tr data-s><td>수급빈집 0804.html</td><td>865KB</td><td>2026-08-05</td></tr>
+<tr data-s><td>수급빈집 0805.html</td><td>854KB</td><td>2026-08-06</td></tr>
+<tr data-s><td>수급빈집 0806.html</td><td>860KB</td><td>2026-08-06</td></tr>
+<tr data-s><td>수급빈집 0807.html</td><td>842KB</td><td>2026-08-07</td></tr>
+<tr data-s><td>수급빈집 0810.html</td><td>843KB</td><td>2026-08-10</td></tr>
+<tr data-s><td>수급빈집 0811.html</td><td>837KB</td><td>2026-08-11</td></tr>
+<tr data-s><td>수급빈집 0812.html</td><td>840KB</td><td>2026-08-12</td></tr>
+<tr data-s><td>수급빈집 0813.html</td><td>846KB</td><td>2026-08-13</td></tr>
+<tr data-s><td>수급빈집 0814.html</td><td>859KB</td><td>2026-08-17</td></tr>
+<tr data-s><td>수급빈집 0818.html</td><td>846KB</td><td>2026-08-18</td></tr>
+<tr data-s><td>수급빈집 0819.html</td><td>845KB</td><td>2026-08-19</td></tr>
+<tr data-s><td>수급빈집 0820.html</td><td>846KB</td><td>2026-08-20</td></tr>
+<tr data-s><td>수급빈집 0821.html</td><td>840KB</td><td>2026-08-21</td></tr>
+<tr data-s><td>수급빈집 0824.html</td><td>841KB</td><td>2026-08-24</td></tr>
+<tr data-s><td>수급빈집 0825.html</td><td>877KB</td><td>2026-08-25</td></tr>
+<tr data-s><td>수급빈집 0826.html</td><td>871KB</td><td>2026-08-26</td></tr>
+<tr data-s><td>이관진행.md</td><td>12KB</td><td>2026-08-06</td></tr>
+<tr data-s><td>주도주_수급.html</td><td>23KB</td><td>2026-08-27</td></tr>
+<tr data-s><td>주요품목 수출 대시보드 0811.html</td><td>3,305KB</td><td>2026-08-20</td></tr>
+<tr data-s><td>주요품목 수출 대시보드 0821.html</td><td>3,327KB</td><td>2026-08-24</td></tr>
+<tr data-s><td>지표_백테스트_YTD2026.html</td><td>70KB</td><td>2026-08-06</td></tr>
+</table></div></div></details>
+<details class="mon"><summary>Windows 시절 보존분 (136)</summary><div class="day"><div class="tw"><table><tr><th>파일</th><th>크기</th><th>수정일</th></tr>
+<tr data-s><td>0612 대한민국-체코 라인업.html</td><td>781KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>0612 대한민국-체코.html</td><td>10KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>0618 수급.html</td><td>296KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>0619 신고가, 수급.html</td><td>301KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>0622.html</td><td>287KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>0623 신고가,수급.html</td><td>306KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>0629.html</td><td>296KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>0702_신고가,거래량,수급.html</td><td>297KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>3중필터 0706.html</td><td>42KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>3중필터 0707.html</td><td>44KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>3중필터.html</td><td>44KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>ETF수급_공매도_0612.html</td><td>23KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>ETF수급_공매도_0624.html</td><td>23KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>ETF수급_후발수혜_0624.html</td><td>33KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>HL만도_수주잔고.html</td><td>19KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>KOSPI_섹터시총비중.html</td><td>343KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>KRX 수급 대시보드 0604.html</td><td>294KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>KRX 신고가, 거래량, 수급 0610.html</td><td>289KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>KRX 신고가,거래량,수급 0611.html</td><td>296KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>KRX 신고가,거래량,수급 0612.html</td><td>300KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>KRX 신고가,거래량,수급 0615.html</td><td>293KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>KRX 신고가,거래량,수급.html</td><td>298KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>KRX 신고가,수급 0605.html</td><td>293KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>KRX 신고가,수급 0608.html</td><td>294KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>KRX 신고가,수급 0609.html</td><td>293KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>README.md</td><td>3KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>SK_에코플랜트_합병_SOTP.html</td><td>16KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>SK_에코플랜트_합병_리포트.html</td><td>16KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>SK스퀘어_괴리율.html</td><td>57KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>SK에코플랜트_본질가치_계산기.html</td><td>15KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>SK에코플랜트_사업분석_0630.html</td><td>49KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>SK에코플랜트_합병비율_가치_0630.html</td><td>28KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>ai_breadth.html</td><td>450KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>cap이벤트_주가궤적_비교.html</td><td>12KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>cap흡수_deepdive.html</td><td>20KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>export_template.html</td><td>26KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>lineup_template.html</td><td>17KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>research_hub.html</td><td>11KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>로봇액추에이터_글로벌밸류체인.html</td><td>53KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>리밸런싱_트래커.html</td><td>17KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>바이오_딜모멘텀_0624.html</td><td>108KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>바이오_딜모멘텀_0625.html</td><td>108KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0612.html</td><td>39KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0615.html</td><td>39KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0616.html</td><td>39KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0617.html</td><td>39KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0618.html</td><td>39KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0619.html</td><td>39KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0620.html</td><td>39KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0622.html</td><td>39KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0623.html</td><td>39KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0624.html</td><td>38KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0625.html</td><td>38KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0626.html</td><td>39KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0629.html</td><td>38KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0630.html</td><td>38KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0701.html</td><td>39KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0702.html</td><td>38KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0703.html</td><td>38KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0706.html</td><td>38KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0707.html</td><td>39KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0708.html</td><td>39KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0709.html</td><td>38KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0710.html</td><td>39KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0713.html</td><td>39KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0714.html</td><td>38KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0715.html</td><td>38KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0716.html</td><td>38KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0717.html</td><td>38KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0720.html</td><td>38KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0721.html</td><td>38KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0722.html</td><td>38KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0723.html</td><td>37KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0724.html</td><td>37KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>반도체ETF_수혜강도.html</td><td>33KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>비중상회_연표_2018-2026.html</td><td>14KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>삼성전기_패시브CAP_프록시분석.html</td><td>28KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0616.html</td><td>869KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0617.html</td><td>858KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0618.html</td><td>869KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0619.html</td><td>854KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0622.html</td><td>861KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0623.html</td><td>839KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0624.html</td><td>839KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0625.html</td><td>848KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0626.html</td><td>846KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0629.html</td><td>882KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0630.html</td><td>887KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0701.html</td><td>883KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0702.html</td><td>882KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0703.html</td><td>864KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0706.html</td><td>838KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0707.html</td><td>841KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0708.html</td><td>833KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0709.html</td><td>844KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0710.html</td><td>868KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0713.html</td><td>862KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0714.html</td><td>856KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0715.html</td><td>866KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0716.html</td><td>844KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0720.html</td><td>830KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0721.html</td><td>833KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0722.html</td><td>845KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0723.html</td><td>842KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집 0724.html</td><td>843KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집_교집합 0630.html</td><td>139KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집_교집합 0706.html</td><td>66KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집_교집합 0707.html</td><td>63KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집_교집합 0708.html</td><td>48KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집_교집합 0709.html</td><td>64KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집_교집합 0710.html</td><td>97KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집_교집합 0714.html</td><td>75KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집_교집합 0715.html</td><td>87KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집_교집합 0716.html</td><td>66KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집_교집합 0720.html</td><td>40KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집_교집합 0721.html</td><td>50KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집_교집합 0722.html</td><td>69KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>수급빈집_교집합.html</td><td>69KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>순환매_역사사례.html</td><td>21KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>신고가,수급,거래량 0617.html</td><td>296KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>실적컨센 미리보기.html</td><td>20KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>에코프로머티_베어템플릿.html</td><td>12KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>일봉_5종목_cap비교.html</td><td>123KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>조이앤줄라이_체육대회.html</td><td>17KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>종목_매매판단_메커니즘.html</td><td>57KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>주도주_대시보드.html</td><td>76KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>주도주_주차별.html</td><td>36KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>주도주_흐름.html</td><td>399KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>주요섹터_시총비중_0625.html</td><td>97KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>주요품목 수출 대시보드 0611.html</td><td>3,070KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>주요품목 수출 대시보드 0621.html</td><td>2,786KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>주요품목 수출 대시보드 0711.html</td><td>3,306KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>증권리포트_정리봇_Claude셋업가이드.md</td><td>22KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>테마별_시총바스켓.html</td><td>97KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>투자판단을_위한_철학_매뉴얼.html</td><td>44KB</td><td>2026-07-27</td></tr>
+<tr data-s><td>하이닉스CapEx_에코플랜트_브리지_0630.html</td><td>34KB</td><td>2026-07-27</td></tr>
+</table></div></div></details>
+<div class="foot">이 책은 book_build.py(크론 #71)가 매일 08:10 · 22:10에 다시 엮는다 · 마지막 제본 2026-08-27 15:04 · 공자 &amp; Claude</div>
+</div><script>
+const q=document.getElementById('q');
+q.addEventListener('input',()=>{
+  const v=q.value.trim().toLowerCase();
+  document.querySelectorAll('[data-s]').forEach(el=>{
+    if(!v){el.classList.remove('hid');return}
+    el.classList.toggle('hid',!el.textContent.toLowerCase().includes(v));
+  });
+  document.querySelectorAll('details').forEach(d=>{if(v)d.open=true});
+});
+document.querySelectorAll('a.wl').forEach(a=>{a.addEventListener('click',()=>{
+  const t=document.querySelector(a.getAttribute('href'));
+  if(t&&t.tagName==='DETAILS')t.open=true;})});
+if(location.hash){const t=document.querySelector(location.hash);if(t&&t.tagName==='DETAILS')t.open=true}
+</script></body></html>

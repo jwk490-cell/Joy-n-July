@@ -379,6 +379,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     <button class="navitem" data-tab="leadflow">변동성 로테이션</button>
     <button class="navitem" data-tab="rstime">RS 타임머신</button>
     <button class="navitem" data-tab="backlog">수주잔고 <small>DART</small></button>
+    <button class="navitem" data-tab="worklog">작업 기록 <small>book</small></button>
     <div class="navgroup">Locked</div>
     <button class="navitem" data-tab="rrgsec">수급 로테이션 맵 (업종) <small>🔒</small></button>
     <button class="navitem" data-tab="rrgstk">수급 로테이션 맵 (종목) <small>🔒</small></button>
@@ -641,6 +642,10 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
 
     <section class="panel embed" id="tab-backlog">
       <iframe data-src="backlog.html" title="수주잔고 트래커"></iframe>
+    </section>
+
+    <section class="panel embed" id="tab-worklog">
+      <iframe data-src="book.html" title="작업 기록"></iframe>
     </section>
 
     <section class="panel embed lockp" id="tab-rrgsec" data-enc="locked/rrg.enc">
@@ -2069,7 +2074,7 @@ function openTab(tab){
   panel.classList.add('on');
   const f=panel.querySelector('iframe[data-src]');
   // 자주 갱신되는 대시보드는 10분 단위 캐시버스터를 붙여 낡은 페이지가 남지 않게 한다
-  const FRESH={backlog:1,basket7:1,supply:1};
+  const FRESH={backlog:1,basket7:1,supply:1,worklog:1};
   if(f&&!f.src){f.src=f.dataset.src+(FRESH[tab]?'?v='+Math.floor(Date.now()/6e5):'');}
   if(tab==='telegram')loadTG(false);
   if(tab==='home')homeStart();
