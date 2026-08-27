@@ -382,6 +382,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     <div class="navgroup">Locked</div>
     <button class="navitem" data-tab="rrgsec">수급 로테이션 맵 (업종) <small>🔒</small></button>
     <button class="navitem" data-tab="rrgstk">수급 로테이션 맵 (종목) <small>🔒</small></button>
+    <button class="navitem" data-tab="leaders">주도 섹터 · 주도주 <small>🔒</small></button>
     <button class="archhead" id="archHead" type="button" style="display:none"><span class="arr">▸</span> 보관 <span id="archCnt"></span></button>
     <div class="archlist" id="archList"></div>
     <button class="archmanage" id="archManage" type="button">⚙ 보관 관리</button>
@@ -668,6 +669,20 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
         </div>
       </div>
       <iframe title="수급 로테이션 맵 (종목)" style="display:none"></iframe>
+    </section>
+
+    <section class="panel embed lockp" id="tab-leaders" data-enc="locked/leaders.enc">
+      <div class="lockgate">
+        <div class="lockcard">
+          <div class="lockico">🔒</div>
+          <div class="locktitle">주도 섹터 · 주도주</div>
+          <div class="lockdesc">잠긴 콘텐츠입니다. 비밀번호를 입력하세요.</div>
+          <form class="lockform"><input type="password" class="lockpw" placeholder="비밀번호" autocomplete="current-password">
+          <button type="submit" class="lockbtn">열기</button></form>
+          <div class="lockmsg"></div>
+        </div>
+      </div>
+      <iframe title="주도 섹터 · 주도주" style="display:none"></iframe>
     </section>
 
     <section class="panel" id="tab-telegram">
@@ -2072,7 +2087,8 @@ function openTab(tab){
   if(tab==='term')termStart();
   if(tab==='ram')ramLoad();
   if(tab==='deepresearch')drLoad();
-  if(tab==='rrgsec'||tab==='rrgstk')lockInit(tab);
+  if(tab==='rrgsec'||tab==='rrgstk'||tab==='leaders')lockInit(tab);
+  if(window.rrOnTab)rrOnTab(tab);
   document.getElementById('nav').classList.remove('open');
   history.replaceState(null,'','#'+tab);
 }
@@ -2299,6 +2315,116 @@ async function homeTick(){
 function homeStart(){homeTick();clearInterval(homeTimer);homeTimer=setInterval(()=>{
   if(document.getElementById('tab-home').classList.contains('on'))homeTick();else clearInterval(homeTimer);},5000);}
 homeStart();
+</script>
+
+<!-- ── 수동 갱신 버튼 (전 탭 공통) — Worker 큐 → 맥 rl_refresh_poll.py가 즉시 실행 ── -->
+<div id="rlFab" style="display:none">
+  <button id="rrBtn" type="button">↻ 수동 갱신</button>
+  <span id="rrStat"></span>
+</div>
+<style>
+#rlFab{position:fixed;right:16px;bottom:16px;z-index:70;display:flex;align-items:center;gap:9px;
+  background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 8px 6px 14px;
+  box-shadow:var(--shadow);font-size:12px;color:var(--dim2);max-width:min(86vw,460px)}
+#rlFab #rrStat{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;order:-1}
+#rlFab #rrStat:empty{display:none}
+#rrBtn{border:1px solid var(--line);background:var(--hover);color:var(--text);font:inherit;font-size:12px;
+  font-weight:700;border-radius:999px;padding:6px 12px;cursor:pointer}
+#rrBtn:hover{filter:brightness(1.12)}
+@media(max-width:860px){#rlFab{right:10px;bottom:10px}}
+</style>
+<script>
+/* 갱신 요청은 매번 비밀번호 입력 — 서버(worker.js)가 해시 검증, 저장하지 않는다 */
+const RL_API=location.hostname==='research-lab.jwk490.workers.dev'?'':'https://research-lab.jwk490.workers.dev';
+const RR_TABS={
+  home:{m:'x'},
+  raoni:{m:'a',eta:'~1분'}, term:{m:'a',eta:'~1분'}, quote:{m:'a',eta:'~5분'},
+  weekly:{m:'x',note:'주간 일정은 텔레그램 취합+웹검증 수동 워크플로우 — Claude 세션에서 갱신'},
+  krwrap:{m:'a',eta:'~2분'}, uswrap:{m:'a',eta:'~2분'}, sector:{m:'a',eta:'~3분'}, disparity:{m:'a',eta:'~2분'},
+  supply:{m:'a',eta:'~7분'}, streak:{m:'a',eta:'~3분'}, krhigh:{m:'a',eta:'~10분'}, ushigh:{m:'a',eta:'~5분'},
+  rs:{m:'a',eta:'~5분'}, semietf:{m:'a',eta:'~2분'}, align:{m:'a',eta:'~15분'},
+  caps:{m:'a',eta:'~2분'}, gap:{m:'a',eta:'~2분'}, dd:{m:'a',eta:'~2분'}, ram:{m:'a',eta:'~2분'},
+  etfgap:{m:'l'}, basket7:{m:'a',eta:'~5분'}, semiexport:{m:'a',eta:'~2분'},
+  export:{m:'a',eta:'~1분 (신규 월 데이터는 엑셀 수동 반입)'}, corpexport:{m:'a',eta:'~3분'},
+  trade10:{m:'a',eta:'~3분'}, taiwan:{m:'a',eta:'~3분'}, chem:{m:'a',eta:'~1분'},
+  telegram:{m:'a',eta:'~2분'}, taerin:{m:'a',eta:'~2분'}, thememap:{m:'a',eta:'~3분'},
+  deepresearch:{m:'x',note:'심층 리서치는 Claude 세션에서 발행합니다'},
+  leadflow:{m:'a',eta:'~5분'}, rstime:{m:'a',eta:'~10분'},
+  backlog:{m:'a',eta:'수십 분 (DART 전수 재추출)'}, rrgsec:{m:'a',eta:'~7분'}, rrgstk:{m:'a',eta:'~7분'}
+};
+let rrTab='home',rrKey=null,rrTimer=null;
+function rrCfg(t){return RR_TABS[t]||{m:'a',eta:'~수 분'};}
+function rrFmt(ts){return new Date(ts).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});}
+function rrOnTab(tab){rrTab=tab;clearInterval(rrTimer);rrRender(null);}
+async function rrCall(path,payload,key){
+  const r=await fetch(RL_API+path,{method:payload?'POST':'GET',
+    headers:{'X-RL-Key':key,...(payload?{'Content-Type':'application/json'}:{})},
+    body:payload?JSON.stringify(payload):undefined});
+  if(r.status===401)throw new Error('unauthorized');
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  return r.json();
+}
+async function rrClick(){
+  const cfg=rrCfg(rrTab);
+  if(cfg.m==='l'){alert('이 탭은 실시간 자동 갱신됩니다.');return;}
+  if(cfg.m==='x'){alert(cfg.note||'수동 취합 탭입니다.');return;}
+  const pw=prompt('갱신 비밀번호 (매번 입력)');
+  if(!pw)return;
+  try{
+    const res=await rrCall('/api/refresh',{tab:rrTab},pw);
+    rrKey=pw;rrRender(res.job);rrPoll();
+  }catch(e){alert(e.message==='unauthorized'?'비밀번호가 올바르지 않습니다.':'요청 실패: '+e.message);}
+}
+function rrPoll(){
+  clearInterval(rrTimer);
+  const tab=rrTab;
+  rrTimer=setInterval(async()=>{
+    if(rrTab!==tab){clearInterval(rrTimer);return;}
+    try{
+      const res=await rrCall('/api/refresh/status?tab='+tab,null,rrKey);
+      rrRender(res.job);
+      if(res.job&&['done','failed','skipped'].includes(res.job.status)){
+        clearInterval(rrTimer);
+        if(res.job.status==='done')rrDone(tab);
+      }
+    }catch(e){clearInterval(rrTimer);}
+  },6000);
+}
+function rrDone(tab){
+  // git push 후 사이트 재빌드에 ~1분 — 75초 카운트다운 뒤 자동 새로고침
+  let left=75;const st=document.getElementById('rrStat');
+  const cd=setInterval(()=>{
+    if(rrTab!==tab){clearInterval(cd);return;}
+    left--;
+    st.innerHTML='갱신 완료 — <u style="cursor:pointer" id="rrNow">지금 새로고침</u> ('+left+'초 후 자동)';
+    const n=document.getElementById('rrNow');if(n)n.onclick=()=>{clearInterval(cd);rrReload(tab);};
+    if(left<=0){clearInterval(cd);rrReload(tab);}
+  },1000);
+}
+function rrReload(tab){
+  const panel=document.getElementById('tab-'+tab);
+  const f=panel&&panel.querySelector('iframe[data-src]');
+  if(f){f.src=f.dataset.src+'?v='+Date.now();rrRender(null);}
+  else location.reload();
+}
+function rrRender(job){
+  const cfg=rrCfg(rrTab),box=document.getElementById('rlFab'),
+        st=document.getElementById('rrStat'),btn=document.getElementById('rrBtn');
+  if(rrTab==='home'){box.style.display='none';return;}
+  box.style.display='flex';btn.style.display='';
+  if(cfg.m==='l'){btn.style.display='none';st.textContent='실시간 자동 갱신 탭';return;}
+  if(cfg.m==='x'){btn.style.display='none';st.textContent='수동 취합 탭';return;}
+  if(!job){st.textContent='';return;}
+  if(job.status==='queued')st.textContent='대기 중 — 1분 내 시작';
+  else if(job.status==='running')st.textContent='갱신 중 '+(cfg.eta||'')+' — '+rrFmt(job.started_at||job.requested_at)+' 시작';
+  else if(job.status==='failed'){
+    st.innerHTML='<span style="color:var(--down);cursor:pointer" id="rrErr">갱신 실패 — 로그 보기</span>';
+    const e2=document.getElementById('rrErr');if(e2)e2.onclick=()=>alert(job.note||'로그 없음');
+  }else if(job.status==='skipped')st.textContent='자동 갱신 체인이 없는 탭';
+  else if(job.status==='done')st.textContent='갱신 완료 '+rrFmt(job.finished_at)+(job.note?' — '+job.note:'');
+}
+document.getElementById('rrBtn').addEventListener('click',rrClick);
+rrOnTab(location.hash?location.hash.slice(1):'home');
 </script>
 </body>
 </html>
