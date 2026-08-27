@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="ko" class="ht-kretfalign"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>韓 ETF 정배열 트래커</title>
+<style>
+:root{--bg:#0f1115;--panel:#171a21;--panel2:#1e222b;--ink:#e9ecf1;--sub:#a4adbd;--line:#2a2f3a;
+--gold:#e6b93f;--teal:#5db4a4;--red:#e0606a;--green:#5cbf8a;--blue:#5a9bd8;--purple:#a98fd6;}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);
+font-family:'Pretendard','Malgun Gothic',-apple-system,sans-serif;letter-spacing:-.01em}
+.wrap{max-width:1180px;margin:0 auto;padding:24px}
+h1{font-size:25px;font-weight:800;margin:0 0 4px}
+h2{font-size:17px;font-weight:800;margin:30px 0 10px}
+.sub{color:var(--sub);font-size:14px;margin-bottom:6px}
+.meta{color:var(--sub);font-size:12.5px}.meta b{color:var(--ink)}
+.formula{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);
+border-radius:10px;padding:13px 16px;font-size:13px;color:var(--sub);margin:14px 0 20px;line-height:1.7}
+.formula b{color:var(--ink)}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 20px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 20px;min-width:150px}
+.stat .lbl{font-size:12px;color:var(--sub);margin-bottom:4px}
+.stat .val{font-size:24px;font-weight:800}
+.stat .val small{font-size:13px;color:var(--sub);font-weight:600}
+.mcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:8px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--sub);margin-top:8px}
+.legend i{display:inline-block;width:14px;height:0;border-top-width:2px;border-top-style:solid;vertical-align:middle;margin-right:5px}
+canvas{display:block;width:100%}
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+th{font-size:11px;color:var(--sub);text-align:right;padding:9px 10px;border-bottom:1px solid var(--line);font-weight:700;white-space:nowrap}
+td{font-size:12.5px;text-align:right;padding:8px 10px;border-bottom:1px solid #20242e;white-space:nowrap;font-variant-numeric:tabular-nums}
+th:nth-child(1),td:nth-child(1){text-align:center;width:34px;color:var(--sub)}
+th:nth-child(2),td:nth-child(2){text-align:left}
+tr:last-child td{border-bottom:0}
+tr:hover td{background:rgba(255,255,255,.03)}
+.tk{font-weight:800}.nm{color:var(--sub);font-size:11px;margin-left:7px;font-weight:500}
+.days b{font-size:13px}
+.bar{display:inline-block;height:7px;border-radius:4px;background:linear-gradient(90deg,var(--gold),#f0d27a);vertical-align:1px;margin-left:8px}
+.bar.t2{background:linear-gradient(90deg,var(--blue),#8fc1ec)}
+.pos{color:var(--red)}.neg{color:var(--blue)}
+.new{font-size:10px;font-weight:800;color:#1a1b20;background:var(--gold);border-radius:5px;padding:1.5px 5px;margin-left:7px;vertical-align:1px}
+.fire{margin-left:6px;font-size:11px}
+.empty{background:var(--panel);border:1px dashed var(--line);border-radius:14px;padding:26px;text-align:center;color:var(--sub);font-size:13px}
+.foot{color:var(--sub);font-size:11.5px;margin-top:26px;border-top:1px solid var(--line);padding-top:14px;line-height:1.7}
+@media(max-width:720px){.nm{display:none}.hidemb{display:none}}
+</style><link rel="stylesheet" href="hub-theme.css"></head><body><div class="wrap">
+<h1>韓 ETF 정배열 트래커</h1>
+<div class="sub">국내 섹터·테마 ETF의 이동평균 정배열 진입·유지 현황 — 추세의 '구조'가 완성된 곳을 찾는다</div>
+<div class="meta" id="meta"></div>
+<div class="formula">📐 <b>완전 정배열 = 현재가 &gt; 4주 &gt; 13주 &gt; 26주 &gt; 52주</b> · <b>이평 정배열 = 4주 &gt; 13주 &gt; 26주 &gt; 52주</b> (가격이 4주선 아래로 눌려도 이평 구조는 유지)<br>
+4주=<b>20일</b> · 13주=<b>65일</b> · 26주=<b>130일</b> · 52주=<b>260일</b> 단순이동평균(SMA, 분배금 수정종가) · 유지일은 조건 연속 충족 <b>거래일</b> 수.
+완전 정배열 신규 진입(NEW)과 장기 유지 종목의 눌림(이평 정배열엔 있는데 완전 정배열엔 없는 ETF)을 함께 본다.</div>
+
+<div class="stats" id="stats"></div>
+
+<div class="mcard"><div style="font-size:14px;font-weight:800;margin-bottom:8px">정배열 ETF 개수 추이 <span style="font-size:11.5px;color:var(--sub);font-weight:600">최근 1년 · 브레드스</span></div>
+<canvas id="bchart" height="260"></canvas>
+<div class="legend"><span><i style="border-top-color:var(--gold)"></i>완전 정배열</span><span><i style="border-top-color:var(--blue)"></i>이평 정배열</span></div></div>
+
+<h2>🔥 완전 정배열 <span style="color:var(--sub);font-size:12.5px;font-weight:600">현재가 &gt; 4주 &gt; 13주 &gt; 26주 &gt; 52주 · 시작일 오랜 순</span></h2>
+<div id="tblFull"></div>
+
+<h2>📈 이평 정배열 <span style="color:var(--sub);font-size:12.5px;font-weight:600">4주 &gt; 13주 &gt; 26주 &gt; 52주 · 🔥=완전 정배열 동시 충족</span></h2>
+<div id="tblMa"></div>
+
+<div class="foot" id="foot"></div>
+</div>
+<script>
+const D = {"asof":"2026-08-27","fetched_at":"2026-08-27 11:57","total":46,"rows":[{"tk":"091160","nm":"KODEX 반도체","px":127975,"chg":2.63,"g4":7.9,"g52":39.9,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"396500","nm":"TIGER 반도체TOP10","px":36070,"chg":2.49,"g4":7.5,"g52":26.0,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"305720","nm":"KODEX 2차전지산업","px":15130,"chg":5.8,"g4":8.9,"g52":-2.7,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"364980","nm":"TIGER 2차전지TOP10","px":10635,"chg":6.46,"g4":10.5,"g52":5.9,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"091180","nm":"KODEX 자동차","px":28050,"chg":-1.94,"g4":-3.5,"g52":2.0,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"466930","nm":"SOL 자동차TOP3플러스","px":25505,"chg":-1.43,"g4":-2.5,"g52":25.0,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"091170","nm":"KODEX 은행","px":16215,"chg":0.97,"g4":2.1,"g52":18.2,"full":{"since":"2026-08-25","days":3},"ma":{"since":"2026-07-15","days":30}},{"tk":"466940","nm":"TIGER 은행고배당플러스TOP10","px":26500,"chg":1.05,"g4":2.0,"g52":15.7,"full":{"since":"2026-08-25","days":3},"ma":{"since":"2026-08-25","days":3}},{"tk":"102970","nm":"KODEX 증권","px":18570,"chg":0.27,"g4":-0.5,"g52":-5.9,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"140700","nm":"KODEX 보험","px":21280,"chg":-0.86,"g4":8.0,"g52":41.7,"full":{"since":"2026-08-26","days":2},"ma":{"since":"2026-08-26","days":2}},{"tk":"117680","nm":"KODEX 철강","px":13070,"chg":2.71,"g4":9.6,"g52":0.0,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"117460","nm":"KODEX 에너지화학","px":13555,"chg":0.74,"g4":1.2,"g52":-3.0,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"117700","nm":"KODEX 건설","px":7220,"chg":1.26,"g4":11.8,"g52":26.5,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"102960","nm":"KODEX 기계장비","px":14135,"chg":3.82,"g4":5.9,"g52":-5.1,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"466920","nm":"SOL 조선TOP3플러스","px":28450,"chg":1.37,"g4":-0.5,"g52":-16.7,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"494670","nm":"TIGER 조선TOP10","px":22525,"chg":1.15,"g4":-0.2,"g52":-16.3,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"449450","nm":"PLUS K방산","px":55155,"chg":2.8,"g4":1.1,"g52":-9.6,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"463250","nm":"TIGER K방산&우주","px":35537,"chg":3.07,"g4":1.2,"g52":-4.0,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"434730","nm":"HANARO 원자력iSelect","px":62037,"chg":3.52,"g4":10.4,"g52":8.7,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"433500","nm":"ACE 원자력TOP10","px":59470,"chg":0.35,"g4":13.8,"g52":13.1,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"445290","nm":"KODEX 로봇액티브","px":30950,"chg":0.65,"g4":0.6,"g52":7.8,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"469070","nm":"RISE AI&로봇","px":11245,"chg":0.36,"g4":-1.1,"g52":-13.6,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"139260","nm":"TIGER 200 IT","px":137835,"chg":3.03,"g4":7.0,"g52":55.6,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"266370","nm":"KODEX IT","px":68290,"chg":3.07,"g4":8.4,"g52":50.1,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"157490","nm":"TIGER 소프트웨어","px":8505,"chg":-0.18,"g4":-0.8,"g52":-8.0,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"365000","nm":"TIGER 인터넷TOP10","px":3720,"chg":0.95,"g4":-0.7,"g52":-18.7,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"300950","nm":"KODEX 게임산업","px":5505,"chg":-1.43,"g4":-2.7,"g52":-13.6,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"364990","nm":"TIGER 게임TOP10","px":4740,"chg":-1.46,"g4":-3.1,"g52":-11.2,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"228810","nm":"TIGER 미디어컨텐츠","px":3105,"chg":-0.8,"g4":-3.1,"g52":-40.3,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"395290","nm":"HANARO Fn K-POP&미디어","px":4945,"chg":-0.5,"g4":-1.5,"g52":-36.0,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"228800","nm":"TIGER 여행레저","px":2682,"chg":-0.67,"g4":3.9,"g52":-17.3,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"388280","nm":"RISE K엔터&여행레저","px":7105,"chg":-0.7,"g4":-0.4,"g52":-8.1,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"228790","nm":"TIGER 화장품","px":4750,"chg":-1.86,"g4":10.3,"g52":28.8,"full":{"since":"2026-08-14","days":9},"ma":{"since":"2026-08-14","days":9}},{"tk":"0008T0","nm":"SOL 화장품TOP3플러스","px":19250,"chg":-2.51,"g4":13.4,"g52":34.9,"full":{"since":"2026-08-24","days":4},"ma":{"since":"2026-08-24","days":4}},{"tk":"244580","nm":"KODEX 바이오","px":8600,"chg":-0.41,"g4":0.6,"g52":-21.8,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"364970","nm":"TIGER 바이오TOP10","px":7680,"chg":-0.32,"g4":1.6,"g52":-4.8,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"261070","nm":"TIGER 코스닥150바이오테크","px":13090,"chg":-0.23,"g4":0.8,"g52":-22.2,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"143860","nm":"TIGER 헬스케어","px":39410,"chg":-0.29,"g4":1.4,"g52":-11.9,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"266420","nm":"KODEX 헬스케어","px":17910,"chg":-0.72,"g4":1.5,"g52":-11.7,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"266410","nm":"KODEX 필수소비재","px":10255,"chg":-0.82,"g4":5.6,"g52":16.4,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"140710","nm":"KODEX 운송","px":6550,"chg":0.15,"g4":2.6,"g52":5.3,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"329200","nm":"TIGER 리츠부동산인프라","px":4067,"chg":-0.8,"g4":-0.2,"g52":-2.5,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"385510","nm":"KODEX 신재생에너지액티브","px":40105,"chg":3.3,"g4":9.2,"g52":11.0,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"367770","nm":"RISE 수소경제테마","px":23460,"chg":2.11,"g4":4.4,"g52":8.7,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"457990","nm":"PLUS 태양광&ESS","px":39115,"chg":3.02,"g4":8.0,"g52":33.4,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}},{"tk":"381560","nm":"HANARO Fn전기&수소차","px":17805,"chg":1.89,"g4":3.6,"g52":-117.0,"full":{"since":null,"days":0},"ma":{"since":null,"days":0}}],"breadth":{"dates":["20250819","20250820","20250821","20250822","20250825","20250826","20250827","20250828","20250829","20250901","20250902","20250903","20250904","20250905","20250908","20250909","20250910","20250911","20250912","20250915","20250916","20250917","20250918","20250919","20250922","20250923","20250924","20250925","20250926","20250929","20250930","20251001","20251002","20251010","20251013","20251014","20251015","20251016","20251017","20251020","20251021","20251022","20251023","20251024","20251027","20251028","20251029","20251030","20251031","20251103","20251104","20251105","20251106","20251107","20251110","20251111","20251112","20251113","20251114","20251117","20251118","20251119","20251120","20251121","20251124","20251125","20251126","20251127","20251128","20251201","20251202","20251203","20251204","20251205","20251208","20251209","20251210","20251211","20251212","20251215","20251216","20251217","20251218","20251219","20251222","20251223","20251224","20251226","20251229","20251230","20260102","20260105","20260106","20260107","20260108","20260109","20260112","20260113","20260114","20260115","20260116","20260119","20260120","20260121","20260122","20260123","20260126","20260127","20260128","20260129","20260130","20260202","20260203","20260204","20260205","20260206","20260209","20260210","20260211","20260212","20260213","20260219","20260220","20260223","20260224","20260225","20260226","20260227","20260303","20260304","20260305","20260306","20260309","20260310","20260311","20260312","20260313","20260316","20260317","20260318","20260319","20260320","20260323","20260324","20260325","20260326","20260327","20260330","20260331","20260401","20260402","20260403","20260406","20260407","20260408","20260409","20260410","20260413","20260414","20260415","20260416","20260417","20260420","20260421","20260422","20260423","20260424","20260427","20260428","20260429","20260430","20260504","20260506","20260507","20260508","20260511","20260512","20260513","20260514","20260515","20260518","20260519","20260520","20260521","20260522","20260526","20260527","20260528","20260529","20260601","20260602","20260604","20260605","20260608","20260609","20260610","20260611","20260612","20260615","20260616","20260617","20260618","20260619","20260622","20260623","20260624","20260625","20260626","20260629","20260630","20260701","20260702","20260703","20260706","20260707","20260708","20260709","20260710","20260713","20260714","20260715","20260716","20260720","20260721","20260722","20260723","20260724","20260727","20260728","20260729","20260730","20260731","20260803","20260804","20260805","20260806","20260807","20260810","20260811","20260812","20260813","20260814","20260818","20260819","20260820","20260821","20260824","20260825","20260826","20260827"],"full":[6,7,9,8,18,17,14,16,16,7,14,17,19,20,22,25,23,22,22,21,22,22,24,22,25,24,23,20,9,15,15,15,19,20,16,14,17,17,16,21,22,25,23,24,30,29,29,27,26,27,29,26,25,19,25,23,26,27,13,17,8,9,9,6,6,4,10,12,14,12,18,22,20,22,23,24,21,21,24,23,11,15,4,9,17,14,13,11,16,15,15,22,23,21,18,18,21,22,22,20,22,24,28,24,26,30,30,32,33,34,32,26,34,34,30,20,29,27,31,30,28,35,36,37,37,38,38,38,31,0,15,17,8,14,17,18,15,13,14,22,13,16,4,10,18,11,15,8,5,12,10,10,11,10,22,22,23,23,23,22,22,22,24,24,24,24,24,24,24,25,24,25,25,24,25,25,21,19,19,11,10,6,6,10,10,12,11,8,10,10,9,11,9,3,8,4,5,7,11,10,10,7,7,5,2,3,4,4,4,3,4,1,1,0,1,0,2,2,1,0,1,2,1,2,2,4,3,3,0,0,0,0,0,0,0,3,2,2,1,0,1,2,2,1,1,1,2,4,5,5],"ma":[30,30,31,30,30,29,29,30,30,29,29,28,28,28,27,27,24,23,23,24,24,25,26,27,28,29,29,29,31,31,33,32,31,31,32,31,30,29,29,28,28,30,30,29,30,30,30,30,30,30,31,31,31,31,31,32,31,31,31,31,32,32,31,31,31,29,29,29,30,30,30,29,30,29,29,29,28,28,28,26,26,26,26,27,27,28,28,28,28,28,27,26,26,25,24,24,25,25,25,23,24,27,29,29,31,31,31,33,33,34,35,36,37,37,37,37,37,37,38,38,38,38,38,38,38,38,38,38,38,37,37,37,37,37,37,37,37,36,36,36,36,36,36,36,36,33,33,30,30,30,29,27,26,25,24,24,23,23,23,22,22,22,24,24,24,24,24,24,24,26,26,26,27,28,30,30,30,31,32,32,31,31,30,29,29,28,27,26,26,26,26,27,27,27,25,21,18,16,15,13,14,14,12,12,11,10,10,10,10,10,10,10,9,8,8,8,10,10,9,8,8,7,6,7,7,6,5,4,4,4,4,4,4,3,2,3,2,2,2,2,1,2,2,2,2,2,3,4,5,5],"total":[44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46]}};
+const fmtD=s=>s.replace(/-/g,'.');
+const rowsFull=D.rows.filter(r=>r.full.days>0).sort((a,b)=>b.full.days-a.full.days||a.nm.localeCompare(b.nm));
+const rowsMa=D.rows.filter(r=>r.ma.days>0).sort((a,b)=>b.ma.days-a.ma.days||a.nm.localeCompare(b.nm));
+document.getElementById('meta').innerHTML=`기준일 <b>${fmtD(D.asof)}</b> (한국 종가) · 갱신 ${D.fetched_at} KST · 분석 유니버스 <b>${D.total}</b>개 ETF`;
+document.getElementById('stats').innerHTML=`
+  <div class="stat"><div class="lbl">🔥 완전 정배열</div><div class="val" style="color:var(--gold)">${rowsFull.length}<small> / ${D.total}</small></div></div>
+  <div class="stat"><div class="lbl">📈 이평 정배열</div><div class="val" style="color:var(--blue)">${rowsMa.length}<small> / ${D.total}</small></div></div>
+  <div class="stat"><div class="lbl">오늘 신규 완전 정배열</div><div class="val">${rowsFull.filter(r=>r.full.days===1).length}<small> 개</small></div></div>
+  <div class="stat"><div class="lbl">눌림 (이평O · 완전X)</div><div class="val">${rowsMa.filter(r=>!r.full.days).length}<small> 개</small></div></div>`;
+const chg=v=>`<span class="${v>0?'pos':v<0?'neg':''}">${v>0?'+':''}${v.toFixed(2)}%</span>`;
+const gap=v=>`<span class="${v>0?'pos':v<0?'neg':''}">${v>0?'+':''}${v.toFixed(1)}%</span>`;
+function tbl(rows,key){
+  if(!rows.length)return '<div class="empty">현재 조건을 충족하는 ETF가 없습니다</div>';
+  const mx=Math.max(...rows.map(r=>r[key].days));
+  return `<table><thead><tr><th>#</th><th style="text-align:left">ETF</th><th>시작일</th><th style="text-align:left;padding-left:14px">유지</th><th class="hidemb">현재가</th><th>전일比</th><th class="hidemb">vs 4주</th><th class="hidemb">vs 52주</th></tr></thead><tbody>`+
+  rows.map((r,i)=>{
+    const s=r[key];
+    const w=Math.max(3,Math.round(90*s.days/mx));
+    return `<tr><td>${i+1}</td>
+    <td><span class="tk">${r.nm}</span><span class="nm">${r.tk}</span>${s.days<=2?'<span class="new">NEW</span>':''}${key==='ma'&&r.full.days?'<span class="fire">🔥</span>':''}</td>
+    <td>${fmtD(s.since)}</td>
+    <td style="text-align:left;padding-left:14px" class="days"><b>${s.days}</b>일<span class="bar${key==='ma'?' t2':''}" style="width:${w}px"></span></td>
+    <td class="hidemb">${r.px.toLocaleString()}원</td><td>${chg(r.chg)}</td>
+    <td class="hidemb">${gap(r.g4)}</td><td class="hidemb">${gap(r.g52)}</td></tr>`;}).join('')+'</tbody></table>';
+}
+document.getElementById('tblFull').innerHTML=tbl(rowsFull,'full');
+document.getElementById('tblMa').innerHTML=tbl(rowsMa,'ma');
+document.getElementById('foot').innerHTML=`유니버스: 국내 상장 섹터·테마 ETF ${D.total}종 (해외지수·레버리지·인버스·채권·배당전략 제외) · 데이터: Yahoo Finance 일봉(분배금 수정종가) · 매 거래일 마감 후 자동 갱신<br>
+이동평균은 주봉이 아닌 일봉 환산(4주=20일 · 13주=65일 · 26주=130일 · 52주=260일 SMA)으로 계산. 유지일은 말일까지 조건이 끊기지 않고 연속 충족된 거래일 수. 현재가는 분배금 수정종가라 실제 종가와 다를 수 있음. 투자 판단의 참고 자료일 뿐 특정 종목의 매수·매도 추천이 아닙니다.`;
+
+// ── 브레드스 차트 (숨김 로드 대비: 폭 0이면 보일 때까지 재시도 + 리사이즈 재그리기) ──
+function drawBreadth(){
+  const cv=document.getElementById('bchart'),B=D.breadth,n=B.dates.length;if(!n)return;
+  const dpr=window.devicePixelRatio||1,W=cv.clientWidth,H=260,P={l:40,r:14,t:12,b:22};
+  if(!W){setTimeout(drawBreadth,400);return;}
+  cv.width=W*dpr;cv.height=H*dpr;const x=cv.getContext('2d');x.scale(dpr,dpr);
+  const IW=W-P.l-P.r,IH=H-P.t-P.b;
+  const hi=Math.max(...B.ma,...B.full)+4;
+  const px=i=>P.l+IW*i/(n-1),py=v=>P.t+IH*(1-v/hi);
+  x.strokeStyle='#2a2f3a';x.fillStyle='#a4adbd';x.font='10.5px Pretendard,sans-serif';x.textAlign='right';
+  for(let g=0;g<=4;g++){const v=Math.round(hi*g/4),y=py(v);
+    x.beginPath();x.moveTo(P.l,y);x.lineTo(W-P.r,y);x.stroke();x.fillText(v,P.l-6,y+3.5);}
+  x.textAlign='center';
+  let lastM='';for(let i=0;i<n;i++){const m=B.dates[i].slice(0,6);
+    if(m!==lastM&&i>4){x.fillText(m.slice(2,4)+'.'+m.slice(4),px(i),H-6);lastM=m;}else if(!lastM)lastM=m;}
+  function line(arr,col,fill){
+    if(fill){x.beginPath();x.moveTo(px(0),py(arr[0]));
+      for(let i=1;i<n;i++)x.lineTo(px(i),py(arr[i]));
+      x.lineTo(px(n-1),py(0));x.lineTo(px(0),py(0));x.closePath();
+      x.fillStyle=fill;x.fill();}
+    x.beginPath();x.moveTo(px(0),py(arr[0]));
+    for(let i=1;i<n;i++)x.lineTo(px(i),py(arr[i]));
+    x.strokeStyle=col;x.lineWidth=1.8;x.stroke();}
+  line(B.ma,'#5a9bd8');
+  line(B.full,'#e6b93f','rgba(230,185,63,.10)');
+}
+drawBreadth();
+let rsT;window.addEventListener('resize',()=>{clearTimeout(rsT);rsT=setTimeout(drawBreadth,200);});
+</script></body></html>
