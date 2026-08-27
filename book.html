@@ -90,14 +90,14 @@ mark{background:rgba(224,160,48,.35);color:inherit;border-radius:3px}
   5분마다 변화를 감지해 스스로 다시 제본된다. (2026-06-11 개장 이후)</div>
   <div class="stats">
     <div class="stat"><b>78</b><span>기록된 날</span></div>
-    <div class="stat"><b>16,901</b><span>총 커밋 (자동 발행 포함)</span></div>
+    <div class="stat"><b>16,905</b><span>총 커밋 (자동 발행 포함)</span></div>
     <div class="stat"><b>124</b><span>작업 항목</span></div>
     <div class="stat"><b>39</b><span>허브 탭</span></div>
     <div class="stat"><b>54/57</b><span>가동 봇</span></div>
     <div class="stat"><b>39</b><span>기록 챕터</span></div>
     <div class="stat"><b>42</b><span>심층 리서치</span></div>
     <div class="stat"><b>405</b><span>수록 소스 파일</span></div>
-    <div class="stat"><b>64,935</b><span>코드 라인</span></div>
+    <div class="stat"><b>64,937</b><span>코드 라인</span></div>
   </div>
 </div>
 <div class="topnav">
@@ -847,8 +847,8 @@ Content-Type: application/json
 </ul></div></details>
 <h2 class="part" id="chron">제4부 · 연대기 <small>site 저장소 전체 히스토리 — 매일 자동 누적</small></h2>
 <div class="partdesc">사람 손으로 만든 작업은 전부 펼치고, 봇의 자동 발행은 건수로 접었다. 최신이 위.</div>
-<details class="mon" open><summary>2026년 08월<small>작업 45건 · 자동 발행 8,533건</small></summary>
-<div class="day" data-s><div class="dh">2026-08-27 (목)<small>자동 발행 233건</small></div>
+<details class="mon" open><summary>2026년 08월<small>작업 45건 · 자동 발행 8,537건</small></summary>
+<div class="day" data-s><div class="dh">2026-08-27 (목)<small>자동 발행 237건</small></div>
 <ul>
 <li>supply: 시총대비 순매수 섹터 맵 추가 — 비율 상위100 treemap(크기·색=비율, 블록=종목 수), 공통 표 1열 폭 정렬</li>
 <li>작업기록 북 창간 — 전 산출물을 한 권으로 제본하는 book.html + 허브 '작업 기록' 탭 (book_build.py, 크론 #71 매일 08:10·22:10 자동 누적)</li>
@@ -3509,7 +3509,7 @@ def blocked(token, owner, msg, bot=""):
     _save(st)
     return True
 </pre></details>
-<details class="src" data-s><summary><b>build.py</b><span class="d"></span><span class="t">841줄 · 42KB · 2026-08-27</span></summary><pre># -*- coding: utf-8 -*-
+<details class="src" data-s><summary><b>build.py</b><span class="d"></span><span class="t">843줄 · 42KB · 2026-08-27</span></summary><pre># -*- coding: utf-8 -*-
 """
 raw_cache.json -&gt; index.html (3섹션 탭 대시보드)
   1) 투자자별 순매수 랭킹 (외국인/사모/연금/투신 × 코스피/코스닥/전체 × 1/5/10/30/60거래일)
@@ -3755,7 +3755,7 @@ def main():
                     mp[side] = [{"c": r["c"], "n": r["n"], "r": r["r"], "v": r["v"],
                                  "g": r["sg"], "ch": r["ch"]} for r in b]
                 blk["맵"][inv] = mp
-            # 공통: 조합 주체 전원이 같은 방향
+            # 공통: 조합 주체 전원이 같은 방향 — 표시 열은 등락률·시총·섹터(비율 열 제거, 2026-08-27)
             for key, invs in COMBOS.items():
                 comm_buy, comm_sell = [], []
                 for c, s in pool:
@@ -3763,12 +3763,13 @@ def main():
                     if any(v is None for v in vs): continue
                     rs = [v[1] for v in vs]
                     row = {"c": c, "n": s["name"], "m": MK_SHORT[s["market"]],
-                           "rs": [round(x, 3) for x in rs], "s": round(sum(rs), 3)}
+                           "ch": s["ch"], "mc": s["mc"], "sg": s["grp"], "_s": sum(rs)}
                     if all(x &gt; 0 for x in rs): comm_buy.append(row)
                     elif all(x &lt; 0 for x in rs): comm_sell.append(row)
-                comm_buy.sort(key=lambda r: r["s"], reverse=True)
-                comm_sell.sort(key=lambda r: r["s"])
-                blk["공통"][key] = {"순매수": comm_buy[:TOP2], "순매도": comm_sell[:TOP2]}
+                comm_buy.sort(key=lambda r: r["_s"], reverse=True)
+                comm_sell.sort(key=lambda r: r["_s"])
+                strip = lambda rows: [{k: v for k, v in r.items() if k != "_s"} for r in rows]
+                blk["공통"][key] = {"순매수": strip(comm_buy[:TOP2]), "순매도": strip(comm_sell[:TOP2])}
             sec2[market][str(N)] = blk
 
     # ---------- 당일(1거래일) 4주체 공통 순매수/순매도 (시장별) ----------
@@ -4020,6 +4021,7 @@ const COMBO_KEY={"사모+투신":"st","사모+투신+연금":"stp","사모+투�
 let s5 = {mkt: "코스피", sort: "비율"};
 
 const fmtNet=v=&gt;{const a=Math.abs(v);return (v&lt;0?"-":"")+a.toLocaleString("ko-KR")+"억";};
+const fmtCap=v=&gt;v&gt;=10000?(v/10000).toFixed(1).replace(/\.0$/,"")+"조":v.toLocaleString("ko-KR")+"억";
 const fmtRat=r=&gt;(r&gt;=0?"+":"")+r.toFixed(2)+"%";
 const fmtPct=p=&gt;(p&gt;=0?"+":"")+p.toFixed(2)+"%";
 const fmtNum=n=&gt;Number(n).toLocaleString("ko-KR");
@@ -4106,16 +4108,16 @@ const MAPINV_LBL={"사모":"사모","투신":"투신","연금":"연금","외인"
 let s2map={inv:"사모"};
 function render2top(){
   // 좌: 공통 순매수/순매도 (주체 조합 선택) · 우: 시총대비 순매수 맵 — 기간·방향·시장 토글 연동
-  const invs=COMBO_INVS[s2.combo];
   const rows=((D.sec2[s2.mkt][s2.per]["공통"][COMBO_KEY[s2.combo]]||{})[s2.side])||[];
   let body;
   if(!rows.length) body='&lt;div class="empty"&gt;공통 '+s2.side+' 종목 없음&lt;/div&gt;';
   else body=tableHead('&lt;th class="c1"&gt;#&lt;/th&gt;&lt;th class="c2"&gt;종목&lt;/th&gt;'
-      +invs.map(v=&gt;'&lt;th style="width:52px"&gt;'+v+'&lt;/th&gt;').join('')+'&lt;th style="width:52px"&gt;합계&lt;/th&gt;')
+      +'&lt;th style="width:52px"&gt;등락률&lt;/th&gt;&lt;th style="width:58px"&gt;시총&lt;/th&gt;&lt;th&gt;섹터/테마&lt;/th&gt;')
     +rows.map((r,i)=&gt;'&lt;tr&gt;&lt;td class="'+(i&lt;3?"rk top":"rk")+'"&gt;'+(i+1)+'&lt;/td&gt;'
       +'&lt;td class="nm"&gt;'+nmLink(r)+'&lt;/td&gt;'
-      +r.rs.map(x=&gt;'&lt;td style="color:'+ratCls(x)+';font-weight:700"&gt;'+fmtRat(x)+'&lt;/td&gt;').join('')
-      +'&lt;td style="color:'+ratCls(r.s)+';font-weight:700"&gt;'+fmtRat(r.s)+'&lt;/td&gt;&lt;/tr&gt;').join('')+'&lt;/tbody&gt;&lt;/table&gt;';
+      +'&lt;td class="rat" style="color:'+ratCls(r.ch)+'"&gt;'+fmtPct(r.ch)+'&lt;/td&gt;'
+      +'&lt;td class="net"&gt;'+fmtCap(r.mc)+'&lt;/td&gt;'
+      +'&lt;td style="color:var(--dim2);font-size:11px;white-space:nowrap"&gt;'+(D.groups[r.sg]||"기타")+'&lt;/td&gt;&lt;/tr&gt;').join('')+'&lt;/tbody&gt;&lt;/table&gt;';
   const bcls=s2.side==="순매도"?"badge sell":"badge comm";
   document.getElementById("sec2top").innerHTML=
     '&lt;div class="card hl"&gt;&lt;h3&gt;'+s2.combo.replace(/\+/g,"·")+' 공통 '+s2.side
@@ -66109,11 +66111,11 @@ if (-not $NoPush) {
 <tr data-s><td>RRG_수급_종목.html</td><td>4,670KB</td><td>2026-08-27</td></tr>
 <tr data-s><td>RRG_알고리즘_검증.md</td><td>8KB</td><td>2026-08-26</td></tr>
 <tr data-s><td>RS_타임머신.html</td><td>4,281KB</td><td>2026-08-27</td></tr>
-<tr data-s><td>index.html</td><td>1,843KB</td><td>2026-08-27</td></tr>
+<tr data-s><td>index.html</td><td>1,830KB</td><td>2026-08-27</td></tr>
 <tr data-s><td>osc_dashboard.html</td><td>1,378KB</td><td>2026-08-27</td></tr>
 <tr data-s><td>변동성_로테이션_트래커.html</td><td>275KB</td><td>2026-08-26</td></tr>
 <tr data-s><td>수급빈집.html</td><td>871KB</td><td>2026-08-26</td></tr>
-<tr data-s><td>이격도.html</td><td>43KB</td><td>2026-08-26</td></tr>
+<tr data-s><td>이격도.html</td><td>43KB</td><td>2026-08-27</td></tr>
 <tr data-s><td>텔레그램_채널_아카이버_프롬프트.md</td><td>11KB</td><td>2026-08-20</td></tr>
 <tr data-s><td>동방메디컬_컨콜노트_20260812.md</td><td>4KB</td><td>2026-08-12</td></tr>
 <tr data-s><td>미국신고가_딥리서치_260810.html</td><td>48KB</td><td>2026-08-11</td></tr>
@@ -66133,7 +66135,7 @@ if (-not $NoPush) {
 <tr data-s><td>반도체ETF_수혜_0824.html</td><td>37KB</td><td>2026-08-24</td></tr>
 <tr data-s><td>반도체ETF_수혜_0825.html</td><td>37KB</td><td>2026-08-25</td></tr>
 <tr data-s><td>반도체ETF_수혜_0826.html</td><td>38KB</td><td>2026-08-26</td></tr>
-<tr data-s><td>반도체ETF_수혜_0827.html</td><td>37KB</td><td>2026-08-27</td></tr>
+<tr data-s><td>반도체ETF_수혜_0827.html</td><td>38KB</td><td>2026-08-27</td></tr>
 <tr data-s><td>수급빈집 0804.html</td><td>865KB</td><td>2026-08-05</td></tr>
 <tr data-s><td>수급빈집 0805.html</td><td>854KB</td><td>2026-08-06</td></tr>
 <tr data-s><td>수급빈집 0806.html</td><td>860KB</td><td>2026-08-06</td></tr>
@@ -66294,7 +66296,7 @@ if (-not $NoPush) {
 <tr data-s><td>투자판단을_위한_철학_매뉴얼.html</td><td>44KB</td><td>2026-07-27</td></tr>
 <tr data-s><td>하이닉스CapEx_에코플랜트_브리지_0630.html</td><td>34KB</td><td>2026-07-27</td></tr>
 </table></div></div></details>
-<div class="foot">이 책은 book_build.py(크론 #71)가 5분마다 변화를 감지해 다시 엮는다 · 마지막 제본 2026-08-27 15:40 · 공자 &amp; Claude</div>
+<div class="foot">이 책은 book_build.py(크론 #71)가 5분마다 변화를 감지해 다시 엮는다 · 마지막 제본 2026-08-27 15:45 · 공자 &amp; Claude</div>
 </div><script>
 const q=document.getElementById('q');let _qt;
 q.addEventListener('input',()=>{clearTimeout(_qt);_qt=setTimeout(()=>{

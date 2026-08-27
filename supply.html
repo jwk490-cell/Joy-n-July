@@ -258,7 +258,7 @@ function render2top(){
     +rows.map((r,i)=>'<tr><td class="'+(i<3?"rk top":"rk")+'">'+(i+1)+'</td>'
       +'<td class="nm">'+nmLink(r)+'</td>'
       +'<td class="rat" style="color:'+ratCls(r.ch)+'">'+fmtPct(r.ch)+'</td>'
-      +'<td class="net">'+fmtCap(r.mc)+'</td>'
+      +'<td class="net" style="white-space:nowrap">'+fmtCap(r.mc)+'</td>'
       +'<td style="color:var(--dim2);font-size:11px;white-space:nowrap">'+(D.groups[r.sg]||"기타")+'</td></tr>').join('')+'</tbody></table>';
   const bcls=s2.side==="순매도"?"badge sell":"badge comm";
   document.getElementById("sec2top").innerHTML=
@@ -333,7 +333,11 @@ function renderMap(){
   box.innerHTML="";
   const rows=(((D.sec2[s2.mkt][s2.per]["맵"]||{})[s2map.inv]||{})[s2.side])||[];
   const W=box.clientWidth,H=box.clientHeight;
-  if(!rows.length||W<60||H<60){box.innerHTML='<div class="empty">데이터 없음</div>';return;}
+  if(!rows.length){box.innerHTML='<div class="empty">데이터 없음</div>';return;}
+  if(W<60||H<60){ // 초기 로드 직후 레이아웃 전(clientHeight 0) — 다음 프레임 재시도
+    if((renderMap._rt=(renderMap._rt||0)+1)<90)requestAnimationFrame(renderMap);
+    return;}
+  renderMap._rt=0;
   const by={};
   rows.forEach(r=>{(by[r.g]=by[r.g]||[]).push(r);});
   const tw=r=>Math.abs(r.r);                 // 타일 크기 = 시총대비 비율 (2026-08-27 확정)
