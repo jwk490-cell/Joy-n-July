@@ -90,14 +90,14 @@ mark{background:rgba(224,160,48,.35);color:inherit;border-radius:3px}
   5분마다 변화를 감지해 스스로 다시 제본된다. (2026-06-11 개장 이후)</div>
   <div class="stats">
     <div class="stat"><b>78</b><span>기록된 날</span></div>
-    <div class="stat"><b>16,918</b><span>총 커밋 (자동 발행 포함)</span></div>
-    <div class="stat"><b>124</b><span>작업 항목</span></div>
+    <div class="stat"><b>16,923</b><span>총 커밋 (자동 발행 포함)</span></div>
+    <div class="stat"><b>125</b><span>작업 항목</span></div>
     <div class="stat"><b>39</b><span>허브 탭</span></div>
     <div class="stat"><b>55/58</b><span>가동 봇</span></div>
     <div class="stat"><b>39</b><span>기록 챕터</span></div>
     <div class="stat"><b>42</b><span>심층 리서치</span></div>
     <div class="stat"><b>405</b><span>수록 소스 파일</span></div>
-    <div class="stat"><b>64,945</b><span>코드 라인</span></div>
+    <div class="stat"><b>64,987</b><span>코드 라인</span></div>
   </div>
 </div>
 <div class="topnav">
@@ -379,7 +379,7 @@ mark{background:rgba(224,160,48,.35);color:inherit;border-radius:3px}
 <li>크론: 평일 21:50 (<code>logs/judo_regime.log</code>). 의존 데이터 갱신 시각 — kr_raw.json = judo_rs_update --kr 매시 8~16시(16:00 회차를 이번에 추가, 당일 종가 확정분 수집), market_cache.json = binzip_update --fetch-market 21:15.</li>
 <li>국면 판정은 "마지막 완결주(거래일 4일 이상)" 기준 — 휴일 낀 주는 부분 주로 표시되고 현재 국면은 직전 완결주를 유지.</li>
 </ul></div></details>
-<details class="ch" id="ch-research-lab-site" data-s><summary><b>research-lab-site</b><span class="d">심층리서치 업로드처는 노션이 아니라 GitHub Pages research-lab 사이트 — 저장소 위치·파일 양식·research.json 갱신 절차</span><span class="t">2026-08-26</span></summary><div class="body"><p>공자가 "심층리서치해서 Research Lab 업로드"라고 하면 <b>노션이 아니라</b> https://jwk490-cell.github.io/research-lab/#deepresearch (GitHub Pages)다. 2026-08-12 동방메디컬 건에서 노션(J&amp;J &gt; 주간폴더)에 먼저 올렸다가 "아니 여기에 올리라고 노션 말고"로 정정받음.</p>
+<details class="ch" id="ch-research-lab-site" data-s><summary><b>research-lab-site</b><span class="d">심층리서치 업로드처는 노션이 아니라 GitHub Pages research-lab 사이트 — 저장소 위치·파일 양식·research.json 갱신 절차</span><span class="t">2026-08-27</span></summary><div class="body"><p>공자가 "심층리서치해서 Research Lab 업로드"라고 하면 <b>노션이 아니라</b> https://jwk490-cell.github.io/research-lab/#deepresearch (GitHub Pages)다. 2026-08-12 동방메디컬 건에서 노션(J&amp;J &gt; 주간폴더)에 먼저 올렸다가 "아니 여기에 올리라고 노션 말고"로 정정받음.</p>
 <p><b>절차:</b></p>
 <ol>
 <li>로컬 저장소: <code>/Users/1ne/수급html/site</code> (origin = jwk490-cell/research-lab). <a class="wl" href="#ch-git-guard-dual-repo">git-guard-dual-repo</a>가 감시 중이라 파일 생성만 해도 자동커밋될 수 있음 — 커밋 로그 확인.</li>
@@ -387,6 +387,7 @@ mark{background:rgba(224,160,48,.35);color:inherit;border-radius:3px}
 <li>인덱스: <code>data/research.json</code>에 <code>{file, name, ticker, date, rating, call, version}</code> 항목을 <b>맨 앞에</b> 추가하고 <code>updated</code> 갱신. 이걸 안 하면 카드가 안 뜬다.</li>
 <li>검증: <code>.claude/launch.json</code>의 researchlab 계열 정적 서버(<code>python3 -m http.server --directory site</code>)로 로컬 확인 후 push. 다른 세션이 8931 점유 중이면 새 포트 구성 추가.</li>
 </ol>
+<p><b>탭 즐겨찾기(2026-08-27)</b>: 사이드바 각 탭 hover 시 ☆ 클릭 → 홈 바로 아래 '★ 즐겨찾기' 그룹으로 이동(복제 아님 — openTab 리스너가 버튼에 직접 붙어 있어 이동 방식이 안전). localStorage <code>rl-favs</code>, 비번 없음, 보관과 겹치면 보관 우선. 별 클릭 핸들러는 archApply() 호출(전체 재배치→favApply 연쇄) — favApply만 부르면 언스타 원위치 복귀가 안 되는 함정.</p>
 <p><b>탭 보관 기능(2026-08-26)</b>: index.html 사이드바 맨 아래 '⚙ 보관 관리' — <a class="wl" href="#ch-rrg-algorithm">rrg-algorithm</a>의 Locked 비밀번호(~/.rrg_lock_pass)와 동일 비번을 SHA-256(salt <code>rl-arch-v1|pw</code>) 해시로 검증(ARCH_HASH 상수, rrg_publish.py sync_arch_hash()가 비번 변경 시 자동 동기화). 편집 모드에서 탭 클릭=보관↔해제, 보관 탭은 사이드바 맨 아래 접이식 '보관' 토글 그룹으로 이동(홈 카드도 숨김, 빈 navgroup 라벨 숨김). 목록은 localStorage <code>rl-archived</code> — <b>브라우저별 저장</b>이라 기기 간 동기화 안 됨(전 방문자 기본값으로 굳히려면 index.html의 archApply 위 archSet 초기값 코드에 반영 필요).</p>
 <ol>
 <li>리포트 본문 구조: 결론·판정(판정 3기둥+한 문장 콜) / BM / 해자·지배구조 / 산업·경쟁 / 실적·분기 해부 / 컨센×주가·멀티플 / Peer / 밸류·시나리오(확률가중 EV) / 리스크·매매플랜·KPI / 촉매 캘린더 / 미결·데이터 계보 + foot(데이터 계보·면책). 데이터는 키움 REST(ka10001/10081/10059) 실측 + DART 원문 + 병렬 웹리서치.</li>
@@ -849,9 +850,10 @@ Content-Type: application/json
 </ul></div></details>
 <h2 class="part" id="chron">제4부 · 연대기 <small>site 저장소 전체 히스토리 — 매일 자동 누적</small></h2>
 <div class="partdesc">사람 손으로 만든 작업은 전부 펼치고, 봇의 자동 발행은 건수로 접었다. 최신이 위.</div>
-<details class="mon" open><summary>2026년 08월<small>작업 45건 · 자동 발행 8,550건</small></summary>
-<div class="day" data-s><div class="dh">2026-08-27 (목)<small>자동 발행 250건</small></div>
+<details class="mon" open><summary>2026년 08월<small>작업 46건 · 자동 발행 8,554건</small></summary>
+<div class="day" data-s><div class="dh">2026-08-27 (목)<small>자동 발행 254건</small></div>
 <ul>
+<li>hub: 사이드바 즐겨찾기 — 탭 hover ☆ 토글, 홈 아래 ★ 그룹 이동, localStorage(rl-favs)</li>
 <li>supply: 시총대비 순매수 섹터 맵 추가 — 비율 상위100 treemap(크기·색=비율, 블록=종목 수), 공통 표 1열 폭 정렬</li>
 <li>작업기록 북 창간 — 전 산출물을 한 권으로 제본하는 book.html + 허브 '작업 기록' 탭 (book_build.py, 크론 #71 매일 08:10·22:10 자동 누적)</li>
 <li>supply: 탭명 → 투자자별 수급/거래량 증감, 세부탭 [투자자별 수급→거래량 급증] 2개만 노출(신고가 임시 숨김)</li>
@@ -63138,8 +63140,8 @@ def main():
 if __name__ == "__main__":
     main()
 </pre></details>
-<h3>site 인프라 <small style='color:var(--dim2)'>(6개 파일 · 190KB)</small></h3>
-<details class="src" data-s><summary><b>index.html</b><span class="d">menuBtn{display:none}</span><span class="t">2,443줄 · 169KB · 2026-08-27</span></summary><pre>&lt;!DOCTYPE html&gt;
+<h3>site 인프라 <small style='color:var(--dim2)'>(6개 파일 · 192KB)</small></h3>
+<details class="src" data-s><summary><b>index.html</b><span class="d">menuBtn{display:none}</span><span class="t">2,485줄 · 171KB · 2026-08-27</span></summary><pre>&lt;!DOCTYPE html&gt;
 &lt;html lang="ko"&gt;
 &lt;head&gt;
 &lt;meta charset="UTF-8"&gt;
@@ -63212,6 +63214,12 @@ nav .sbrand span{font-size:12px;color:var(--faint)}
 .navitem .ico{display:none}
 
 /* ── 탭 보관 (사이드바 맨 아래 토글 그룹) ── */
+.navitem small{margin-left:auto}   /* 별 추가 후에도 small 배지가 오른쪽에 붙도록 */
+.favstar{flex:none;margin-left:6px;font-size:12px;line-height:1;color:var(--faint);opacity:0;cursor:pointer;transition:opacity .12s}
+.navitem:hover .favstar{opacity:.75}
+.favstar.on{opacity:1!important;color:#f5c451}
+@media(max-width:900px){.favstar{opacity:.45}}
+#favGroup{color:#f5c451}
 .archhead{display:flex;align-items:center;gap:6px;width:100%;margin-top:18px;padding:10px 12px 6px;border:none;
   background:transparent;color:var(--faint);font-family:inherit;font-size:11px;font-weight:700;letter-spacing:.04em;
   border-top:1px solid var(--line);cursor:pointer;text-align:left}
@@ -63480,6 +63488,8 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
   &lt;nav id="nav"&gt;
     &lt;div class="sbrand"&gt;&lt;b&gt;Research Lab&lt;/b&gt;&lt;span&gt;KRX · 실시간 리서치 데스크&lt;/span&gt;&lt;/div&gt;
     &lt;button class="navitem on" data-tab="home"&gt;홈&lt;/button&gt;
+    &lt;div class="navgroup" id="favGroup" style="display:none"&gt;★ 즐겨찾기&lt;/div&gt;
+    &lt;div id="favList"&gt;&lt;/div&gt;
     &lt;div class="navgroup"&gt;실시간&lt;/div&gt;
     &lt;button class="navitem" data-tab="raoni"&gt;실시간 한국주식 &lt;small&gt;5초&lt;/small&gt;&lt;/button&gt;
     &lt;button class="navitem" data-tab="term"&gt;전닉 터미널&lt;/button&gt;
@@ -65327,6 +65337,7 @@ function archApply(){
     const cards=s.querySelectorAll('.card[data-go]');
     if(cards.length)s.style.display=Array.from(cards).some(c=&gt;c.style.display!=='none')?'':'none';
   });
+  favApply();                                            // 보관 재배치 후 즐겨찾기 재배치
 }
 archHead.addEventListener('click',()=&gt;archHead.classList.toggle('open'));
 archNav.addEventListener('click',e=&gt;{                   // 편집 모드: 클릭=보관 토글 (capture로 openTab 차단)
@@ -65363,6 +65374,39 @@ archManage.addEventListener('click',async()=&gt;{
   archEdit=true;document.body.classList.add('archedit');
   archManage.textContent='✓ 보관 관리 종료';
   archHead.classList.add('open');
+});
+
+/* ── 즐겨찾기: 탭 hover ☆ 토글 → 홈 바로 아래 그룹으로 이동. localStorage(브라우저별), 비번 없음 ── */
+const favGroup=document.getElementById('favGroup'),
+      favList=document.getElementById('favList');
+let favSet=new Set();
+try{const s=JSON.parse(localStorage.getItem('rl-favs'));if(Array.isArray(s))favSet=new Set(s);}catch(_){}
+function favApply(){
+  const favs=[];
+  archNav.querySelectorAll('.navitem[data-tab]').forEach(b=&gt;{
+    const t=b.dataset.tab;
+    if(t!=='home'&amp;&amp;favSet.has(t)&amp;&amp;!archSet.has(t))favs.push(b);  // 보관된 탭은 보관 그룹 우선
+  });
+  favs.forEach(b=&gt;favList.appendChild(b));
+  favGroup.style.display=favs.length?'':'none';
+  document.querySelectorAll('.favstar').forEach(s=&gt;{
+    const t=s.parentElement.dataset.tab;
+    s.classList.toggle('on',favSet.has(t));
+    s.textContent=favSet.has(t)?'★':'☆';
+  });
+}
+document.querySelectorAll('#nav .navitem[data-tab]').forEach(b=&gt;{
+  if(b.dataset.tab==='home')return;
+  const s=document.createElement('span');
+  s.className='favstar';s.textContent='☆';s.title='즐겨찾기';
+  s.addEventListener('click',e=&gt;{
+    e.stopPropagation();
+    const t=b.dataset.tab;
+    favSet.has(t)?favSet.delete(t):favSet.add(t);
+    localStorage.setItem('rl-favs',JSON.stringify([...favSet]));
+    archApply();   // 전체 재배치(원위치 복원 포함) 후 favApply까지 연쇄 호출됨
+  });
+  b.appendChild(s);
 });
 archApply();
 
@@ -66306,7 +66350,7 @@ if (-not $NoPush) {
 <tr data-s><td>투자판단을_위한_철학_매뉴얼.html</td><td>44KB</td><td>2026-07-27</td></tr>
 <tr data-s><td>하이닉스CapEx_에코플랜트_브리지_0630.html</td><td>34KB</td><td>2026-07-27</td></tr>
 </table></div></div></details>
-<div class="foot">이 책은 book_build.py(크론 #71)가 5분마다 변화를 감지해 다시 엮는다 · 마지막 제본 2026-08-27 16:15 · 공자 &amp; Claude</div>
+<div class="foot">이 책은 book_build.py(크론 #71)가 5분마다 변화를 감지해 다시 엮는다 · 마지막 제본 2026-08-27 16:25 · 공자 &amp; Claude</div>
 </div><script>
 const q=document.getElementById('q');let _qt;
 q.addEventListener('input',()=>{clearTimeout(_qt);_qt=setTimeout(()=>{
