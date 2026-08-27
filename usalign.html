@@ -63,10 +63,9 @@ tr:hover td{background:rgba(255,255,255,.03)}
 
 <div class="brief" id="brief"></div>
 
-<div class="stats" id="stats"></div>
-
 <div class="mcard"><button class="chdr" id="chartHead" type="button">📈 정배열 개수 · 추이 차트 <small>최근 1년 · 브레드스</small><span class="arr">▸ 펼치기</span></button>
 <div class="cbody" id="chartBody" hidden>
+<div class="stats" id="stats" style="margin-top:4px"></div>
 <canvas id="bchart" height="260"></canvas>
 <div class="legend"><span><i style="border-top-color:var(--gold)"></i>완전 정배열</span><span><i style="border-top-color:var(--blue)"></i>이평 정배열</span></div></div></div>
 
@@ -156,7 +155,7 @@ let chartOpen=false;try{chartOpen=localStorage.getItem('usalign-chart')==='1'}ca
 function setChart(o){chartOpen=o;chartBody.hidden=!o;
   chartHead.querySelector('.arr').textContent=o?'▾ 접기':'▸ 펼치기';
   try{localStorage.setItem('usalign-chart',o?'1':'0')}catch(e){}
-  if(o)requestAnimationFrame(drawBreadth);}
+  if(o)setTimeout(drawBreadth,0);}
 chartHead.onclick=()=>setChart(!chartOpen);
 function drawBreadth(){
   if(chartBody.hidden)return;

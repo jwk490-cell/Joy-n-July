@@ -55,9 +55,8 @@ tr:last-child td{border-bottom:0}
 <div class="sub" id="hd"></div>
 <div class="tabs" id="tabs"></div>
 <div class="brief" id="brief"></div>
-<div class="stats" id="stats"></div>
 <div class="chartbox"><button class="chdr" id="chartHead" type="button">📈 정배열 종목수 · 추이 차트 (현 유니버스 소급)<span class="arr">▸ 펼치기</span></button>
-<div class="cbody" id="chartBody" hidden><div id="chart"></div></div></div>
+<div class="cbody" id="chartBody" hidden><div class="stats" id="stats" style="margin-top:2px"></div><div id="chart"></div></div></div>
 <div class="sec"><h2>🔥 완전 정배열 <span style="font-size:11px;color:var(--faint)">현재가 &gt; 4주 &gt; 13주 &gt; 26주 &gt; 52주</span></h2><div id="full"></div></div>
 <div class="sec"><h2>📊 이평 정배열 <span style="font-size:11px;color:var(--faint)">4주 &gt; 13주 &gt; 26주 &gt; 52주</span></h2><div id="ma"></div></div>
 <div class="sec"><h2>💨 오늘 이탈</h2><div id="drop"></div></div>
@@ -125,7 +124,7 @@ let chartOpen=false;try{chartOpen=localStorage.getItem('maalign-chart')==='1'}ca
 function setChart(o){chartOpen=o;chartBody.hidden=!o;
  chartHead.querySelector('.arr').textContent=o?'▾ 접기':'▸ 펼치기';
  try{localStorage.setItem('maalign-chart',o?'1':'0')}catch(e){}
- if(o)requestAnimationFrame(drawChart);}
+ if(o)setTimeout(drawChart,0);}
 chartHead.onclick=()=>setChart(!chartOpen);
 function drawChart(){
  if(chartBody.hidden)return;
