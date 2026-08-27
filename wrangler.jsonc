@@ -7,6 +7,11 @@
   "vars": {
     "BASIC_USER": "researchlab"
   },
+  // 수동 갱신 큐 저장소 (worker.js RefreshQueue) — SQLite 클래스라 무료 플랜에서 동작
+  "durable_objects": {
+    "bindings": [{ "name": "REFRESH", "class_name": "RefreshQueue" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RefreshQueue"] }],
   "assets": {
     "directory": ".",
     "binding": "ASSETS",
