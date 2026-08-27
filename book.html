@@ -90,14 +90,14 @@ mark{background:rgba(224,160,48,.35);color:inherit;border-radius:3px}
   5분마다 변화를 감지해 스스로 다시 제본된다. (2026-06-11 개장 이후)</div>
   <div class="stats">
     <div class="stat"><b>78</b><span>기록된 날</span></div>
-    <div class="stat"><b>16,909</b><span>총 커밋 (자동 발행 포함)</span></div>
+    <div class="stat"><b>16,914</b><span>총 커밋 (자동 발행 포함)</span></div>
     <div class="stat"><b>124</b><span>작업 항목</span></div>
     <div class="stat"><b>39</b><span>허브 탭</span></div>
-    <div class="stat"><b>54/57</b><span>가동 봇</span></div>
+    <div class="stat"><b>55/58</b><span>가동 봇</span></div>
     <div class="stat"><b>39</b><span>기록 챕터</span></div>
     <div class="stat"><b>42</b><span>심층 리서치</span></div>
     <div class="stat"><b>405</b><span>수록 소스 파일</span></div>
-    <div class="stat"><b>64,941</b><span>코드 라인</span></div>
+    <div class="stat"><b>64,943</b><span>코드 라인</span></div>
   </div>
 </div>
 <div class="topnav">
@@ -223,6 +223,7 @@ mark{background:rgba(224,160,48,.35);color:inherit;border-radius:3px}
 <tr data-s><td>66</td><td>美ETF_정배열</td><td>평일 16:50</td><td><span class="badge b-run">가동</span></td><td>섹터·테마 ETF 96종 yfinance 일봉(전일 밤 미국 세션 기준)으로</td></tr>
 <tr data-s><td>68</td><td>韓ETF_정배열</td><td>평일 16:45, 한국 장 마감 후</td><td><span class="badge b-run">가동</span></td><td>국내 섹터·테마 ETF 46종 yfinance 수정종가 일봉으로</td></tr>
 <tr data-s><td>71</td><td>작업기록_북</td><td>5분 변경감지 + 22:10 강제 전체 제본</td><td><span class="badge b-run">가동</span></td><td>공자&amp;Claude 전 산출물을 한 권으로 제본해 site/book.html 갱신</td></tr>
+<tr data-s><td>72</td><td>JNJ_수급조기배포</td><td>평일 16:30</td><td><span class="badge b-run">가동</span></td><td>16:05 update.py(#10)의 당일 기준 index.html을 site로 배포 (21:40 확정치 재배포는 유지)</td></tr>
 </table></div>
 <h2 class="part" id="chapters">제3부 · 기록 챕터 <small>작업 기억 원문 — 새 기록이 쌓이면 자동으로 늘어난다</small></h2>
 <div class="partdesc">각 시스템이 어떻게 만들어졌고, 어떤 함정을 밟았고, 어떻게 굴러가는지에 대한 1차 기록.</div>
@@ -424,6 +425,7 @@ python3 sectorcap_build.py --reclass   # raw 캐시로 재분류, 0.1초
 <p><b>함정:</b> ka10099의 <code>upName</code>이 비는 종목이 36개 있다(기업은행·카카오뱅크·케이뱅크·제주은행·외국주 950xxx/900xxx 등). 구 basket7 빌더는 빈 upName을 걸러서 <b>KB금융·기업은행이 통째로 누락</b>됐었다 — 이 빌더는 upName 필터를 쓰지 않고 override로 잡는다. 또 ka10001은 단발 실패가 나므로(KB금융 전례) 실패분 1회 재시도 로직 필수.</p>
 <p>우선주는 코드 <code>[:5]+"0"</code>으로 본주 override를 상속한다 (005935→005930, 00680K→006800).</p></div></details>
 <details class="ch" id="ch-supply-tab-flows" data-s><summary><b>supply-tab-flows</b><span class="d">수급 탭(supply.html) 투자자별 수급 섹션 — build.py sec2 5주체 구조, 프로그램 ka90004 캐시 공유, 공통 조합 선택</span><span class="t">2026-08-27</span></summary><div class="body"><p>2026-08-27 개편. Research Lab <code>#supply</code> 탭의 '기관 수급' 섹션(sec2)을 <b>투자자별 수급(사모/투신/연금/외인/프램)</b>으로 확장. 생성 경로는 그대로: <code>~/수급html/build.py</code> → <code>index.html</code> → daily_close.py <code>inject_and_copy()</code> → <code>site/supply.html</code>.</p>
+<p><b>배포 시각</b>: 15:31 daily_close(미정산이라 전일 롤백판) → <b>16:30 조기배포 cron #72</b>(16:05 update.py의 당일 기준판, 2026-08-27 신설 — KRX 투자자별 잠정치가 15:40~16:00에야 정산돼 16시 정각은 불가) → 21:40 확정치 재배포. 허브 iframe은 FRESH 캐시버스터(10분 버킷)로 supply 항상 최신.</p>
 <p><b>탭 노출</b>: 허브 탭명은 <b>투자자별 수급/거래량 증감</b>(당일 3번 개명 끝 확정). 세부 탭은 sec2(투자자별 수급, 기본)→sec3(거래량 급증) 2개만. sec4(60일 신고가)·sec5(당일)·sec1(누적)은 2026-08-27 임시 숨김(사용자 지정) — 데이터·렌더 코드는 살아있고 build.py <code>TABDEF</code> 배열에 항목 복원만 하면 됨(주석에 원래 항목 보존).</p>
 <p><b>sec2 구조 (build.py):</b></p>
 <ul>
@@ -847,8 +849,8 @@ Content-Type: application/json
 </ul></div></details>
 <h2 class="part" id="chron">제4부 · 연대기 <small>site 저장소 전체 히스토리 — 매일 자동 누적</small></h2>
 <div class="partdesc">사람 손으로 만든 작업은 전부 펼치고, 봇의 자동 발행은 건수로 접었다. 최신이 위.</div>
-<details class="mon" open><summary>2026년 08월<small>작업 45건 · 자동 발행 8,541건</small></summary>
-<div class="day" data-s><div class="dh">2026-08-27 (목)<small>자동 발행 241건</small></div>
+<details class="mon" open><summary>2026년 08월<small>작업 45건 · 자동 발행 8,546건</small></summary>
+<div class="day" data-s><div class="dh">2026-08-27 (목)<small>자동 발행 246건</small></div>
 <ul>
 <li>supply: 시총대비 순매수 섹터 맵 추가 — 비율 상위100 treemap(크기·색=비율, 블록=종목 수), 공통 표 1열 폭 정렬</li>
 <li>작업기록 북 창간 — 전 산출물을 한 권으로 제본하는 book.html + 허브 '작업 기록' 탭 (book_build.py, 크론 #71 매일 08:10·22:10 자동 누적)</li>
@@ -4112,12 +4114,12 @@ function render2top(){
   let body;
   if(!rows.length) body='&lt;div class="empty"&gt;공통 '+s2.side+' 종목 없음&lt;/div&gt;';
   else body=tableHead('&lt;th class="c1"&gt;#&lt;/th&gt;&lt;th class="c2"&gt;종목&lt;/th&gt;'
-      +'&lt;th&gt;섹터/테마&lt;/th&gt;&lt;th style="width:52px"&gt;등락률&lt;/th&gt;&lt;th style="width:58px"&gt;시총&lt;/th&gt;')
+      +'&lt;th&gt;섹터/테마&lt;/th&gt;&lt;th style="width:58px"&gt;시총&lt;/th&gt;&lt;th style="width:52px"&gt;등락률&lt;/th&gt;')
     +rows.map((r,i)=&gt;'&lt;tr&gt;&lt;td class="'+(i&lt;3?"rk top":"rk")+'"&gt;'+(i+1)+'&lt;/td&gt;'
       +'&lt;td class="nm"&gt;'+nmLink(r)+'&lt;/td&gt;'
       +'&lt;td style="color:var(--dim2);font-size:11px;white-space:nowrap"&gt;'+(D.groups[r.sg]||"기타")+'&lt;/td&gt;'
-      +'&lt;td class="rat" style="color:'+ratCls(r.ch)+'"&gt;'+fmtPct(r.ch)+'&lt;/td&gt;'
-      +'&lt;td class="net" style="white-space:nowrap"&gt;'+fmtCap(r.mc)+'&lt;/td&gt;&lt;/tr&gt;').join('')+'&lt;/tbody&gt;&lt;/table&gt;';
+      +'&lt;td class="net" style="white-space:nowrap"&gt;'+fmtCap(r.mc)+'&lt;/td&gt;'
+      +'&lt;td class="rat" style="color:'+ratCls(r.ch)+'"&gt;'+fmtPct(r.ch)+'&lt;/td&gt;&lt;/tr&gt;').join('')+'&lt;/tbody&gt;&lt;/table&gt;';
   const bcls=s2.side==="순매도"?"badge sell":"badge comm";
   document.getElementById("sec2top").innerHTML=
     '&lt;div class="card hl"&gt;&lt;h3&gt;'+s2.combo.replace(/\+/g,"·")+' 공통 '+s2.side
@@ -10052,7 +10054,7 @@ def extract_from_header(text, header_prefix):
     "date":  "2026-07-21",
     "notes":  "15:00~15:15 회사 전체 개요(Overview) 설명, 15:15부터 Q\u0026A 세션 시작. 사용자 강조: Q\u0026A가 가장 중요 — 모든 문답을 빠짐없이 Q) 질문/답변 형태로 정리할 것.\n[15:40] 참고자료: 교보증권 리포트 2건(2026-07-03, 2026-02-04 인뎁스) 텍스트 전량 포함 - 수치·명칭 교정용. IR자료 2026(발표 앞부분 사용 자료)는 이미지 기반이라 텍스트 미추출, Overview 파트는 전사 기반으로 정리할 것."
 }</pre></details>
-<details class="src" data-s><summary><b>crontab.txt</b><span class="d">===== 수급html 자동화 (Windows→맥 이관, 이관진행.md 참조) =====</span><span class="t">200줄 · 22KB · 2026-08-27</span></summary><pre># ===== 수급html 자동화 (Windows→맥 이관, 이관진행.md 참조) =====
+<details class="src" data-s><summary><b>crontab.txt</b><span class="d">===== 수급html 자동화 (Windows→맥 이관, 이관진행.md 참조) =====</span><span class="t">202줄 · 22KB · 2026-08-27</span></summary><pre># ===== 수급html 자동화 (Windows→맥 이관, 이관진행.md 참조) =====
 # 표준 인터프리터: /Users/1ne/수급html/.venv/bin/python3
 # ⚠️ macOS 키체인은 cron(로그인 세션 밖)에서 접근 불가 → 모든 자격증명은 파일 폴백 사용
 #    키움 .kiwoom_env / claude .claude_env / git ~/.git-credentials (전부 600)
@@ -10136,6 +10138,8 @@ def extract_from_header(text, header_prefix):
 40 6 * * 2-6 cd /Users/1ne/수급html &amp;&amp; .venv/bin/python3 us_newhigh_feed.py &gt;&gt; /Users/1ne/수급html/logs/us_newhigh.log 2&gt;&amp;1
 # 23 JNJ_장마감_올인원 (평일 15:31)
 31 15 * * 1-5 cd /Users/1ne/수급html &amp;&amp; .venv/bin/python3 daily_close.py &gt;&gt; /Users/1ne/수급html/logs/daily_close.log 2&gt;&amp;1
+# 72 JNJ_수급조기배포 (평일 16:30) — 16:05 update.py(#10)의 당일 기준 index.html을 site로 배포 (21:40 확정치 재배포는 유지)
+30 16 * * 1-5 cd /Users/1ne/수급html &amp;&amp; .venv/bin/python3 daily_close.py --publish-only &gt;&gt; /Users/1ne/수급html/logs/daily_close.log 2&gt;&amp;1
 # 24 JNJ_한국신고가 (평일 21:35)
 35 21 * * 1-5 cd /Users/1ne/수급html &amp;&amp; .venv/bin/python3 kr_newhigh_feed.py &gt;&gt; /Users/1ne/수급html/logs/kr_newhigh.log 2&gt;&amp;1
 # 25 JNJ_수급재배포 (평일 21:40)
@@ -66300,7 +66304,7 @@ if (-not $NoPush) {
 <tr data-s><td>투자판단을_위한_철학_매뉴얼.html</td><td>44KB</td><td>2026-07-27</td></tr>
 <tr data-s><td>하이닉스CapEx_에코플랜트_브리지_0630.html</td><td>34KB</td><td>2026-07-27</td></tr>
 </table></div></div></details>
-<div class="foot">이 책은 book_build.py(크론 #71)가 5분마다 변화를 감지해 다시 엮는다 · 마지막 제본 2026-08-27 15:55 · 공자 &amp; Claude</div>
+<div class="foot">이 책은 book_build.py(크론 #71)가 5분마다 변화를 감지해 다시 엮는다 · 마지막 제본 2026-08-27 16:05 · 공자 &amp; Claude</div>
 </div><script>
 const q=document.getElementById('q');let _qt;
 q.addEventListener('input',()=>{clearTimeout(_qt);_qt=setTimeout(()=>{
