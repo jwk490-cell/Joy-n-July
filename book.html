@@ -90,14 +90,14 @@ mark{background:rgba(224,160,48,.35);color:inherit;border-radius:3px}
   5분마다 변화를 감지해 스스로 다시 제본된다. (2026-06-11 개장 이후)</div>
   <div class="stats">
     <div class="stat"><b>78</b><span>기록된 날</span></div>
-    <div class="stat"><b>16,898</b><span>총 커밋 (자동 발행 포함)</span></div>
-    <div class="stat"><b>123</b><span>작업 항목</span></div>
+    <div class="stat"><b>16,901</b><span>총 커밋 (자동 발행 포함)</span></div>
+    <div class="stat"><b>124</b><span>작업 항목</span></div>
     <div class="stat"><b>39</b><span>허브 탭</span></div>
     <div class="stat"><b>54/57</b><span>가동 봇</span></div>
-    <div class="stat"><b>38</b><span>기록 챕터</span></div>
+    <div class="stat"><b>39</b><span>기록 챕터</span></div>
     <div class="stat"><b>42</b><span>심층 리서치</span></div>
     <div class="stat"><b>405</b><span>수록 소스 파일</span></div>
-    <div class="stat"><b>64,895</b><span>코드 라인</span></div>
+    <div class="stat"><b>64,935</b><span>코드 라인</span></div>
   </div>
 </div>
 <div class="topnav">
@@ -226,7 +226,7 @@ mark{background:rgba(224,160,48,.35);color:inherit;border-radius:3px}
 </table></div>
 <h2 class="part" id="chapters">제3부 · 기록 챕터 <small>작업 기억 원문 — 새 기록이 쌓이면 자동으로 늘어난다</small></h2>
 <div class="partdesc">각 시스템이 어떻게 만들어졌고, 어떤 함정을 밟았고, 어떻게 굴러가는지에 대한 1차 기록.</div>
-<h3>Research Lab 허브 · 탭 <small style='color:var(--dim2)'>(17)</small></h3>
+<h3>Research Lab 허브 · 탭 <small style='color:var(--dim2)'>(18)</small></h3>
 <details class="ch" id="ch-backlog-tracker" data-s><summary><b>backlog-tracker</b><span class="d">수주잔고 트래커(#backlog) — DART 원문 표 파싱 + 엑셀 캘리브레이션 구조, cron #61, DART 레이트리밋 함정</span><span class="t">2026-08-25</span></summary><div class="body"><p>Research Lab <code>#backlog</code> 탭 = <code>site/backlog.html</code> + <code>site/data/backlog.json</code>, 파이프라인은 <code>/Users/1ne/수급html/backlog/</code> (README.md 있음). 2026-08-24 구축.</p>
 <p><b>핵심 설계</b>: DART는 수주잔고를 정형 API로 주지 않는다(원문 <code>document.xml</code>의 '수주상황' 표를 파싱해야 함). 기업마다 표 구조·단위·집계범위가 달라서 <b>파서는 후보를 넓게 뽑고(<code>T{표}C{열}#T|#S|#R:라벨</code>, <code>A#KRW</code>, <code>N{n}</code> 서술), 정확도는 큐레이션 엑셀 실측치와의 대조(±1.5%)로 확보</b>한다 → <code>rules.json</code>에 종목별 규칙 고정. 128종목 중 113개 자동 일치.</p>
 <ul>
@@ -284,6 +284,21 @@ mark{background:rgba(224,160,48,.35);color:inherit;border-radius:3px}
 </ul>
 <p>알려진 버그: 다크 테마 :root에서 <code>--down-tint:var(--down-tint)</code>, <code>--purple:var(--purple)</code> 자기참조 → 파란 계열 배지 배경 20+개가 다크 모드에서 투명. 수정은 <code>--down-tint:110,168,254; --purple:#a78bfa;</code></p>
 <p><a class="wl" href="#ch-sugeup-bot-migration">sugeup-bot-migration</a>의 봇 파이프라인 + 수급html의 300KB 데이터인라인 HTML을 "봇이 JSON 커밋 → 뷰어 HTML" 구조로 옮길 때의 참조 모델.</p></div></details>
+<details class="ch" id="ch-credit-liquidity-cds-tab" data-s><summary><b>credit-liquidity-cds-tab</b><span class="d">글로벌 크레딧·유동성 통합 탭(#72) — 美 유동성(usliq)+빅테크 CDS(cds) 서브탭, ICE 공개 정산가 채널·TGA 3중 포맷·미러 누적 구조</span><span class="t">2026-08-27</span></summary><div class="body"><p>Research Lab <code>credit.html</code> 통합 탭 (2026-08-27 구축, upperlimitprice 대시보드 방법론 문서 2건 기반 업그레이드판). cron #72 평일 07:15 <code>us_liq_build.py &amp;&amp; cds_build.py</code>, FAB 탭 'credit', push는 <a class="wl" href="#ch-git-guard-dual-repo">git-guard-dual-repo</a>.</p>
+<p><b>美 유동성 (us_liq_build.py → site/usliq.html)</b></p>
+<ul>
+<li>공식: 순유동성_B = FRED WALCL/1000 − TGA_B(당일 종가) − RRPONTSYD. <b>원본은 TGA 전일 종가를 당일로 표기(하루 지연)</b> — 우리는 당일 종가라 값이 다름(예: 8/25 우리 5,751.2 vs 원본 5,812.1). 이건 버그 아님.</li>
+<li><b>TGA는 FiscalData DTS 포맷이 3번 바뀜</b>: ~2021-10 <code>Federal Reserve Account</code>.close_today_bal / 2021-10~2022-04 <code>Treasury General Account (TGA)</code>.close_today_bal / 2022-04~ <code>TGA Closing Balance</code>.<b>open_today_bal</b>(필드명 함정). 셋 다 처리해야 원본의 193일 공백이 안 생긴다.</li>
+<li>WRESBAL·WALCL은 백만$ (B로 /1000 필요). 확장: SOFR−IORB 스프레드, S&amp;P500·KOSPI 오버레이(구간시작=100 재정규화), QT 시나리오 슬라이더, QRA 첫수요일 자동생성, FiscalData upcoming_auctions(filter auction_date:gte 필수 — 없으면 2024 과거가 나옴).</li>
+<li><b>FRED는 Mozilla 위장 UA를 스톨시킴</b> — curl 기본 UA + <code>-g</code>(globoff, fiscaldata <code>[]</code> 글롭 함정)로 해결. venv python TLS는 FRED에 막힘.</li>
+</ul>
+<p><b>빅테크 CDS (cds_build.py → site/cds.html, 상태 cds_history.json)</b></p>
+<ul>
+<li>2채널: ① upperlimitprice cds.html 미러 → 누적 (원본은 과거를 버림 — 2026-08-27 확인, 4/15 이전 소실. <code>--backfill</code>로 repo 과거 커밋 25개에서 ORCL 2025-11~, CRWV 64개 복원 완료. CRWV는 통합 제외 이전 커밋의 cdsd에 있었음) ② <b>ICE Clear Credit 공개 JSON</b> <code>https://www.ice.com/api/cds-settlement-prices/icc-single-names</code> — 9종 전부(CRWV 포함), 계약 사양 명시(<code>MSFT.SNRFOR.USD.XR14.100.2031-06-20</code>), 최신일만 제공이라 매일 누적.</li>
+<li>ICE 정산가(클린가) → par spread: ISDA flat-hazard 근사(회수율 40%, 할인율 FRED DGS5, RPV01 연속근사 반복수렴). <b>미러와 ±0.2bp 일치 → 원본 소스가 이 피드임을 사실상 증명</b>. 쿠폰 100 우선(DELL은 100/500 둘 다 존재).</li>
+<li>병합: 미러 우선 + 없는 날짜 ICE 보충(ICE 배지) — CRWV 스테일(8/18 726.6) 해소(8/26 784.6). 경보: 4사+ 동일값 / 1일 ±15% / 5영업일 스테일 / 채널 괴리 15bp+ → telegram-digest/.env SCREENER_BOT (alert_state로 중복 가드).</li>
+<li>UI: 로그축 토글(CRWV 통합 비교), 결측 점선, 주가 오버레이(yfinance), cds_events.json 이벤트 주석(수동 편집).</li>
+</ul></div></details>
 <details class="ch" id="ch-export-tab-pipeline" data-s><summary><b>export-tab-pipeline</b><span class="d">수출 데이터 탭(export.html)은 export_watch.py 크론이 자동 갱신 — 수동 빌드 시 hub-theme 누락 함정, 공유 패키지 제작 절차</span><span class="t">2026-08-24</span></summary><div class="body"><p>Research Lab '수출 데이터' 탭(site/export.html)은 <b>telegram-digest/export_watch.py가 자동 갱신</b>한다(크론 <code>*/30 9-18 * * 1-5</code>). 워처가 Downloads의 최신 <code>주요품목별수출정리*.xlsx</code> mtime을 export_watch_state.json과 비교 → 새 파일이면 ① build_export_html.py로 <code>주요품목 수출 대시보드 MMDD.html</code> 생성 ② daily_close.py --publish-only 호출. daily_close는 빌드를 하지 않고 <code>inject_and_copy(newest("주요품목 수출 대시보드*.html"))</code>(daily_close.py:70)로 hub-theme.css 링크 + <code>class="ht-export"</code>만 주입해 배포한다.</p>
 <p><b>함정 (2026-08-20 실수)</b>: build_export_html.py 출력물을 직접 site/export.html로 복사하면 hub-theme 링크가 빠진다. 수동 갱신 금지 — 엑셀만 Downloads에 두면 크론이 처리. 갱신 요청 시 먼저 <code>logs/export_watch.log</code>와 배포본 payload의 <code>source</code>/<code>lastUpdate</code>를 확인할 것 — 이미 처리돼 있으면 재빌드 불필요(2026-08-24 확인).</p>
 <p><b>소스 데이터 특이점</b>: 저자 워크북의 <code>총수출</code> 시트만 2025년12월에서 멈춰 있다(52행 고정, 2026-08-20·08-24 수령본 동일). 나머지 222개 시트는 정상적으로 2026년08월까지. 파이프라인 버그 아님 — 대시보드 총수출 탭이 오래된 것처럼 보이면 이것.</p>
@@ -415,6 +430,7 @@ python3 sectorcap_build.py --reclass   # raw 캐시로 재분류, 0.1초
 <li>페이로드는 <code>sec2[시장][기간]</code> 2단 키 — 시장(전체/코스피/코스닥) 토글 추가(2026-08-27 당일 2차 요청). 시장별 사전계산이라 index.html이 ~750KB로 커짐(gzip이면 무관).</li>
 <li>5주체 시총대비 순매수·순매도 Top20 — <code>SEC2INV = 사모/투신/연금/외국인/프로그램</code> 순. 그리드는 <code>.g5i</code>(minmax 340px, 종목명 잘림 방지로 g5보다 넓음).</li>
 <li>상단 공통 표(구 하단 표 이동, ★ 당일 칩 카드는 삭제): <code>COMBOS</code> = st(사모+투신) / stp(+연금) / stpf(+외국인) 3조합 버튼, 기간(1/5/10/30/60)·방향 토글 연동, 합계 열 포함. 공통 판정은 반올림 전 raw ratio 부호 기준(표시 +0.00%인데 포함되는 경우 정상).</li>
+<li><b>섹터 맵</b>(2026-08-27, 그릴 세션으로 확정): 공통 표 오른쪽(<code>mapcard</code>, grid-column 2/-1), 자체 squarified treemap(<code>tmLayout</code>, 외부 라이브러리 없음). 유니버스=시총대비 비율 상위 100(<code>MAP_RAT</code>), 섹터 블록 크기=종목 수, 타일 크기·색=시총대비 비율(색 상한=|r| 90퍼센타일 포화, 순매수 초록/순매도 빨강), 맵 전용 주체 미니토글(기본 사모)+전체 토글 연동, hover 툴팁·클릭 네이버금융. 섹터 분류=<code>sector_groups.json</code> 공유(override→wics_map fallback→기타, sectorcap 탭과 동일 파일 — <b>override 수정 시 두 탭 모두 영향</b>). 934개 맵 등장종목 전수 검증으로 override 32건 추가(2026-08-27: 한화비전→전자부품, 폴라리스오피스→SW, 에스에너지→신재생, 신규상장 웹검증분 등).</li>
 <li>하단 절대금액 기준 Top20: 외국인·프로그램만, 방향 토글 연동 2열.</li>
 <li>프로그램 데이터가 기간보다 짧으면 배지 "집계 N/M일".</li>
 </ul>
@@ -831,9 +847,10 @@ Content-Type: application/json
 </ul></div></details>
 <h2 class="part" id="chron">제4부 · 연대기 <small>site 저장소 전체 히스토리 — 매일 자동 누적</small></h2>
 <div class="partdesc">사람 손으로 만든 작업은 전부 펼치고, 봇의 자동 발행은 건수로 접었다. 최신이 위.</div>
-<details class="mon" open><summary>2026년 08월<small>작업 44건 · 자동 발행 8,531건</small></summary>
-<div class="day" data-s><div class="dh">2026-08-27 (목)<small>자동 발행 231건</small></div>
+<details class="mon" open><summary>2026년 08월<small>작업 45건 · 자동 발행 8,533건</small></summary>
+<div class="day" data-s><div class="dh">2026-08-27 (목)<small>자동 발행 233건</small></div>
 <ul>
+<li>supply: 시총대비 순매수 섹터 맵 추가 — 비율 상위100 treemap(크기·색=비율, 블록=종목 수), 공통 표 1열 폭 정렬</li>
 <li>작업기록 북 창간 — 전 산출물을 한 권으로 제본하는 book.html + 허브 '작업 기록' 탭 (book_build.py, 크론 #71 매일 08:10·22:10 자동 누적)</li>
 <li>supply: 탭명 → 투자자별 수급/거래량 증감, 세부탭 [투자자별 수급→거래량 급증] 2개만 노출(신고가 임시 숨김)</li>
 <li>hub: supply 탭명 → 신고가/수급 대시보드</li>
@@ -1144,7 +1161,7 @@ Content-Type: application/json
 <li>새 봇을 만들면: crontab.txt에 번호 주석 → 메모리 기록 작성 → 자체 커밋 메시지가 있으면 book_build.py <code>AUTO_PATTERNS</code> 추가. 이 세 가지가 책을 정확하게 유지한다.</li>
 <li>데이터 검증은 항상 독립 소스 교차확인(RRG 역산 RMSE, 오실레이터 corr 1.0, 정배열 수기 대조 방식 — 제3부 각 챕터 참조).</li>
 </ul></div></details>
-<h3>수급html <small style='color:var(--dim2)'>(393개 파일 · 2,604KB)</small></h3>
+<h3>수급html <small style='color:var(--dim2)'>(393개 파일 · 2,606KB)</small></h3>
 <details class="src" data-s><summary><b>_archive_basket7_build.py</b><span class="d"></span><span class="t">269줄 · 12KB · 2026-08-12</span></summary><pre># -*- coding: utf-8 -*-
 """
 핵심 7종목(삼성전자·삼성전자우·SK하이닉스·SK스퀘어·S-Oil·SK이노베이션·GS)의
@@ -3492,7 +3509,7 @@ def blocked(token, owner, msg, bot=""):
     _save(st)
     return True
 </pre></details>
-<details class="src" data-s><summary><b>build.py</b><span class="d"></span><span class="t">842줄 · 42KB · 2026-08-27</span></summary><pre># -*- coding: utf-8 -*-
+<details class="src" data-s><summary><b>build.py</b><span class="d"></span><span class="t">841줄 · 42KB · 2026-08-27</span></summary><pre># -*- coding: utf-8 -*-
 """
 raw_cache.json -&gt; index.html (3섹션 탭 대시보드)
   1) 투자자별 순매수 랭킹 (외국인/사모/연금/투신 × 코스피/코스닥/전체 × 1/5/10/30/60거래일)
@@ -4104,7 +4121,7 @@ function render2top(){
     '&lt;div class="card hl"&gt;&lt;h3&gt;'+s2.combo.replace(/\+/g,"·")+' 공통 '+s2.side
     +' &lt;span class="'+bcls+'"&gt;'+s2.mkt+' · '+s2.per+'거래일 · '+rows.length+'종목&lt;/span&gt;&lt;/h3&gt;'+body+'&lt;/div&gt;'
     +'&lt;div class="card hl mapcard"&gt;&lt;h3&gt;&lt;span&gt;시총대비 '+s2.side+' 맵'
-    +' &lt;span style="color:var(--dim2);font-weight:400;font-size:10px"&gt;크기=금액 · 색=시총대비&lt;/span&gt;&lt;/span&gt;'
+    +' &lt;span style="color:var(--dim2);font-weight:400;font-size:10px"&gt;비율 상위 100 · 크기·색=순매수/시총 · 블록=종목 수&lt;/span&gt;&lt;/span&gt;'
     +'&lt;span style="display:flex;align-items:center;gap:7px"&gt;&lt;span class="group" id="gMapInv"&gt;&lt;/span&gt;'
     +'&lt;span class="'+bcls+'"&gt;'+s2.mkt+' · '+s2.per+'거래일&lt;/span&gt;&lt;/span&gt;&lt;/h3&gt;'
     +'&lt;div class="mapbox" id="mapbox"&gt;&lt;/div&gt;&lt;/div&gt;';
@@ -4155,7 +4172,6 @@ function tmLayout(items,x,y,w,h){
   }
   return out;
 }
-let MAPMODE="ratio";   // "ratio"=크기 시총대비 비율 / "amt"=크기 순매수 금액
 let TIP=null;
 function mapTip(e,r,gi){
   if(!TIP){TIP=document.createElement("div");TIP.className="mtip";document.body.appendChild(TIP);}
@@ -4176,9 +4192,9 @@ function renderMap(){
   if(!rows.length||W&lt;60||H&lt;60){box.innerHTML='&lt;div class="empty"&gt;데이터 없음&lt;/div&gt;';return;}
   const by={};
   rows.forEach(r=&gt;{(by[r.g]=by[r.g]||[]).push(r);});
-  const tw=r=&gt;MAPMODE==="amt"?Math.abs(r.v):Math.abs(r.r);   // 타일 가중치
+  const tw=r=&gt;Math.abs(r.r);                 // 타일 크기 = 시총대비 비율 (2026-08-27 확정)
   const grps=Object.entries(by).map(([g,list])=&gt;(
-    {g:+g,list,w:list.length}));                              // 섹터 블록 = 종목 수
+    {g:+g,list,w:list.length}));             // 섹터 블록 = 종목 수
   const rs=rows.map(r=&gt;Math.abs(r.r)).sort((a,b)=&gt;a-b);
   const cap=Math.max(rs[Math.floor(rs.length*0.9)]||0.3,0.05);
   const sell=s2.side==="순매도";
@@ -9007,7 +9023,7 @@ def main():
 if __name__ == "__main__":
     main()
 </pre></details>
-<details class="src" data-s><summary><b>cds_build.py</b><span class="d">빅테크 5Y CDS 프리미엄 — site/cds.html 생성 (credit.html 통합 탭의 CDS 서브탭).</span><span class="t">631줄 · 31KB · 2026-08-27</span></summary><pre># -*- coding: utf-8 -*-
+<details class="src" data-s><summary><b>cds_build.py</b><span class="d">빅테크 5Y CDS 프리미엄 — site/cds.html 생성 (credit.html 통합 탭의 CDS 서브탭).</span><span class="t">671줄 · 33KB · 2026-08-27</span></summary><pre># -*- coding: utf-8 -*-
 """빅테크 5Y CDS 프리미엄 — site/cds.html 생성 (credit.html 통합 탭의 CDS 서브탭).
 
   데이터: upperlimitprice.github.io/dashboards/cds.html (ICE 정산가+DTCC 신고 병합, 평일 07:10 KST 갱신)
@@ -9221,9 +9237,36 @@ def biz_gap(d1, d2):
     return n
 
 
-def detect_anomalies(hist, asof):
+def combined_series(hist):
+    """표시용 병합: 미러(기본) + 미러에 없는 날짜는 ICE 변환 스프레드로 보충."""
+    out, filled = {}, {}
+    ice = hist.get("ice", {})
+    for t in TICKERS:
+        base = dict(hist["series"].get(t, {}))
+        f = []
+        for d, rec in ice.get(t, {}).items():
+            if d not in base:
+                base[d] = rec["s"]
+                f.append(d)
+        out[t] = sorted(base.items())
+        filled[t] = sorted(f)
+    return out, filled
+
+
+def detect_anomalies(hist, asof, comb=None):
     S = hist["series"]
     alerts = []
+    # ⓪ 채널 교차 검증: 같은 날 미러 vs ICE 변환값 괴리
+    ice = hist.get("ice", {})
+    for t in TICKERS:
+        mp = hist["series"].get(t, {})
+        common = sorted(set(mp) &amp; set(ice.get(t, {})))
+        if common:
+            d = common[-1]
+            diff = mp[d] - ice[t][d]["s"]
+            if abs(diff) &gt; 15:
+                alerts.append({"k": f"xchk:{t}:{d}", "sev": "warn",
+                               "msg": f"{t} {d} 미러 {mp[d]}bp vs ICE 변환 {ice[t][d]['s']}bp — 괴리 {diff:+.1f}bp"})
     # ① 다수 기업 동일값 (최신 공통 날짜)
     last_common = None
     for t in S:
@@ -9241,21 +9284,23 @@ def detect_anomalies(hist, asof):
             if len(ts) &gt;= 4:
                 alerts.append({"k": f"same:{last_common}:{v}", "sev": "warn",
                                "msg": f"{last_common} {len(ts)}개 기업 동일값 {v}bp ({'·'.join(ts)}) — 소스 계보 점검 필요"})
-    # ② 1일 급등/급락 ≥15%
-    for t in S:
-        obs = sorted(S[t].items())
+    # ② 1일 급등/급락 ≥15% (표시 기준 = 병합 계열)
+    SS2 = comb if comb else {t: sorted(S[t].items()) for t in S}
+    for t in SS2:
+        obs = SS2[t]
         if len(obs) &lt; 2:
             continue
         (d0, v0), (d1, v1) = obs[-2], obs[-1]
         if v0 &gt; 0 and abs(v1 - v0) / v0 &gt;= 0.15:
             alerts.append({"k": f"jump:{t}:{d1}", "sev": "hot",
                            "msg": f"{t} 1일 {v1-v0:+.1f}bp ({(v1-v0)/v0*100:+.0f}%) → {v1}bp"})
-    # ③ 스테일 (페이지 기준일 대비 5영업일+)
+    # ③ 스테일 (페이지 기준일 대비 5영업일+) — ICE 보충 후 병합 기준
     if asof:
-        for t in S:
-            if not S[t]:
+        SS = {t: dict(v) for t, v in comb.items()} if comb else S
+        for t in SS:
+            if not SS[t]:
                 continue
-            last = max(S[t])
+            last = max(SS[t])
             g = biz_gap(last, asof)
             if g &gt;= 5:
                 alerts.append({"k": f"stale:{t}:{last}", "sev": "warn",
@@ -9304,12 +9349,15 @@ def main():
     hist["asof"] = asof
     print(f"  기준일 {asof} · 신규/변경 {n}건 · 누적 " +
           ", ".join(f"{t}:{len(hist['series'].get(t, {}))}" for t in TICKERS))
+    print("①-b ICE 정산가 (독립 채널)")
+    fetch_ice(hist)
+    comb, filled = combined_series(hist)
 
     print("② 주가 (yfinance)")
     prices = fetch_prices()
 
     print("③ 이상 징후")
-    alerts = detect_anomalies(hist, asof)
+    alerts = detect_anomalies(hist, asof, comb)
     seen = set(hist.get("alert_state", {}).get("sent", []))
     fresh = [a for a in alerts if a["k"] not in seen]
     for a in alerts:
@@ -9329,16 +9377,19 @@ def main():
         except Exception as e:
             print(f"  이벤트 파일 오류(무시): {e}")
 
-    page = render(hist, prices, alerts, events)
+    page = render(hist, comb, filled, prices, alerts, events)
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(page)
     print(f"④ 완료 → {OUT} ({len(page)/1024:.0f}KB)")
 
 
-def render(hist, prices, alerts, events):
-    S = {t: sorted(hist["series"].get(t, {}).items()) for t in TICKERS}
+def render(hist, comb, filled, prices, alerts, events):
+    S = comb
     asof = hist["asof"] or "?"
+    all_last = [obs[-1][0] for obs in S.values() if obs]
+    asof_disp = max([asof] + all_last) if asof != "?" else (max(all_last) if all_last else "?")
+    n_fill = sum(len(v) for v in filled.values())
     # 요약
     movers = []
     for t in TICKERS:
@@ -9364,17 +9415,21 @@ def render(hist, prices, alerts, events):
             continue
         d, v = obs[-1]
         d1 = v - obs[-2][1] if len(obs) &gt;= 2 else 0
-        stale = biz_gap(d, asof) &gt;= 5 if asof != "?" else False
+        stale = biz_gap(d, asof_disp) &gt;= 5 if asof_disp != "?" else False
+        src_ice = d in filled.get(t, [])
         cls = "up" if d1 &gt; 0 else ("dn" if d1 &lt; 0 else "")
+        tag = " &lt;span class=stale&gt;스테일&lt;/span&gt;" if stale else (" &lt;span class=ice&gt;ICE&lt;/span&gt;" if src_ice else "")
         trows += (f"&lt;tr&gt;&lt;td&gt;&lt;span class='sw' style='background:{COLORS[t]}'&gt;&lt;/span&gt;{t}&lt;/td&gt;"
                   f"&lt;td class='num'&gt;{v:,.1f}&lt;/td&gt;&lt;td class='num {cls}'&gt;{d1:+.1f}&lt;/td&gt;"
-                  f"&lt;td class='num sm'&gt;{d[5:]}{' &lt;span class=stale&gt;스테일&lt;/span&gt;' if stale else ''}&lt;/td&gt;&lt;/tr&gt;")
-    payload = {"asof": asof, "gen": datetime.datetime.now().strftime("%Y-%m-%d %H:%M KST"),
+                  f"&lt;td class='num sm'&gt;{d[5:]}{tag}&lt;/td&gt;&lt;/tr&gt;")
+    payload = {"asof": asof_disp, "gen": datetime.datetime.now().strftime("%Y-%m-%d %H:%M KST"),
                "tickers": TICKERS, "colors": COLORS, "names": NAMES,
-               "series": {t: S[t] for t in TICKERS}, "prices": prices, "events": events}
+               "series": {t: S[t] for t in TICKERS}, "prices": prices, "events": events,
+               "filled": filled}
     data = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+    src_note = f"미러 기준일 {asof} · ICE 보충 {n_fill}일" if n_fill else f"미러 기준일 {asof}"
     return HTML_TMPL.replace("__SUMMARY__", summary).replace("__ALERTS__", alert_html) \
-        .replace("__TROWS__", trows).replace("__ASOF__", asof) \
+        .replace("__TROWS__", trows).replace("__ASOF__", f"{asof_disp} ({src_note})") \
         .replace("__GEN__", payload["gen"]).replace("__DATA__", data)
 
 
@@ -9417,6 +9472,7 @@ td.sm{font-size:11px;color:var(--faint)}
 .sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:baseline}
 .up{color:var(--red)}.dn{color:var(--blu)}
 .stale{color:var(--org);font-size:10px;border:1px solid #5a4a2a;border-radius:8px;padding:0 5px}
+.ice{color:#39d2c0;font-size:10px;border:1px solid #1f4a44;border-radius:8px;padding:0 5px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .ph{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
 .ph b{font-size:13.5px}.pv{font-size:16px;font-weight:800}
@@ -9446,8 +9502,8 @@ __ALERTS__
 &lt;h2 style="font-size:15px;margin:4px 0 10px"&gt;기업별 추이 &lt;small style="color:var(--faint);font-weight:400;font-size:11px"&gt;CDS(좌) + 주가(우, 회색) · 붉은점 최고 · 파란점 최저 · 세로선 이벤트&lt;/small&gt;&lt;/h2&gt;
 &lt;div class="grid" id="panels"&gt;&lt;/div&gt;
 &lt;div class="foot"&gt;
-소스: upperlimitprice 대시보드(ICE 정산가+DTCC 신고 병합)를 평일 아침 미러링해 자체 누적 — 원본이 버리는 과거 데이터도 보존. 주가는 Yahoo Finance 수정종가.&lt;br&gt;
-주의: CDS 계약은 통화·선순위·재구성 조항까지 고정해야 비교 가능하나 원본의 계약 사양·병합 규칙은 비공개 — 절대 레벨보다 &lt;b&gt;방향·상대 비교&lt;/b&gt; 중심으로 해석. 여러 기업이 같은 값을 공유하는 날은 소스 계보 이상 가능성(경보 자동 감지). 결측 구간은 점선.
+소스 2채널: ① upperlimitprice 대시보드(ICE 정산가+DTCC 신고 병합) 평일 미러 + 자체 누적(원본이 버리는 과거 보존) ② &lt;b&gt;ICE Clear Credit 공개 정산가&lt;/b&gt;(ice.com/cds-settlement-prices) 매일 수집 — 계약 사양 명시(SNRFOR·USD·XR14·5Y IMM), 정산가를 ISDA flat-hazard 근사(회수율 40%, 할인율 FRED DGS5)로 par spread 변환(검증 오차 ±1bp 내). 미러에 없는 날짜(CRWV 등)는 ICE로 보충하며 &lt;span class="ice"&gt;ICE&lt;/span&gt; 표기, 두 채널 괴리 15bp+ 시 자동 경보. 주가는 Yahoo Finance 수정종가.&lt;br&gt;
+주의: 절대 레벨보다 &lt;b&gt;방향·상대 비교&lt;/b&gt; 중심으로 해석. 여러 기업이 같은 값을 공유하는 날은 소스 계보 이상 가능성(경보 자동 감지). 결측 구간은 점선.
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;script id="D" type="application/json"&gt;__DATA__&lt;/script&gt;
@@ -66001,7 +66057,7 @@ if (-not $NoPush) {
 }
 </pre></details>
 <h3>memory <small style='color:var(--dim2)'>(1개 파일 · 6KB)</small></h3>
-<details class="src" data-s><summary><b>MEMORY.md</b><span class="d">Memory Index</span><span class="t">42줄 · 6KB · 2026-08-27</span></summary><pre># Memory Index
+<details class="src" data-s><summary><b>MEMORY.md</b><span class="d">Memory Index</span><span class="t">43줄 · 6KB · 2026-08-27</span></summary><pre># Memory Index
 
 - [Research Lab 사이트 업로드](research-lab-site.md) — 심층리서치는 노션 아님, site repo research/*.html + data/research.json 갱신 절차
 - [OpenDART API](dart-open-api.md) — 키 .dart_env(600), fnlttSinglAcntAll·document.xml·자사주 typed API 검증 패턴, 뷰어 셸 함정 우회
@@ -66040,6 +66096,7 @@ if (-not $NoPush) {
 - [韓 정배열 트래커](kr-ma-align-bot.md) — #67 ma_align_build.py 평일 16:25, 일봉 20/65/130/260 SMA+NaN통과 공식 검증, 수급150 유니버스 3토글, maalign.html→align.html 통합 탭 (美판=#66 us_align)
 - [주도 섹터·주도주 탭](leaders-tab.md) — #69 leaders_build.py 21:35 체인, upperlimitprice 방법론 자체 구현, Locked leaders.enc, 탑픽→수급지속 대체
 - [수동 갱신 버튼](manual-refresh-button.md) — 전 탭 FAB, Worker DO 큐+폴러 #70(1분), 비번 매회 입력, Python-urllib UA 403 함정
+- [글로벌 크레딧·유동성 탭](credit-liquidity-cds-tab.md) — #72 usliq+cds 서브탭, ICE 공개 정산가 API·TGA 3중 포맷 함정·미러 누적+백필, FRED UA 함정
 - [RRG 알고리즘](rrg-algorithm.md) — 업종·종목판 완전 역산, cron #65 21:35, Locked 섹션(AES), 시그널 백테스트=풀평균 대비 알파(rrg_backtest.py, 선점후보 최강·개선→주도 마이너스)
 - [작업기록 북](worklog-book.md) — 전 산출물+전체 소스 설계도(비밀값 마스킹) site/book.html 자동 제본, 크론 #71 5분 변경감지, 새 봇 커밋은 AUTO_PATTERNS 추가 필수
 </pre></details>
@@ -66237,7 +66294,7 @@ if (-not $NoPush) {
 <tr data-s><td>투자판단을_위한_철학_매뉴얼.html</td><td>44KB</td><td>2026-07-27</td></tr>
 <tr data-s><td>하이닉스CapEx_에코플랜트_브리지_0630.html</td><td>34KB</td><td>2026-07-27</td></tr>
 </table></div></div></details>
-<div class="foot">이 책은 book_build.py(크론 #71)가 5분마다 변화를 감지해 다시 엮는다 · 마지막 제본 2026-08-27 15:35 · 공자 &amp; Claude</div>
+<div class="foot">이 책은 book_build.py(크론 #71)가 5분마다 변화를 감지해 다시 엮는다 · 마지막 제본 2026-08-27 15:40 · 공자 &amp; Claude</div>
 </div><script>
 const q=document.getElementById('q');let _qt;
 q.addEventListener('input',()=>{clearTimeout(_qt);_qt=setTimeout(()=>{
