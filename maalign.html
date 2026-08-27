@@ -9,9 +9,11 @@ body{background:var(--bg);color:var(--txt);font:14px/1.55 -apple-system,BlinkMac
 .wrap{max-width:1180px;margin:0 auto}
 h1{font-size:19px;margin-bottom:2px}
 .sub{color:var(--sub);font-size:12px;margin-bottom:14px}
-.tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
-.tabs button{background:var(--card);border:1px solid var(--line);color:var(--sub);padding:6px 14px;border-radius:8px;font-size:13px;cursor:pointer}
-.tabs button.on{color:var(--txt);border-color:var(--blu);background:#13233a}
+.tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.tabs button{flex:0 0 auto;min-width:136px;text-align:center;background:var(--card);border:1px solid var(--line);color:var(--sub);padding:9px 28px;border-radius:9px;font-size:13.5px;font-weight:600;cursor:pointer;transition:color .15s,border-color .15s,background .15s}
+.tabs button:hover{color:var(--txt);border-color:#3a4150}
+.tabs button.on{color:var(--txt);border-color:var(--blu);background:#13233a;font-weight:700}
+@media(max-width:640px){.tabs button{min-width:0;flex:1;padding:9px 10px}}
 .brief{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--grn);border-radius:10px;padding:13px 16px;margin-bottom:14px}
 .brief .bt{font-size:13px;font-weight:700;margin-bottom:6px}
 .brief p{margin:0 0 5px;font-size:13px;color:var(--sub);line-height:1.7}
@@ -51,7 +53,7 @@ tr:last-child td{border-bottom:0}
 .empty{color:var(--faint);padding:14px;background:var(--card);border:1px solid var(--line);border-radius:10px;font-size:13px}
 @media(max-width:640px){body{padding:12px 8px 40px}td,th{padding:5px 6px}}
 </style></head><body><div class="wrap">
-<h1>📈 정배열 트래커</h1>
+<h1>韓 종목 정배열 트래커</h1>
 <div class="sub" id="hd"></div>
 <div class="tabs" id="tabs"></div>
 <div class="brief" id="brief"></div>
