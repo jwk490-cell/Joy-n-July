@@ -333,8 +333,8 @@ function mkBtns(id,items,getCur,setCur,cls){
     g.appendChild(b);
   });
 }
-const TABDEF=[["sec4","60일 신고가"],["sec3","거래량 급증"],["sec2","투자자별 수급(사모/투신/연금/외인/프램)"],
-              ["sec5","당일 투자자별 순매수 랭킹"],["sec1","누적 투자자별 순매수 랭킹"]];
+// sec5(당일)·sec1(누적) 탭은 2026-08-27 임시 숨김 — sec2가 커버. 데이터·렌더 코드는 유지, 아래 배열에 다시 넣으면 복구.
+const TABDEF=[["sec4","60일 신고가"],["sec3","거래량 급증"],["sec2","투자자별 수급(사모/투신/연금/외인/프램)"]];
 const SECS=TABDEF.map(d=>d[0]);
 function buildTabs(){
   const t=document.getElementById("tabs"); t.innerHTML="";
