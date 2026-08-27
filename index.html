@@ -71,6 +71,12 @@ nav .sbrand span{font-size:12px;color:var(--faint)}
 .navitem .ico{display:none}
 
 /* ── 탭 보관 (사이드바 맨 아래 토글 그룹) ── */
+.navitem small{margin-left:auto}   /* 별 추가 후에도 small 배지가 오른쪽에 붙도록 */
+.favstar{flex:none;margin-left:6px;font-size:12px;line-height:1;color:var(--faint);opacity:0;cursor:pointer;transition:opacity .12s}
+.navitem:hover .favstar{opacity:.75}
+.favstar.on{opacity:1!important;color:#f5c451}
+@media(max-width:900px){.favstar{opacity:.45}}
+#favGroup{color:#f5c451}
 .archhead{display:flex;align-items:center;gap:6px;width:100%;margin-top:18px;padding:10px 12px 6px;border:none;
   background:transparent;color:var(--faint);font-family:inherit;font-size:11px;font-weight:700;letter-spacing:.04em;
   border-top:1px solid var(--line);cursor:pointer;text-align:left}
@@ -339,6 +345,8 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
   <nav id="nav">
     <div class="sbrand"><b>Research Lab</b><span>KRX · 실시간 리서치 데스크</span></div>
     <button class="navitem on" data-tab="home">홈</button>
+    <div class="navgroup" id="favGroup" style="display:none">★ 즐겨찾기</div>
+    <div id="favList"></div>
     <div class="navgroup">실시간</div>
     <button class="navitem" data-tab="raoni">실시간 한국주식 <small>5초</small></button>
     <button class="navitem" data-tab="term">전닉 터미널</button>
@@ -2186,6 +2194,7 @@ function archApply(){
     const cards=s.querySelectorAll('.card[data-go]');
     if(cards.length)s.style.display=Array.from(cards).some(c=>c.style.display!=='none')?'':'none';
   });
+  favApply();                                            // 보관 재배치 후 즐겨찾기 재배치
 }
 archHead.addEventListener('click',()=>archHead.classList.toggle('open'));
 archNav.addEventListener('click',e=>{                   // 편집 모드: 클릭=보관 토글 (capture로 openTab 차단)
@@ -2222,6 +2231,39 @@ archManage.addEventListener('click',async()=>{
   archEdit=true;document.body.classList.add('archedit');
   archManage.textContent='✓ 보관 관리 종료';
   archHead.classList.add('open');
+});
+
+/* ── 즐겨찾기: 탭 hover ☆ 토글 → 홈 바로 아래 그룹으로 이동. localStorage(브라우저별), 비번 없음 ── */
+const favGroup=document.getElementById('favGroup'),
+      favList=document.getElementById('favList');
+let favSet=new Set();
+try{const s=JSON.parse(localStorage.getItem('rl-favs'));if(Array.isArray(s))favSet=new Set(s);}catch(_){}
+function favApply(){
+  const favs=[];
+  archNav.querySelectorAll('.navitem[data-tab]').forEach(b=>{
+    const t=b.dataset.tab;
+    if(t!=='home'&&favSet.has(t)&&!archSet.has(t))favs.push(b);  // 보관된 탭은 보관 그룹 우선
+  });
+  favs.forEach(b=>favList.appendChild(b));
+  favGroup.style.display=favs.length?'':'none';
+  document.querySelectorAll('.favstar').forEach(s=>{
+    const t=s.parentElement.dataset.tab;
+    s.classList.toggle('on',favSet.has(t));
+    s.textContent=favSet.has(t)?'★':'☆';
+  });
+}
+document.querySelectorAll('#nav .navitem[data-tab]').forEach(b=>{
+  if(b.dataset.tab==='home')return;
+  const s=document.createElement('span');
+  s.className='favstar';s.textContent='☆';s.title='즐겨찾기';
+  s.addEventListener('click',e=>{
+    e.stopPropagation();
+    const t=b.dataset.tab;
+    favSet.has(t)?favSet.delete(t):favSet.add(t);
+    localStorage.setItem('rl-favs',JSON.stringify([...favSet]));
+    archApply();   // 전체 재배치(원위치 복원 포함) 후 favApply까지 연쇄 호출됨
+  });
+  b.appendChild(s);
 });
 archApply();
 
