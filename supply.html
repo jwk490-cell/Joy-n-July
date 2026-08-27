@@ -254,12 +254,12 @@ function render2top(){
   let body;
   if(!rows.length) body='<div class="empty">공통 '+s2.side+' 종목 없음</div>';
   else body=tableHead('<th class="c1">#</th><th class="c2">종목</th>'
-      +'<th style="width:52px">등락률</th><th style="width:58px">시총</th><th>섹터/테마</th>')
+      +'<th>섹터/테마</th><th style="width:52px">등락률</th><th style="width:58px">시총</th>')
     +rows.map((r,i)=>'<tr><td class="'+(i<3?"rk top":"rk")+'">'+(i+1)+'</td>'
       +'<td class="nm">'+nmLink(r)+'</td>'
+      +'<td style="color:var(--dim2);font-size:11px;white-space:nowrap">'+(D.groups[r.sg]||"기타")+'</td>'
       +'<td class="rat" style="color:'+ratCls(r.ch)+'">'+fmtPct(r.ch)+'</td>'
-      +'<td class="net" style="white-space:nowrap">'+fmtCap(r.mc)+'</td>'
-      +'<td style="color:var(--dim2);font-size:11px;white-space:nowrap">'+(D.groups[r.sg]||"기타")+'</td></tr>').join('')+'</tbody></table>';
+      +'<td class="net" style="white-space:nowrap">'+fmtCap(r.mc)+'</td></tr>').join('')+'</tbody></table>';
   const bcls=s2.side==="순매도"?"badge sell":"badge comm";
   document.getElementById("sec2top").innerHTML=
     '<div class="card hl"><h3>'+s2.combo.replace(/\+/g,"·")+' 공통 '+s2.side
