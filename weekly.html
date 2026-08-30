@@ -262,6 +262,30 @@ a { color: inherit; text-decoration: none; }
   color: var(--ink-3); font-size: 12px; font-style: italic;
 }
 
+/* ============ IPO 탭 ============ */
+.ipo-table .col-ir-count .ir-count { white-space: nowrap; }
+.ipo-table .ipo-row.weekend { background: var(--bg-weekend); }
+.ipo-table .ipo-row > td { padding: 10px 14px; border-right: 1px solid var(--line-soft); vertical-align: top; }
+.ipo-table .ipo-row > td:last-child { border-right: none; }
+.ipo-table .ipo-row:nth-child(even) { background: var(--bg-soft); }
+.ipo-table .ir-list { flex-direction: column; gap: 6px; }
+.ipo-table .ir-list > li {
+  white-space: normal; font-size: 12.5px; padding: 6px 11px;
+  background: var(--bg-soft); border: 1px solid var(--line);
+  border-radius: 4px; color: var(--ink-2); line-height: 1.5;
+}
+.ipo-kind {
+  display: inline-block; font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+  padding: 1px 6px; border-radius: 3px; margin-right: 7px; vertical-align: 1px;
+  background: var(--bg-soft-2); border: 1px solid var(--line); color: var(--ink-3);
+}
+.ipo-kind.listing { background: var(--accent-bg); border-color: var(--accent-soft); color: var(--accent-deep); }
+.ipo-kind.offer { background: rgba(29, 78, 216, 0.10); border-color: rgba(29, 78, 216, 0.35); color: var(--c-kr); }
+.ipo-note {
+  background: var(--bg-soft); border: 1px solid var(--line); border-radius: 4px;
+  padding: 10px 14px; margin-bottom: 12px; color: var(--ink-3); font-size: 11.5px;
+}
+
 /* ============ Excel-style Table ============ */
 .cal-table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--bg); border: none; }
 .cal-table thead th {
@@ -439,6 +463,7 @@ a { color: inherit; text-decoration: none; }
 .detail-group.us-earn .detail-group-h { border-left: 3px solid var(--c-us); }
 .detail-group.kr-earn .detail-group-h { border-left: 3px solid var(--c-kr); }
 .detail-group.ir .detail-group-h { border-left: 3px solid var(--c-ir); }
+.detail-group.ipo .detail-group-h { border-left: 3px solid var(--accent); }
 .detail-group.other .detail-group-h { border-left: 3px solid var(--ink-4); }
 
 .detail-list {
@@ -633,32 +658,6 @@ a { color: inherit; text-decoration: none; }
     font-size: 12px;
   }
 }
-
-/* ============ IPO 탭 (postbuild 주입) ============ */
-.ipo-table .col-ir-count .ir-count { white-space: nowrap; }
-.ipo-table .ipo-row.weekend { background: var(--bg-weekend); }
-.ipo-table .ipo-row > td { padding: 10px 14px; border-right: 1px solid var(--line-soft); vertical-align: top; }
-.ipo-table .ipo-row > td:last-child { border-right: none; }
-.ipo-table .ipo-row:nth-child(even) { background: var(--bg-soft); }
-.ipo-table .ir-list { flex-direction: column; gap: 6px; }
-.ipo-table .ir-list > li {
-  white-space: normal; font-size: 12.5px; padding: 6px 11px;
-  background: var(--bg-soft); border: 1px solid var(--line);
-  border-radius: 4px; color: var(--ink-2); line-height: 1.5;
-}
-.ipo-kind {
-  display: inline-block; font-family: var(--mono); font-size: 10.5px; font-weight: 700;
-  padding: 1px 6px; border-radius: 3px; margin-right: 7px; vertical-align: 1px;
-  background: var(--bg-soft-2); border: 1px solid var(--line); color: var(--ink-3);
-}
-.ipo-kind.listing { background: var(--accent-bg); border-color: var(--accent-soft); color: var(--accent-deep); }
-.ipo-kind.offer { background: rgba(29, 78, 216, 0.10); border-color: rgba(29, 78, 216, 0.35); color: var(--c-kr); }
-.ipo-note {
-  background: var(--bg-soft); border: 1px solid var(--line); border-radius: 4px;
-  padding: 10px 14px; margin-bottom: 12px; color: var(--ink-3); font-size: 11.5px;
-}
-.detail-group.ipo .detail-group-h { border-left: 3px solid var(--accent); }
-
 </style>
 <link rel="stylesheet" href="hub-theme.css">
 </head>
@@ -725,6 +724,14 @@ a { color: inherit; text-decoration: none; }
       <div class="detail-group-body">
         <ul class="detail-list"><li>SAIC (SAIC) <span class="ev-meta">(장전)</span></li></ul>
       </div>
+    </div><div class="detail-group ipo">
+      <div class="detail-group-h">
+        <span>IPO 일정</span>
+        <span class="grp-pill">1건</span>
+      </div>
+      <div class="detail-group-body">
+        <ul class="detail-list"><li class=""><span class="ipo-kind">납입</span> 스카이랩스 — 공모주 납입일 (확정공모가 10,000원·밴드 하회, 공모 200억, 주관 한국투자증권)</li></ul>
+      </div>
     </div><div class="detail-group other">
       <div class="detail-group-h">
         <span>그외 이벤트</span>
@@ -732,14 +739,6 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="detail-group-body">
         <ul class="detail-list"><li class="ev-emph">MSCI 지수 리밸런싱 효력 발생 — LG이노텍 편입 · HLB·LG디스플레이·포스코인터내셔널·삼성에피스홀딩스 제외, 샌디스크 MSCI World 신규 편입</li><li class="">카카오뱅크 노조 전면 총파업 · 현대차 노사 임금협상 잠정합의안 찬반투표</li></ul>
-      </div>
-    </div><div class="detail-group ipo">
-      <div class="detail-group-h">
-        <span>IPO · 공모</span>
-        <span class="grp-pill">1건</span>
-      </div>
-      <div class="detail-group-body">
-        <ul class="detail-list"><li class=""><span class="ipo-kind ">납입</span> 스카이랩스 — 공모주 납입일 (확정공모가 10,000원·밴드 하회, 공모 200억, 주관 한국투자증권)</li></ul>
       </div>
     </div></div>
               </td>
@@ -766,6 +765,14 @@ a { color: inherit; text-decoration: none; }
       <div class="detail-group-body">
         <ul class="detail-list"><li>델 테크놀로지스 (DELL) <span class="ev-meta">(장후)</span></li><li>팔로알토 네트웍스 (PANW) <span class="ev-meta">(장후)</span></li><li>크레도 (CRDO) <span class="ev-meta">(장후)</span></li><li>몽고DB (MDB) <span class="ev-meta">(장후)</span></li><li>깃랩 (GTLB) <span class="ev-meta">(장후)</span></li><li>메드트로닉 (MDT) <span class="ev-meta">(장전)</span></li><li>니오 (NIO) <span class="ev-meta">(장전)</span></li></ul>
       </div>
+    </div><div class="detail-group ipo">
+      <div class="detail-group-h">
+        <span>IPO 일정</span>
+        <span class="grp-pill">1건</span>
+      </div>
+      <div class="detail-group-body">
+        <ul class="detail-list"><li class="ev-emph"><span class="ipo-kind">청약</span> 엔에이치스팩34호 — 일반청약 1일차 (9/1~9/2, 공모가 2,000원, 주관 NH투자증권, 상장예정 9/11)</li></ul>
+      </div>
     </div><div class="detail-group other">
       <div class="detail-group-h">
         <span>그외 이벤트</span>
@@ -773,14 +780,6 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="detail-group-body">
         <ul class="detail-list"><li class="ev-emph">🇰🇷 8월 수출입 통계 (09:00) — 수출 +62.6%·무역수지 $30.7B 예상, 반도체가 견인한 1~20일 흐름의 월간 확인</li><li class="">🇰🇷 국회 정무위 소위 — 비금전 신탁수익증권(STO) 법안 심사</li><li class="">팔도·동원F&amp;B 가격 인상 시행</li></ul>
-      </div>
-    </div><div class="detail-group ipo">
-      <div class="detail-group-h">
-        <span>IPO · 공모</span>
-        <span class="grp-pill">1건</span>
-      </div>
-      <div class="detail-group-body">
-        <ul class="detail-list"><li class="ev-emph"><span class="ipo-kind offer">청약</span> 엔에이치스팩34호 — 일반청약 1일차 (9/1~9/2, 공모가 2,000원, 주관 NH투자증권, 상장예정 9/11)</li></ul>
       </div>
     </div></div>
               </td>
@@ -809,11 +808,11 @@ a { color: inherit; text-decoration: none; }
       </div>
     </div><div class="detail-group ipo">
       <div class="detail-group-h">
-        <span>IPO · 공모</span>
+        <span>IPO 일정</span>
         <span class="grp-pill">2건</span>
       </div>
       <div class="detail-group-body">
-        <ul class="detail-list"><li class=""><span class="ipo-kind offer">청약</span> 엔에이치스팩34호 — 일반청약 마감일 (NH투자증권)</li><li class="ev-emph"><span class="ipo-kind ">수요예측</span> 네오사피엔스 — 수요예측 개시 (9/2~9/8). 밴드 13,800~15,800원 · 예상시총 1,683~1,927억 · 주관 대신증권. AI 음성생성 '타입캐스트' (청약 9/10~9/11)</li></ul>
+        <ul class="detail-list"><li class=""><span class="ipo-kind">청약</span> 엔에이치스팩34호 — 일반청약 마감일 (NH투자증권)</li><li class="ev-emph"><span class="ipo-kind">수요예측</span> 네오사피엔스 — 수요예측 개시 (9/2~9/8). 밴드 13,800~15,800원 · 예상시총 1,683~1,927억 · 주관 대신증권. AI 음성생성 &#x27;타입캐스트&#x27; (청약 9/10~9/11)</li></ul>
       </div>
     </div></div>
               </td>
@@ -857,6 +856,14 @@ a { color: inherit; text-decoration: none; }
       <div class="detail-group-body">
         <ul class="detail-list"><li class="ev-warn">🇺🇸 8월 고용보고서 (21:30) — NFP +5.8만·실업률 4.1% 예상 (7월 -2.3만 쇼크 후 회복 여부). 강한 반등=금리인상 논거, 큰 부진=침체 우려 — 양방향 변동성 주의</li><li class="">IFA 2026 유럽 최대 가전전시회 개막 (~9/8, 베를린)</li><li class="">美 중간선거 D-60</li><li class="">OPEC+ 회의 (9/6 일요일)</li></ul>
       </div>
+    </div><div class="detail-group ipo">
+      <div class="detail-group-h">
+        <span>IPO 일정</span>
+        <span class="grp-pill">4건</span>
+      </div>
+      <div class="detail-group-body">
+        <ul class="detail-list"><li class="ev-emph"><span class="ipo-kind">상장</span> 스카이랩스 — 코스닥 신규상장 (반지형 커프리스 혈압 모니터링 의료기기). 확정공모가 10,000원(밴드 13,000~16,000 하회) · 공모 200억 · 상장후 시총 약 1,960억 · 주관 한국투자증권</li><li class=""><span class="ipo-kind">수요예측</span> 케이비제34호스팩 — 수요예측 개시 (9/4~9/7, 공모가 2,000원, 주관 KB증권, 청약 9/10~9/11)</li><li class=""><span class="ipo-kind">수요예측</span> 와이즈플래닛컴퍼니 — 수요예측 개시 (9/4~9/10). 밴드 10,000~12,000원 · 예상시총 1,000~1,200억 · 주관 대신증권 (청약 9/14~9/15)</li><li class=""><span class="ipo-kind">납입</span> 엔에이치스팩34호 — 납입일 (NH투자증권)</li></ul>
+      </div>
     </div><div class="detail-group other">
       <div class="detail-group-h">
         <span>그외 이벤트</span>
@@ -864,14 +871,6 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="detail-group-body">
         <ul class="detail-list"><li class="">🇰🇷 금융노조 총파업 · 홈플러스 회생계획안 가결 기한</li><li class="">SK하이닉스 솔리다임 프리IPO 추진 보도 조회공시 답변 재공시 기한 · 🇰🇷 7월 국제수지 (08:00)</li></ul>
-      </div>
-    </div><div class="detail-group ipo">
-      <div class="detail-group-h">
-        <span>IPO · 공모</span>
-        <span class="grp-pill">4건</span>
-      </div>
-      <div class="detail-group-body">
-        <ul class="detail-list"><li class="ev-emph"><span class="ipo-kind listing">상장</span> 스카이랩스 — 코스닥 신규상장 (반지형 커프리스 혈압 모니터링 의료기기). 확정공모가 10,000원(밴드 13,000~16,000 하회) · 공모 200억 · 상장후 시총 약 1,960억 · 주관 한국투자증권</li><li class=""><span class="ipo-kind ">수요예측</span> 케이비제34호스팩 — 수요예측 개시 (9/4~9/7, 공모가 2,000원, 주관 KB증권, 청약 9/10~9/11)</li><li class=""><span class="ipo-kind ">수요예측</span> 와이즈플래닛컴퍼니 — 수요예측 개시 (9/4~9/10). 밴드 10,000~12,000원 · 예상시총 1,000~1,200억 · 주관 대신증권 (청약 9/14~9/15)</li><li class=""><span class="ipo-kind ">납입</span> 엔에이치스팩34호 — 납입일 (NH투자증권)</li></ul>
       </div>
     </div></div>
               </td>
@@ -892,11 +891,11 @@ a { color: inherit; text-decoration: none; }
       </div>
     </div><div class="detail-group ipo">
       <div class="detail-group-h">
-        <span>IPO · 공모</span>
+        <span>IPO 일정</span>
         <span class="grp-pill">3건</span>
       </div>
       <div class="detail-group-body">
-        <ul class="detail-list"><li class=""><span class="ipo-kind ">수요예측</span> 한국제17호스팩 — 수요예측 (9/7~9/8, 공모가 2,000원, 청약 9/10~9/11)</li><li class=""><span class="ipo-kind ">수요예측</span> 글로벌테크놀로지 — 수요예측 개시 (9/7~9/11, 주관 한국투자증권)</li><li class=""><span class="ipo-kind ">수요예측</span> 빅웨이브로보틱스 — 수요예측 개시 (9/7~9/11, 주관 유진투자증권·미래에셋증권)</li></ul>
+        <ul class="detail-list"><li class=""><span class="ipo-kind">수요예측</span> 한국제17호스팩 — 수요예측 (9/7~9/8, 공모가 2,000원, 청약 9/10~9/11)</li><li class=""><span class="ipo-kind">수요예측</span> 글로벌테크놀로지 — 수요예측 개시 (9/7~9/11, 주관 한국투자증권)</li><li class=""><span class="ipo-kind">수요예측</span> 빅웨이브로보틱스 — 수요예측 개시 (9/7~9/11, 주관 유진투자증권·미래에셋증권)</li></ul>
       </div>
     </div></div>
               </td>
@@ -917,11 +916,11 @@ a { color: inherit; text-decoration: none; }
       </div>
     </div><div class="detail-group ipo">
       <div class="detail-group-h">
-        <span>IPO · 공모</span>
+        <span>IPO 일정</span>
         <span class="grp-pill">1건</span>
       </div>
       <div class="detail-group-body">
-        <ul class="detail-list"><li class=""><span class="ipo-kind ">수요예측</span> 덕산넵코어스 — 수요예측 개시 (9/8~9/14, 주관 대신증권, 상장예정 9/30)</li></ul>
+        <ul class="detail-list"><li class=""><span class="ipo-kind">수요예측</span> 덕산넵코어스 — 수요예측 개시 (9/8~9/14, 주관 대신증권, 상장예정 9/30)</li></ul>
       </div>
     </div></div>
               </td>
@@ -942,11 +941,11 @@ a { color: inherit; text-decoration: none; }
       </div>
     </div><div class="detail-group ipo">
       <div class="detail-group-h">
-        <span>IPO · 공모</span>
+        <span>IPO 일정</span>
         <span class="grp-pill">2건</span>
       </div>
       <div class="detail-group-body">
-        <ul class="detail-list"><li class=""><span class="ipo-kind ">수요예측</span> 브릴스 — 수요예측 개시 (9/9~9/15, 주관 IBK투자증권). 로봇 모듈화 플랫폼 — 당초 8/31 개시에서 연기</li><li class=""><span class="ipo-kind ">수요예측</span> 엘리스그룹 — 수요예측 개시 (9/9~9/15, 주관 미래에셋증권·삼성증권)</li></ul>
+        <ul class="detail-list"><li class=""><span class="ipo-kind">수요예측</span> 브릴스 — 수요예측 개시 (9/9~9/15, 주관 IBK투자증권). 로봇 모듈화 플랫폼 — 당초 8/31 개시에서 연기</li><li class=""><span class="ipo-kind">수요예측</span> 엘리스그룹 — 수요예측 개시 (9/9~9/15, 주관 미래에셋증권·삼성증권)</li></ul>
       </div>
     </div></div>
               </td>
@@ -965,6 +964,14 @@ a { color: inherit; text-decoration: none; }
       <div class="detail-group-body">
         <ul class="detail-list"><li class="ev-warn">🇪🇺 ECB 기준금리 결정 (21:15) · 기자회견 (21:45)</li><li class="ev-emph">🇺🇸 8월 PPI (21:30) · 30년물 국채 입찰 · OPEC 월간 원유시장 보고서</li></ul>
       </div>
+    </div><div class="detail-group ipo">
+      <div class="detail-group-h">
+        <span>IPO 일정</span>
+        <span class="grp-pill">2건</span>
+      </div>
+      <div class="detail-group-body">
+        <ul class="detail-list"><li class="ev-emph"><span class="ipo-kind">청약</span> 네오사피엔스 — 일반청약 1일차 (9/10~9/11, 주관 대신증권)</li><li class=""><span class="ipo-kind">청약</span> 케이비제34호스팩·한국제17호스팩 — 일반청약 (9/10~9/11, 공모가 각 2,000원)</li></ul>
+      </div>
     </div><div class="detail-group other">
       <div class="detail-group-h">
         <span>그외 이벤트</span>
@@ -972,14 +979,6 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="detail-group-body">
         <ul class="detail-list"><li class="ev-emph">🇰🇷 선물·옵션 동시만기일</li></ul>
-      </div>
-    </div><div class="detail-group ipo">
-      <div class="detail-group-h">
-        <span>IPO · 공모</span>
-        <span class="grp-pill">2건</span>
-      </div>
-      <div class="detail-group-body">
-        <ul class="detail-list"><li class="ev-emph"><span class="ipo-kind offer">청약</span> 네오사피엔스 — 일반청약 1일차 (9/10~9/11, 주관 대신증권)</li><li class=""><span class="ipo-kind offer">청약</span> 케이비제34호스팩·한국제17호스팩 — 일반청약 (9/10~9/11, 공모가 각 2,000원)</li></ul>
       </div>
     </div></div>
               </td>
@@ -998,6 +997,14 @@ a { color: inherit; text-decoration: none; }
       <div class="detail-group-body">
         <ul class="detail-list"><li class="ev-warn">🇺🇸 8월 CPI (21:30) — 9월 FOMC(9/15~16) 직전 마지막 물가 지표</li><li class="">🇺🇸 9월 미시간대 소비자심리지수 잠정치 (23:00)</li></ul>
       </div>
+    </div><div class="detail-group ipo">
+      <div class="detail-group-h">
+        <span>IPO 일정</span>
+        <span class="grp-pill">3건</span>
+      </div>
+      <div class="detail-group-body">
+        <ul class="detail-list"><li class="ev-emph"><span class="ipo-kind">상장</span> 엔에이치스팩34호 — 코스닥 신규상장 (공모가 2,000원, 주관 NH투자증권)</li><li class=""><span class="ipo-kind">청약</span> 네오사피엔스·케이비제34호스팩·한국제17호스팩 — 일반청약 마감일</li><li class=""><span class="ipo-kind">수요예측</span> 글로벌테크놀로지·빅웨이브로보틱스 — 수요예측 최종일</li></ul>
+      </div>
     </div><div class="detail-group other">
       <div class="detail-group-h">
         <span>그외 이벤트</span>
@@ -1006,21 +1013,13 @@ a { color: inherit; text-decoration: none; }
       <div class="detail-group-body">
         <ul class="detail-list"><li class="">🇰🇷 9월 1~10일 수출입 (11:00)</li></ul>
       </div>
-    </div><div class="detail-group ipo">
-      <div class="detail-group-h">
-        <span>IPO · 공모</span>
-        <span class="grp-pill">3건</span>
-      </div>
-      <div class="detail-group-body">
-        <ul class="detail-list"><li class="ev-emph"><span class="ipo-kind listing">상장</span> 엔에이치스팩34호 — 코스닥 신규상장 (공모가 2,000원, 주관 NH투자증권)</li><li class=""><span class="ipo-kind offer">청약</span> 네오사피엔스·케이비제34호스팩·한국제17호스팩 — 일반청약 마감일</li><li class=""><span class="ipo-kind ">수요예측</span> 글로벌테크놀로지·빅웨이브로보틱스 — 수요예측 최종일</li></ul>
-      </div>
     </div></div>
               </td>
             </tr>
       </tbody>
     </table></div></div>
       <div class="tab-panel" id="tab-ir"><div class="table-wrap"><table class="cal-table ir-table"><thead><tr><th style="width:120px;">날짜</th><th style="width:60px;">건수</th><th>IR 일정</th></tr></thead><tbody><tr class="week-sep"><td colspan="3">WEEK 1 — 8/31(월) ~ 9/4(금)</td></tr><tr class="ir-row " data-date="8/31"><td class="col-date-w ">8/31(월)</td><td class="col-ir-count"><span class="ir-count">13건</span></td><td class="col-ir"><ul class="ir-list"><li>기아 (키움 Corporate Day)</li><li>현대자동차 (해외 NDR)</li><li>현대모비스 (키움 Corporate Day)</li><li>현대건설 (골드만 아시아 컨퍼런스)</li><li>KB금융 (골드만 아시아 컨퍼런스)</li><li>우리금융지주 (골드만 아시아 컨퍼런스)</li><li>카카오페이</li><li>삼성E&amp;A</li><li>롯데에너지머티리얼즈</li><li>한미반도체 (레이먼드제임스 아시아 테크 투어)</li><li>달바글로벌</li><li>스트라드비젼</li><li>갤럭시아머니트리</li></ul></td></tr><tr class="ir-row " data-date="9/1"><td class="col-date-w ">9/1(화)</td><td class="col-ir-count"><span class="ir-count">8건</span></td><td class="col-ir"><ul class="ir-list"><li>한화에어로스페이스 (골드만 아시아 컨퍼런스)</li><li>카카오</li><li>LG유플러스</li><li>에이피알</li><li>SOOP</li><li>슈프리마</li><li>스튜디오드래곤 (키움 Corporate Day)</li><li>현대백화점그룹 Corporate Day — 현대백화점·한섬·지누스·현대그린푸드·현대리바트·현대바이오랜드·현대에버다임·현대이지웰·현대지에프홀딩스·현대퓨처넷·대원강업</li></ul></td></tr><tr class="ir-row " data-date="9/2"><td class="col-date-w ">9/2(수)</td><td class="col-ir-count"><span class="ir-count">7건</span></td><td class="col-ir"><ul class="ir-list"><li>신한지주 (골드만 아시아 컨퍼런스)</li><li>한국가스공사 (2Q 실적)</li><li>롯데지주</li><li>클래시스</li><li>자화전자 (2Q 실적)</li><li>GS건설 (키움 Corporate Day)</li><li>SY동아</li></ul></td></tr><tr class="ir-row " data-date="9/3"><td class="col-date-w ">9/3(목)</td><td class="col-ir-count"><span class="ir-count">4건</span></td><td class="col-ir"><ul class="ir-list"><li>삼성바이오로직스 (유상증자 설명)</li><li>쏘닉스</li><li>엘케이켐</li><li>진양폴리우레탄</li></ul></td></tr><tr class="ir-row " data-date="9/4"><td class="col-date-w ">9/4(금)</td><td class="col-ir-count"><span class="ir-count">1건</span></td><td class="col-ir"><ul class="ir-list"><li>신한지주 (신한 Premier Corporate Day)</li></ul></td></tr><tr class="week-sep"><td colspan="3">WEEK 2 — 9/7(월) ~ 9/11(금)</td></tr><tr class="ir-row " data-date="9/7"><td class="col-date-w ">9/7(월)</td><td class="col-ir-count"><span class="ir-count">3건</span></td><td class="col-ir"><ul class="ir-list"><li>동진쎄미켐 (상반기 실적)</li><li>롯데에너지머티리얼즈 (해외 NDR)</li><li>자이에스앤디</li></ul></td></tr><tr class="ir-row " data-date="9/8"><td class="col-date-w ">9/8(화)</td><td class="col-ir-count"><span class="ir-count">3건</span></td><td class="col-ir"><ul class="ir-list"><li>사토시홀딩스</li><li>알지노믹스</li><li>셀바이오휴먼텍 (2Q 실적)</li></ul></td></tr><tr class="ir-row " data-date="9/9"><td class="col-date-w ">9/9(수)</td><td class="col-ir-count"></td><td class="col-ir"><span class="col-summary-empty">—</span></td></tr><tr class="ir-row " data-date="9/10"><td class="col-date-w ">9/10(목)</td><td class="col-ir-count"><span class="ir-count">2건</span></td><td class="col-ir"><ul class="ir-list"><li>신한지주 (KB Korea Conference)</li><li>데브시스터즈</li></ul></td></tr><tr class="ir-row " data-date="9/11"><td class="col-date-w ">9/11(금)</td><td class="col-ir-count"></td><td class="col-ir"><span class="col-summary-empty">—</span></td></tr></tbody></table></div></div>
-      <div class="tab-panel" id="tab-ipo"><div class="table-wrap"><div class="ipo-note">출처: 텔레그램 @haan_ipo (대진인베스트먼트) 데일리 일정 · 38커뮤니케이션 청약일정 교차검증 (2026.08.31 기준). 수요예측 결과에 따라 청약·상장일은 변경될 수 있음. 브릴스 수요예측은 8/31→9/9로 연기 반영.</div><table class="cal-table ir-table ipo-table"><thead><tr><th style="width:110px;">날짜</th><th style="width:72px;">건수</th><th>IPO 일정 (상장 · 청약 · 수요예측)</th></tr></thead><tbody><tr class="week-sep"><td colspan="3">WEEK 1 — 8/31(월) ~ 9/4(금)</td></tr><tr class="ipo-row " data-date="8/31"><td class="col-date-w ">8/31(월)</td><td class="col-ir-count"><span class="ir-count">1건</span></td><td class="col-ir"><ul class="ir-list"><li class=""><span class="ipo-kind ">납입</span> 스카이랩스 — 공모주 납입일 (확정공모가 10,000원·밴드 하회, 공모 200억, 주관 한국투자증권)</li></ul></td></tr><tr class="ipo-row " data-date="9/1"><td class="col-date-w ">9/1(화)</td><td class="col-ir-count"><span class="ir-count">1건</span></td><td class="col-ir"><ul class="ir-list"><li class="ev-emph"><span class="ipo-kind offer">청약</span> 엔에이치스팩34호 — 일반청약 1일차 (9/1~9/2, 공모가 2,000원, 주관 NH투자증권, 상장예정 9/11)</li></ul></td></tr><tr class="ipo-row " data-date="9/2"><td class="col-date-w ">9/2(수)</td><td class="col-ir-count"><span class="ir-count">2건</span></td><td class="col-ir"><ul class="ir-list"><li class=""><span class="ipo-kind offer">청약</span> 엔에이치스팩34호 — 일반청약 마감일 (NH투자증권)</li><li class="ev-emph"><span class="ipo-kind ">수요예측</span> 네오사피엔스 — 수요예측 개시 (9/2~9/8). 밴드 13,800~15,800원 · 예상시총 1,683~1,927억 · 주관 대신증권. AI 음성생성 '타입캐스트' (청약 9/10~9/11)</li></ul></td></tr><tr class="ipo-row " data-date="9/3"><td class="col-date-w ">9/3(목)</td><td class="col-ir-count"></td><td class="col-ir"><span class="col-summary-empty">—</span></td></tr><tr class="ipo-row " data-date="9/4"><td class="col-date-w ">9/4(금)</td><td class="col-ir-count"><span class="ir-count">4건</span></td><td class="col-ir"><ul class="ir-list"><li class="ev-emph"><span class="ipo-kind listing">상장</span> 스카이랩스 — 코스닥 신규상장 (반지형 커프리스 혈압 모니터링 의료기기). 확정공모가 10,000원(밴드 13,000~16,000 하회) · 공모 200억 · 상장후 시총 약 1,960억 · 주관 한국투자증권</li><li class=""><span class="ipo-kind ">수요예측</span> 케이비제34호스팩 — 수요예측 개시 (9/4~9/7, 공모가 2,000원, 주관 KB증권, 청약 9/10~9/11)</li><li class=""><span class="ipo-kind ">수요예측</span> 와이즈플래닛컴퍼니 — 수요예측 개시 (9/4~9/10). 밴드 10,000~12,000원 · 예상시총 1,000~1,200억 · 주관 대신증권 (청약 9/14~9/15)</li><li class=""><span class="ipo-kind ">납입</span> 엔에이치스팩34호 — 납입일 (NH투자증권)</li></ul></td></tr><tr class="week-sep"><td colspan="3">WEEK 2 — 9/7(월) ~ 9/11(금)</td></tr><tr class="ipo-row " data-date="9/7"><td class="col-date-w ">9/7(월)</td><td class="col-ir-count"><span class="ir-count">3건</span></td><td class="col-ir"><ul class="ir-list"><li class=""><span class="ipo-kind ">수요예측</span> 한국제17호스팩 — 수요예측 (9/7~9/8, 공모가 2,000원, 청약 9/10~9/11)</li><li class=""><span class="ipo-kind ">수요예측</span> 글로벌테크놀로지 — 수요예측 개시 (9/7~9/11, 주관 한국투자증권)</li><li class=""><span class="ipo-kind ">수요예측</span> 빅웨이브로보틱스 — 수요예측 개시 (9/7~9/11, 주관 유진투자증권·미래에셋증권)</li></ul></td></tr><tr class="ipo-row " data-date="9/8"><td class="col-date-w ">9/8(화)</td><td class="col-ir-count"><span class="ir-count">1건</span></td><td class="col-ir"><ul class="ir-list"><li class=""><span class="ipo-kind ">수요예측</span> 덕산넵코어스 — 수요예측 개시 (9/8~9/14, 주관 대신증권, 상장예정 9/30)</li></ul></td></tr><tr class="ipo-row " data-date="9/9"><td class="col-date-w ">9/9(수)</td><td class="col-ir-count"><span class="ir-count">2건</span></td><td class="col-ir"><ul class="ir-list"><li class=""><span class="ipo-kind ">수요예측</span> 브릴스 — 수요예측 개시 (9/9~9/15, 주관 IBK투자증권). 로봇 모듈화 플랫폼 — 당초 8/31 개시에서 연기</li><li class=""><span class="ipo-kind ">수요예측</span> 엘리스그룹 — 수요예측 개시 (9/9~9/15, 주관 미래에셋증권·삼성증권)</li></ul></td></tr><tr class="ipo-row " data-date="9/10"><td class="col-date-w ">9/10(목)</td><td class="col-ir-count"><span class="ir-count">2건</span></td><td class="col-ir"><ul class="ir-list"><li class="ev-emph"><span class="ipo-kind offer">청약</span> 네오사피엔스 — 일반청약 1일차 (9/10~9/11, 주관 대신증권)</li><li class=""><span class="ipo-kind offer">청약</span> 케이비제34호스팩·한국제17호스팩 — 일반청약 (9/10~9/11, 공모가 각 2,000원)</li></ul></td></tr><tr class="ipo-row " data-date="9/11"><td class="col-date-w ">9/11(금)</td><td class="col-ir-count"><span class="ir-count">3건</span></td><td class="col-ir"><ul class="ir-list"><li class="ev-emph"><span class="ipo-kind listing">상장</span> 엔에이치스팩34호 — 코스닥 신규상장 (공모가 2,000원, 주관 NH투자증권)</li><li class=""><span class="ipo-kind offer">청약</span> 네오사피엔스·케이비제34호스팩·한국제17호스팩 — 일반청약 마감일</li><li class=""><span class="ipo-kind ">수요예측</span> 글로벌테크놀로지·빅웨이브로보틱스 — 수요예측 최종일</li></ul></td></tr></tbody></table></div></div>
+      <div class="tab-panel" id="tab-ipo"><div class="table-wrap"><div class="ipo-note">출처: 텔레그램 @haan_ipo (대진인베스트먼트) 데일리 일정 · 38커뮤니케이션 청약일정 교차검증 (2026.08.31 기준). 수요예측 결과에 따라 청약·상장일은 변경될 수 있음. 브릴스 수요예측은 8/31→9/9로 연기 반영.</div><table class="cal-table ir-table ipo-table"><thead><tr><th style="width:110px;">날짜</th><th style="width:72px;">건수</th><th>IPO 일정 (상장 · 청약 · 수요예측)</th></tr></thead><tbody><tr class="week-sep"><td colspan="3">WEEK 1 — 8/31(월) ~ 9/4(금)</td></tr><tr class="ipo-row " data-date="8/31"><td class="col-date-w ">8/31(월)</td><td class="col-ir-count"><span class="ir-count">1건</span></td><td class="col-ir"><ul class="ir-list"><li class=""><span class="ipo-kind ">납입</span> 스카이랩스 — 공모주 납입일 (확정공모가 10,000원·밴드 하회, 공모 200억, 주관 한국투자증권)</li></ul></td></tr><tr class="ipo-row " data-date="9/1"><td class="col-date-w ">9/1(화)</td><td class="col-ir-count"><span class="ir-count">1건</span></td><td class="col-ir"><ul class="ir-list"><li class="ev-emph"><span class="ipo-kind offer">청약</span> 엔에이치스팩34호 — 일반청약 1일차 (9/1~9/2, 공모가 2,000원, 주관 NH투자증권, 상장예정 9/11)</li></ul></td></tr><tr class="ipo-row " data-date="9/2"><td class="col-date-w ">9/2(수)</td><td class="col-ir-count"><span class="ir-count">2건</span></td><td class="col-ir"><ul class="ir-list"><li class=""><span class="ipo-kind offer">청약</span> 엔에이치스팩34호 — 일반청약 마감일 (NH투자증권)</li><li class="ev-emph"><span class="ipo-kind ">수요예측</span> 네오사피엔스 — 수요예측 개시 (9/2~9/8). 밴드 13,800~15,800원 · 예상시총 1,683~1,927억 · 주관 대신증권. AI 음성생성 &#x27;타입캐스트&#x27; (청약 9/10~9/11)</li></ul></td></tr><tr class="ipo-row " data-date="9/3"><td class="col-date-w ">9/3(목)</td><td class="col-ir-count"></td><td class="col-ir"><span class="col-summary-empty">—</span></td></tr><tr class="ipo-row " data-date="9/4"><td class="col-date-w ">9/4(금)</td><td class="col-ir-count"><span class="ir-count">4건</span></td><td class="col-ir"><ul class="ir-list"><li class="ev-emph"><span class="ipo-kind listing">상장</span> 스카이랩스 — 코스닥 신규상장 (반지형 커프리스 혈압 모니터링 의료기기). 확정공모가 10,000원(밴드 13,000~16,000 하회) · 공모 200억 · 상장후 시총 약 1,960억 · 주관 한국투자증권</li><li class=""><span class="ipo-kind ">수요예측</span> 케이비제34호스팩 — 수요예측 개시 (9/4~9/7, 공모가 2,000원, 주관 KB증권, 청약 9/10~9/11)</li><li class=""><span class="ipo-kind ">수요예측</span> 와이즈플래닛컴퍼니 — 수요예측 개시 (9/4~9/10). 밴드 10,000~12,000원 · 예상시총 1,000~1,200억 · 주관 대신증권 (청약 9/14~9/15)</li><li class=""><span class="ipo-kind ">납입</span> 엔에이치스팩34호 — 납입일 (NH투자증권)</li></ul></td></tr><tr class="week-sep"><td colspan="3">WEEK 2 — 9/7(월) ~ 9/11(금)</td></tr><tr class="ipo-row " data-date="9/7"><td class="col-date-w ">9/7(월)</td><td class="col-ir-count"><span class="ir-count">3건</span></td><td class="col-ir"><ul class="ir-list"><li class=""><span class="ipo-kind ">수요예측</span> 한국제17호스팩 — 수요예측 (9/7~9/8, 공모가 2,000원, 청약 9/10~9/11)</li><li class=""><span class="ipo-kind ">수요예측</span> 글로벌테크놀로지 — 수요예측 개시 (9/7~9/11, 주관 한국투자증권)</li><li class=""><span class="ipo-kind ">수요예측</span> 빅웨이브로보틱스 — 수요예측 개시 (9/7~9/11, 주관 유진투자증권·미래에셋증권)</li></ul></td></tr><tr class="ipo-row " data-date="9/8"><td class="col-date-w ">9/8(화)</td><td class="col-ir-count"><span class="ir-count">1건</span></td><td class="col-ir"><ul class="ir-list"><li class=""><span class="ipo-kind ">수요예측</span> 덕산넵코어스 — 수요예측 개시 (9/8~9/14, 주관 대신증권, 상장예정 9/30)</li></ul></td></tr><tr class="ipo-row " data-date="9/9"><td class="col-date-w ">9/9(수)</td><td class="col-ir-count"><span class="ir-count">2건</span></td><td class="col-ir"><ul class="ir-list"><li class=""><span class="ipo-kind ">수요예측</span> 브릴스 — 수요예측 개시 (9/9~9/15, 주관 IBK투자증권). 로봇 모듈화 플랫폼 — 당초 8/31 개시에서 연기</li><li class=""><span class="ipo-kind ">수요예측</span> 엘리스그룹 — 수요예측 개시 (9/9~9/15, 주관 미래에셋증권·삼성증권)</li></ul></td></tr><tr class="ipo-row " data-date="9/10"><td class="col-date-w ">9/10(목)</td><td class="col-ir-count"><span class="ir-count">2건</span></td><td class="col-ir"><ul class="ir-list"><li class="ev-emph"><span class="ipo-kind offer">청약</span> 네오사피엔스 — 일반청약 1일차 (9/10~9/11, 주관 대신증권)</li><li class=""><span class="ipo-kind offer">청약</span> 케이비제34호스팩·한국제17호스팩 — 일반청약 (9/10~9/11, 공모가 각 2,000원)</li></ul></td></tr><tr class="ipo-row " data-date="9/11"><td class="col-date-w ">9/11(금)</td><td class="col-ir-count"><span class="ir-count">3건</span></td><td class="col-ir"><ul class="ir-list"><li class="ev-emph"><span class="ipo-kind listing">상장</span> 엔에이치스팩34호 — 코스닥 신규상장 (공모가 2,000원, 주관 NH투자증권)</li><li class=""><span class="ipo-kind offer">청약</span> 네오사피엔스·케이비제34호스팩·한국제17호스팩 — 일반청약 마감일</li><li class=""><span class="ipo-kind ">수요예측</span> 글로벌테크놀로지·빅웨이브로보틱스 — 수요예측 최종일</li></ul></td></tr></tbody></table></div></div>
     </div><section class="outer-foot">
       <div class="foot-inner">
         <div class="foot-disclaim-short">본 자료는 공개된 일정·뉴스를 정리한 단순 참조용이며, 매수·매도 추천이나 투자 판단을 유도하지 않습니다.</div>
