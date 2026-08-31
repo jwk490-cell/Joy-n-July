@@ -391,6 +391,8 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     <button class="navitem" data-tab="backlog">수주잔고 <small>DART</small></button>
     <button class="navitem" data-tab="util">가동률 트래커 <small>DART</small></button>
     <button class="navitem" data-tab="screening">수주·가동률 스크리닝</button>
+    <button class="navitem" data-tab="cost">비용구조 <small>DART</small></button>
+    <button class="navitem" data-tab="vs">VS 재무 리포트 <small>xlsx</small></button>
     <div class="navgroup">Locked</div>
     <button class="navitem" data-tab="rrgsec">수급 로테이션 맵 (업종) <small>🔒</small></button>
     <button class="navitem" data-tab="rrgstk">수급 로테이션 맵 (종목) <small>🔒</small></button>
@@ -610,6 +612,14 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
 
     <section class="panel embed" id="tab-screening">
       <iframe data-src="screening/index.html" title="수주·가동률 스크리닝"></iframe>
+    </section>
+
+    <section class="panel embed" id="tab-cost">
+      <iframe data-src="cost/index.html" title="비용구조"></iframe>
+    </section>
+
+    <section class="panel embed" id="tab-vs">
+      <iframe data-src="vs/index.html" title="VS 재무 리포트"></iframe>
     </section>
 
     <section class="panel embed" id="tab-align">
@@ -2098,7 +2108,7 @@ function openTab(tab){
   panel.classList.add('on');
   const f=panel.querySelector('iframe[data-src]');
   // 자주 갱신되는 대시보드는 10분 단위 캐시버스터를 붙여 낡은 페이지가 남지 않게 한다
-  const FRESH={backlog:1,basket7:1,supply:1,flowosc:1,util:1,screening:1};
+  const FRESH={backlog:1,basket7:1,supply:1,flowosc:1,util:1,screening:1,cost:1,vs:1};
   if(f&&!f.src){f.src=f.dataset.src+(FRESH[tab]?'?v='+Math.floor(Date.now()/6e5):'');}
   if(tab==='telegram')loadTG(false);
   if(tab==='home')homeStart();
@@ -2414,7 +2424,8 @@ const RR_TABS={
   telegram:{m:'a',eta:'~2분'}, taerin:{m:'a',eta:'~2분'}, thememap:{m:'a',eta:'~3분'},
   deepresearch:{m:'x',note:'심층 리서치는 Claude 세션에서 발행합니다'},
   leadflow:{m:'a',eta:'~5분'}, rstime:{m:'a',eta:'~10분'},
-  backlog:{m:'a',eta:'수십 분 (DART 전수 재추출)'}, util:{m:'a',eta:'~5분'}, screening:{m:'a',eta:'~1분'}, rrgsec:{m:'a',eta:'~7분'}, rrgstk:{m:'a',eta:'~7분'}
+  backlog:{m:'a',eta:'수십 분 (DART 전수 재추출)'}, util:{m:'a',eta:'~5분'}, screening:{m:'a',eta:'~1분'},
+  cost:{m:'a',eta:'~3분'}, vs:{m:'a',eta:'~3분'}, rrgsec:{m:'a',eta:'~7분'}, rrgstk:{m:'a',eta:'~7분'}
 };
 let rrTab='home',rrKey=null,rrTimer=null;
 function rrCfg(t){return RR_TABS[t]||{m:'a',eta:'~수 분'};}
