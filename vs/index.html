@@ -1,6 +1,6 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VS 재무 리포트</title>
+<title>비용추정</title>
 <style>
 :root{--bg:#0e1117;--panel:#161b24;--panel2:#1a2030;--line:#2a3140;--tx:#dbe2ee;--sub:#8b96a8;
 --up:#f85149;--dn:#58a6ff;--acc:#4d7df5;--capln:#d7dee8;--gold:#e3b341}
@@ -83,7 +83,7 @@ body.emb #hdr,body.emb .sbar,body.emb .meth{display:none}
 </style></head><body>
 <div class="wrap">
 <header id="hdr">
-<h1>VS 재무 리포트</h1>
+<h1>비용추정</h1>
 <div class="hsub">단일 기업 분기 손익·비용 리포트 · 수정 가능한 수식 워크북(.xlsx) 내보내기</div>
 <div class="hmeta" id="hmeta">데이터 로딩 중…</div>
 </header>
@@ -96,7 +96,7 @@ body.emb #hdr,body.emb .sbar,body.emb .meth{display:none}
 <div class="card" id="detail" style="display:none">
 <div class="ctop">
   <span class="cname" id="cname"></span><span id="cbadges"></span>
-  <button id="xbtn" type="button">VS 엑셀 다운로드</button><span id="xmsg"></span>
+  <button id="xbtn" type="button">비용추정 엑셀 다운로드</button><span id="xmsg"></span>
 </div>
 <div class="cmeta" id="cstats"></div>
 <div class="kgrid" id="kgrid"></div>
@@ -224,7 +224,7 @@ function loadExcelJS(){
 async function buildWorkbook(code,comp){
   const M=fsqModel(comp);
   const wb=new ExcelJS.Workbook();
-  wb.creator='VS 재무 리포트';
+  wb.creator='비용추정';
   wb.calcProperties={fullCalcOnLoad:true};
   const FMT_N='#,##0.0',FMT_P='0.0%';
   const HD='FF1F2937',HDX='FFF3F4F6';
@@ -334,10 +334,10 @@ async function exportXlsx(){
       const wb=await buildWorkbook(CURC,CUR);
       const buf=await wb.xlsx.writeBuffer();
       dl(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),
-        'VS_'+CURC+'_'+CUR.n+'.xlsx');
+        '비용추정_'+CURC+'_'+CUR.n+'.xlsx');
       msg.textContent='완료 — FS-Q 수식 워크북';
     }else{
-      dl(new Blob([buildCSV(CURC,CUR)],{type:'text/csv;charset=utf-8'}),'VS_'+CURC+'_'+CUR.n+'.csv');
+      dl(new Blob([buildCSV(CURC,CUR)],{type:'text/csv;charset=utf-8'}),'비용추정_'+CURC+'_'+CUR.n+'.csv');
       msg.textContent='엑셀 라이브러리 로드 실패 → CSV(값)로 대체';
     }
   }catch(e){msg.textContent='실패: '+e;}
