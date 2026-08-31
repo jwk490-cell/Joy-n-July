@@ -67,7 +67,7 @@ td.sm{font-size:11px;color:var(--faint)}
 <h2 style="font-size:15px;margin:4px 0 10px">기업별 추이 <small style="color:var(--faint);font-weight:400;font-size:11px">CDS(좌) + 주가(우, 회색) · 붉은점 최고 · 파란점 최저 · 세로선 이벤트</small></h2>
 <div class="grid" id="panels"></div>
 <div class="foot">
-소스 2채널: ① upperlimitprice 대시보드(ICE 정산가+DTCC 신고 병합) 평일 미러 + 자체 누적(원본이 버리는 과거 보존) ② <b>ICE Clear Credit 공개 정산가</b>(ice.com/cds-settlement-prices) 매일 수집 — 계약 사양 명시(SNRFOR·USD·XR14·5Y IMM), 정산가를 ISDA flat-hazard 근사(회수율 40%, 할인율 FRED DGS5)로 par spread 변환(검증 오차 ±1bp 내). 미러에 없는 날짜(CRWV 등)는 ICE로 보충하며 <span class="ice">ICE</span> 표기, 두 채널 괴리 15bp+ 시 자동 경보. 주가는 Yahoo Finance 수정종가.<br>
+소스 2채널: ① 외부 집계 미러(ICE 정산가+DTCC 신고 병합) 평일 수집 + 자체 누적(원본이 버리는 과거 보존) ② <b>ICE Clear Credit 공개 정산가</b>(ice.com/cds-settlement-prices) 매일 수집 — 계약 사양 명시(SNRFOR·USD·XR14·5Y IMM), 정산가를 ISDA flat-hazard 근사(회수율 40%, 할인율 FRED DGS5)로 par spread 변환(검증 오차 ±1bp 내). 미러에 없는 날짜(CRWV 등)는 ICE로 보충하며 <span class="ice">ICE</span> 표기, 두 채널 괴리 15bp+ 시 자동 경보. 주가는 Yahoo Finance 수정종가.<br>
 주의: 절대 레벨보다 <b>방향·상대 비교</b> 중심으로 해석. 여러 기업이 같은 값을 공유하는 날은 소스 계보 이상 가능성(경보 자동 감지). 결측 구간은 점선.
 </div>
 </div>
