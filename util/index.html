@@ -121,7 +121,7 @@ body.emb #detail{margin-bottom:6px}
 </div>
 
 <div class="meth" id="meth">
-<b>기간 의미</b> — 각 값은 해당 정기보고서의 <b>보고 기간(3·6·9·12개월) 평균 가동률</b>이다. 독립된 분기 실적이 아니므로 개월수가 다른 관측끼리 차감·차분해 분기 수치를 역산하지 말 것. 표의 '기준기간' 열에 각 관측의 개월수를 함께 표기했다.<br>
+<b>기간 의미</b> — 기간 표기는 <b>1Q24·2Q26</b> 형식(보고서 기수: 1Q=3월말, 2Q=6월말, 3Q=9월말, 4Q=12월말)이다. 각 값은 해당 정기보고서의 <b>보고 기간(3·6·9·12개월) 평균 가동률</b>이다. 독립된 분기 실적이 아니므로 개월수가 다른 관측끼리 차감·차분해 분기 수치를 역산하지 말 것. 각 기간 옆에 관측의 개월수(N개월 평균)를 함께 표기했다.<br>
 <b>대표 가동률</b> — 회사가 합계·전사 가동률을 공시하면 그 값을(합계 기준), 아니면 부문 값들의 단순평균을 사용한다. 단순평균은 부문별 생산능력(캐파) 규모를 반영하지 않으므로 소규모 부문의 극단값이 대표값을 왜곡할 수 있다 — 부문 수가 많거나 부문 간 편차가 큰 종목은 반드시 부문별 표로 확인할 것. 100% 초과값은 공시 원문 그대로의 초과 가동이며 절사하지 않았다.<br>
 <b>미공시·한계</b> — 가동률 표를 공시하지 않는 기업은 '미공시(명시)'로 표기하고 랭킹에서 제외했다. 부문 구성(공장·라인 구분)이 보고서마다 바뀌는 기업은 '구성 변경' 배지를 달았으며 이 경우 시계열 연속성이 깨질 수 있다. 산출 기준(생산능력 정의, 조업일수 등)은 회사마다 달라 종목 간 절대 수준 비교보다 같은 종목의 방향성 확인에 적합하다. 원천: DART 정기보고서.
 </div>
@@ -139,6 +139,12 @@ var pp=function(v){var s=(v>0?'+':'')+f1(v)+'%p';
 var prevQ=function(p){var a=p.split('.'),y=+a[0],m=+a[1];m-=3;if(m<=0){m+=12;y-=1;}
   return y+'.'+(m<10?'0'+m:''+m);};
 var yoyQ=function(p){var a=p.split('.');return (+a[0]-1)+'.'+a[1];};
+/* 표시 전용 변환: 데이터 키 "YYYY.MM"은 그대로 두고 라벨만 "2Q26" 형식으로.
+   03→1Q, 06→2Q, 09→3Q, 12→4Q. 미인식 형식은 원문 그대로. */
+var QMAP={'03':'1Q','06':'2Q','09':'3Q','12':'4Q'};
+var qLbl=function(p){
+  var m=/^(\d{4})\.(03|06|09|12)$/.exec(p);
+  return m?QMAP[m[2]]+m[1].slice(-2):p;};
 var SECNAME=function(s){return s?s:'미분류';};
 
 /* ---------- 상태 ---------- */
@@ -252,7 +258,7 @@ function renderRank(){
       +'<td class="lft">'+esc(r.n)+'<span class="cd">'+esc(r.tk)+'</span></td>'
       +'<td class="lft">'+esc(SECNAME(r.s))+'</td>'
       +'<td class="'+(r.last>=100?'hi':'')+'"><b>'+f1(r.last)+'%</b></td>'
-      +'<td class="ctr">'+esc(r.lastP)+' <span class="cd">'+esc(r.dur)+'개월</span></td>'
+      +'<td class="ctr">'+esc(qLbl(r.lastP))+' <span class="cd">'+esc(r.dur)+'개월 평균</span></td>'
       +'<td>'+(r.qoq!=null?pp(r.qoq):'<span class="cd">-</span>')+'</td>'
       +'<td>'+(r.yoy!=null?pp(r.yoy):'<span class="cd">-</span>')+'</td>'
       +'<td>'+r.nseg+'</td></tr>';}
@@ -302,7 +308,7 @@ function acRender(hdr){
   var h=hdr?'<div class="achd">'+esc(hdr)+'</div>':'';
   for(var i=0;i<SUGL.length;i++){var tk=SUGL[i],e=UT[tk];if(!e)continue;
     var ps=obsPeriods(e),tail=ps.length?
-      (ps[ps.length-1]+' · '+f1(e.meta[ps[ps.length-1]].rep)+'%'):'미공시';
+      (qLbl(ps[ps.length-1])+' · '+f1(e.meta[ps[ps.length-1]].rep)+'%'):'미공시';
     h+='<div class="aci'+(i===SEL?' on':'')+'" data-tk="'+esc(tk)+'">'
       +esc(e.name)+'<small>'+esc(tk)+' · '+esc(SECNAME(e.sector||''))+'</small>'
       +'<span class="gr">'+esc(tail)+'</span></div>';}
@@ -364,7 +370,7 @@ function trunc(s,n){return s.length>n?s.slice(0,n)+'…':s;}
 
 function tipHtml(e,p){
   var mt=e.meta[p]||{},sr=e.series[p]||{},keys=Object.keys(sr);
-  var h='<b>'+esc(p)+'</b> <span class="td">('+esc(mt.dur)+'개월 평균)</span><br>'
+  var h='<b>'+esc(qLbl(p))+'</b> <span class="td">('+esc(mt.dur)+'개월 평균)</span><br>'
     +'대표 <b>'+f1(mt.rep)+'%</b> <span class="td">'
     +(mt.method==='total'?'합계 기준':'부문 단순평균')+'</span>';
   if(keys.length){
@@ -419,7 +425,7 @@ function drawChart(e,ps){
   /* x축 라벨 */
   for(var xi=0;xi<ps.length;xi++){
     s+='<text x="'+X(xi)+'" y="'+(H-8)+'" fill="#8b96a8" font-size="11" text-anchor="middle">'
-      +esc(ps[xi])+'</text>';}
+      +esc(qLbl(ps[xi]))+'</text>';}
   var single=ps.length===1;
   /* 부문 선/점 */
   for(var si=0;si<show.length;si++){
@@ -479,11 +485,11 @@ function drawChart(e,ps){
 function segTable(e,allP){
   var ops=obsPeriods(e);
   var union=segUnion(e,ops);
-  var h='<table><thead><tr><th class="lft">부문 \\ 기간</th>';
+  var h='<table><thead><tr><th class="lft">부문 \\ 분기</th>';
   for(var i=0;i<allP.length;i++){
     var nd=e.meta[allP[i]]&&e.meta[allP[i]].avail==='not_disclosed';
-    h+='<th class="ctr">'+esc(allP[i])+(nd?'':' <span class="cd">'
-      +esc(e.meta[allP[i]].dur)+'개월</span>')+'</th>';}
+    h+='<th class="ctr">'+esc(qLbl(allP[i]))+(nd?'':' <span class="cd">'
+      +esc(e.meta[allP[i]].dur)+'개월 평균</span>')+'</th>';}
   h+='</tr></thead><tbody>';
   for(var si=0;si<union.length;si++){
     h+='<tr><td class="lft">'+esc(union[si])+'</td>';
@@ -523,7 +529,7 @@ function showDetail(tk){
   var allP=ps.concat(nds);allP.sort();
   document.getElementById('cname').textContent=e.name+' ('+tk+')';
   var bh='';
-  if(nds.length)bh+='<span class="badge">미공시(명시) '+esc(nds.join(', '))+'</span> ';
+  if(nds.length)bh+='<span class="badge">미공시(명시) '+esc(nds.map(qLbl).join(', '))+'</span> ';
   if(ps.length>1&&compChanged(e,ps))bh+='<span class="badge b2">구성 변경</span>';
   document.getElementById('cbadges').innerHTML=bh;
   if(!ps.length){
@@ -537,7 +543,7 @@ function showDetail(tk){
     return;}
   var r=null;
   for(var i=0;i<ROWS.length;i++)if(ROWS[i].tk===tk){r=ROWS[i];break;}
-  var st=esc(SECNAME(e.sector||''))+' · 최신 '+esc(r.lastP)+' <span class="cd">'
+  var st=esc(SECNAME(e.sector||''))+' · 최신 '+esc(qLbl(r.lastP))+' <span class="cd">'
     +esc(r.dur)+'개월 평균</span> 대표 가동률 <b>'+f1(r.last)+'%</b>'
     +' · QoQ '+(r.qoq!=null?pp(r.qoq):'<span class="cd">-</span>')
     +' · YoY '+(r.yoy!=null?pp(r.yoy):'<span class="cd">-</span>')
@@ -577,7 +583,7 @@ function boot(){
       '기준: 기업 '+(cv.companies!=null?cv.companies.toLocaleString():'-')+'개 · 관측 '
       +(cv.observations!=null?cv.observations.toLocaleString():'-')+'건'
       +(cv.periods&&cv.periods.length?' · 기간 '+(cv.periods.length>1?
-        cv.periods[0]+' ~ '+cv.periods[cv.periods.length-1]:cv.periods[0]):'')
+        qLbl(cv.periods[0])+' ~ '+qLbl(cv.periods[cv.periods.length-1]):qLbl(cv.periods[0])):'')
       +' · 갱신 '+dt;
   }).catch(function(e){
     document.getElementById('hmeta').textContent='manifest 로딩 실패';

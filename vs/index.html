@@ -108,7 +108,7 @@ body.emb #hdr,body.emb .sbar,body.emb .meth{display:none}
 
 <div class="meth" id="meth">
 <b>손익(is)</b> — 분기 단일 손익 6계정(매출·원가·매출총이익·판관비·영업이익·순이익), 단위 억원. 현재 소수 기업만 수집돼 있으며 매일 확충된다. 미수집 기업은 '수집 중'으로 표기.<br>
-<b>비용 원문</b> — 성격별 비용·판관비 표는 공시 원문 라벨 그대로이며 기간은 <b>누적 기준</b>(Q1=3개월, H1=반기 누적, 9M=3분기 누적, FY=연간)이다. '(파생)'은 누적 차감으로 만든 분기 파생치로, 계정 재분류·범위 변경 시 왜곡될 수 있다.<br>
+<b>비용 원문</b> — 성격별 비용·판관비 표는 공시 원문 라벨 그대로이며 기간 표기는 <b>1Q24·2Q26</b> 형식. 값 = 보고서 누적의 인접 차분(1Q는 누적 그대로, 4Q=연간−9M)한 <b>독립 분기(3개월) flow</b>. 전기 누적 미공시로 차분 불가한 분기는 결측, 신설 항목은 전기 0 간주. 음수(재고 변동·차분 결과)는 정상값이다.<br>
 <b>엑셀 워크북</b> — FS-Q 시트의 연간·비율·YoY는 값이 아니라 <b>살아있는 Excel 수식</b>이다. 분기 셀을 수정하거나 미래 분기(빈 열)에 추정치를 입력하면 연간·비율·YoY·그래프 시트가 자동 재계산된다. YoY 분모는 전년동기 원값(절댓값 아님)이므로 전년동기가 음수면 부호 해석에 주의. 컨센서스·재고자산·종가/시총 행은 수동 입력용 빈칸.
 </div>
 </div>
@@ -122,18 +122,16 @@ const fA=v=>v==null?'':(Math.round(v*10)/10).toLocaleString('ko-KR',{minimumFrac
 const fP=v=>v==null?'-':(Math.round(v*1000)/10).toFixed(1)+'%';
 const pctCls=v=>v>0?'up':v<0?'dn':'';
 const fSign=v=>v==null?'-':((v>0?'+':'')+(Math.round(v*1000)/10).toFixed(1)+'%');
-/* 분기 라벨 */
-const qParse=q=>{const m=/^(\d{4})Q([1-4])$/.exec(q);return m?[+m[1],+m[2]]:null;};
+/* 분기 라벨 — 표준 표기 "1Q24"(분기Q연도2자리). 파서: /^([1-4])Q(\d\d)$/ → (2000+yy, q) */
+const qParse=q=>{const m=/^([1-4])Q(\d\d)$/.exec(q);return m?[2000+ +m[2],+m[1]]:null;};
 const qKey=q=>{const p=qParse(q);return p?p[0]*4+p[1]:0;};
-const qOf=k=>((k-1)/4|0)+'Q'+((k-1)%4+1);
+const qOf=k=>((k-1)%4+1)+'Q'+String((k-1)/4|0).slice(-2);
 const qAdd=(q,n)=>qOf(qKey(q)+n);
-/* 누적 라벨 정렬 (2024Q1 / 2024H1 / 20249M / 2024FY / 2024Q3(파생)) */
+const fyL=y=>'FY'+String(y).slice(-2);
+/* 비용 라벨 정렬 — 동일 "1Q24" 형식, (연도,분기) 파싱 기준(문자열 정렬 금지) */
 function perKey(p){
-  let m=/^(\d{4})(Q1|H1|9M|FY)$/.exec(p);
-  if(m)return +m[1]*10+{Q1:1,H1:2,'9M':3,FY:4}[m[2]];
-  m=/^(\d{4})Q([1-4])\(파생\)$/.exec(p);
-  if(m)return +m[1]*10+ +m[2];
-  return 0;}
+  const m=/^([1-4])Q(\d\d)$/.exec(p);
+  return m?(2000+ +m[2])*10+ +m[1]:0;}
 const sortPer=o=>Object.keys(o||{}).sort((a,b)=>perKey(a)-perKey(b)||(a<b?-1:1));
 function colL(n){let s='';while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=(n-1)/26|0;}return s;}
 
@@ -149,18 +147,18 @@ async function loadComp(code){
   const d=await SHC[sh];return d[code]||null;}
 
 /* ---------- FS-Q 워크북 모델 (엑셀·CSV·검증 공유) ---------- */
-/* 분기 열: 2022Q1 ~ 최신 is 분기(없으면 직전 완결 분기) + 미래 여백 4분기 */
+/* 분기 열: 1Q22 ~ 최신 is 분기(없으면 직전 완결 분기) + 미래 여백 4분기 */
 function lastQuarter(comp){
   const ks=Object.keys(comp.is||{}).filter(qParse);
   if(ks.length)return ks.sort((a,b)=>qKey(a)-qKey(b))[ks.length-1];
   const d=new Date((IDX&&IDX.updated||'').replace(' ','T')||Date.now());
   let y=d.getFullYear(),q=Math.ceil((d.getMonth()+1)/3)-1;
   if(q<1){q=4;y--;}
-  return y+'Q'+q;}
+  return q+'Q'+String(y).slice(-2);}
 function fsqModel(comp){
   const lq=lastQuarter(comp);
   const quarters=[];
-  for(let k=qKey('2022Q1');k<=qKey(qAdd(lq,4));k++)quarters.push(qOf(k));
+  for(let k=qKey('1Q22');k<=qKey(qAdd(lq,4));k++)quarters.push(qOf(k));
   const years=[];quarters.forEach(q=>{const y=qParse(q)[0];if(years.indexOf(y)<0)years.push(y);});
   const QC0=2, GAP=QC0+quarters.length, YC0=GAP+1;
   const qCol=i=>QC0+i, yCol=i=>YC0+i;
@@ -245,7 +243,7 @@ async function buildWorkbook(code,comp){
   cell(ws,1,1,esc0(comp.n)+' ('+code+') — '+FSQ_NOTE,{small:true,color:'FF6B7280'});
   cell(ws,3,1,'구분',{b:true,fill:HD,color:HDX});
   M.quarters.forEach((q,i)=>cell(ws,3,M.qCol(i),q,{b:true,fill:HD,color:HDX,al:'center'}));
-  M.years.forEach((y,i)=>cell(ws,3,M.yCol(i),y+'년',{b:true,fill:HD,color:HDX,al:'center'}));
+  M.years.forEach((y,i)=>cell(ws,3,M.yCol(i),fyL(y),{b:true,fill:HD,color:HDX,al:'center'}));
   IS_KEYS.forEach((k,ki)=>{const r=4+ki,em=(k[0]==='rev'||k[0]==='op');
     cell(ws,r,1,k[1],{b:em});
     M.quarters.forEach((q,i)=>{const v=M.V[r+':'+M.qCol(i)];
@@ -267,7 +265,7 @@ async function buildWorkbook(code,comp){
   cell(wg,1,1,'FS-Q 연간 요약 — 모든 값은 \'FS-Q\' 시트 셀 참조 수식. FS-Q 분기 셀을 고치면 이 면도 자동 재계산. 단위: 억원',{small:true,color:'FF6B7280'});
   cell(wg,3,1,'항목',{b:true,fill:HD,color:HDX});
   M.years.forEach((y,i)=>{wg.getColumn(2+i).width=12;
-    cell(wg,3,2+i,y+'년',{b:true,fill:HD,color:HDX,al:'center'});});
+    cell(wg,3,2+i,fyL(y),{b:true,fill:HD,color:HDX,al:'center'});});
   G_ITEMS.forEach((it,k)=>{const[lb,sr,fm]=it;cell(wg,4+k,1,lb,{b:fm==='n'});
     M.years.forEach((y,i)=>{
       const f="'FS-Q'!"+colL(M.yCol(i))+sr;
@@ -276,7 +274,7 @@ async function buildWorkbook(code,comp){
   /* ── 3) 비용 (RAW 덤프) ── */
   const wc=wb.addWorksheet('비용',{views:[{state:'frozen',xSplit:1,ySplit:1,showGridLines:false}]});
   wc.getColumn(1).width=34;
-  cell(wc,1,1,'공시 원문 RAW · 단위: 억원 · 기간 라벨은 누적 기준(Q1=3개월, H1=반기 누적, 9M=3분기 누적, FY=연간) · (파생)=누적 차감 분기 파생치',{small:true,color:'FF6B7280'});
+  cell(wc,1,1,'공시 원문 라벨 RAW · 단위: 억원 · 기간 표기 1Q24 형식 · 값=보고서 누적의 인접 차분(1Q는 누적 그대로, 4Q=연간−9M)한 독립 분기(3개월) flow · 차분 불가 분기는 결측 · 음수(재고 변동 등) 정상',{small:true,color:'FF6B7280'});
   let r0=3;
   const dump=(title,obj)=>{
     if(!obj||!Object.keys(obj).length)return;
@@ -289,9 +287,8 @@ async function buildWorkbook(code,comp){
       pers.forEach((p,i)=>{const v=obj[p][lb];
         cell(wc,r0+1+li,2+i,typeof v==='number'?v:undefined,{fmt:FMT_N});});});
     r0+=labels.length+2;};
-  dump('성격별 비용 (누적 원문)',comp.cost);
-  dump('성격별 비용 (분기 파생)',comp.cost_d);
-  dump('판매비와관리비 (누적 원문)',comp.sga);
+  dump('성격별 비용 (분기 flow)',comp.cost);
+  dump('판매비와관리비 (분기 flow)',comp.sga);
   return wb;}
 
 function esc0(s){return String(s==null?'':s);}
@@ -301,7 +298,7 @@ function buildCSV(code,comp){
   const M=fsqModel(comp);
   const L=[];const row=a=>L.push(a.map(csvSafe).join(','));
   row([comp.n+' ('+code+') — FS-Q 값 덤프(수식 없음) · '+FSQ_NOTE]);
-  row(['구분'].concat(M.quarters).concat(['']).concat(M.years.map(y=>y+'년')));
+  row(['구분'].concat(M.quarters).concat(['']).concat(M.years.map(fyL)));
   const line=(r,lb)=>row([lb].concat(M.quarters.map((q,i)=>{const v=M.V[r+':'+M.qCol(i)];return v!=null?v:'';}))
     .concat(['']).concat(M.years.map((y,i)=>{const v=M.V[r+':'+M.yCol(i)];return v!=null?v:'';})));
   IS_KEYS.forEach((k,ki)=>line(4+ki,k[1]));
@@ -311,12 +308,11 @@ function buildCSV(code,comp){
   const dump=(title,obj)=>{if(!obj||!Object.keys(obj).length)return;
     const pers=sortPer(obj);
     const labels=[];pers.forEach(p=>Object.keys(obj[p]).forEach(l=>{if(labels.indexOf(l)<0)labels.push(l);}));
-    row([title+' (단위: 억원, 기간=누적 라벨)'].concat(pers));
+    row([title+' (단위: 억원, 값=독립 분기 3개월 flow)'].concat(pers));
     labels.forEach(lb=>row([lb].concat(pers.map(p=>{const v=obj[p][lb];return typeof v==='number'?v:'';}))));
     L.push('');};
-  dump('성격별 비용(누적 원문)',comp.cost);
-  dump('성격별 비용(분기 파생)',comp.cost_d);
-  dump('판매비와관리비(누적 원문)',comp.sga);
+  dump('성격별 비용(분기 flow)',comp.cost);
+  dump('판매비와관리비(분기 flow)',comp.sga);
   return '﻿'+L.join('\r\n');}
 
 function dl(blob,name){
@@ -405,7 +401,7 @@ function renderChart(comp){
     s+='<text x="'+(W-Rm+8)+'" y="'+(Y2(v)+4)+'" fill="#8b96a8" font-size="10.5">'+(v*100).toFixed(0)+'%</text>';}
   qs.forEach((q,i)=>{
     if(i%2===(qs.length%2?0:1)||qs.length<=8)
-      s+='<text x="'+X(i)+'" y="'+(H-8)+'" fill="#8b96a8" font-size="10.5" text-anchor="middle">'+esc(q.slice(2))+'</text>';
+      s+='<text x="'+X(i)+'" y="'+(H-8)+'" fill="#8b96a8" font-size="10.5" text-anchor="middle">'+esc(q)+'</text>';
     const o=is[q];if(!o||o.rev==null)return;
     s+='<rect x="'+(X(i)-bw/2)+'" y="'+Y1(Math.max(0,o.rev))+'" width="'+bw+'" height="'+Math.max(1,Y1(0)-Y1(Math.max(0,o.rev)))+'" fill="#4d7df5" opacity=".82" rx="2"/>';});
   LINES.forEach(l=>{
@@ -461,17 +457,16 @@ function renderTables(comp){
         return (o&&o.rev&&o[m[1]]!=null)?fP(o[m[1]]/o.rev):null;})});});
     h+=tblHTML(qs,rows,{corner:'계정 \\ 분기'});
   }else h+='<div class="tblwrap"><div class="empty">분기 손익 수집 중 — 확충되는 대로 표시됩니다.</div></div>';
-  /* 2) 성격별 비용 + 파생 + 판관비 */
+  /* 2) 성격별 비용 + 판관비 (독립 분기 flow) */
   const rawTbl=(title,sub,obj)=>{
     if(!obj||!Object.keys(obj).length)return '';
     const pers=sortPer(obj);
     const labels=[];pers.forEach(p=>Object.keys(obj[p]).forEach(l=>{if(labels.indexOf(l)<0)labels.push(l);}));
     const rows=labels.map(lb=>({lb:lb,vals:pers.map(p=>{const v=obj[p][lb];
       return typeof v==='number'?fA(v):null;})}));
-    return '<div class="sechd">'+esc(title)+'<small>'+esc(sub)+'</small></div>'+tblHTML(pers,rows,{corner:'항목 \\ 기간'});};
-  h+=rawTbl('성격별 비용','단위: 억원 · 기간=공시 누적 라벨(Q1·H1·9M·FY) 원문',comp.cost);
-  h+=rawTbl('성격별 비용 (분기 파생)','단위: 억원 · 누적 차감 파생치 — 재분류 시 왜곡 가능',comp.cost_d);
-  h+=rawTbl('판매비와관리비','단위: 억원 · 기간=공시 누적 라벨 원문',comp.sga);
+    return '<div class="sechd">'+esc(title)+'<small>'+esc(sub)+'</small></div>'+tblHTML(pers,rows,{corner:'항목 \\ 분기'});};
+  h+=rawTbl('성격별 비용','단위: 억원 · 독립 분기(3개월) flow — 보고서 누적의 인접 차분',comp.cost);
+  h+=rawTbl('판매비와관리비','단위: 억원 · 독립 분기(3개월) flow',comp.sga);
   /* 3) 부문 (간략: 최근 4개 기간) */
   if(comp.seg&&Object.keys(comp.seg).length){
     const pers=sortPer(comp.seg).slice(-4);
@@ -482,9 +477,9 @@ function renderTables(comp){
       const isTot=pers.some(p=>roles[p]&&roles[p][lb]==='total');
       return {lb:lb,td:isTot?'tot':'',vals:pers.map(p=>{const v=comp.seg[p][lb];
         return typeof v==='number'?fA(v):null;})};});
-    h+='<div class="sechd">부문별 매출 (간략)<small>단위: 억원 · 최근 '+pers.length+'개 기간'
+    h+='<div class="sechd">부문별 매출 (간략)<small>단위: 억원 · 독립 분기 flow · 최근 '+pers.length+'개 분기'
       +(cut?' · 상위 '+CAP+'행만 표시 (전체 '+labels.length+'행)':'')+' · 굵은 값=합계 행</small></div>'
-      +tblHTML(pers,rows,{corner:'부문 \\ 기간'});}
+      +tblHTML(pers,rows,{corner:'부문 \\ 분기'});}
   el.innerHTML=h;}
 
 /* ---------- 상세 ---------- */
