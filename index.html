@@ -360,6 +360,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     <div class="navgroup">수급 · 모멘텀</div>
     <button class="navitem" data-tab="supply">투자자별 수급/거래량 증감</button>
     <button class="navitem" data-tab="streak">수급 연속 <small>새벽</small></button>
+    <button class="navitem" data-tab="flowosc">수급 오실레이터 <small>MACD</small></button>
     <button class="navitem" data-tab="krhigh">韓 신고가 (20·60일·52주)</button>
     <button class="navitem" data-tab="ushigh">美 신고가 (20·60일·52주)</button>
     <button class="navitem" data-tab="rs">RS 분석</button>
@@ -595,6 +596,10 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
 
     <section class="panel embed" id="tab-supply">
       <iframe data-src="supply.html" title="수급 대시보드"></iframe>
+    </section>
+
+    <section class="panel embed" id="tab-flowosc">
+      <iframe data-src="flowosc/index.html" title="수급 오실레이터"></iframe>
     </section>
 
     <section class="panel embed" id="tab-align">
@@ -2083,7 +2088,7 @@ function openTab(tab){
   panel.classList.add('on');
   const f=panel.querySelector('iframe[data-src]');
   // 자주 갱신되는 대시보드는 10분 단위 캐시버스터를 붙여 낡은 페이지가 남지 않게 한다
-  const FRESH={backlog:1,basket7:1,supply:1};
+  const FRESH={backlog:1,basket7:1,supply:1,flowosc:1};
   if(f&&!f.src){f.src=f.dataset.src+(FRESH[tab]?'?v='+Math.floor(Date.now()/6e5):'');}
   if(tab==='telegram')loadTG(false);
   if(tab==='home')homeStart();
@@ -2389,7 +2394,7 @@ const RR_TABS={
   raoni:{m:'a',eta:'~1분'}, term:{m:'a',eta:'~1분'}, quote:{m:'a',eta:'~5분'},
   weekly:{m:'x',note:'주간 일정은 텔레그램 취합+웹검증 수동 워크플로우 — Claude 세션에서 갱신'},
   krwrap:{m:'a',eta:'~2분'}, uswrap:{m:'a',eta:'~2분'}, sector:{m:'a',eta:'~3분'}, disparity:{m:'a',eta:'~2분'},
-  supply:{m:'a',eta:'~7분'}, streak:{m:'a',eta:'~3분'}, krhigh:{m:'a',eta:'~10분'}, ushigh:{m:'a',eta:'~5분'},
+  supply:{m:'a',eta:'~7분'}, streak:{m:'a',eta:'~3분'}, flowosc:{m:'a',eta:'~3분'}, krhigh:{m:'a',eta:'~10분'}, ushigh:{m:'a',eta:'~5분'},
   rs:{m:'a',eta:'~5분'}, semietf:{m:'a',eta:'~2분'}, align:{m:'a',eta:'~15분'},
   caps:{m:'a',eta:'~2분'}, gap:{m:'a',eta:'~2분'}, dd:{m:'a',eta:'~2분'}, ram:{m:'a',eta:'~2분'},
   etfgap:{m:'l'}, basket7:{m:'a',eta:'~5분'}, semiexport:{m:'a',eta:'~2분'},

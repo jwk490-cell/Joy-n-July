@@ -215,18 +215,23 @@ function goSec(name){
 }
 
 /* ---------- 종목/섹터 로드 ---------- */
+function cmsg(t){ /* render()가 chartbox를 다시 그려 #cmsg가 사라질 수 있어 재생성 셋터 사용 */
+  let el=$('cmsg');
+  if(!el){el=document.createElement('div');el.id='cmsg';$('chartbox').prepend(el);}
+  el.textContent=t;
+}
 async function loadStock(code,quiet){
   const st=SMAP.get(code);if(!st)return;
-  $('cmsg').textContent='차트 로딩 중…';
+  cmsg('차트 로딩 중…');
   try{
     const shd=await getShard(st[1]);
     const rec=shd[code];
-    if(!rec){$('cmsg').textContent='해당 종목의 시계열이 없습니다';return;}
+    if(!rec){cmsg('해당 종목의 시계열이 없습니다');return;}
     CUR={kind:'stock',code,name:st[0],group:st[2],rec};
     ZOOM=null;pushRecent(code,st[0]);
     $('q').value=st[0];
     render();
-  }catch(e){$('cmsg').textContent='샤드 로딩 실패';}
+  }catch(e){cmsg('샤드 로딩 실패');}
 }
 async function loadSector(name){
   try{
@@ -234,7 +239,7 @@ async function loadSector(name){
     const rec=sec[name];if(!rec)return;
     CUR={kind:'sector',code:null,name,rec};
     ZOOM=null;render();
-  }catch(e){$('cmsg').textContent='섹터 로딩 실패';}
+  }catch(e){cmsg('섹터 로딩 실패');}
 }
 
 /* ---------- 메인 차트 ---------- */
