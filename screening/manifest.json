@@ -1,0 +1,24 @@
+{
+ "build_id": "66b6c2bc4ad8",
+ "created_at": "2026-08-31T14:18:31+09:00",
+ "ref_period": {
+  "Q": "2Q26",
+  "P": "1Q26",
+  "Y": "2Q25"
+ },
+ "inputs": {
+  "backlog_updated": "2026-08-31 07:10",
+  "utd_build": "10a3a96959fc",
+  "cap_as_of": "20260828"
+ },
+ "counts": {
+  "obqoq": 200,
+  "obyoy": 255,
+  "utqoq": 546,
+  "utyoy": 3,
+  "obboth": 163,
+  "utboth": 3,
+  "inter": 68
+ },
+ "excluded_cap": 388
+}
