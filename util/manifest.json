@@ -1,0 +1,15 @@
+{
+ "build_id": "10a3a96959fc",
+ "created_at": "2026-08-31T14:06:07+09:00",
+ "parser_version": "v4",
+ "coverage": {
+  "companies": 1469,
+  "with_series": 1325,
+  "observations": 4360,
+  "periods": [
+   "2024.06",
+   "2026.06"
+  ],
+  "docs_missing": 20227
+ }
+}
