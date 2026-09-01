@@ -397,6 +397,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     <button class="navitem" data-tab="rrgsec">수급 로테이션 맵 (업종) <small>🔒</small></button>
     <button class="navitem" data-tab="rrgstk">수급 로테이션 맵 (종목) <small>🔒</small></button>
     <button class="navitem" data-tab="leaders">주도 섹터 · 주도주 <small>🔒</small></button>
+    <button class="navitem" data-tab="meridian">롱숏 챌린지 <small>🔒</small></button>
     <button class="archhead" id="archHead" type="button" style="display:none"><span class="arr">▸</span> 보관 <span id="archCnt"></span></button>
     <div class="archlist" id="archList"></div>
     <button class="archmanage" id="archManage" type="button">⚙ 보관 관리</button>
@@ -722,6 +723,20 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
         </div>
       </div>
       <iframe title="주도 섹터 · 주도주" style="display:none"></iframe>
+    </section>
+
+    <section class="panel embed lockp" id="tab-meridian" data-enc="locked/meridian.enc">
+      <div class="lockgate">
+        <div class="lockcard">
+          <div class="lockico">🔒</div>
+          <div class="locktitle">롱숏 챌린지</div>
+          <div class="lockdesc">잠긴 콘텐츠입니다. 비밀번호를 입력하세요.</div>
+          <form class="lockform"><input type="password" class="lockpw" placeholder="비밀번호" autocomplete="current-password">
+          <button type="submit" class="lockbtn">열기</button></form>
+          <div class="lockmsg"></div>
+        </div>
+      </div>
+      <iframe title="롱숏 챌린지" style="display:none"></iframe>
     </section>
 
     <section class="panel" id="tab-telegram">
@@ -2126,7 +2141,7 @@ function openTab(tab){
   if(tab==='term')termStart();
   if(tab==='ram')ramLoad();
   if(tab==='deepresearch')drLoad();
-  if(tab==='rrgsec'||tab==='rrgstk'||tab==='leaders')lockInit(tab);
+  if(tab==='rrgsec'||tab==='rrgstk'||tab==='leaders'||tab==='meridian')lockInit(tab);
   if(window.rrOnTab)rrOnTab(tab);
   document.getElementById('nav').classList.remove('open');
   history.replaceState(null,'','#'+tab);
