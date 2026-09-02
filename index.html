@@ -385,6 +385,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
     <button class="navitem" data-tab="telegram">텔레그램 채널 요약</button>
     <button class="navitem" data-tab="taerin">태린이아빠</button>
     <button class="navitem" data-tab="thememap">관련주 신경망 맵</button>
+    <button class="navitem" data-tab="reportscreen">리포트 스크리닝 <small>장중</small></button>
     <button class="navitem" data-tab="deepresearch">심층 리서치</button>
     <button class="navitem" data-tab="leadflow">변동성 로테이션</button>
     <button class="navitem" data-tab="rstime">RS 타임머신</button>
@@ -488,6 +489,7 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
           <button class="card" data-go="telegram"><h3>텔레그램 채널 요약 <span class="tag">매시간</span></h3><p>18개 채널 당일 게시글 자동 수집 — 최신순 피드</p></button>
           <button class="card" data-go="taerin"><h3>태린이아빠 <span class="tag">피드</span></h3><p>태린이아빠 채널 아카이브</p></button>
           <button class="card" data-go="thememap"><h3>관련주 신경망 맵 <span class="tag">인터랙티브</span></h3><p>고잉 채널 관련주 정리 249장 → 테마 131개 × 종목 1,305개 커넥톰 — 줌·검색·시간선</p></button>
+          <button class="card" data-go="reportscreen"><h3>리포트 스크리닝 <span class="tag">장중</span></h3><p>당일 발간 리포트 추정치 vs 컨센 자동 대조 — OP 상향·컨센 상회 스크리닝 일별 누적</p></button>
           <button class="card" data-go="deepresearch"><h3>심층 리서치 <span class="tag">리포트</span></h3><p>종목·산업 심층 리서치 아카이브</p></button>
           <button class="card" data-go="backlog"><h3>수주잔고 <span class="tag">DART</span></h3><p>분기별 수주잔고 추이 — OpenDART 정기보고서 자동 추출 · QoQ·YoY·연속증가·매출 커버리지</p></button>
         </div>
@@ -681,6 +683,10 @@ footer{flex:none;padding:14px;display:flex;align-items:center;justify-content:ce
 
     <section class="panel embed" id="tab-backlog">
       <iframe data-src="backlog.html" title="수주잔고 트래커"></iframe>
+    </section>
+
+    <section class="panel embed" id="tab-reportscreen">
+      <iframe data-src="reports.html" title="증권사 리포트 스크리닝"></iframe>
     </section>
 
     <section class="panel embed lockp" id="tab-rrgsec" data-enc="locked/rrg.enc">
@@ -2438,6 +2444,7 @@ const RR_TABS={
   credit:{m:'a',eta:'~3분'},
   telegram:{m:'a',eta:'~2분'}, taerin:{m:'a',eta:'~2분'}, thememap:{m:'a',eta:'~3분'},
   deepresearch:{m:'x',note:'심층 리서치는 Claude 세션에서 발행합니다'},
+  reportscreen:{m:'x',note:'평일 07~16시 15분 주기 자동 수집 — 수동 갱신 불필요'},
   leadflow:{m:'a',eta:'~5분'}, rstime:{m:'a',eta:'~10분'},
   backlog:{m:'a',eta:'수십 분 (DART 전수 재추출)'}, util:{m:'a',eta:'~5분'}, screening:{m:'a',eta:'~1분'},
   cost:{m:'a',eta:'~3분'}, vs:{m:'a',eta:'~3분'}, rrgsec:{m:'a',eta:'~7분'}, rrgstk:{m:'a',eta:'~7분'}
