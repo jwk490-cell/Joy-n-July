@@ -237,6 +237,28 @@ button.card:hover{box-shadow:var(--shadow-hover);transform:none}
 .wrapday .inner .wrapsec{background:transparent;box-shadow:none;border-radius:0;padding:14px 2px 0}
 .wrapday .inner .wrapsec+.wrapsec{border-top:1px dashed var(--line);margin-top:14px}
 .wrapday .inner .wrapsrc{margin-top:12px}
+/* 시황 아카이브 달력 */
+.mwcal{background:var(--surface);border-radius:16px;box-shadow:var(--shadow);padding:16px 18px;max-width:420px}
+.mwcal .calhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.mwcal .calhead b{font-size:13.5px;font-weight:800}
+.calnav{border:none;background:var(--surface2);color:var(--sub);width:28px;height:28px;border-radius:9px;cursor:pointer;font-size:14px;line-height:1;flex:none}
+.calnav:hover:not(:disabled){background:var(--accent-soft);color:var(--accent)}
+.calnav:disabled{opacity:.3;cursor:default}
+.mwcal .calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.mwcal .calwd{font-size:10.5px;font-weight:700;color:var(--faint);text-align:center;padding:3px 0}
+.mwcal .calwd.sun{color:var(--up)}
+.mwcal .calcell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:12.5px;color:var(--faint);border-radius:10px;border:1px solid transparent}
+.mwcal .calcell.has{background:var(--accent-soft);color:var(--accent);font-weight:800;cursor:pointer}
+.mwcal .calcell.has:hover{border-color:var(--accent-line)}
+.mwcal .calcell.today{box-shadow:inset 0 0 0 1.5px var(--accent-line)}
+/* 시황 팝업 */
+.mwmodal{position:fixed;inset:0;background:rgba(25,31,40,.48);display:none;align-items:flex-start;justify-content:center;z-index:300;padding:36px 14px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.mwmodal.on{display:flex}
+.mwmodal .mwbox{background:var(--bg);border-radius:20px;max-width:760px;width:100%;box-shadow:var(--shadow-hover);overflow:hidden}
+.mwmodal .mhead{display:flex;align-items:center;gap:8px;padding:13px 16px;background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:1}
+.mwmodal .mhead b{font-size:13.5px;font-weight:800;flex:1;text-align:center}
+.mwmodal .mwx{margin-left:4px}
+.mwmodal .mbody{padding:16px;display:flex;flex-direction:column;gap:14px}
 
 /* ───────── raoni류 공용 ───────── */
 .rngwrap{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
@@ -782,6 +804,19 @@ const MW={
   krwrap:{url:'data/krwrap.json',label:'韓 시황',note:'평일 15:50 한국 마감시황 봇이 작성'},
   uswrap:{url:'data/uswrap.json',label:'美 시황',note:'매일 아침 미국 모닝시황 봇이 작성'}
 };
+const mwDate=ds=>new Date(2000+ +ds.slice(0,2),+ds.slice(2,4)-1,+ds.slice(4,6));
+const mwWd=ds=>['일','월','화','수','목','금','토'][mwDate(ds).getDay()];
+const mwFmt=t=>esc(t).split('\n').map((ln,i)=>{
+  const s=ln.trim();
+  if(i===0)return `<b class="mwhead">${ln}</b>`;
+  if(/^&lt;.+&gt;/.test(s)||/^\[.+\]/.test(s)||/^[■◆▶#]/.test(s))return `<b class="mwsec">${ln}</b>`;
+  return ln;
+}).join('\n');
+const mwDayHtml=d=>{
+  let h=`<div class="wrapsec"><div class="mwtxt">${mwFmt(d.text)}</div></div>`;
+  if(d.high&&d.high.text)h+=`<div class="wrapsec mwhigh"><div class="mwtxt">${mwFmt(d.high.text)}</div></div>`;
+  return h;
+};
 async function loadMW(k){
   const c=MW[k];
   if(c.days&&Date.now()-c.at<300000)return;
@@ -795,30 +830,80 @@ async function loadMW(k){
     body.innerHTML='<div class="empty"><b>아직 게시된 시황이 없습니다</b>봇이 발행하면 30분 내 자동 업로드됩니다.</div>';
     return;
   }
-  const wd=ds=>['일','월','화','수','목','금','토'][new Date('20'+ds.slice(0,2)+'-'+ds.slice(2,4)+'-'+ds.slice(4,6)+'T00:00:00+09:00').getDay()];
-  const fmt=t=>esc(t).split('\n').map((ln,i)=>{
-    const s=ln.trim();
-    if(i===0)return `<b class="mwhead">${ln}</b>`;
-    if(/^&lt;.+&gt;/.test(s)||/^\[.+\]/.test(s)||/^[■◆▶#]/.test(s))return `<b class="mwsec">${ln}</b>`;
-    return ln;
-  }).join('\n');
-  const dayHtml=d=>{
-    let h=`<div class="wrapsec"><div class="mwtxt">${fmt(d.text)}</div></div>`;
-    if(d.high&&d.high.text)h+=`<div class="wrapsec mwhigh"><div class="mwtxt">${fmt(d.high.text)}</div></div>`;
-    return h;
-  };
-  const days=c.days,latest=days[0];
+  c.byDate={};c.days.forEach(d=>c.byDate[d.date]=d);
+  c.dates=c.days.map(d=>d.date).sort();
+  const latest=c.days[0];
   if(!latest){meta.textContent=c.note+'합니다.';body.innerHTML='<div class="empty"><b>아직 게시된 시황이 없습니다</b></div>';return;}
-  meta.innerHTML=`<b>${latest.date}(${wd(latest.date)})</b> · ${esc(latest.mtime||'')} 게시 · ${c.note} · 최근 ${days.length}일 보관`;
-  let html=dayHtml(latest);
-  if(days.length>1){
-    html+='<div class="wrapdiv">지난 시황</div>';
-    days.slice(1).forEach(d=>{
-      html+=`<details class="wrapday"><summary>📅 ${esc(d.date)} (${wd(d.date)}) ${c.label}</summary><div class="inner">${dayHtml(d)}</div></details>`;
-    });
+  const first=c.dates[0];
+  meta.innerHTML=`<b>${latest.date}(${mwWd(latest.date)})</b> · ${esc(latest.mtime||'')} 게시 · ${c.note} · 전체 ${c.days.length}일 보관 (${first.slice(0,2)}.${first.slice(2,4)}.${first.slice(4,6)}~)`;
+  let html=mwDayHtml(latest);
+  if(c.days.length>1){
+    html+='<div class="wrapdiv">지난 시황 — 달력의 날짜를 누르면 팝업으로 열립니다</div>';
+    html+=`<div class="mwcal" id="${k}Cal"></div>`;
   }
   body.innerHTML=html;
+  c.ym=latest.date.slice(0,4);
+  mwCal(k);
 }
+function mwCal(k){
+  const c=MW[k],el=document.getElementById(k+'Cal');
+  if(!el||!c.dates||!c.dates.length)return;
+  const ym=c.ym,y=2000+ +ym.slice(0,2),m=+ym.slice(2,4);
+  const minYm=c.dates[0].slice(0,4),maxYm=c.dates[c.dates.length-1].slice(0,4);
+  const start=new Date(y,m-1,1).getDay(),nd=new Date(y,m,0).getDate();
+  const t=new Date(),tod=String(t.getFullYear()-2000).padStart(2,'0')+String(t.getMonth()+1).padStart(2,'0')+String(t.getDate()).padStart(2,'0');
+  let h=`<div class="calhead"><button class="calnav" data-cn="-1" ${ym<=minYm?'disabled':''}>‹</button><b>${y}년 ${m}월</b><button class="calnav" data-cn="1" ${ym>=maxYm?'disabled':''}>›</button></div><div class="calgrid">`;
+  ['일','월','화','수','목','금','토'].forEach((w,i)=>h+=`<div class="calwd${i===0?' sun':''}">${w}</div>`);
+  for(let i=0;i<start;i++)h+='<div class="calcell"></div>';
+  for(let d=1;d<=nd;d++){
+    const ds=ym+String(d).padStart(2,'0'),has=!!c.byDate[ds];
+    h+=`<div class="calcell${has?' has':''}${ds===tod?' today':''}"${has?` data-d="${ds}"`:''}>${d}</div>`;
+  }
+  el.innerHTML=h+'</div>';
+  el.querySelectorAll('.calnav').forEach(b=>b.addEventListener('click',()=>{
+    let yy=y,mm=m+ +b.dataset.cn;
+    if(mm===0){yy--;mm=12}else if(mm===13){yy++;mm=1}
+    c.ym=String(yy-2000).padStart(2,'0')+String(mm).padStart(2,'0');
+    mwCal(k);
+  }));
+  el.querySelectorAll('.calcell.has').forEach(b=>b.addEventListener('click',()=>mwOpen(k,b.dataset.d)));
+}
+let mwCur=null;
+function mwOpen(k,ds){
+  const c=MW[k],d=c.byDate[ds];
+  if(!d)return;
+  mwCur=k;c.sel=ds;
+  let mo=document.getElementById('mwModal');
+  if(!mo){
+    mo=document.createElement('div');mo.id='mwModal';mo.className='mwmodal';
+    mo.innerHTML='<div class="mwbox"><div class="mhead"><button class="calnav" id="mwPrev">‹</button><b id="mwTitle"></b><button class="calnav" id="mwNext">›</button><button class="calnav mwx" id="mwClose">✕</button></div><div class="mbody" id="mwBody"></div></div>';
+    document.body.appendChild(mo);
+    mo.addEventListener('click',e=>{if(e.target===mo)mwClose()});
+    document.getElementById('mwClose').addEventListener('click',mwClose);
+    document.getElementById('mwPrev').addEventListener('click',()=>mwStep(-1));
+    document.getElementById('mwNext').addEventListener('click',()=>mwStep(1));
+    document.addEventListener('keydown',e=>{
+      if(!mo.classList.contains('on'))return;
+      if(e.key==='Escape')mwClose();
+      else if(e.key==='ArrowLeft')mwStep(-1);
+      else if(e.key==='ArrowRight')mwStep(1);
+    });
+  }
+  const i=c.dates.indexOf(ds);
+  document.getElementById('mwTitle').textContent=`${ds} (${mwWd(ds)}) ${c.label}`;
+  document.getElementById('mwPrev').disabled=i<=0;
+  document.getElementById('mwNext').disabled=i>=c.dates.length-1;
+  document.getElementById('mwBody').innerHTML=mwDayHtml(d);
+  mo.classList.add('on');
+  mo.scrollTop=0;
+}
+function mwStep(s){
+  const c=MW[mwCur];if(!c)return;
+  const i=c.dates.indexOf(c.sel)+s;
+  if(i<0||i>=c.dates.length)return;
+  mwOpen(mwCur,c.dates[i]);
+}
+function mwClose(){const mo=document.getElementById('mwModal');if(mo)mo.classList.remove('on')}
 
 /* ── 텔레그램 피드: data/telegram.json 을 읽어 좌측 채널 목록 + 최신순 피드 렌더 ── */
 let TG=null,tgSel='all',tgFetchedAt=0,tgShown=0;
