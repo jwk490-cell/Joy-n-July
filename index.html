@@ -215,6 +215,8 @@ button.card:hover{box-shadow:var(--shadow-hover);transform:none}
 .mwtxt .mwhead{display:block;font-size:14.5px;font-weight:800;margin-bottom:4px}
 .mwtxt .mwsec{color:var(--accent);font-weight:700}
 .wrapbody{display:flex;flex-direction:column;gap:14px;max-width:880px}
+.wrapsec.mwhigh{border-left:3px solid var(--accent)}
+.wrapday .inner .wrapsec.mwhigh{border-left:3px solid var(--accent);padding-left:14px}
 .wrapsec{background:var(--surface);border:none;border-radius:16px;padding:18px 22px;box-shadow:var(--shadow)}
 .wrapsec h3{font-size:14.5px;font-weight:800;display:flex;align-items:center;gap:8px}
 .wrapsec ul{margin:11px 0 0 18px;padding:0}
@@ -797,10 +799,14 @@ async function loadMW(k){
   const fmt=t=>esc(t).split('\n').map((ln,i)=>{
     const s=ln.trim();
     if(i===0)return `<b class="mwhead">${ln}</b>`;
-    if(/^&lt;.+&gt;/.test(s)||/^\[.+\]/.test(s)||/^[■◆▶]/.test(s))return `<b class="mwsec">${ln}</b>`;
+    if(/^&lt;.+&gt;/.test(s)||/^\[.+\]/.test(s)||/^[■◆▶#]/.test(s))return `<b class="mwsec">${ln}</b>`;
     return ln;
   }).join('\n');
-  const dayHtml=d=>`<div class="wrapsec"><div class="mwtxt">${fmt(d.text)}</div></div>`;
+  const dayHtml=d=>{
+    let h=`<div class="wrapsec"><div class="mwtxt">${fmt(d.text)}</div></div>`;
+    if(d.high&&d.high.text)h+=`<div class="wrapsec mwhigh"><div class="mwtxt">${fmt(d.high.text)}</div></div>`;
+    return h;
+  };
   const days=c.days,latest=days[0];
   if(!latest){meta.textContent=c.note+'합니다.';body.innerHTML='<div class="empty"><b>아직 게시된 시황이 없습니다</b></div>';return;}
   meta.innerHTML=`<b>${latest.date}(${wd(latest.date)})</b> · ${esc(latest.mtime||'')} 게시 · ${c.note} · 최근 ${days.length}일 보관`;
