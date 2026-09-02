@@ -43,8 +43,13 @@ color:var(--dim);cursor:pointer;font-size:12px;user-select:none}
 .mline{margin:3px 0;line-height:1.55;color:#c9ced6}
 .mline .lb{color:var(--dim);display:inline-block;min-width:44px}
 .pos{color:var(--up)} .neg{color:var(--down)} .mut{color:var(--dim2)}
-.porline{margin:6px 0 2px;color:var(--dim);line-height:1.5}
-.porline b{color:#c9ced6;font-weight:600}
+table.yt{border-collapse:collapse;margin:4px 0 2px;font-variant-numeric:tabular-nums;width:auto}
+.yt th,.yt td{padding:2.5px 12px 2.5px 0;text-align:right;font-size:12.5px;white-space:nowrap}
+.yt th{color:var(--dim2);font-weight:600}
+.yt td:first-child,.yt th:first-child{text-align:left;color:var(--dim);padding-right:16px;min-width:52px}
+.yt tr.vh td{color:#e9ebee;font-weight:700}
+.yt tbody tr{border-top:1px solid #232530}
+.yt tbody tr:first-child{border-top:0}
 .morebtn{margin-top:8px;background:none;border:1px solid var(--line);border-radius:8px;
 color:var(--dim2);font-size:11.5px;padding:3px 10px;cursor:pointer}
 .morebtn:hover{color:var(--txt);border-color:var(--border2,#31343d)}
@@ -99,39 +104,49 @@ function paren(rev,gap){const p=[];
   if(rev!=null)p.push('직전 추정치 대비 '+pct(rev));
   if(gap!=null)p.push('컨센대비 '+pct(gap));
   return p.length?`<span class="mut">(</span>${p.join('<span class="mut">, </span>')}<span class="mut">)</span>`:''}
-function mline3(lb,r,pfx,sfx,fmt,revk,gapk){
-  const parts=[];
-  for(const y of [26,27,28]){
-    const v=r[pfx+y+sfx];
-    if(v==null)continue;
-    parts.push(y+'년 <b>'+fmt(v)+'</b>'+paren(r[revk+y],r[gapk+y]));}
-  return parts.length?`<div class="mline"><span class="lb">${lb}</span>${parts.join(' <span class="mut">/</span> ')}</div>`:''}
-function xline(lb,r,pfx){
-  const parts=[];
-  for(const y of [26,27,28]){
-    const v=r[pfx+y];
-    if(v==null)continue;
-    parts.push(`${y}년 <b>${Number(v).toFixed(1)}x</b>`);}
-  return parts.length?`${lb} ${parts.join(' <span class="mut">/</span> ')}`:''}
+function fx(x){return x==null?null:Number(x).toFixed(1)+'x'}
+function fp(x){return x==null?null:Number(x).toFixed(1)+'%'}
+function ytable(r,rows){
+  /* rows: [label, y=>value(html or null), isValueRow] — 값 있는 연도 열만, 값 있는 행만 */
+  const years=[26,27,28].filter(y=>rows.some(([,f])=>f(y)!=null));
+  if(!years.length)return '';
+  const body=rows.map(([lb,f,vh])=>{
+    const cells=years.map(y=>{const v=f(y);return `<td>${v==null?'<span class=mut>-</span>':v}</td>`});
+    if(!years.some(y=>f(y)!=null))return '';
+    return `<tr${vh?' class="vh"':''}><td>${lb}</td>${cells.join('')}</tr>`}).join('');
+  return `<table class="yt"><thead><tr><th></th>${years.map(y=>`<th>${y}E</th>`).join('')}</tr></thead><tbody>${body}</tbody></table>`}
 const TPR={'추정치':'어닝 추정치','멀티플':'타겟 멀티플','둘다':'추정치+멀티플'};
 function card(r,b){
   let h=`<div class="card${b==='down'?' down-c':''}">`;
   h+=`<div class="chead"><span class="em">${emoji(r,b)}</span><span class="nm">${r.name||'?'}</span>`+
      `<span class="cd">${r.code||''}</span><span class="bk">${r.broker||''}${r.time?' · '+r.time:''}</span>`+
      (r.suspect?'<span class="tag" style="border-color:#5c4420;color:#e0a030">⚠️ 파싱의심</span>':'')+`</div>`;
-  // ── 메인: OP + POR ──
-  const opl=mline3('OP',r,'op_','e_eok',eok,'op_rev_','op_gap_');
-  if(opl)h+=opl;
-  else if(r.cons_op_26!=null||r.cons_op_27!=null)
-    h+=`<div class="mline mut"><span class="lb">OP</span>컨센 26년 ${eok(r.cons_op_26)} / 27년 ${eok(r.cons_op_27)} (애널추정 미검출)</div>`;
-  if(!opl&&(r.signal_tags||[]).length)
-    h+=`<div class="mline">${r.signal_tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;
-  const por=xline('POR',r,'por_');
-  if(por)h+=`<div class="porline">${por}</div>`;
-  // ── 토글 상세: 매출/EPS/Upside/Valuation ──
+  // ── 메인 표: OP 추정/컨센/직전 + POR ──
+  const hasOp=[26,27,28].some(y=>r['op_'+y+'e_eok']!=null);
+  const main=ytable(r,[
+    ['OP',y=>r['op_'+y+'e_eok']!=null?eok(r['op_'+y+'e_eok']):null,true],
+    ['컨센',y=>pct(r['op_gap_'+y])],
+    ['직전',y=>pct(r['op_rev_'+y])],
+    ['POR',y=>fx(r['por_'+y])]]);
+  if(hasOp)h+=main;
+  else{
+    if(r.cons_op_26!=null||r.cons_op_27!=null)
+      h+=`<div class="mline mut"><span class="lb">OP</span>컨센 26년 ${eok(r.cons_op_26)} / 27년 ${eok(r.cons_op_27)} (애널추정 미검출)</div>`;
+    if((r.signal_tags||[]).length)
+      h+=`<div class="mline">${r.signal_tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;
+    h+=main;}
+  // ── 토글 상세: 매출/EPS 표 + Upside/PBR ──
   let d='';
-  d+=mline3('매출액',r,'sales_','e_eok',eok,'sales_rev_','sales_gap_');
-  d+=mline3('EPS',r,'eps_20','e',x=>n0(x)+'원','eps_rev_','eps_gap_');
+  d+=ytable(r,[
+    ['매출액',y=>r['sales_'+y+'e_eok']!=null?eok(r['sales_'+y+'e_eok']):null,true],
+    ['컨센',y=>pct(r['sales_gap_'+y])],
+    ['직전',y=>pct(r['sales_rev_'+y])],
+    ['Growth',y=>fp(r['sales_g_'+y])]]);
+  d+=ytable(r,[
+    ['EPS',y=>r['eps_20'+y+'e']!=null?n0(r['eps_20'+y+'e'])+'원':null,true],
+    ['컨센',y=>pct(r['eps_gap_'+y])],
+    ['직전',y=>pct(r['eps_rev_'+y])],
+    ['PER',y=>fx(r['per_'+y])]]);
   const price=r.prev_close!=null?r.prev_close:r.current_price;
   if(r.tp!=null){
     let s=`<div class="upline"><span class="lb" style="color:var(--dim)">Upside</span> `;
@@ -143,16 +158,10 @@ function card(r,b){
       const rs=TPR[r.tp_change_reason||''];if(rs)c+=` <span class="mut">(${rs} ${dd})</span>`;
       s+=c;}
     d+=s+'</div>';}
-  const v=[];
-  if(r.sales_g_26!=null||r.sales_g_27!=null)
-    v.push(`매출 Growth <b>26년 ${r.sales_g_26!=null?r.sales_g_26.toFixed(1)+'%':'-'} / 27년 ${r.sales_g_27!=null?r.sales_g_27.toFixed(1)+'%':'-'}</b>`);
-  const per=xline('PER',r,'per_');
-  if(per)v.push(per);
   const band=r.pbr_band||{};const pbr=r.pbr_26!=null?r.pbr_26:band.now;
-  if(pbr!=null){let s=`PBR <b>${Number(pbr).toFixed(1)}</b>`;
+  if(pbr!=null){let s=`<div class="upline"><span class="lb" style="color:var(--dim)">PBR</span> <b>${Number(pbr).toFixed(1)}</b>`;
     if(band.lo!=null)s+=` <span class="mut">(밴드 ${band.lo.toFixed(1)}~${band.hi.toFixed(1)}, 현재 ${band.pos})</span>`;
-    v.push(s);}
-  if(v.length)d+=`<div class="val">${v.map(x=>`<span>${x}</span>`).join('')}</div>`;
+    d+=s+'</div>';}
   if(d)h+=`<button class="morebtn">상세 ▾</button><div class="detail">${d}</div>`;
   return h+'</div>'}
 function match(r){if(!Q)return true;const q=Q.toLowerCase();
