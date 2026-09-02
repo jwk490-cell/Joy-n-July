@@ -65,7 +65,7 @@ padding:1px 7px;font-size:11px;margin-right:4px}
   <div id="days"></div>
   <div class="foot">
     · 대상: 지정 30개 증권사 당일 발간 실질추정리포트(목표가/EPS 보유) — 평일 07~16시 15분 주기 자동 수집<br>
-    · 상향: 애널 OP 추정 컨센대비 ≥ +5%(27E 우선) 또는 본인 상향 ≥ +3% / 하향: 컨센대비 ≤ −5% 또는 본인 하향 (🔥/🧊 = ±10% 이상)<br>
+    · 상향 🔥: 애널 OP 추정 컨센대비 ≥ +5%(27E 우선) 또는 본인 상향 ≥ +3% / 하향 ☔️: 컨센대비 ≤ −5% 또는 본인 하향<br>
     · 컨센 = 당일 첫 조회값 고정 · POR/PER/PBR = 애널 추정치 × 현재가 기준, 밴드 = 최근 3년 PBR 밴드 · 정렬 = OP 컨센대비 상회율순
   </div>
 </div>
@@ -79,9 +79,7 @@ function pct(x,sign=true){if(x==null)return null;let v=Math.round(Number(x));if(
   const s=(sign&&v>0?'+':'')+v+'%';
   return `<span class="${v>0?'pos':v<0?'neg':'mut'}">${s}</span>`}
 function repGap(r){return r.op_gap!=null?r.op_gap:(r.op_rev!=null?r.op_rev:null)}
-function emoji(r,b){const g=repGap(r);
-  if(b==='up')return (g!=null&&g>=10)?'🔥':'▲';
-  return (g!=null&&g<=-10)?'🧊':'▼'}
+function emoji(r,b){return b==='up'?'🔥':'☔️'}
 function paren(rev,gap){const p=[];
   if(rev!=null)p.push('직전 추정치 대비 '+pct(rev));
   if(gap!=null)p.push('컨센대비 '+pct(gap));
