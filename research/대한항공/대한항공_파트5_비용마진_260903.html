@@ -1,0 +1,532 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="coverage" content="costs">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>대한항공(003490) 파트 5 — 비용·마진 · 2026-09-03</title>
+<style>
+body{margin:0;background:#faf8f4;color:#3a3630;font-family:'Noto Serif KR','Apple SD Gothic Neo','Malgun Gothic',serif;line-height:1.78;word-break:keep-all}
+main{max-width:920px;margin:0 auto;padding:44px 28px 80px}
+h1{font-size:23px;margin:0 0 6px;line-height:1.35} .sub{color:#8a857c;font-size:13px;margin-bottom:10px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;line-height:1.6}
+h2{font-size:17.5px;margin:36px 0 8px;padding-top:16px;border-top:1px solid #e3ded4}
+h3{font-size:15px;margin:22px 0 6px}
+p{max-width:700px;font-size:15px;margin:0 0 1.25em}
+p.reading{font-size:14px;color:#4a463f;background:#f4f0e8;border-radius:6px;padding:10px 14px;max-width:700px}
+figure{margin:14px 0 6px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px}
+figcaption{font-size:13px;font-weight:600;margin-bottom:8px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+svg{width:100%;height:auto;display:block}
+.src{font-size:11.5px;color:#8a857c;margin-top:6px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+table{border-collapse:collapse;font-size:13px;margin:10px 0 16px;font-family:Pretendard,'Apple SD Gothic Neo',-apple-system,sans-serif;background:#fff}
+td,th{border:1px solid #e0dbd0;padding:5px 10px;text-align:right;vertical-align:top} td:first-child,th:first-child{text-align:left} th{background:#f1ede4;font-weight:600;color:#5a5650}
+.gloss{display:grid;grid-template-columns:160px 1fr;gap:6px 14px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px;font-size:13.5px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;max-width:740px;line-height:1.55}
+.gloss b{font-size:13px}
+.judge{background:#f1ede4;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.ourview{background:#eef2f7;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.panel{background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px 16px;max-width:700px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;font-size:14px;margin:12px 0 18px}
+.panel input[type=range]{width:100%}
+.panel .out{margin-top:8px;font-weight:700}
+.panel .note{color:#8a857c;font-size:12.5px;margin-top:6px}
+.est{font-size:.72em;vertical-align:super;color:#a44a3f;font-weight:700}
+.foot{font-size:12px;color:#8a857c;max-width:700px;margin-top:30px;border-top:1px solid #e3ded4;padding-top:12px}
+.segdive{border:1px solid #e0dbd0;border-radius:8px;padding:6px 18px 4px;margin:14px 0 20px;background:#fdfcf9}
+.leadchain{background:#fff8ea;border:1px solid #e8d9b5;border-radius:6px;padding:12px 16px;max-width:700px;font-size:14px}
+.hubnav{font-size:12.5px;color:#8a857c;font-family:Pretendard,sans-serif;margin-bottom:14px}
+.hubnav a{color:#1f3a5f}
+a{color:#1f3a5f}
+@media print{.panel input{display:none}}
+</style></head><body><main>
+
+<h1>대한항공 파트 5 — 비용·마진: 원가의 42%가 항공유일 때, 나머지 58%는 무엇을 하고 있었나</h1>
+<div class="sub">파트제 커버리지 5편 · 작성 2026-09-03 · 주가 29,150원(9-03 종가) · 시총 10조 7,336억원 · $1=₩1,359.1 · 12월 결산 · 다음 실적 3Q26 잠정 2026년 10월 중순<span class="est">E</span> ·
+숫자 정본: 허브 상수 블록 · 소스: 반기·분기·사업보고서 2022~2026 주석 '비용의 성격별 분류'(연결, 18분기 작성자 파싱)·주석 30 판관비·주석 32 기타영업외·II-3 항공유 단가·II-5 위험관리·2Q26 IR 비용 구성 및 연료비 증분 분해·OpenDART 분기 손익</div>
+<div class="hubnav">현행 판정은 <a href="대한항공_허브.html">대한항공_허브.html</a>이 듭니다. 이 파트는 커버리지 층 costs를 맡고, 파트 7 총괄 조정판과 변수(항공유·환율)를 공유합니다.</div>
+
+<p>이 파트가 커버리지에서 맡는 자리입니다. 허브 논쟁 1(3Q26 별도 영업이익이 5,000억원대로 돌아오는가)의 회계 층 증거가 여기서 섭니다. 이 회사는 비용을 성격별로 12개 계정으로 공시하므로 원가를 직접 볼 수 있고, 그 가운데 항공유 하나가 2Q26에 비용의 42.9%를 차지했습니다. 이 파트는 18분기 계정 궤적을 열어 세 가지를 확인합니다 — 연료 밖의 비용은 유가 충격 동안 무엇을 했나, 연료비를 항공유 값과 환율로 분해하면 3Q에 얼마가 돌아오나, 그리고 영업이익 아래에서 순이익을 흔드는 환율 층은 얼마나 큰가. 마지막에 항공유·환율·전가율 세 손잡이가 달린 조정판을 둡니다.</p>
+
+<p>먼저 푸는 용어 일곱 개입니다.</p>
+<div class="gloss">
+<b>성격별 비용 분류</b><span>매출원가·판관비를 합쳐 연료·급여·감가상각 같은 성격으로 다시 나눈 공시(주석 34). 한국 항공사는 이것을 분기마다 내므로 원가 성분을 20분기로 추적할 수 있습니다.</span>
+<b>CASK</b><span>공급좌석킬로미터당 비용. 미국 항공사는 연료 제외 CASM-ex를 쓰는데, 대한항공은 공시하지 않아 이 파트는 '매출 대비 비율'로 대신합니다.</span>
+<b>유류 헤지(제로코스트칼라)</b><span>풋을 팔고 콜을 사서 프리미엄 없이 유가 상하한을 거는 옵션. 회사는 연간 소모량의 최대 50%까지 걸며, 2026년 6월 말 잔액 860만 배럴(2027년 10월 만기)입니다. 매매목적 회계라 평가손익이 영업외로 갑니다.</span>
+<b>전가율</b><span>연료비 변동 가운데 유류할증료·운임 인상으로 매출에 되돌아오는 몫. KB증권은 2Q26에 67%, 회사 별도 숫자로 역산하면 절반 안팎<span class="est">E</span>입니다.</span>
+<b>외화환산손익</b><span>분기 말 환율로 외화 자산·부채를 다시 평가한 손익. 현금이 오가지 않지만 순이익에 그대로 잡히고, 이 회사는 순외화부채 56억달러라 10원당 560억원입니다.</span>
+<b>리스 이자</b><span>리스부채(11.4조원)에 붙는 이자. 감가상각과 함께 항공기 보유 비용을 이루며 금융비용(상반기 4,709억원)의 절반 안팎<span class="est">E</span>입니다.</span>
+<b>통상임금</b><span>2024년 12월 대법원 판결로 상여금이 통상임금에 포함돼 수당·퇴직급여가 늘어난 것. 아시아나 2025년 손실 원인의 하나이고 대한항공에도 인건비 상향 압력입니다.</span>
+</div>
+
+<h2>1. 회계 인식 지도 — 무엇이 어느 계정으로 가나</h2>
+<figure class="photo"><figcaption>장표 1. 회계 인식 지도 — 매출 항목의 인식 시점과 비용 계정의 귀속(2026년 상반기 연결)</figcaption><svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<text x="20" y="22" font-size="12" font-weight="700" fill="#1f3a5f">매출 항목 → 인식 방식</text>
+<rect x="20" y="32" width="250" height="44" rx="5" fill="#fff" stroke="#1f3a5f"/><text x="145" y="50" text-anchor="middle" font-size="11" font-weight="600">여객 노선수익(별도 57%)</text><text x="145" y="66" text-anchor="middle" font-size="10" fill="#8a857c">탑승 시점 인식 · 판매 시 선수금 6.36조</text>
+<rect x="20" y="84" width="250" height="44" rx="5" fill="#fff" stroke="#1f3a5f"/><text x="145" y="102" text-anchor="middle" font-size="11" font-weight="600">화물 노선수익(27%)</text><text x="145" y="118" text-anchor="middle" font-size="10" fill="#8a857c">운송 완료 시점 · kg당 운임 + 할증료</text>
+<rect x="20" y="136" width="250" height="44" rx="5" fill="#fff" stroke="#1f3a5f"/><text x="145" y="154" text-anchor="middle" font-size="11" font-weight="600">기타(마일리지·기내판매·정비 10%)</text><text x="145" y="170" text-anchor="middle" font-size="10" fill="#8a857c">마일리지는 이연수익 4.07조 → 사용 시 인식</text>
+<rect x="20" y="188" width="250" height="44" rx="5" fill="#fff" stroke="#1f3a5f"/><text x="145" y="206" text-anchor="middle" font-size="11" font-weight="600">항공우주(5%)</text><text x="145" y="222" text-anchor="middle" font-size="10" fill="#8a857c">창정비·무인기 = 진행률 기간 인식 · 부품 = 납품 시점</text>
+<text x="330" y="22" font-size="12" font-weight="700" fill="#a44a3f">비용 계정(성격별, 2026년 상반기 연결 13.58조) → 어디로 가나</text>
+<rect x="330" y="32" width="260" height="30" rx="5" fill="#fff8ea" stroke="#b07d2b"/><text x="460" y="52" text-anchor="middle" font-size="10.5">연료유류비 4.74조(34.9%) — 전량 매출원가</text>
+<rect x="330" y="68" width="260" height="30" rx="5" fill="#fff" stroke="#8a857c"/><text x="460" y="88" text-anchor="middle" font-size="10.5">급여·퇴직·복리 2.50조(18.4%) — 승무·정비는 원가, 본사는 판관비</text>
+<rect x="330" y="104" width="260" height="30" rx="5" fill="#fff" stroke="#8a857c"/><text x="460" y="124" text-anchor="middle" font-size="10.5">감가·무형상각 1.51조(11.1%) — 항공기·리스자산, 원가</text>
+<rect x="330" y="140" width="260" height="30" rx="5" fill="#fff" stroke="#8a857c"/><text x="460" y="160" text-anchor="middle" font-size="10.5">공항관련비 1.19조 + 객화서비스비 0.65조(13.6%) — 원가</text>
+<rect x="330" y="176" width="260" height="30" rx="5" fill="#fff" stroke="#8a857c"/><text x="460" y="196" text-anchor="middle" font-size="10.5">지급수수료 0.50조·판매수수료 0.15조 — 대부분 판관비</text>
+<rect x="330" y="212" width="260" height="30" rx="5" fill="#fff" stroke="#8a857c"/><text x="460" y="232" text-anchor="middle" font-size="10.5">항공우주원가 0.26조·기타 1.96조(정비·보험·IT) — 원가</text>
+<rect x="620" y="32" width="240" height="90" rx="5" fill="#f1ede4" stroke="#1f3a5f"/><text x="740" y="52" text-anchor="middle" font-size="11" font-weight="700">영업이익 아래 — 순이익을 흔드는 층</text><text x="740" y="72" text-anchor="middle" font-size="10">외화환산손익: 순외화부채 56억달러 × 분기말 환율</text><text x="740" y="88" text-anchor="middle" font-size="10">금융비용 4,709억(상반기): 차입 11.0조 + 리스 11.4조</text><text x="740" y="104" text-anchor="middle" font-size="10">파생상품: 유가옵션 860만배럴·통화스왑</text>
+<rect x="620" y="132" width="240" height="50" rx="5" fill="#fff" stroke="#8a857c"/><text x="740" y="152" text-anchor="middle" font-size="10.5">판관비 합계 1.27조(상반기) = 비용의 9.4%</text><text x="740" y="170" text-anchor="middle" font-size="10" fill="#8a857c">나머지 90.6%가 매출원가 — 원가율 사업</text>
+<rect x="620" y="192" width="240" height="50" rx="5" fill="#fff" stroke="#8a857c"/><text x="740" y="212" text-anchor="middle" font-size="10.5">고정비 성격: 인건비·감가·리스이자·공항 정액</text><text x="740" y="230" text-anchor="middle" font-size="10" fill="#8a857c">변동비 성격: 연료·객화서비스·판매수수료</text>
+<text x="20" y="270" font-size="10.5" fill="#8a857c">자료: 반기보고서 주석 29·30·34(2026-08-14), 2Q26 IR 비용 구성. 판관비 = 급여 2,582·지급수수료 4,101·판매수수료 1,487·광고 388 등 1조 2,750억원</text>
+</svg><div class="src">자료: 반기보고서 주석 29(수익)·30(판관비)·34(성격별 비용)·24(이연수익)·25(파생), 2Q26 IR. 작성자 정리</div></figure>
+<p class="reading"><b>관찰.</b> 1) 비용의 90.6%가 매출원가이고 판관비는 9.4%뿐입니다. 2) 매출 쪽은 여객·화물 모두 서비스 완료 시점 인식이라 선수금(6.36조원)과 이연수익(4.07조원)이라는 두 부채가 미래 매출의 저수지입니다. 3) 영업이익 아래에 외화환산·금융비용·파생이라는 세 번째 층이 있고, 그 크기가 분기 순이익을 영업이익보다 더 흔듭니다. <b>원인.</b> 항공사는 항공기·연료·인력이 전부 운항 원가로 들어가는 원가율 사업이고, 판매·관리 조직은 상대적으로 작습니다. 부채가 크고 달러 부채가 많아 영업외 층이 두껍습니다. <b>함의.</b> 이 회사의 마진을 읽을 때 판관비 레버리지는 논점이 아닙니다. 논점은 매출원가 안의 두 계정 — 연료(변동비)와 인건비·감가·리스(고정비) — 의 비율이고, 순이익을 읽을 때는 영업이익보다 분기 말 환율을 먼저 봐야 합니다.</p>
+
+<h2>2. 18분기 계정 궤적 — 연료 밖의 비용은 조용했다</h2>
+<figure class=""><figcaption>장표 2. 성격별 비용 절대액 스택, 2022년 1분기~2026년 2분기(연결, 억원) — 2024년 4분기부터 아시아나 포함</figcaption><svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="296.0" x2="730" y2="296.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="300.0" text-anchor="end" font-size="11" fill="#8a857c">0</text>
+<line x1="62" y1="226.5" x2="730" y2="226.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="230.5" text-anchor="end" font-size="11" fill="#8a857c">20,000</text>
+<line x1="62" y1="157.0" x2="730" y2="157.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="161.0" text-anchor="end" font-size="11" fill="#8a857c">40,000</text>
+<line x1="62" y1="87.5" x2="730" y2="87.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="91.5" text-anchor="end" font-size="11" fill="#8a857c">60,000</text>
+<line x1="62" y1="18.0" x2="730" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">80,000</text>
+<text x="80.6" y="314" text-anchor="middle" font-size="10" fill="#8a857c">'22년 1Q</text>
+<text x="154.8" y="314" text-anchor="middle" font-size="10" fill="#8a857c">3Q</text>
+<text x="229.0" y="314" text-anchor="middle" font-size="10" fill="#8a857c">'23년 1Q</text>
+<text x="303.2" y="314" text-anchor="middle" font-size="10" fill="#8a857c">3Q</text>
+<text x="377.4" y="314" text-anchor="middle" font-size="10" fill="#8a857c">'24년 1Q</text>
+<text x="451.7" y="314" text-anchor="middle" font-size="10" fill="#8a857c">3Q</text>
+<text x="525.9" y="314" text-anchor="middle" font-size="10" fill="#8a857c">'25년 1Q</text>
+<text x="600.1" y="314" text-anchor="middle" font-size="10" fill="#8a857c">3Q</text>
+<text x="674.3" y="314" text-anchor="middle" font-size="10" fill="#8a857c">'26년 1Q</text>
+<text x="711.4" y="314" text-anchor="middle" font-size="10" fill="#8a857c">2Q</text>
+<rect x="69.4" y="273.1" width="22.3" height="22.9" fill="#b07d2b" opacity="0.9"/>
+<rect x="69.4" y="256.0" width="22.3" height="17.1" fill="#1f3a5f" opacity="0.9"/>
+<rect x="69.4" y="242.5" width="22.3" height="13.6" fill="#2b7a78" opacity="0.9"/>
+<rect x="69.4" y="236.6" width="22.3" height="5.8" fill="#3a6ea5" opacity="0.9"/>
+<rect x="69.4" y="235.0" width="22.3" height="1.6" fill="#8a857c" opacity="0.9"/>
+<rect x="69.4" y="222.6" width="22.3" height="12.4" fill="#d8d4cc" opacity="0.9"/>
+<rect x="106.5" y="260.9" width="22.3" height="35.1" fill="#b07d2b" opacity="0.9"/>
+<rect x="106.5" y="240.3" width="22.3" height="20.6" fill="#1f3a5f" opacity="0.9"/>
+<rect x="106.5" y="226.8" width="22.3" height="13.5" fill="#2b7a78" opacity="0.9"/>
+<rect x="106.5" y="221.6" width="22.3" height="5.1" fill="#3a6ea5" opacity="0.9"/>
+<rect x="106.5" y="218.2" width="22.3" height="3.4" fill="#8a857c" opacity="0.9"/>
+<rect x="106.5" y="202.8" width="22.3" height="15.4" fill="#d8d4cc" opacity="0.9"/>
+<rect x="143.6" y="253.0" width="22.3" height="43.0" fill="#b07d2b" opacity="0.9"/>
+<rect x="143.6" y="231.1" width="22.3" height="21.9" fill="#1f3a5f" opacity="0.9"/>
+<rect x="143.6" y="216.4" width="22.3" height="14.7" fill="#2b7a78" opacity="0.9"/>
+<rect x="143.6" y="209.8" width="22.3" height="6.6" fill="#3a6ea5" opacity="0.9"/>
+<rect x="143.6" y="205.9" width="22.3" height="3.9" fill="#8a857c" opacity="0.9"/>
+<rect x="143.6" y="187.9" width="22.3" height="18.0" fill="#d8d4cc" opacity="0.9"/>
+<rect x="180.8" y="253.3" width="22.3" height="42.7" fill="#b07d2b" opacity="0.9"/>
+<rect x="180.8" y="226.8" width="22.3" height="26.6" fill="#1f3a5f" opacity="0.9"/>
+<rect x="180.8" y="211.2" width="22.3" height="15.6" fill="#2b7a78" opacity="0.9"/>
+<rect x="180.8" y="203.8" width="22.3" height="7.4" fill="#3a6ea5" opacity="0.9"/>
+<rect x="180.8" y="197.9" width="22.3" height="5.9" fill="#8a857c" opacity="0.9"/>
+<rect x="180.8" y="179.1" width="22.3" height="18.8" fill="#d8d4cc" opacity="0.9"/>
+<rect x="217.9" y="257.9" width="22.3" height="38.1" fill="#b07d2b" opacity="0.9"/>
+<rect x="217.9" y="235.6" width="22.3" height="22.3" fill="#1f3a5f" opacity="0.9"/>
+<rect x="217.9" y="220.3" width="22.3" height="15.3" fill="#2b7a78" opacity="0.9"/>
+<rect x="217.9" y="207.2" width="22.3" height="13.1" fill="#3a6ea5" opacity="0.9"/>
+<rect x="217.9" y="201.9" width="22.3" height="5.3" fill="#8a857c" opacity="0.9"/>
+<rect x="217.9" y="188.0" width="22.3" height="13.9" fill="#d8d4cc" opacity="0.9"/>
+<rect x="255.0" y="259.6" width="22.3" height="36.4" fill="#b07d2b" opacity="0.9"/>
+<rect x="255.0" y="233.9" width="22.3" height="25.7" fill="#1f3a5f" opacity="0.9"/>
+<rect x="255.0" y="218.1" width="22.3" height="15.8" fill="#2b7a78" opacity="0.9"/>
+<rect x="255.0" y="202.3" width="22.3" height="15.8" fill="#3a6ea5" opacity="0.9"/>
+<rect x="255.0" y="196.7" width="22.3" height="5.6" fill="#8a857c" opacity="0.9"/>
+<rect x="255.0" y="177.8" width="22.3" height="18.9" fill="#d8d4cc" opacity="0.9"/>
+<rect x="292.1" y="252.3" width="22.3" height="43.7" fill="#b07d2b" opacity="0.9"/>
+<rect x="292.1" y="225.8" width="22.3" height="26.5" fill="#1f3a5f" opacity="0.9"/>
+<rect x="292.1" y="211.5" width="22.3" height="14.3" fill="#2b7a78" opacity="0.9"/>
+<rect x="292.1" y="193.5" width="22.3" height="18.0" fill="#3a6ea5" opacity="0.9"/>
+<rect x="292.1" y="187.2" width="22.3" height="6.3" fill="#8a857c" opacity="0.9"/>
+<rect x="292.1" y="167.2" width="22.3" height="20.0" fill="#d8d4cc" opacity="0.9"/>
+<rect x="329.2" y="247.3" width="22.3" height="48.7" fill="#b07d2b" opacity="0.9"/>
+<rect x="329.2" y="212.1" width="22.3" height="35.2" fill="#1f3a5f" opacity="0.9"/>
+<rect x="329.2" y="197.6" width="22.3" height="14.4" fill="#2b7a78" opacity="0.9"/>
+<rect x="329.2" y="179.6" width="22.3" height="18.1" fill="#3a6ea5" opacity="0.9"/>
+<rect x="329.2" y="172.7" width="22.3" height="6.9" fill="#8a857c" opacity="0.9"/>
+<rect x="329.2" y="153.2" width="22.3" height="19.4" fill="#d8d4cc" opacity="0.9"/>
+<rect x="366.3" y="251.8" width="22.3" height="44.2" fill="#b07d2b" opacity="0.9"/>
+<rect x="366.3" y="224.6" width="22.3" height="27.2" fill="#1f3a5f" opacity="0.9"/>
+<rect x="366.3" y="209.7" width="22.3" height="14.9" fill="#2b7a78" opacity="0.9"/>
+<rect x="366.3" y="191.0" width="22.3" height="18.7" fill="#3a6ea5" opacity="0.9"/>
+<rect x="366.3" y="184.7" width="22.3" height="6.3" fill="#8a857c" opacity="0.9"/>
+<rect x="366.3" y="165.6" width="22.3" height="19.1" fill="#d8d4cc" opacity="0.9"/>
+<rect x="403.4" y="251.6" width="22.3" height="44.4" fill="#b07d2b" opacity="0.9"/>
+<rect x="403.4" y="220.4" width="22.3" height="31.1" fill="#1f3a5f" opacity="0.9"/>
+<rect x="403.4" y="205.3" width="22.3" height="15.1" fill="#2b7a78" opacity="0.9"/>
+<rect x="403.4" y="185.7" width="22.3" height="19.6" fill="#3a6ea5" opacity="0.9"/>
+<rect x="403.4" y="179.4" width="22.3" height="6.3" fill="#8a857c" opacity="0.9"/>
+<rect x="403.4" y="158.4" width="22.3" height="21.0" fill="#d8d4cc" opacity="0.9"/>
+<rect x="440.5" y="252.0" width="22.3" height="44.0" fill="#b07d2b" opacity="0.9"/>
+<rect x="440.5" y="220.4" width="22.3" height="31.6" fill="#1f3a5f" opacity="0.9"/>
+<rect x="440.5" y="204.5" width="22.3" height="15.9" fill="#2b7a78" opacity="0.9"/>
+<rect x="440.5" y="184.2" width="22.3" height="20.2" fill="#3a6ea5" opacity="0.9"/>
+<rect x="440.5" y="177.8" width="22.3" height="6.4" fill="#8a857c" opacity="0.9"/>
+<rect x="440.5" y="156.7" width="22.3" height="21.1" fill="#d8d4cc" opacity="0.9"/>
+<rect x="477.6" y="255.6" width="22.3" height="40.4" fill="#b07d2b" opacity="0.9"/>
+<rect x="477.6" y="220.1" width="22.3" height="35.5" fill="#1f3a5f" opacity="0.9"/>
+<rect x="477.6" y="203.6" width="22.3" height="16.5" fill="#2b7a78" opacity="0.9"/>
+<rect x="477.6" y="183.9" width="22.3" height="19.7" fill="#3a6ea5" opacity="0.9"/>
+<rect x="477.6" y="177.2" width="22.3" height="6.7" fill="#8a857c" opacity="0.9"/>
+<rect x="477.6" y="155.7" width="22.3" height="21.5" fill="#d8d4cc" opacity="0.9"/>
+<rect x="514.8" y="231.9" width="22.3" height="64.1" fill="#b07d2b" opacity="0.9"/>
+<rect x="514.8" y="188.4" width="22.3" height="43.5" fill="#1f3a5f" opacity="0.9"/>
+<rect x="514.8" y="163.3" width="22.3" height="25.1" fill="#2b7a78" opacity="0.9"/>
+<rect x="514.8" y="133.2" width="22.3" height="30.1" fill="#3a6ea5" opacity="0.9"/>
+<rect x="514.8" y="123.3" width="22.3" height="9.9" fill="#8a857c" opacity="0.9"/>
+<rect x="514.8" y="85.4" width="22.3" height="37.9" fill="#d8d4cc" opacity="0.9"/>
+<rect x="551.9" y="240.9" width="22.3" height="55.1" fill="#b07d2b" opacity="0.9"/>
+<rect x="551.9" y="194.8" width="22.3" height="46.1" fill="#1f3a5f" opacity="0.9"/>
+<rect x="551.9" y="171.5" width="22.3" height="23.3" fill="#2b7a78" opacity="0.9"/>
+<rect x="551.9" y="137.3" width="22.3" height="34.2" fill="#3a6ea5" opacity="0.9"/>
+<rect x="551.9" y="128.4" width="22.3" height="8.9" fill="#8a857c" opacity="0.9"/>
+<rect x="551.9" y="93.0" width="22.3" height="35.3" fill="#d8d4cc" opacity="0.9"/>
+<rect x="589.0" y="239.5" width="22.3" height="56.5" fill="#b07d2b" opacity="0.9"/>
+<rect x="589.0" y="197.4" width="22.3" height="42.2" fill="#1f3a5f" opacity="0.9"/>
+<rect x="589.0" y="172.1" width="22.3" height="25.3" fill="#2b7a78" opacity="0.9"/>
+<rect x="589.0" y="141.5" width="22.3" height="30.5" fill="#3a6ea5" opacity="0.9"/>
+<rect x="589.0" y="130.9" width="22.3" height="10.7" fill="#8a857c" opacity="0.9"/>
+<rect x="589.0" y="92.0" width="22.3" height="38.8" fill="#d8d4cc" opacity="0.9"/>
+<rect x="626.1" y="237.3" width="22.3" height="58.7" fill="#b07d2b" opacity="0.9"/>
+<rect x="626.1" y="185.5" width="22.3" height="51.8" fill="#1f3a5f" opacity="0.9"/>
+<rect x="626.1" y="160.0" width="22.3" height="25.5" fill="#2b7a78" opacity="0.9"/>
+<rect x="626.1" y="127.9" width="22.3" height="32.1" fill="#3a6ea5" opacity="0.9"/>
+<rect x="626.1" y="117.8" width="22.3" height="10.0" fill="#8a857c" opacity="0.9"/>
+<rect x="626.1" y="75.6" width="22.3" height="42.2" fill="#d8d4cc" opacity="0.9"/>
+<rect x="663.2" y="239.1" width="22.3" height="56.9" fill="#b07d2b" opacity="0.9"/>
+<rect x="663.2" y="196.2" width="22.3" height="42.8" fill="#1f3a5f" opacity="0.9"/>
+<rect x="663.2" y="170.4" width="22.3" height="25.8" fill="#2b7a78" opacity="0.9"/>
+<rect x="663.2" y="139.1" width="22.3" height="31.3" fill="#3a6ea5" opacity="0.9"/>
+<rect x="663.2" y="127.2" width="22.3" height="11.9" fill="#8a857c" opacity="0.9"/>
+<rect x="663.2" y="82.6" width="22.3" height="44.6" fill="#d8d4cc" opacity="0.9"/>
+<rect x="700.3" y="188.3" width="22.3" height="107.7" fill="#b07d2b" opacity="0.9"/>
+<rect x="700.3" y="144.1" width="22.3" height="44.1" fill="#1f3a5f" opacity="0.9"/>
+<rect x="700.3" y="117.5" width="22.3" height="26.6" fill="#2b7a78" opacity="0.9"/>
+<rect x="700.3" y="84.8" width="22.3" height="32.7" fill="#3a6ea5" opacity="0.9"/>
+<rect x="700.3" y="74.3" width="22.3" height="10.5" fill="#8a857c" opacity="0.9"/>
+<rect x="700.3" y="37.6" width="22.3" height="36.8" fill="#d8d4cc" opacity="0.9"/>
+<rect x="736" y="18" width="10" height="10" fill="#b07d2b"/>
+<text x="750" y="27" font-size="11" fill="#8a857c">연료유류비</text>
+<rect x="736" y="34" width="10" height="10" fill="#1f3a5f"/>
+<text x="750" y="43" font-size="11" fill="#8a857c">인건비(급여+복리후생)</text>
+<rect x="736" y="50" width="10" height="10" fill="#2b7a78"/>
+<text x="750" y="59" font-size="11" fill="#8a857c">감가상각·무형상각</text>
+<rect x="736" y="66" width="10" height="10" fill="#3a6ea5"/>
+<text x="750" y="75" font-size="11" fill="#8a857c">공항관련비+객화서비스비</text>
+<rect x="736" y="82" width="10" height="10" fill="#8a857c"/>
+<text x="750" y="91" font-size="11" fill="#8a857c">지급·판매수수료</text>
+<rect x="736" y="98" width="10" height="10" fill="#d8d4cc"/>
+<text x="750" y="107" font-size="11" fill="#8a857c">기타(정비·항공우주원가 등)</text>
+</svg><div class="src">자료: 분기·반기·사업보고서 주석 '비용의 성격별 분류'(연결) 18분기, 작성자 파싱. 4분기 = 연간 − 3분기 누적. 기타 = 매출−영업이익−표시 계정 합(정비·보험·IT·항공우주원가 포함)</div></figure>
+<p class="reading"><b>관찰.</b> 1) 분기 총비용은 2022년 1분기 2조 1,112억원에서 2026년 2분기 7조 4,372억원으로 3.5배가 됐고, 그중 아시아나 편입(2025년 1분기)이 한 번에 2조원을 더했습니다. 2) 연료비는 2022년 3분기 1조 2,386억원 → 2025년 1조 6,000억원대 → 2026년 2분기 3조 1,004억원으로 한 분기에 두 배가 됐습니다. 3) 인건비(1조 400억원대)·감가상각(7,400억원대)·공항·객화비(9,400억원대)는 2025년 1분기 이후 여섯 분기 동안 거의 평평합니다. <b>원인.</b> 연료는 항공유 값의 함수이고 나머지는 기단·인력·운항 편수의 함수입니다. 2025~2026년에 편수와 인력이 거의 그대로였으므로 고정비도 그대로였고, 움직인 것은 연료뿐입니다. <b>함의.</b> 2Q26 연결 영업적자 -2,071억원은 연료비 한 계정이 전 분기 대비 1조 4,623억원 늘어난 결과이고, 나머지 계정의 합은 오히려 전 분기보다 줄었습니다(기타 -2,259억원). 이 사실이 3Q 회복의 회계적 근거입니다 — 연료비가 내리면 다른 계정이 그 자리를 채우지 않습니다.</p>
+<figure class=""><figcaption>장표 3. 매출 대비 비용 비율과 영업이익률, 18분기(연결, %) — 연료비율이 곧 영업이익률의 거울</figcaption><svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="276.0" x2="730" y2="276.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="280.0" text-anchor="end" font-size="11" fill="#8a857c">-10%</text>
+<line x1="62" y1="233.0" x2="730" y2="233.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="237.0" text-anchor="end" font-size="11" fill="#8a857c">0%</text>
+<line x1="62" y1="190.0" x2="730" y2="190.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="194.0" text-anchor="end" font-size="11" fill="#8a857c">10%</text>
+<line x1="62" y1="147.0" x2="730" y2="147.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="151.0" text-anchor="end" font-size="11" fill="#8a857c">20%</text>
+<line x1="62" y1="104.0" x2="730" y2="104.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="108.0" text-anchor="end" font-size="11" fill="#8a857c">30%</text>
+<line x1="62" y1="61.0" x2="730" y2="61.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="65.0" text-anchor="end" font-size="11" fill="#8a857c">40%</text>
+<line x1="62" y1="18.0" x2="730" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">50%</text>
+<text x="62.0" y="294" text-anchor="middle" font-size="10" fill="#8a857c">'22년 1Q</text>
+<text x="140.6" y="294" text-anchor="middle" font-size="10" fill="#8a857c">3Q</text>
+<text x="219.2" y="294" text-anchor="middle" font-size="10" fill="#8a857c">'23년 1Q</text>
+<text x="297.8" y="294" text-anchor="middle" font-size="10" fill="#8a857c">3Q</text>
+<text x="376.4" y="294" text-anchor="middle" font-size="10" fill="#8a857c">'24년 1Q</text>
+<text x="454.9" y="294" text-anchor="middle" font-size="10" fill="#8a857c">3Q</text>
+<text x="533.5" y="294" text-anchor="middle" font-size="10" fill="#8a857c">'25년 1Q</text>
+<text x="612.1" y="294" text-anchor="middle" font-size="10" fill="#8a857c">3Q</text>
+<text x="690.7" y="294" text-anchor="middle" font-size="10" fill="#8a857c">'26년 1Q</text>
+<text x="730.0" y="294" text-anchor="middle" font-size="10" fill="#8a857c">2Q</text>
+<polyline points="62.0,134.5 101.3,106.2 140.6,96.7 179.9,97.1 219.2,101.8 258.5,116.9 297.8,105.7 337.1,95.8 376.4,105.3 415.6,108.3 454.9,116.5 494.2,122.1 533.5,110.9 572.8,123.3 612.1,116.9 651.4,121.2 690.7,127.2 730.0,48.5" fill="none" stroke="#b07d2b" stroke-width="2"/>
+<circle cx="62.0" cy="134.5" r="2.4" fill="#b07d2b"/>
+<circle cx="101.3" cy="106.2" r="2.4" fill="#b07d2b"/>
+<circle cx="140.6" cy="96.7" r="2.4" fill="#b07d2b"/>
+<circle cx="179.9" cy="97.1" r="2.4" fill="#b07d2b"/>
+<circle cx="219.2" cy="101.8" r="2.4" fill="#b07d2b"/>
+<circle cx="258.5" cy="116.9" r="2.4" fill="#b07d2b"/>
+<circle cx="297.8" cy="105.7" r="2.4" fill="#b07d2b"/>
+<circle cx="337.1" cy="95.8" r="2.4" fill="#b07d2b"/>
+<circle cx="376.4" cy="105.3" r="2.4" fill="#b07d2b"/>
+<circle cx="415.6" cy="108.3" r="2.4" fill="#b07d2b"/>
+<circle cx="454.9" cy="116.5" r="2.4" fill="#b07d2b"/>
+<circle cx="494.2" cy="122.1" r="2.4" fill="#b07d2b"/>
+<circle cx="533.5" cy="110.9" r="2.4" fill="#b07d2b"/>
+<circle cx="572.8" cy="123.3" r="2.4" fill="#b07d2b"/>
+<circle cx="612.1" cy="116.9" r="2.4" fill="#b07d2b"/>
+<circle cx="651.4" cy="121.2" r="2.4" fill="#b07d2b"/>
+<circle cx="690.7" cy="127.2" r="2.4" fill="#b07d2b"/>
+<circle cx="730.0" cy="48.5" r="2.4" fill="#b07d2b"/>
+<polyline points="62.0,159.9 101.3,158.6 140.6,163.8 179.9,148.3 219.2,156.0 258.5,150.9 297.8,156.0 337.1,133.7 376.4,154.7 415.6,145.3 454.9,149.6 494.2,135.4 533.5,150.0 572.8,141.0 612.1,146.6 651.4,134.1 690.7,153.5 730.0,157.3" fill="none" stroke="#1f3a5f" stroke-width="2"/>
+<circle cx="62.0" cy="159.9" r="2.4" fill="#1f3a5f"/>
+<circle cx="101.3" cy="158.6" r="2.4" fill="#1f3a5f"/>
+<circle cx="140.6" cy="163.8" r="2.4" fill="#1f3a5f"/>
+<circle cx="179.9" cy="148.3" r="2.4" fill="#1f3a5f"/>
+<circle cx="219.2" cy="156.0" r="2.4" fill="#1f3a5f"/>
+<circle cx="258.5" cy="150.9" r="2.4" fill="#1f3a5f"/>
+<circle cx="297.8" cy="156.0" r="2.4" fill="#1f3a5f"/>
+<circle cx="337.1" cy="133.7" r="2.4" fill="#1f3a5f"/>
+<circle cx="376.4" cy="154.7" r="2.4" fill="#1f3a5f"/>
+<circle cx="415.6" cy="145.3" r="2.4" fill="#1f3a5f"/>
+<circle cx="454.9" cy="149.6" r="2.4" fill="#1f3a5f"/>
+<circle cx="494.2" cy="135.4" r="2.4" fill="#1f3a5f"/>
+<circle cx="533.5" cy="150.0" r="2.4" fill="#1f3a5f"/>
+<circle cx="572.8" cy="141.0" r="2.4" fill="#1f3a5f"/>
+<circle cx="612.1" cy="146.6" r="2.4" fill="#1f3a5f"/>
+<circle cx="651.4" cy="134.1" r="2.4" fill="#1f3a5f"/>
+<circle cx="690.7" cy="153.5" r="2.4" fill="#1f3a5f"/>
+<circle cx="730.0" cy="157.3" r="2.4" fill="#1f3a5f"/>
+<polyline points="62.0,175.0 101.3,184.0 140.6,186.6 179.9,183.1 219.2,180.1 258.5,182.7 297.8,191.3 337.1,192.2 376.4,190.0 415.6,190.4 454.9,190.9 494.2,187.4 533.5,185.3 572.8,186.6 612.1,181.0 651.4,184.4 690.7,184.8 730.0,187.4" fill="none" stroke="#2b7a78" stroke-width="2"/>
+<circle cx="62.0" cy="175.0" r="2.4" fill="#2b7a78"/>
+<circle cx="101.3" cy="184.0" r="2.4" fill="#2b7a78"/>
+<circle cx="140.6" cy="186.6" r="2.4" fill="#2b7a78"/>
+<circle cx="179.9" cy="183.1" r="2.4" fill="#2b7a78"/>
+<circle cx="219.2" cy="180.1" r="2.4" fill="#2b7a78"/>
+<circle cx="258.5" cy="182.7" r="2.4" fill="#2b7a78"/>
+<circle cx="297.8" cy="191.3" r="2.4" fill="#2b7a78"/>
+<circle cx="337.1" cy="192.2" r="2.4" fill="#2b7a78"/>
+<circle cx="376.4" cy="190.0" r="2.4" fill="#2b7a78"/>
+<circle cx="415.6" cy="190.4" r="2.4" fill="#2b7a78"/>
+<circle cx="454.9" cy="190.9" r="2.4" fill="#2b7a78"/>
+<circle cx="494.2" cy="187.4" r="2.4" fill="#2b7a78"/>
+<circle cx="533.5" cy="185.3" r="2.4" fill="#2b7a78"/>
+<circle cx="572.8" cy="186.6" r="2.4" fill="#2b7a78"/>
+<circle cx="612.1" cy="181.0" r="2.4" fill="#2b7a78"/>
+<circle cx="651.4" cy="184.4" r="2.4" fill="#2b7a78"/>
+<circle cx="690.7" cy="184.8" r="2.4" fill="#2b7a78"/>
+<circle cx="730.0" cy="187.4" r="2.4" fill="#2b7a78"/>
+<polyline points="62.0,208.1 101.3,214.5 140.6,212.4 179.9,209.3 219.2,187.8 258.5,182.3 297.8,180.5 337.1,182.3 376.4,179.2 415.6,178.0 454.9,179.2 494.2,178.8 533.5,175.4 572.8,165.1 612.1,170.2 651.4,171.9 690.7,175.0 730.0,177.1" fill="none" stroke="#3a6ea5" stroke-width="2"/>
+<circle cx="62.0" cy="208.1" r="2.4" fill="#3a6ea5"/>
+<circle cx="101.3" cy="214.5" r="2.4" fill="#3a6ea5"/>
+<circle cx="140.6" cy="212.4" r="2.4" fill="#3a6ea5"/>
+<circle cx="179.9" cy="209.3" r="2.4" fill="#3a6ea5"/>
+<circle cx="219.2" cy="187.8" r="2.4" fill="#3a6ea5"/>
+<circle cx="258.5" cy="182.3" r="2.4" fill="#3a6ea5"/>
+<circle cx="297.8" cy="180.5" r="2.4" fill="#3a6ea5"/>
+<circle cx="337.1" cy="182.3" r="2.4" fill="#3a6ea5"/>
+<circle cx="376.4" cy="179.2" r="2.4" fill="#3a6ea5"/>
+<circle cx="415.6" cy="178.0" r="2.4" fill="#3a6ea5"/>
+<circle cx="454.9" cy="179.2" r="2.4" fill="#3a6ea5"/>
+<circle cx="494.2" cy="178.8" r="2.4" fill="#3a6ea5"/>
+<circle cx="533.5" cy="175.4" r="2.4" fill="#3a6ea5"/>
+<circle cx="572.8" cy="165.1" r="2.4" fill="#3a6ea5"/>
+<circle cx="612.1" cy="170.2" r="2.4" fill="#3a6ea5"/>
+<circle cx="651.4" cy="171.9" r="2.4" fill="#3a6ea5"/>
+<circle cx="690.7" cy="175.0" r="2.4" fill="#3a6ea5"/>
+<circle cx="730.0" cy="177.1" r="2.4" fill="#3a6ea5"/>
+<polyline points="62.0,117.8 101.3,140.1 140.6,144.9 179.9,175.8 219.2,175.0 258.5,180.1 297.8,178.0 337.1,205.0 376.4,179.2 415.6,189.6 454.9,171.9 494.2,188.7 533.5,204.6 572.8,207.2 612.1,221.8 651.4,222.7 690.7,199.5 730.0,245.5" fill="none" stroke="#a44a3f" stroke-width="2.4"/>
+<circle cx="62.0" cy="117.8" r="2.4" fill="#a44a3f"/>
+<circle cx="101.3" cy="140.1" r="2.4" fill="#a44a3f"/>
+<circle cx="140.6" cy="144.9" r="2.4" fill="#a44a3f"/>
+<circle cx="179.9" cy="175.8" r="2.4" fill="#a44a3f"/>
+<circle cx="219.2" cy="175.0" r="2.4" fill="#a44a3f"/>
+<circle cx="258.5" cy="180.1" r="2.4" fill="#a44a3f"/>
+<circle cx="297.8" cy="178.0" r="2.4" fill="#a44a3f"/>
+<circle cx="337.1" cy="205.0" r="2.4" fill="#a44a3f"/>
+<circle cx="376.4" cy="179.2" r="2.4" fill="#a44a3f"/>
+<circle cx="415.6" cy="189.6" r="2.4" fill="#a44a3f"/>
+<circle cx="454.9" cy="171.9" r="2.4" fill="#a44a3f"/>
+<circle cx="494.2" cy="188.7" r="2.4" fill="#a44a3f"/>
+<circle cx="533.5" cy="204.6" r="2.4" fill="#a44a3f"/>
+<circle cx="572.8" cy="207.2" r="2.4" fill="#a44a3f"/>
+<circle cx="612.1" cy="221.8" r="2.4" fill="#a44a3f"/>
+<circle cx="651.4" cy="222.7" r="2.4" fill="#a44a3f"/>
+<circle cx="690.7" cy="199.5" r="2.4" fill="#a44a3f"/>
+<circle cx="730.0" cy="245.5" r="2.4" fill="#a44a3f"/>
+<text x="736" y="52.5" font-size="11" fill="#b07d2b">연료비/매출 % 43%</text>
+<text x="736" y="161.3" font-size="11" fill="#1f3a5f">인건비/매출 % 18%</text>
+<text x="736" y="181.1" font-size="11" fill="#3a6ea5">공항·객화/매출 % 13%</text>
+<text x="736" y="196.1" font-size="11" fill="#2b7a78">감가상각/매출 % 11%</text>
+<text x="736" y="249.5" font-size="11" fill="#a44a3f">영업이익률 % -3%</text>
+</svg><div class="src">자료: 같은 원자료. 비율 = 계정 ÷ 분기 매출</div></figure>
+<p class="reading"><b>관찰.</b> 1) 연료비/매출은 2022년 3분기 31.7%가 유가 정점(브렌트 100달러)의 값이었고, 2024~2025년 25~29%, 2026년 1분기 24.6%, 2분기 42.9%입니다. 2) 영업이익률은 연료비율의 거울처럼 움직입니다 — 연료비율이 25%일 때 10~14%, 30%일 때 5~13%, 43%일 때 -2.9%. 3) 인건비율(14~16%)·감가상각률(10~11%)은 아시아나 편입 뒤 오히려 내려왔습니다(매출 분모 증가). <b>원인.</b> 항공유가 배럴당 10달러 오르면 연간 3,050만 배럴 × 10달러 = 3억 500만달러(약 4,150억원)의 연료비가 늘고, 그중 전가율만큼만 매출로 돌아옵니다. 2Q26 연료비율 42.9%는 항공유 172달러{E}·환율 1,527원의 조합입니다. <b>함의.</b> 이 회사의 영업이익률은 연료비율 하나로 자릿수가 정해집니다. 연료비율 30%면 영업이익률 5~10%, 25%면 10~14%가 18분기 실측의 대응이고, 3Q26 항공유 140달러{E}·환율 1,380원{E}이면 연료비율은 32~34%{E}로 돌아와 별도 영업이익률 10% 안팎{E}이 회계적으로 가능합니다.</p>
+<table><tr><th>연결, 억원</th><th>1Q25</th><th>2Q25</th><th>3Q25</th><th>4Q25</th><th>1Q26</th><th>2Q26</th><th>2Q26/2Q25</th></tr>
+<tr><td>매출액</td><td>64,919</td><td>62,107</td><td>60,269</td><td>64,961</td><td>66,581</td><td>72,301</td><td>+16.4%</td></tr>
+<tr><td>연료유류비</td><td>18,444</td><td>15,842</td><td>16,245</td><td>16,889</td><td>16,381</td><td>31,004</td><td>+95.7%</td></tr>
+<tr><td>급여·퇴직·복리후생</td><td>13,276</td><td>13,275</td><td>13,132</td><td>13,904</td><td>12,332</td><td>12,699</td><td>-4.3%</td></tr>
+<tr><td>감가상각·무형상각</td><td>7,213</td><td>6,718</td><td>7,285</td><td>7,335</td><td>7,433</td><td>7,668</td><td>+14.1%</td></tr>
+<tr><td>공항관련비+객화서비스비</td><td>8,673</td><td>9,834</td><td>8,782</td><td>9,239</td><td>9,000</td><td>9,410</td><td>-4.3%</td></tr>
+<tr><td>지급·판매수수료</td><td>2,838</td><td>2,724</td><td>3,133</td><td>3,055</td><td>3,434</td><td>3,010</td><td>+10.5%</td></tr>
+<tr><td>기타(정비·IT·보험·항공우주원가)</td><td>10,165</td><td>10,013</td><td>10,117</td><td>12,990</td><td>12,827</td><td>10,581</td><td>+5.7%</td></tr>
+<tr><td>영업이익</td><td>4,310</td><td>3,701</td><td>1,575</td><td>1,549</td><td>5,174</td><td>-2,071</td><td>적자 전환</td></tr>
+</table>
+<div class="src">자료: 주석 34 성격별 비용(연결)·OpenDART. 인건비는 급여·퇴직급여·복리후생비 합, 기타는 잔차</div>
+
+<h2>3. 연료 — 단가·소모량·환율 세 조각으로 가른 2Q26의 1조 513억원</h2>
+<figure class=""><figcaption>장표 4. 2Q26 별도 연료비 증가분 분해 — 전년 동기 9,478억원에서 1조 9,991억원까지 (억원)</figcaption><svg viewBox="0 0 880 240" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="196.0" x2="860" y2="196.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="200.0" text-anchor="end" font-size="11" fill="#8a857c">0</text>
+<line x1="62" y1="151.5" x2="860" y2="151.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="155.5" text-anchor="end" font-size="11" fill="#8a857c">5,000</text>
+<line x1="62" y1="107.0" x2="860" y2="107.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="111.0" text-anchor="end" font-size="11" fill="#8a857c">10,000</text>
+<line x1="62" y1="62.5" x2="860" y2="62.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="66.5" text-anchor="end" font-size="11" fill="#8a857c">15,000</text>
+<line x1="62" y1="18.0" x2="860" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">20,000</text>
+<text x="141.8" y="214" text-anchor="middle" font-size="10" fill="#8a857c">2Q25 연료비</text>
+<text x="301.4" y="214" text-anchor="middle" font-size="10" fill="#8a857c">단가</text>
+<text x="461.0" y="214" text-anchor="middle" font-size="10" fill="#8a857c">소모량</text>
+<text x="620.6" y="214" text-anchor="middle" font-size="10" fill="#8a857c">환율</text>
+<text x="780.2" y="214" text-anchor="middle" font-size="10" fill="#8a857c">2Q26 연료비</text>
+<rect x="85.9" y="111.6" width="110.7" height="84.4" fill="#b07d2b" opacity="0.9"/>
+<text x="141.8" y="107.6" text-anchor="middle" font-size="9.5" fill="#b07d2b">9,478</text>
+<rect x="245.5" y="114.9" width="110.7" height="81.1" fill="#b07d2b" opacity="0.9"/>
+<text x="301.4" y="110.9" text-anchor="middle" font-size="9.5" fill="#b07d2b">9,115</text>
+<rect x="405.1" y="195.5" width="110.7" height="0.5" fill="#b07d2b" opacity="0.9"/>
+<text x="461.0" y="191.5" text-anchor="middle" font-size="9.5" fill="#b07d2b">60</text>
+<rect x="564.7" y="184.1" width="110.7" height="11.9" fill="#b07d2b" opacity="0.9"/>
+<text x="620.6" y="180.1" text-anchor="middle" font-size="9.5" fill="#b07d2b">1,338</text>
+<rect x="724.3" y="18.1" width="110.7" height="177.9" fill="#b07d2b" opacity="0.9"/>
+<text x="780.2" y="14.1" text-anchor="middle" font-size="9.5" fill="#b07d2b">19,991</text>
+</svg><div class="src">자료: 2Q26 IR 자료(회사 공시 분해). 단가 +9,115·소모량 +60·환율 +1,338</div></figure>
+<p class="reading"><b>관찰.</b> 1) 별도 연료비가 9,478억원에서 1조 9,991억원으로 +110.9% 늘었고, 그 증분 1조 513억원의 87%가 단가입니다. 2) 소모량 효과는 +60억원으로 사실상 0 — 운항을 늘리지 않았습니다. 3) 환율 효과 +1,338억원은 원/달러가 2Q25 평균 1,400원대에서 2Q26 1,527원으로 9% 약해진 결과입니다. <b>원인.</b> 싱가포르 항공유가 2Q25 평균 85~90달러에서 2Q26 평균 172달러{E}로 두 배가 됐기 때문입니다. 회사 매입단가(총 급유액 ÷ 사용량) 기준으로 2025년 국내 213.8센트/갤런이 2026년 상반기 307.7센트, 2Q26 단독으로는 380센트{E}(배럴당 160달러)입니다. <b>함의.</b> 3Q26 항공유가 140달러{E}면 단가 효과가 2Q26 대비 약 -3,500억원{E}, 환율이 1,380원이면 환율 효과 -1,900억원{E}으로, 별도 분기 연료비는 1조 4,500억원{E} 안팎입니다. 여기에 전가율 50%를 걸면 연료비 감소 5,500억원 중 절반이 할증료 수입 감소로 상쇄돼 영업이익 기여는 +2,700억원{E}입니다 — 이것이 논쟁 1의 회계 층 답의 절반이고, 나머지 절반은 성수기 yield(파트 1)와 화물(파트 2)입니다.</p>
+<figure class=""><figcaption>장표 5. 항공유 매입단가(막대, US센트/갤런)와 연료비/매출(선, %) — 2024·2025·2026년 상반기·2Q26</figcaption><svg viewBox="0 0 880 260" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="216.0" x2="730" y2="216.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="220.0" text-anchor="end" font-size="11" fill="#8a857c">0</text>
+<line x1="62" y1="176.4" x2="730" y2="176.4" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="180.4" text-anchor="end" font-size="11" fill="#8a857c">100</text>
+<line x1="62" y1="136.8" x2="730" y2="136.8" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="140.8" text-anchor="end" font-size="11" fill="#8a857c">200</text>
+<line x1="62" y1="97.2" x2="730" y2="97.2" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="101.2" text-anchor="end" font-size="11" fill="#8a857c">300</text>
+<line x1="62" y1="57.6" x2="730" y2="57.6" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="61.6" text-anchor="end" font-size="11" fill="#8a857c">400</text>
+<line x1="62" y1="18.0" x2="730" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">500</text>
+<text x="145.5" y="234" text-anchor="middle" font-size="10" fill="#8a857c">2024</text>
+<text x="312.5" y="234" text-anchor="middle" font-size="10" fill="#8a857c">2025</text>
+<text x="479.5" y="234" text-anchor="middle" font-size="10" fill="#8a857c">2026 상반기</text>
+<text x="646.5" y="234" text-anchor="middle" font-size="10" fill="#8a857c">2Q26(분기)</text>
+<rect x="87.1" y="122.0" width="57.4" height="94.0" fill="#b07d2b" opacity="0.9"/>
+<text x="116.3" y="118.0" text-anchor="middle" font-size="9.5" fill="#b07d2b">238</text>
+<rect x="145.5" y="114.3" width="57.4" height="101.7" fill="#1f3a5f" opacity="0.9"/>
+<text x="174.7" y="110.3" text-anchor="middle" font-size="9.5" fill="#1f3a5f">257</text>
+<rect x="254.1" y="131.3" width="57.4" height="84.7" fill="#b07d2b" opacity="0.9"/>
+<text x="283.3" y="127.3" text-anchor="middle" font-size="9.5" fill="#b07d2b">214</text>
+<rect x="312.5" y="123.6" width="57.4" height="92.4" fill="#1f3a5f" opacity="0.9"/>
+<text x="341.7" y="119.6" text-anchor="middle" font-size="9.5" fill="#1f3a5f">233</text>
+<rect x="421.1" y="94.2" width="57.4" height="121.8" fill="#b07d2b" opacity="0.9"/>
+<text x="450.3" y="90.2" text-anchor="middle" font-size="9.5" fill="#b07d2b">308</text>
+<rect x="479.5" y="77.9" width="57.4" height="138.1" fill="#1f3a5f" opacity="0.9"/>
+<text x="508.7" y="73.9" text-anchor="middle" font-size="9.5" fill="#1f3a5f">349</text>
+<rect x="588.0" y="65.5" width="57.4" height="150.5" fill="#b07d2b" opacity="0.9"/>
+<text x="617.3" y="61.5" text-anchor="middle" font-size="9.5" fill="#b07d2b">380</text>
+<rect x="646.5" y="49.7" width="57.4" height="166.3" fill="#1f3a5f" opacity="0.9"/>
+<text x="675.7" y="45.7" text-anchor="middle" font-size="9.5" fill="#1f3a5f">420</text>
+<polyline points="145.5,205.0 312.5,205.4 479.5,202.5 646.5,199.0" fill="none" stroke="#a44a3f" stroke-width="2"/>
+<circle cx="145.5" cy="205.0" r="2.4" fill="#a44a3f"/>
+<circle cx="312.5" cy="205.4" r="2.4" fill="#a44a3f"/>
+<circle cx="479.5" cy="202.5" r="2.4" fill="#a44a3f"/>
+<circle cx="646.5" cy="199.0" r="2.4" fill="#a44a3f"/>
+<rect x="736" y="18" width="10" height="10" fill="#b07d2b"/>
+<text x="750" y="27" font-size="11" fill="#8a857c">항공유 매입단가 국내(US센트/갤런)</text>
+<rect x="736" y="34" width="10" height="10" fill="#1f3a5f"/>
+<text x="750" y="43" font-size="11" fill="#8a857c">항공유 매입단가 해외(US센트/갤런)</text>
+<rect x="736" y="50" width="10" height="10" fill="#a44a3f"/>
+<text x="750" y="59" font-size="11" fill="#8a857c">연료비/매출 %(연결, 선 — 같은 눈금)</text>
+</svg><div class="src">자료: 반기보고서 II-3 원재료 가격변동(국내·해외 매입단가, 총급유액÷사용량)·주석 34. 2Q26 단독 단가는 상반기와 1Q26의 차로 작성자 역산E</div></figure>
+<p>헤지의 자리도 적어 둡니다. 회사는 연간 소모량의 최대 50%를 제로코스트칼라로 걸 수 있고 2026년 6월 말 잔액은 860만 배럴(연간 소모량의 28%, 2027년 10월 만기)입니다. 매매목적 회계라 옵션 평가손익은 영업외로 가고, 2Q26 별도 파생상품손익은 -216억원, 1Q26은 +2,894억원이었습니다. 즉 헤지는 영업이익의 연료비를 줄이지 않고 순이익 층에서 분기마다 수천억씩 부호가 바뀌는 잡음을 만듭니다 — 영업이익으로 회사를 평가할 때 헤지를 무시해야 하는 이유이고, 순이익으로 평가할 때 걷어내야 하는 이유입니다.</p>
+
+<h2>4. 고정비 세 계정 — 인건비·감가상각·리스 이자</h2>
+<p><b>인건비는 상반기 2조 5,028억원(비용의 18.4%)으로 전년 동기 대비 -3%이고, 이것은 통합 전 인력 동결의 결과입니다.</b> 대한항공 별도 직원은 2026년 6월 말 항공운송 1만 5,223명·항공우주 1,700명대<span class="est">E</span>이고, 아시아나·진에어·에어부산을 합친 그룹 인력이 약 2만 8,000명입니다. 통상임금 판결(2024년 12월)로 수당·퇴직급여 부담이 늘었지만 2026년 상반기 급여 계정은 2조 827억원으로 전년(2조 621억원) 대비 +1%에 그쳤습니다. 통합 후 인건비의 방향은 두 갈래입니다 — 중복 관리직·지원 조직 정리로 내려가는 힘과, 두 회사 임금 체계를 높은 쪽으로 맞추는 힘(노조 통합)입니다. 회사가 시너지 3,000억원의 내역을 밝히지 않았으므로 인건비 시너지의 크기는 미결입니다.</p>
+<p><b>감가상각은 상반기 1조 5,101억원(11.1%)으로 전년 동기 대비 +8.4%이고, 앞으로 5~7년 동안 이 계정만이 구조적으로 오릅니다.</b> 원인은 신기재입니다 — 2Q26 감가상각 +734억원(별도, +16%)이 IR에 "신기재 도입"으로 적혔고, A350 33대·보잉 103대가 2027~2032년에 들어오면 연 감가상각이 3조원대 후반<span class="est">E</span>으로 오릅니다. 매출이 같이 늘면 비율은 유지되지만 절대액은 늘고, 리스 이자도 같이 늡니다. 금융비용은 상반기 4,709억원(전년 동기 6,412억원에서 감소 — 2025년 상반기에 아시아나 인수 관련 일회성이 있었던 것으로 추정<span class="est">E</span>)이고, 차입 11.0조원·리스 11.4조원의 가중 이자율로 역산하면 연 4.2%<span class="est">E</span>입니다.</p>
+
+<h2>4-1. 판관비 해부 — 9.4%의 내용</h2>
+<p><b>2026년 상반기 연결 판관비 1조 2,750억원의 몸통은 지급수수료 4,101억원(32%), 급여·퇴직 2,879억원(23%), 판매수수료 1,487억원(12%)이고, 광고선전비는 388억원(3%)뿐입니다.</b> 지급수수료에는 카드 수수료·예약 시스템(GDS) 사용료·IT 위탁이 들어가고, 매출과 함께 움직이는 변동비입니다. 판매수수료는 여행사·대리점 수수료로 직판 확대와 함께 비중이 줄어 왔고(2025년 연간 매출의 1.0%), 2Q26 3개월 743억원은 전년 동기와 비슷합니다. 광고선전비 2Q26 276억원이 전년 동기 대비 늘어난 것은 통합 CI(41년 만의 새 브랜드) 준비로 읽히지만 회사 설명은 없습니다. 통신비 819억원(상반기)이 판관비의 6%인 것은 기내 와이파이·예약 시스템 통신료가 여기 잡히기 때문이고, 항공사 판관비에서 특이한 계정입니다. 결론은 단순합니다 — 판관비는 2026년 상반기 매출의 9%대에서 움직이는 변동비 덩어리라 마진 논쟁의 변수가 아니고, 통합 비용이 판관비(IT·브랜드·인력 재배치)로 들어올 때 이 비율이 10%를 넘는지가 2027년의 유일한 관전점입니다.</p>
+<table><tr><th>판관비 계정(연결, 억원)</th><th>2Q26 3개월</th><th>2026 상반기</th><th>비중(상반기)</th><th>성격</th></tr>
+<tr><td>지급수수료</td><td>1,873</td><td>4,101</td><td>32.2%</td><td>카드·GDS·IT 위탁 — 변동</td></tr>
+<tr><td>급여·퇴직급여</td><td>1,433</td><td>2,879</td><td>22.6%</td><td>본사·영업 인력 — 고정</td></tr>
+<tr><td>판매수수료</td><td>743</td><td>1,487</td><td>11.7%</td><td>여행사·대리점 — 변동</td></tr>
+<tr><td>통신비</td><td>345</td><td>819</td><td>6.4%</td><td>예약 시스템·기내 와이파이 — 준고정</td></tr>
+<tr><td>복리후생비</td><td>417</td><td>790</td><td>6.2%</td><td>고정</td></tr>
+<tr><td>감가상각·무형상각</td><td>468</td><td>910</td><td>7.1%</td><td>IT 시스템·건물 — 고정</td></tr>
+<tr><td>광고선전비</td><td>276</td><td>388</td><td>3.0%</td><td>통합 CI 준비로 2Q 증가<span class="est">E</span></td></tr>
+<tr><td>기타(제세공과·시설·교육 등)</td><td>692</td><td>1,376</td><td>10.8%</td><td>혼합</td></tr>
+<tr><td>합계</td><td>6,247</td><td>12,750</td><td>100%</td><td>매출 대비 9.2%</td></tr>
+</table>
+<div class="src">자료: 반기보고서 주석 30 판매비와 관리비(연결). 성격 구분은 작성자 판정E</div>
+
+<h2>4-2. 별도와 연결의 원가 차이 — 아시아나의 원가 구조가 다른 이유</h2>
+<p><b>별도(대한항공)와 연결의 차이가 곧 아시아나·LCC의 원가 구조이고, 그 구조는 연료 비중이 더 높고 완충재가 없다는 두 가지로 요약됩니다.</b> 2026년 상반기 항공유 매입액은 대한항공 20.7억달러, 아시아나 7.8억달러, 진에어 2,717억원, 에어부산 1,723억원, 에어서울 600억원입니다. 아시아나 매입단가는 국내 322.1센트·해외 361.4센트/갤런으로 대한항공(307.7·348.8)보다 4% 비쌌는데, 규모(구매력)와 헤지 차이입니다. 매출 대비로 보면 아시아나의 연료비 비중이 대한항공보다 5~8%포인트<span class="est">E</span> 높습니다 — 화물기를 팔아 유류할증료가 붙는 화물 매출이 줄었고, 프리미엄 장거리 비중이 낮으며, 기단이 A330·A321 중심이라 좌석당 연료 효율이 대한항공 신기재보다 나쁘기 때문입니다. 통합 후 조달 시너지의 첫 항목이 연료 공동 구매(단가 4% 차이 × 7.8억달러 = 연 3,100만달러<span class="est">E</span>)와 헤지 통합이고, 둘째가 정비·부품 공동 조달입니다. 이것이 회사가 말하는 시너지 3,000억원 가운데 계산 가능한 몫이며, 나머지(기종 표준화·인력)는 2028년 이후입니다.</p>
+<table><tr><th>2026년 상반기</th><th>대한항공(별도)</th><th>아시아나(연결)</th><th>진에어</th><th>읽는 법</th></tr>
+<tr><td>매출(억원)</td><td>95,350</td><td>35,246</td><td>7,833</td><td>—</td></tr>
+<tr><td>영업이익(억원)</td><td>7,787</td><td>-4,086</td><td>-155</td><td>같은 유가에 부호가 갈림</td></tr>
+<tr><td>항공유 매입</td><td>20.7억달러</td><td>7.8억달러</td><td>2,717억원</td><td>규모 2.7배 차이 = 구매력</td></tr>
+<tr><td>항공유 단가(국내, 센트/갤런)</td><td>307.65</td><td>322.08</td><td>4,775원/갤런</td><td>아시아나가 4% 비쌈</td></tr>
+<tr><td>연료 외 완충재</td><td>화물 2.63조·항공우주 4,623억</td><td>화물 1,767억(매각 후)</td><td>없음</td><td>충격 흡수력의 차이</td></tr>
+</table>
+<div class="src">자료: 반기보고서 II-3 원재료(회사별 매입액·단가)·주석 11(아시아나·진에어 요약 손익). 연료비 비중 차이는 작성자 추정E</div>
+
+<h2>4-3. 인당 인건비와 유효세율 — 두 개의 조용한 계정</h2>
+<p>인건비의 단가를 적어 둡니다. 대한항공 별도 항공운송 부문 직원 1만 5,223명의 2026년 상반기 급여총액은 1조 382억원(남 6,452억·여 3,930억원)으로 1인 반기 평균 6,800만원<span class="est">E</span>, 연 환산 1억 3,600만원<span class="est">E</span>입니다(임원 제외, 조종사 포함). 평균 근속 17.7~18.2년이라 임금 체계가 연공 중심이고, 통상임금 판결이 상여를 통상임금에 넣으면서 시간외수당·퇴직급여가 구조적으로 올랐습니다. 통합 시 아시아나(2만 8,000명 중 8,000명대<span class="est">E</span>)의 임금 체계를 대한항공에 맞추면 인건비는 오르고, 중복 관리직을 줄이면 내립니다 — 두 힘의 순효과는 회사가 밝히지 않았고 미결입니다.</p>
+<p>유효세율은 분기마다 널뜁니다. 2Q26 연결 법인세는 -1,331억원(환입)으로 세전손실 -7,332억원에 대해 18.2%의 세율 효과였고, 2026년 상반기는 세전 -2,248억원<span class="est">E</span>에 법인세 -1,199억원입니다. 2025년 연간은 세전 8,910억원<span class="est">E</span>에 법인세 2,437억원<span class="est">E</span>으로 27%<span class="est">E</span>였습니다. 이 회사의 정상 세율은 24~27%<span class="est">E</span>(법인세 24% + 지방세)이고, 이연법인세 자산(이월결손금·마일리지 부채 관련)의 인식·환입이 분기 세율을 흔듭니다. 파트 7의 조정판은 세율 24%를 씁니다 — 정상 세율의 하단이고, 아시아나 이월결손금(누적 손실 수천억원<span class="est">E</span>)이 통합 후 대한항공 과세소득과 통산되면 2027~2028년 유효세율이 정상보다 낮아질 수 있다는 것이 통합의 작은 플러스이자 미결입니다.</p>
+
+<h2>5. 영업이익 아래 — 순이익을 흔드는 환율 층</h2>
+<figure class=""><figcaption>장표 6. 별도 기타영업외 순손익(막대, 억원)과 분기 말 원/달러(선), 1Q25~2Q26 — 순이익은 환율의 함수였다</figcaption><svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="206.0" x2="730" y2="206.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="210.0" text-anchor="end" font-size="11" fill="#8a857c">-6,000</text>
+<line x1="62" y1="168.4" x2="730" y2="168.4" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="172.4" text-anchor="end" font-size="11" fill="#8a857c">-4,000</text>
+<line x1="62" y1="130.8" x2="730" y2="130.8" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="134.8" text-anchor="end" font-size="11" fill="#8a857c">-2,000</text>
+<line x1="62" y1="93.2" x2="730" y2="93.2" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="97.2" text-anchor="end" font-size="11" fill="#8a857c">0</text>
+<line x1="62" y1="55.6" x2="730" y2="55.6" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="59.6" text-anchor="end" font-size="11" fill="#8a857c">2,000</text>
+<line x1="62" y1="18.0" x2="730" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">4,000</text>
+<text x="117.7" y="224" text-anchor="middle" font-size="10" fill="#8a857c">1Q25</text>
+<text x="229.0" y="224" text-anchor="middle" font-size="10" fill="#8a857c">2Q25</text>
+<text x="340.3" y="224" text-anchor="middle" font-size="10" fill="#8a857c">3Q25</text>
+<text x="451.7" y="224" text-anchor="middle" font-size="10" fill="#8a857c">4Q25</text>
+<text x="563.0" y="224" text-anchor="middle" font-size="10" fill="#8a857c">1Q26</text>
+<text x="674.3" y="224" text-anchor="middle" font-size="10" fill="#8a857c">2Q26</text>
+<rect x="78.7" y="93.2" width="76.9" height="14.3" fill="#a44a3f" opacity="0.9"/>
+<text x="117.7" y="118.5" text-anchor="middle" font-size="9.5" fill="#a44a3f">-760</text>
+<rect x="190.0" y="29.9" width="76.9" height="63.3" fill="#a44a3f" opacity="0.9"/>
+<text x="229.0" y="25.9" text-anchor="middle" font-size="9.5" fill="#a44a3f">3,365</text>
+<rect x="301.4" y="93.2" width="76.9" height="45.9" fill="#a44a3f" opacity="0.9"/>
+<text x="340.3" y="150.1" text-anchor="middle" font-size="9.5" fill="#a44a3f">-2,441</text>
+<rect x="412.7" y="93.2" width="76.9" height="9.6" fill="#a44a3f" opacity="0.9"/>
+<text x="451.7" y="113.8" text-anchor="middle" font-size="9.5" fill="#a44a3f">-512</text>
+<rect x="524.0" y="93.2" width="76.9" height="76.8" fill="#a44a3f" opacity="0.9"/>
+<text x="563.0" y="181.0" text-anchor="middle" font-size="9.5" fill="#a44a3f">-4,085</text>
+<rect x="635.4" y="93.2" width="76.9" height="45.4" fill="#a44a3f" opacity="0.9"/>
+<text x="674.3" y="149.6" text-anchor="middle" font-size="9.5" fill="#a44a3f">-2,414</text>
+<polyline points="117.7,65.6 229.0,67.8 340.3,66.9 451.7,66.2 563.0,64.8 674.3,64.2" fill="none" stroke="#b07d2b" stroke-width="2"/>
+<circle cx="117.7" cy="65.6" r="2.4" fill="#b07d2b"/>
+<circle cx="229.0" cy="67.8" r="2.4" fill="#b07d2b"/>
+<circle cx="340.3" cy="66.9" r="2.4" fill="#b07d2b"/>
+<circle cx="451.7" cy="66.2" r="2.4" fill="#b07d2b"/>
+<circle cx="563.0" cy="64.8" r="2.4" fill="#b07d2b"/>
+<circle cx="674.3" cy="64.2" r="2.4" fill="#b07d2b"/>
+<rect x="736" y="18" width="10" height="10" fill="#a44a3f"/>
+<text x="750" y="27" font-size="11" fill="#8a857c">별도 기타영업외 순손익(억원, 외화환산 포함)</text>
+<rect x="736" y="34" width="10" height="10" fill="#b07d2b"/>
+<text x="750" y="43" font-size="11" fill="#8a857c">분기 말 원/달러(선, 같은 눈금 ÷ 1)</text>
+</svg><div class="src">자료: OpenDART 별도 기타영업외수익·비용(순액)·회사 IR 평가환율(4Q25 1,434.9·1Q26 1,513.4·2Q26 1,541.5, 1~3Q25는 작성자 근사E)</div></figure>
+<p class="reading"><b>관찰.</b> 1) 별도 기타영업외 순손익이 2Q25 +3,365억원, 1Q26 -4,085억원, 2Q26 -2,414억원으로 분기마다 수천억씩 부호를 바꿉니다. 2) 방향은 분기 말 환율과 정확히 반대입니다 — 환율이 오른 분기(1Q26 1,513원·2Q26 1,542원)에 손실입니다. 3) 2Q26 별도 순손실 -973억원은 영업이익 2,618억원에서 이 층이 -3,591억원을 빼 간 결과입니다. <b>원인.</b> 순외화부채 56억달러의 평가 때문입니다. 회사가 공시한 민감도(10원당 560억원)로 2Q26 환율 상승 28원(1,513→1,542)은 -1,570억원이고, 실제 외화환산손실 -1,450억원과 자릿수가 맞습니다. <b>함의.</b> 9월 3일 환율 1,359원이 9월 말까지 유지되면 3Q26 별도 외화환산이익은 (1,541.5−1,359) × 56억달러 = 약 1조 200억원{E}입니다. 3Q26 별도 순이익은 영업이익 5,000억원대{E}에 이 이익이 얹혀 1조원을 넘을 수 있고, 연결 순이익 컨센(3,000억원)은 이 층을 크게 과소평가하고 있습니다. 다만 이것은 현금이 아니고 다음 분기에 환율이 오르면 되돌아가므로, 이익의 질에서는 0으로 두는 것이 맞습니다.</p>
+
+<h2>6. 판정과 조정판 — 마진의 방향을 정하는 계정은 하나다</h2>
+<p class="judge">판정. 이 회사 마진의 방향을 정하는 계정은 연료유류비 하나이고, 나머지 계정은 여섯 분기 동안 유가 충격에 반응하지 않았습니다. 그래서 3Q26 별도 영업이익 5,000억원대 회복(허브 논쟁 1)은 회계적으로 항공유 140달러<span class="est">E</span>·환율 1,380원<span class="est">E</span>·전가율 50%<span class="est">E</span>면 연료비 하나에서 +2,700억원<span class="est">E</span>이 나오고, 성수기 yield·화물이 나머지를 채우는 구조입니다. 이 판정을 흔드는 것은 유가뿐입니다 — 9월 1일 이후 브렌트 95달러·항공유 157달러(IATA 최신 주간)가 3분기 내내 유지되면 연료비 회복분이 절반으로 줄어 별도 영업이익은 4,000억원대<span class="est">E</span>로 내려옵니다. 경보선은 3Q 잠정실적의 연료비/매출(별도)이 35%를 넘는 경우이고, 그때는 4Q 회복 경로를 다시 짭니다.</p>
+<div class="panel"><b>조정판 — 항공유 단가와 환율이 별도 분기 연료비와 영업이익에 닿는 길(전가율 연결)</b><br><br>
+싱가포르 항공유 분기 평균($/bbl) <span id="f_pv">140</span><br><input type="range" id="f_p" min="90" max="230" step="5" value="140"><br>
+원/달러 분기 평균 <span id="f_xv">1,380</span><br><input type="range" id="f_x" min="1250" max="1600" step="10" value="1380"><br>
+유류할증료 전가율(연료비 변동 중 매출로 되돌아오는 몫, %) <span id="f_tv">50</span><br><input type="range" id="f_t" min="0" max="80" step="5" value="50"><br>
+<div class="out" id="f_out"></div>
+<div class="note">산식: 분기 연료비 = 소모량 762만 배럴<span class="est">E</span>(연 3,050만 ÷ 4) × 항공유 $/bbl × 환율 ÷ 1e8(억원). 2Q26 검산: 1조 9,991억원 = 762만 × 172달러<span class="est">E</span> × 1,527원 — 2Q26 분기 평균 항공유 172달러<span class="est">E</span>는 이 식의 역산이며 Platts 4~6월 평균과 자릿수가 맞습니다. 별도 영업이익 = 2Q26 2,618억원 + (2Q26 연료비 − 새 연료비) × (1 − 전가율) + 성수기·화물 효과는 제외(파트 1·2가 따로 듦). 기본값 140달러·1,380원·50%는 이 파트의 3Q26 가정<span class="est">E</span>. 인쇄 시 기본값 고정.</div></div>
+<script>(function(){var p=document.getElementById('f_p'),x=document.getElementById('f_x'),t=document.getElementById('f_t');function f(){var P=+p.value,X=+x.value,T=+t.value;document.getElementById('f_pv').textContent=P;document.getElementById('f_xv').textContent=X.toLocaleString();document.getElementById('f_tv').textContent=T;var fuel=7620000*P*X/1e8;var dOP=(19991-fuel)*(1-T/100);document.getElementById('f_out').textContent='별도 분기 연료비 '+Math.round(fuel).toLocaleString()+'억원 (2Q26 19,991억원 대비 '+(fuel-19991>=0?'+':'')+Math.round(fuel-19991).toLocaleString()+'억원) → 연료비만으로 본 별도 영업이익 '+Math.round(2618+dOP).toLocaleString()+'억원E (2Q26 2,618억원 대비 '+(dOP>=0?'+':'')+Math.round(dOP).toLocaleString()+'억원)';}p.addEventListener('input',f);x.addEventListener('input',f);t.addEventListener('input',f);f();})();</script>
+<p>계기판을 정리합니다. 10월 중순 3Q 잠정실적에서 보는 것 — 별도 연료비(1조 4,500억원<span class="est">E</span> 안팎이면 경로 유지, 1조 7,000억원 이상이면 경보), 연료비/매출, 감가상각 증가율(+15% 이상이면 신기재 인도 가속). 11월 분기보고서에서 보는 것 — 성격별 비용 12계정의 3개월 값, 특히 기타 계정(정비·IT)이 통합 준비 비용으로 튀는지. 분기 말마다 보는 것 — 환율(10원 = 560억원)과 유가옵션 평가손익. 상시 — 유류할증료 단계와 항공유 주간가의 시차(한 달), 그리고 회사 공시 민감도 표(연간 소모량·순외화부채)가 반기마다 갱신되는지.</p>
+
+<h2>7. 이 파트가 논쟁에 주는 답 — 그리고 아직 못 주는 답</h2>
+<p>논쟁 1에 이 파트가 보태는 답은 "회복은 연료 계정 하나로 회계적으로 가능하고, 크기는 항공유 값이 정한다"입니다. 18분기 실측에서 연료비율 25%는 영업이익률 10~14%, 30%는 5~13%와 대응했고, 3Q26 가정(연료비율 32~34%<span class="est">E</span>)은 별도 영업이익률 10% 안팎<span class="est">E</span>에 해당합니다. 순이익 축에는 경고를 답니다 — 3Q26 별도 순이익은 외화환산이익 약 1조원<span class="est">E</span>으로 부풀 수 있고, 그것은 이익의 질에서 0입니다. 논쟁 2(통합)에는 인건비 시너지의 방향이 양쪽(정리 대 임금 상향)이라 크기를 미결로 두고, 감가상각은 통합과 무관하게 신기재로 구조적으로 오른다는 사실을 보탭니다.</p>
+<p>아직 답하지 못한 것들을 미결로 남깁니다. ①2Q26 분기 단독 항공유 매입단가(A급 — 상반기 307.7센트와 1Q26 단가의 차로 역산E, 3Q 분기보고서 II-3에서 확정). ②전가율의 실측(A급 — 2Q26 별도 여객·화물 매출 증분 중 할증료 몫을 회사가 공시하지 않아 50%E, KB 67%와 병기). ③기타 계정 1조 500억~1조 3,000억원의 성분(정비·IT·보험·항공우주원가·통합 비용)(B급 — 사업보고서 매출원가 명세 없음, IR 문의). ④금융비용 상반기 4,709억원의 차입 이자·리스 이자 분해와 2025년 상반기 6,412억원의 일회성 성분(B급 — 주석 31 원문 재확인). ⑤2022년 분기 객화서비스비 공백(C급 — 당시 계정 명칭 상이, 표시 계정 합계에는 영향 없음).</p>
+
+<p class="foot">파트 5 끝. 다음 파트: 파트 6 리스크. 이 파트가 허브에 보태는 항목: 논쟁 1 회계 층 답(연료비율 25%↔영업이익률 10~14% 대응, 3Q26 연료비 1조 4,500억원E·연료 효과 +2,700억원E)·경보선(연료비/매출 35%)·순이익 경고(외화환산이익 약 1조원E는 이익의 질 0), 조정판 변수 3종(항공유·환율·전가율)을 파트 7과 공유, 미결 5건. 작성 Claude · 검증: 산술 검산(18분기 계정 합 = 매출−영업이익 정합·2Q26 연료비 식 역산 172달러·환율 민감도 28원×56억달러 = 1,570억 대 실측 1,450억) 완료</p>
+
+</main></body></html>

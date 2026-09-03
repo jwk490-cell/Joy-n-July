@@ -1,0 +1,257 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="coverage" content="valuation,model">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>대한항공(003490) 파트 7 — 밸류에이션·조정 모델 · 2026-09-03</title>
+<style>
+body{margin:0;background:#faf8f4;color:#3a3630;font-family:'Noto Serif KR','Apple SD Gothic Neo','Malgun Gothic',serif;line-height:1.78;word-break:keep-all}
+main{max-width:920px;margin:0 auto;padding:44px 28px 80px}
+h1{font-size:23px;margin:0 0 6px;line-height:1.35} .sub{color:#8a857c;font-size:13px;margin-bottom:10px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;line-height:1.6}
+h2{font-size:17.5px;margin:36px 0 8px;padding-top:16px;border-top:1px solid #e3ded4}
+h3{font-size:15px;margin:22px 0 6px}
+p{max-width:700px;font-size:15px;margin:0 0 1.25em}
+p.reading{font-size:14px;color:#4a463f;background:#f4f0e8;border-radius:6px;padding:10px 14px;max-width:700px}
+figure{margin:14px 0 6px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px}
+figcaption{font-size:13px;font-weight:600;margin-bottom:8px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+svg{width:100%;height:auto;display:block}
+.src{font-size:11.5px;color:#8a857c;margin-top:6px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+table{border-collapse:collapse;font-size:13px;margin:10px 0 16px;font-family:Pretendard,'Apple SD Gothic Neo',-apple-system,sans-serif;background:#fff}
+td,th{border:1px solid #e0dbd0;padding:5px 10px;text-align:right;vertical-align:top} td:first-child,th:first-child{text-align:left} th{background:#f1ede4;font-weight:600;color:#5a5650}
+.gloss{display:grid;grid-template-columns:160px 1fr;gap:6px 14px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px;font-size:13.5px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;max-width:740px;line-height:1.55}
+.gloss b{font-size:13px}
+.judge{background:#f1ede4;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.ourview{background:#eef2f7;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.panel{background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px 16px;max-width:700px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;font-size:14px;margin:12px 0 18px}
+.panel input[type=range]{width:100%}
+.panel .out{margin-top:8px;font-weight:700}
+.panel .note{color:#8a857c;font-size:12.5px;margin-top:6px}
+.est{font-size:.72em;vertical-align:super;color:#a44a3f;font-weight:700}
+.foot{font-size:12px;color:#8a857c;max-width:700px;margin-top:30px;border-top:1px solid #e3ded4;padding-top:12px}
+.segdive{border:1px solid #e0dbd0;border-radius:8px;padding:6px 18px 4px;margin:14px 0 20px;background:#fdfcf9}
+.leadchain{background:#fff8ea;border:1px solid #e8d9b5;border-radius:6px;padding:12px 16px;max-width:700px;font-size:14px}
+.hubnav{font-size:12.5px;color:#8a857c;font-family:Pretendard,sans-serif;margin-bottom:14px}
+.hubnav a{color:#1f3a5f}
+a{color:#1f3a5f}
+@media print{.panel input{display:none}}
+</style></head><body><main>
+
+<h1>대한항공 파트 7 — 밸류에이션·조정 모델: 시총 10.7조원은 2027년의 어떤 이익을 세고 있나</h1>
+<div class="sub">파트제 커버리지 7편 · 작성 2026-09-03 · 주가 29,150원(9-03 종가) · 시총 10조 7,336억원 · $1=₩1,359.1 · 12월 결산 · 다음 실적 3Q26 잠정 2026년 10월 중순<span class="est">E</span> · 합병기일 2026-12-16(신주 상장 2027-01-04) ·
+숫자 정본: 허브 상수 블록 · 소스: WiseReport 컨센서스(2026-09-02, 10개사)·셀사이드 추정 인용(하나 8-18·iM 7-15·KB 7-15·신한 7-15·NH 7-02)·stockanalysis/marketscreener 피어 밸류(9-03)·OpenDART·파트 1~6 산출</div>
+<div class="hubnav">현행 판정은 <a href="대한항공_허브.html">대한항공_허브.html</a>이 듭니다. 이 파트는 커버리지 층 valuation·model을 맡습니다. 목표주가·시나리오 주가는 쓰지 않습니다 — 산출은 함의 배수·내재기대·컨센 반영률·조정 가능 모델까지입니다.</div>
+
+<p>이 파트가 커버리지에서 맡는 자리입니다. 파트 1~6이 이익의 방향과 크기를 세웠으니, 여기서는 그 이익을 지금 시가총액과 대봅니다. 방법은 셋입니다 — 시총을 연도별 순이익으로 나눈 함의 배수, 피어 배수와의 상대 위치, 그리고 컨센과 우리 추정의 간극을 단으로 쪼갠 EPS 사다리. 마지막에 여섯 변수(항공유·환율·여객 yield·RPK·화물 yield·아시아나 부문)가 달린 총괄 조정판을 둡니다. 파트 1·2·5의 미니패널과 같은 변수이고, 읽는 사람이 자기 조합을 만듭니다.</p>
+<p>먼저 푸는 용어 다섯 개입니다.</p>
+<div class="gloss">
+<b>함의 PER</b><span>현재 시가총액 ÷ 연도별 순이익. 어느 연도 이익에서 '정상' 배수(피어 8~10배)에 닿는지가 시장이 믿는 연도입니다.</span>
+<b>시총 축 / 기업가치 축</b><span>시총 축은 PER·PBR(주주 몫), 기업가치 축은 EV/EBITDA(부채 포함). 순차입 17조원인 이 회사는 두 축의 배수가 크게 다르므로 병기합니다.</span>
+<b>컨센 반영률</b><span>투자포인트마다 컨센서스에 얼마나 들어가 있는지(반영·부분·미반영). 알파는 미반영에만 있습니다.</span>
+<b>EPS 사다리</b><span>우리 추정에서 컨센까지를 매출·마진 조건으로 단을 나눈 것. 단마다 성립 조건과 채점 관측치를 답니다.</span>
+<b>희석</b><span>합병 신주 2,034만 주로 주식수가 3억 6,822만 주에서 3억 8,856만 주(+5.5%)가 되는 것. 2027년 EPS는 이 주식수로 계산합니다.</span>
+</div>
+
+<h2>1. 컨센의 지형 — 2026년은 갈라졌고 2027년은 한 점으로 모였다</h2>
+<figure class=""><figcaption>장표 1. 2026E·2027E 연결 영업이익 — 하우스별 추정과 컨센, 그리고 우리 Base (억원)</figcaption><svg viewBox="0 0 880 280" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="236.0" x2="730" y2="236.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="240.0" text-anchor="end" font-size="11" fill="#8a857c">0</text>
+<line x1="62" y1="192.4" x2="730" y2="192.4" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="196.4" text-anchor="end" font-size="11" fill="#8a857c">5,000</text>
+<line x1="62" y1="148.8" x2="730" y2="148.8" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="152.8" text-anchor="end" font-size="11" fill="#8a857c">10,000</text>
+<line x1="62" y1="105.2" x2="730" y2="105.2" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="109.2" text-anchor="end" font-size="11" fill="#8a857c">15,000</text>
+<line x1="62" y1="61.6" x2="730" y2="61.6" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="65.6" text-anchor="end" font-size="11" fill="#8a857c">20,000</text>
+<line x1="62" y1="18.0" x2="730" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">25,000</text>
+<text x="117.7" y="254" text-anchor="middle" font-size="10" fill="#8a857c">NH</text>
+<text x="229.0" y="254" text-anchor="middle" font-size="10" fill="#8a857c">컨센(9-02)</text>
+<text x="340.3" y="254" text-anchor="middle" font-size="10" fill="#8a857c">iM</text>
+<text x="451.7" y="254" text-anchor="middle" font-size="10" fill="#8a857c">하나</text>
+<text x="563.0" y="254" text-anchor="middle" font-size="10" fill="#8a857c">KB</text>
+<text x="674.3" y="254" text-anchor="middle" font-size="10" fill="#8a857c">우리(파트7)</text>
+<rect x="78.7" y="166.9" width="38.0" height="69.1" fill="#d8d4cc" opacity="0.9"/>
+<text x="98.2" y="162.9" text-anchor="middle" font-size="9.5" fill="#d8d4cc">7,920</text>
+<rect x="190.0" y="134.9" width="38.0" height="101.1" fill="#d8d4cc" opacity="0.9"/>
+<text x="209.5" y="130.9" text-anchor="middle" font-size="9.5" fill="#d8d4cc">11,594</text>
+<rect x="229.0" y="42.3" width="38.0" height="193.7" fill="#1f3a5f" opacity="0.9"/>
+<text x="248.5" y="38.3" text-anchor="middle" font-size="9.5" fill="#1f3a5f">22,211</text>
+<rect x="301.4" y="134.2" width="38.0" height="101.8" fill="#d8d4cc" opacity="0.9"/>
+<text x="320.9" y="130.2" text-anchor="middle" font-size="9.5" fill="#d8d4cc">11,670</text>
+<rect x="340.3" y="58.5" width="38.0" height="177.5" fill="#1f3a5f" opacity="0.9"/>
+<text x="359.8" y="54.5" text-anchor="middle" font-size="9.5" fill="#1f3a5f">20,350</text>
+<rect x="412.7" y="86.3" width="38.0" height="149.7" fill="#d8d4cc" opacity="0.9"/>
+<text x="432.2" y="82.3" text-anchor="middle" font-size="9.5" fill="#d8d4cc">17,170</text>
+<rect x="451.7" y="35.4" width="38.0" height="200.6" fill="#1f3a5f" opacity="0.9"/>
+<text x="471.1" y="31.4" text-anchor="middle" font-size="9.5" fill="#1f3a5f">23,000</text>
+<rect x="524.0" y="85.0" width="38.0" height="151.0" fill="#d8d4cc" opacity="0.9"/>
+<text x="543.5" y="81.0" text-anchor="middle" font-size="9.5" fill="#d8d4cc">17,314</text>
+<rect x="635.4" y="144.4" width="38.0" height="91.6" fill="#d8d4cc" opacity="0.9"/>
+<text x="654.8" y="140.4" text-anchor="middle" font-size="9.5" fill="#d8d4cc">10,500</text>
+<rect x="674.3" y="66.0" width="38.0" height="170.0" fill="#1f3a5f" opacity="0.9"/>
+<text x="693.8" y="62.0" text-anchor="middle" font-size="9.5" fill="#1f3a5f">19,500</text>
+<rect x="736" y="18" width="10" height="10" fill="#d8d4cc"/>
+<text x="750" y="27" font-size="11" fill="#8a857c">2026E 연결 영업이익(억원)</text>
+<rect x="736" y="34" width="10" height="10" fill="#1f3a5f"/>
+<text x="750" y="43" font-size="11" fill="#8a857c">2027E 연결 영업이익(억원)</text>
+</svg><div class="src">자료: WiseReport 컨센(2026-09-02, 10개사)·하나(8-18)·iM(7-15)·KB(7-15)·NH(7-02) 언론 인용. 우리 Base는 이 파트 4절</div></figure>
+<p class="reading"><b>관찰.</b> 1) 2026E 연결 영업이익 추정이 NH 7,920억원에서 KB 1조 7,314억원까지 두 배 넘게 벌어져 있고, 컨센 1조 1,594억원은 그 가운데입니다. 2) 2027E는 iM 2조 350억·컨센 2조 2,211억·하나 2조 3,000억원으로 좁습니다. 3) 우리 Base는 2026E 1조 500억원{E}·2027E 1조 9,500억원{E}으로 둘 다 컨센 아래입니다. <b>원인.</b> 2026E 산포는 하반기 유가 가정과 아시아나 손실 가정이 하우스마다 다르기 때문이고(상반기 실측 3,103억원에 하반기를 4,800억~1조 4,000억원으로 얹음), 2027E가 좁은 것은 모두가 '유가 정상·아시아나 0·시너지 일부'라는 같은 그림을 그리기 때문입니다. <b>함의.</b> 알파의 자리는 2026E가 아니라 2027E입니다 — 2026E는 이미 다투고 있어 10월 실적이 답을 주고, 2027E는 다투지 않는데 그 합의의 전제(아시아나 0)가 파트 3에서 흔들렸습니다. 우리와 컨센의 2027E 간극 2,700억원{E}이 이 파트의 몸통입니다.</p>
+<table><tr><th>연결, 억원</th><th>2025A</th><th>2026E 컨센</th><th>2027E 컨센</th><th>2028E 컨센</th><th>2027E 우리 Base<span class="est">E</span></th></tr>
+<tr><td>매출액</td><td>252,255</td><td>282,575</td><td>280,124</td><td>287,559</td><td>276,000</td></tr>
+<tr><td>영업이익 / 이익률</td><td>11,136 / 4.4%</td><td>11,594 / 4.1%</td><td>22,211 / 7.9%</td><td>25,970 / 9.0%</td><td>19,500 / 7.1%</td></tr>
+<tr><td>지배주주 순이익</td><td>7,797</td><td>3,363</td><td>14,162</td><td>17,110</td><td>13,200</td></tr>
+<tr><td>EPS(원)</td><td>2,111</td><td>909</td><td>3,634</td><td>4,391</td><td>3,400</td></tr>
+<tr><td>PER(29,150원 기준)</td><td>13.8</td><td>32.1</td><td>8.0</td><td>6.6</td><td>8.6</td></tr>
+<tr><td>BPS(원) / PBR</td><td>29,659 / 0.98</td><td>28,682 / 1.02</td><td>31,830 / 0.92</td><td>35,239 / 0.83</td><td>31,500 / 0.93</td></tr>
+<tr><td>EV/EBITDA</td><td>7.0</td><td>6.6</td><td>5.0</td><td>4.3</td><td>5.4<span class="est">E</span></td></tr>
+<tr><td>DPS(원)</td><td>750</td><td>782</td><td>—</td><td>—</td><td>800<span class="est">E</span></td></tr>
+</table>
+<div class="src">자료: WiseReport(FnGuide) 2026-09-02. PER은 9-03 종가로 재계산. 우리 Base EPS는 합병 후 3억 8,856만 주 기준, 컨센 EPS는 집계 기준 주식수(미확인 — 미결)</div>
+
+<h2>2. 함의 배수 — 시장은 2027년을 세고 있고, 2027년으로 보면 싸다</h2>
+<figure class=""><figcaption>장표 2. 시총 10조 7,336억원을 연도별 지배순이익으로 나눈 함의 PER — 2027E 컨센 기준 7.6배</figcaption><svg viewBox="0 0 880 240" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="196.0" x2="860" y2="196.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="200.0" text-anchor="end" font-size="11" fill="#8a857c">0.0</text>
+<line x1="62" y1="151.5" x2="860" y2="151.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="155.5" text-anchor="end" font-size="11" fill="#8a857c">10.0</text>
+<line x1="62" y1="107.0" x2="860" y2="107.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="111.0" text-anchor="end" font-size="11" fill="#8a857c">20.0</text>
+<line x1="62" y1="62.5" x2="860" y2="62.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="66.5" text-anchor="end" font-size="11" fill="#8a857c">30.0</text>
+<line x1="62" y1="18.0" x2="860" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">40.0</text>
+<text x="161.8" y="214" text-anchor="middle" font-size="10" fill="#8a857c">2025A</text>
+<text x="361.2" y="214" text-anchor="middle" font-size="10" fill="#8a857c">2026E</text>
+<text x="560.8" y="214" text-anchor="middle" font-size="10" fill="#8a857c">2027E</text>
+<text x="760.2" y="214" text-anchor="middle" font-size="10" fill="#8a857c">2028E</text>
+<rect x="91.9" y="134.6" width="138.6" height="61.4" fill="#1f3a5f" opacity="0.9"/>
+<text x="161.8" y="130.6" text-anchor="middle" font-size="9.5" fill="#1f3a5f">13.8</text>
+<rect x="291.4" y="54.0" width="138.6" height="142.0" fill="#1f3a5f" opacity="0.9"/>
+<text x="361.2" y="50.0" text-anchor="middle" font-size="9.5" fill="#1f3a5f">31.9</text>
+<rect x="490.9" y="162.2" width="138.6" height="33.8" fill="#1f3a5f" opacity="0.9"/>
+<text x="560.8" y="158.2" text-anchor="middle" font-size="9.5" fill="#1f3a5f">7.6</text>
+<rect x="690.4" y="168.0" width="138.6" height="28.0" fill="#1f3a5f" opacity="0.9"/>
+<text x="760.2" y="164.0" text-anchor="middle" font-size="9.5" fill="#1f3a5f">6.3</text>
+</svg><div class="src">자료: 시총(키움 9-03)·WiseReport 연도별 지배순이익. 2026E 31.9배는 2Q26 적자 반영</div></figure>
+<p class="reading"><b>관찰.</b> 1) 2025년 실적 기준 13.8배, 2026E 컨센 기준 31.9배, 2027E 6.6~7.6배(주식수 기준에 따라), 2028E 6.3배입니다. 2) 피어 정상 배수(JAL 13.5·ANA 11.6·델타 9.5·캐세이 7.9·중화 9.2·유나이티드 8.1, 평균 약 10배)에 닿는 연도가 2027년입니다. 3) 2026E 배수는 의미가 없습니다 — 2Q26 순손실이 연간을 눌러 분모가 작습니다. <b>원인.</b> 시장은 2026년을 건너뛰고 2027년 이익을 지불하고 있습니다. 이것이 '내재기대 역산'의 결론이고, 2027E 컨센 순이익 1조 4,162억원에 피어 평균 10배를 곱하면 14조원, 8배면 11.3조원입니다. <b>함의.</b> 현재 시총 10.7조원은 2027E 컨센에 피어 하단(8배)을 곱한 값 근처이고, 우리 Base(1조 3,200억원{E})로도 8.1배입니다. 즉 시장은 2027년 회복을 '세고는 있되 싸게' 세고 있습니다 — 회복이 오면 배수가 아니라 이익이 주가를 밀고, 회복이 안 오면 2027E 분모가 깨져 배수가 뛰는 구조입니다.</p>
+<p>기업가치 축을 병기합니다. 순차입(리스 포함) 16조 9,528억원<span class="est">E</span>을 시총에 더하면 기업가치는 27조 7,000억원<span class="est">E</span>이고, 2027E 컨센 EBITDA(영업이익 2조 2,211억원 + 감가상각 3조 2,000억원<span class="est">E</span> = 5조 4,000억원<span class="est">E</span>)로 나누면 5.1배, 우리 Base로는 5.4배<span class="est">E</span>입니다. 피어는 JAL 2.9배·ANA 3.7배·중화 4.3배·EVA 4.3배·캐세이 4.8배·SIA 5.4배(2026E 기준)이니, 기업가치 축에서 대한항공은 피어 상단입니다. 시총 축(PER 7.6배·PBR 1.0배)에서 싸고 기업가치 축(EV/EBITDA 5.1~5.4배)에서 비싼 것은 순차입 17조원 때문이고, 이것이 이 종목 밸류 논쟁의 본질입니다 — 주주 몫은 싸지만 회사 전체는 싸지 않습니다. 셀사이드 목표주가(iM·신한·NH)가 EV/EBITDA 5.7~6.4배를 쓴 것은 피어 상단에 10~20% 프리미엄을 얹은 것이며, 그 프리미엄의 근거는 '통합 후 유일 FSC'입니다.</p>
+<figure class=""><figcaption>장표 3. 피어 산점 — PER(26E, 대한항공은 27E)과 PBR. 대한항공은 PER 하단·PBR 하단의 구석에 있다</figcaption><svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62.0" y1="20" x2="62.0" y2="276" stroke="#d8d4cc" stroke-width="0.7"/><text x="62.0" y="292" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 5배</text>
+<line x1="205.3" y1="20" x2="205.3" y2="276" stroke="#d8d4cc" stroke-width="0.7"/><text x="205.3" y="292" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 7배</text>
+<line x1="348.5" y1="20" x2="348.5" y2="276" stroke="#d8d4cc" stroke-width="0.7"/><text x="348.5" y="292" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 9배</text>
+<line x1="491.8" y1="20" x2="491.8" y2="276" stroke="#d8d4cc" stroke-width="0.7"/><text x="491.8" y="292" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 11배</text>
+<line x1="635.1" y1="20" x2="635.1" y2="276" stroke="#d8d4cc" stroke-width="0.7"/><text x="635.1" y="292" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 13배</text>
+<line x1="778.4" y1="20" x2="778.4" y2="276" stroke="#d8d4cc" stroke-width="0.7"/><text x="778.4" y="292" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 15배</text>
+<line x1="62" y1="230.3" x2="850" y2="230.3" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="234.3" text-anchor="end" font-size="10.5" fill="#8a857c">PBR 0.5</text>
+<line x1="62" y1="184.6" x2="850" y2="184.6" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="188.6" text-anchor="end" font-size="10.5" fill="#8a857c">PBR 1.0</text>
+<line x1="62" y1="138.9" x2="850" y2="138.9" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="142.9" text-anchor="end" font-size="10.5" fill="#8a857c">PBR 1.5</text>
+<line x1="62" y1="93.1" x2="850" y2="93.1" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="97.1" text-anchor="end" font-size="10.5" fill="#8a857c">PBR 2.0</text>
+<line x1="62" y1="47.4" x2="850" y2="47.4" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="51.4" text-anchor="end" font-size="10.5" fill="#8a857c">PBR 2.5</text>
+<circle cx="269.7" cy="183.7" r="7" fill="#1f3a5f" opacity="0.85"/>
+<text x="277.7" y="173.7" font-size="10.5" fill="#3a3630">대한항공 27E</text>
+<circle cx="384.4" cy="62.1" r="5" fill="#8a857c" opacity="0.85"/>
+<text x="392.4" y="52.1" font-size="10.5" fill="#3a3630">델타</text>
+<circle cx="284.1" cy="83.1" r="5" fill="#8a857c" opacity="0.85"/>
+<text x="292.1" y="73.1" font-size="10.5" fill="#3a3630">유나이티드</text>
+<circle cx="670.9" cy="199.2" r="5" fill="#2b7a78" opacity="0.85"/>
+<text x="678.9" y="189.2" font-size="10.5" fill="#3a3630">JAL</text>
+<circle cx="534.8" cy="192.8" r="5" fill="#2b7a78" opacity="0.85"/>
+<text x="542.8" y="160.7" font-size="10.5" fill="#3a3630">ANA</text>
+<circle cx="269.7" cy="143.4" r="5" fill="#b07d2b" opacity="0.85"/>
+<text x="277.7" y="133.4" font-size="10.5" fill="#3a3630">캐세이</text>
+<circle cx="362.9" cy="166.3" r="5" fill="#b07d2b" opacity="0.85"/>
+<text x="370.9" y="147.7" font-size="10.5" fill="#3a3630">중화항공</text>
+<circle cx="456.0" cy="135.2" r="5" fill="#b07d2b" opacity="0.85"/>
+<text x="464.0" y="120.4" font-size="10.5" fill="#3a3630">EVA</text>
+<circle cx="284.1" cy="210.2" r="5" fill="#8a857c" opacity="0.85"/>
+<text x="292.1" y="176.2" font-size="10.5" fill="#3a3630">루프트한자</text>
+<circle cx="276.9" cy="48.3" r="5" fill="#8a857c" opacity="0.85"/>
+<text x="284.9" y="38.3" font-size="10.5" fill="#3a3630">IAG</text>
+<circle cx="248.3" cy="144.3" r="5" fill="#a44a3f" opacity="0.85"/>
+<text x="256.3" y="107.4" font-size="10.5" fill="#3a3630">제주항공 27E</text>
+</svg><div class="src">자료: stockanalysis·marketscreener(글로벌, 2026-09-02~03)·WiseReport(국내). 대한항공 PER은 2027E 컨센 EPS 3,634원 기준, 제주항공도 27E</div></figure>
+<p class="reading"><b>관찰.</b> 1) 대한항공(27E PER 7.9배·PBR 1.01배)은 캐세이(7.9배·1.45배)와 PER이 같고 PBR은 낮습니다. 2) 일본 2사는 PBR 0.84~0.91배로 대한항공보다 낮지만 PER은 11.6~13.5배로 높습니다. 3) 미국 2사와 IAG는 PBR 2.1~2.5배로 자본이 얇습니다(자사주 소각 누적). <b>원인.</b> PBR이 낮은 이유는 자본이 두껍기 때문입니다 — 2021년 3.3조원 유상증자와 아시아나 인수로 자본 10.8조원이 쌓였고 그 대가로 ROE가 7%(2025년)입니다. PER이 낮은 이유는 2027E 이익 회복을 시장이 할인하기 때문입니다. <b>함의.</b> 이 종목이 피어 산점의 왼쪽 아래 구석에 있는 것은 '싸다'와 '자본 효율이 낮다'의 동시 표현입니다. 리레이팅의 조건은 ROE입니다 — 2027E 컨센 ROE 12.0%가 실현되면 PBR 1.2~1.5배(캐세이·중화 수준)로 갈 근거가 생기고, 우리 Base ROE 11%{E}로도 방향은 같습니다.</p>
+
+<h2>3. 컨센 반영률 — 투자포인트마다 무엇이 가격에 있나</h2>
+<table><tr><th>투자포인트</th><th>컨센 반영</th><th>근거</th><th>미반영 = 상방 / 과반영 = 하방</th></tr>
+<tr><td>① 3Q26 별도 영업이익 5,000억원대 회복</td><td>반영</td><td>컨센 3Q26 연결 3,501억원 = 별도 5,000억원대 − 자회사 1,500억원; 하나·iM 별도 5,170~5,520억원</td><td>상방은 아시아나 적자가 -1,500억원 안으로 좁혀질 때뿐</td></tr>
+<tr><td>② 유가 정상화(항공유 120달러)</td><td>반영</td><td>2027E 컨센 영업이익률 7.9%는 항공유 110~130달러 전제<span class="est">E</span></td><td>과반영 위험 — 9월 1일 이후 브렌트 95달러(항공유 150달러대)가 유지되면 2027E는 3,000~4,000억원<span class="est">E</span> 깎임</td></tr>
+<tr><td>③ 아시아나 손실 소멸</td><td>반영(전량)</td><td>2027E 컨센 2.2조원 = 별도 경로 + 아시아나 0</td><td>과반영 — 우리는 -1,000억~0원 + 통합비용 1,000~2,000억원(파트 3)</td></tr>
+<tr><td>④ 통합 시너지 3,000억원</td><td>부분(2028E)</td><td>2028E 컨센 2조 5,970억원이 2027E 대비 +3,759억원</td><td>실행(AOC·노조·기종 표준화) 확인 전까지 미반영분 없음</td></tr>
+<tr><td>⑤ 화물 yield 620~660원 정착(AI 화물)</td><td>미반영<span class="est">E</span></td><td>2027E 매출 컨센이 2026E와 같음 = 화물 프리미엄 소멸 가정</td><td>상방 +2,000억원<span class="est">E</span>(yield 600 대 520 × CTK 8,800)</td></tr>
+<tr><td>⑥ 여객 yield 128~132원 정착(공급 병목·인바운드)</td><td>미반영<span class="est">E</span></td><td>같은 근거(2027E 매출 정체)</td><td>상방 +3,000억원<span class="est">E</span>(yield 130 대 124 × RPK 80,000 × 0.7)</td></tr>
+<tr><td>⑦ 환율 1,359원 유지 → 3Q26 외화환산이익 1조원<span class="est">E</span></td><td>미반영</td><td>3Q26 순이익 컨센 3,000억원</td><td>EPS 서프라이즈이되 이익의 질 0 — 배수에 넣지 않음</td></tr>
+<tr><td>⑧ 항공우주(무인기 수출) 옵션</td><td>미반영</td><td>어느 하우스도 별도 가치 부여 없음</td><td>2026년 상반기 영업이익 367억원, 수출 계약 시 재평가 — 값 미정</td></tr>
+</table>
+<div class="src">자료: WiseReport 컨센·셀사이드 인용·파트 1~5 산출. 반영률 판정은 작성자E</div>
+<p>표를 한 줄로 줄이면 이렇습니다. 시장은 유가 정상화와 아시아나 소멸이라는 두 '되돌림'을 전부 넣었고, 화물·여객 yield의 구조적 상향이라는 두 '남는 것'은 넣지 않았습니다. 우리는 반대입니다 — 되돌림은 시장보다 덜 넣고(아시아나 -1,000억~0원, 통합비용), 남는 것은 시장보다 더 넣습니다(화물 600원·여객 130원). 두 방향이 상쇄돼 2027E 영업이익은 컨센보다 2,700억원<span class="est">E</span> 낮은 1조 9,500억원<span class="est">E</span>이지만, 그 구성은 다릅니다. 컨센이 맞으려면 유가가 협조해야 하고, 우리가 맞으려면 yield가 협조해야 합니다. 10월 실적이 yield를, 4분기 유가가 나머지를 채점합니다.</p>
+
+<h2>4. EPS 사다리 — 우리 하단에서 컨센까지 네 단</h2>
+<figure class=""><figcaption>장표 4. 2027E 주당순이익 사다리 — 우리 하단·Base·상단, iM, 컨센, 그리고 2025 실적 (원, 합병 후 주식수)</figcaption><svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="206.0" x2="860" y2="206.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="210.0" text-anchor="end" font-size="11" fill="#8a857c">0</text>
+<line x1="62" y1="159.0" x2="860" y2="159.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="163.0" text-anchor="end" font-size="11" fill="#8a857c">1,000</text>
+<line x1="62" y1="112.0" x2="860" y2="112.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="116.0" text-anchor="end" font-size="11" fill="#8a857c">2,000</text>
+<line x1="62" y1="65.0" x2="860" y2="65.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="69.0" text-anchor="end" font-size="11" fill="#8a857c">3,000</text>
+<line x1="62" y1="18.0" x2="860" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">4,000</text>
+<text x="128.5" y="224" text-anchor="middle" font-size="10" fill="#8a857c">컨센 27E</text>
+<text x="261.5" y="224" text-anchor="middle" font-size="10" fill="#8a857c">우리 상단</text>
+<text x="394.5" y="224" text-anchor="middle" font-size="10" fill="#8a857c">우리 Base</text>
+<text x="527.5" y="224" text-anchor="middle" font-size="10" fill="#8a857c">우리 하단</text>
+<text x="660.5" y="224" text-anchor="middle" font-size="10" fill="#8a857c">iM 27E</text>
+<text x="793.5" y="224" text-anchor="middle" font-size="10" fill="#8a857c">2025A</text>
+<rect x="82.0" y="35.2" width="92.1" height="170.8" fill="#1f3a5f" opacity="0.9"/>
+<text x="128.5" y="31.2" text-anchor="middle" font-size="9.5" fill="#1f3a5f">3,634</text>
+<rect x="214.9" y="22.7" width="92.1" height="183.3" fill="#1f3a5f" opacity="0.9"/>
+<text x="261.5" y="18.7" text-anchor="middle" font-size="9.5" fill="#1f3a5f">3,900</text>
+<rect x="347.9" y="46.2" width="92.1" height="159.8" fill="#1f3a5f" opacity="0.9"/>
+<text x="394.5" y="42.2" text-anchor="middle" font-size="9.5" fill="#1f3a5f">3,400</text>
+<rect x="480.9" y="74.4" width="92.1" height="131.6" fill="#1f3a5f" opacity="0.9"/>
+<text x="527.5" y="70.4" text-anchor="middle" font-size="9.5" fill="#1f3a5f">2,800</text>
+<rect x="614.0" y="20.1" width="92.1" height="185.9" fill="#1f3a5f" opacity="0.9"/>
+<text x="660.5" y="16.1" text-anchor="middle" font-size="9.5" fill="#1f3a5f">3,956</text>
+<rect x="747.0" y="106.8" width="92.1" height="99.2" fill="#1f3a5f" opacity="0.9"/>
+<text x="793.5" y="102.8" text-anchor="middle" font-size="9.5" fill="#1f3a5f">2,111</text>
+</svg><div class="src">자료: WiseReport 2027E 3,634원(집계 기준 주식수 미확인)·iM 3,956원·우리 추정E(3억 8,856만 주 기준). 2025A 2,111원은 3억 6,822만 주</div></figure>
+<table><tr><th>단</th><th>2027E 영업이익</th><th>EPS<span class="est">E</span></th><th>성립 조건</th><th>채점 관측치</th></tr>
+<tr><td>우리 하단</td><td>1조 6,000억원</td><td>2,800원</td><td>항공유 140달러·환율 1,450원·여객 yield 126·화물 550·아시아나 -2,500억원</td><td>3Q 별도 영업이익 3,500억원대·4Q26 아시아나 -2,500억원</td></tr>
+<tr><td>우리 Base</td><td>1조 9,500억원</td><td>3,400원</td><td>항공유 120·환율 1,400·여객 130·화물 600·아시아나 -500억원·통합비용 1,500억원</td><td>3Q 별도 5,000억원대·yield 130/620 이상·4Q26 아시아나 -1,500억원 안</td></tr>
+<tr><td>우리 상단</td><td>2조 2,500억원</td><td>3,900원</td><td>항공유 100·환율 1,350·여객 133·화물 650·아시아나 0·시너지 조기 1,000억원</td><td>중동 공역 재개 + 유가 100달러 + 마일리지 승인 12월 전</td></tr>
+<tr><td>컨센(9-02)</td><td>2조 2,211억원</td><td>3,634원</td><td>유가 정상·아시아나 0·통합비용 없음<span class="est">E</span>·yield 2025년 수준</td><td>—</td></tr>
+<tr><td>iM(7-15)</td><td>2조 350억원</td><td>3,956원</td><td>별도 2조 380억·아시아나 -100억원, 주식수 미희석<span class="est">E</span></td><td>—</td></tr>
+</table>
+<div class="src">자료: 작성자 추정E(조정판 산식과 1:1)·WiseReport·iM. 세율 24%·금융비용 8,500억원·지배 90%·주식수 3억 8,856만 주 공통</div>
+<p>사다리에서 봐야 할 것은 단 사이의 거리가 어디서 나는가입니다. 하단과 Base의 차이 3,500억원 중 2,000억원이 아시아나(-2,500 → -500), 1,000억원이 유가(140 → 120달러), 500억원이 yield입니다. Base와 상단의 차이 3,000억원은 유가 1,000억원·아시아나 500억원·시너지 1,000억원·yield 500억원입니다. 즉 사다리의 가장 큰 칸은 아시아나이고, 그다음이 유가이며, yield는 양쪽에서 작은 칸입니다 — 이것이 허브가 논쟁 2(아시아나)를 논쟁 1(유가)보다 앞에 두는 이유입니다. 컨센 EPS 3,634원은 우리 Base와 상단 사이에 있고, 우리 Base(3,400원)로 현재가는 PER 8.6배, 하단(2,800원)으로 10.4배, 상단(3,900원)으로 7.5배입니다. 하단에서도 피어 평균(10배) 근처라는 것이 이 배수 산수의 결론입니다.</p>
+
+<h2>5. 총괄 조정판 — 여섯 변수, 하나의 상태</h2>
+<div class="panel"><b>총괄 조정판 — 변수 여섯 개가 2027E 연결 영업이익·순이익·함의 배수에 닿는 길(파트 1·2·5 미니패널과 같은 변수)</b><br><br>
+<table style="width:100%"><tr>
+<td style="text-align:left;border:none">항공유 연평균($/bbl) <span id="m_pv">120</span><br><input type="range" id="m_p" min="80" max="200" step="5" value="120"></td>
+<td style="text-align:left;border:none">원/달러 연평균 <span id="m_xv">1,400</span><br><input type="range" id="m_x" min="1250" max="1600" step="10" value="1400"></td></tr>
+<tr><td style="text-align:left;border:none">국제선 yield(원/km) <span id="m_yv">130</span><br><input type="range" id="m_y" min="118" max="145" step="1" value="130"></td>
+<td style="text-align:left;border:none">국제선 RPK 성장(합병 후 통합 기준, %) <span id="m_rv">+3</span><br><input type="range" id="m_r" min="-3" max="10" step="1" value="3"></td></tr>
+<tr><td style="text-align:left;border:none">화물 yield(원/km) <span id="m_cv">600</span><br><input type="range" id="m_c" min="480" max="720" step="5" value="600"></td>
+<td style="text-align:left;border:none">옛 아시아나 부문 영업손익(억원) <span id="m_av">-500</span><br><input type="range" id="m_a" min="-4000" max="1500" step="100" value="-500"></td></tr></table>
+<div class="out" id="m_out"></div><div id="m_out2" style="margin-top:4px"></div>
+<div class="note">산식(연간, 억원): 국제선 여객 = yield × RPK(2026E 기준 80,000백만인km<span class="est">E</span> × (1+성장)) ÷ 100 · 화물 = yield × CTK 8,800<span class="est">E</span> ÷ 100 · 기타·국내선·항공우주 = 2조 3,000억원<span class="est">E</span> 고정 · 연료비 = 3,050만 배럴 × 항공유 × 환율 ÷ 1e8 · 연료 외 비용 = 12조 8,000억원<span class="est">E</span>(2026년 상반기 연결 연료 외 비용 8.84조원의 연환산에서 아시아나 부문 손익을 따로 떼어 계산) · 연결 영업이익 = 여객+화물+기타 − 연료 − 연료 외 + 아시아나 부문 + LCC 500<span class="est">E</span> − 통합비용 1,500<span class="est">E</span> · 순이익 = (영업이익 − 금융비용 8,500<span class="est">E</span>) × (1−세율 24%) · 지배 90%<span class="est">E</span> · 주식수 3.885억 주(합병 신주 포함). 기본값이 2027E Base(영업이익 1조 9,500억원E·EPS 3,400원E)를 재현합니다. 컨센 2027E는 2조 2,211억원·EPS 3,634원. 인쇄 시 기본값 고정.</div></div>
+<script>(function(){var ids=['m_p','m_x','m_y','m_r','m_c','m_a'];var el={};ids.forEach(function(i){el[i]=document.getElementById(i);});
+function f(){var P=+el.m_p.value,X=+el.m_x.value,Y=+el.m_y.value,R=+el.m_r.value,Cv=+el.m_c.value,A=+el.m_a.value;
+document.getElementById('m_pv').textContent=P;document.getElementById('m_xv').textContent=X.toLocaleString();document.getElementById('m_yv').textContent=Y;document.getElementById('m_rv').textContent=(R>=0?'+':'')+R;document.getElementById('m_cv').textContent=Cv;document.getElementById('m_av').textContent=A.toLocaleString();
+var pax=Y*80000*(1+R/100)/100, cargo=Cv*8800/100, other=23000, fuel=30500000*P*X/1e8, nonfuel=128000;
+var op=pax+cargo+other-fuel-nonfuel+A+500-1500; var ni=(op-8500)*0.76*0.9; var eps=ni*1e8/388558330; var per=107336/ni;
+document.getElementById('m_out').textContent='2027E 연결 영업이익 '+Math.round(op).toLocaleString()+'억원E (컨센 22,211억원 대비 '+(op-22211>=0?'+':'')+Math.round(op-22211).toLocaleString()+') · 지배순이익 '+Math.round(ni).toLocaleString()+'억원E · EPS '+Math.round(eps).toLocaleString()+'원E';
+document.getElementById('m_out2').textContent='시총 10조 7,336억원 기준 함의 PER '+per.toFixed(1)+'배E · 연료비 '+Math.round(fuel).toLocaleString()+'억원 · 여객 '+Math.round(pax).toLocaleString()+' · 화물 '+Math.round(cargo).toLocaleString()+' — '+(per<9?'피어 밴드(8~10배) 아래: 이 조합이면 현재가는 회복을 덜 세고 있음':(per<12?'피어 밴드 안: 회복을 대체로 세고 있음':'피어 밴드 위: 회복을 넘어 세고 있음'));}
+ids.forEach(function(i){el[i].addEventListener('input',f);});f();})();</script>
+<p>조정판을 읽는 법입니다. 항공유 슬라이더를 120달러에서 150달러로 옮기면 연료비가 1조 2,000억원<span class="est">E</span> 늘고 영업이익이 그만큼 줄어 함의 PER이 8.6배에서 12배대로 뜁니다 — 유류할증료 전가를 이 총괄판에는 넣지 않았으므로(파트 5 미니패널에 있음) 이것은 전가 전 순효과이고, 실제로는 절반이 매출로 돌아옵니다. 아시아나 슬라이더를 -500에서 -2,500으로 옮기면 영업이익이 2,000억원 줄고, 0으로 옮기면 컨센 경로에 가까워집니다. 화물 yield를 520(2025년)으로 내리면 -7,000억원<span class="est">E</span>이 빠지는데, 이것이 '화물 프리미엄 소멸' 가정의 크기이고 컨센이 대체로 이 값을 쓰고 있다는 뜻입니다. 여객 yield 1원은 800억원<span class="est">E</span>, RPK 1%는 1,000억원<span class="est">E</span>입니다.</p>
+<p>이 조정판은 연간 상수(연료 외 비용 12조 8,000억원<span class="est">E</span>·기타 매출 2조 3,000억원<span class="est">E</span>·금융비용 8,500억원<span class="est">E</span>)를 고정해 두었으므로 자릿수용입니다. 변수 여섯 개의 Base 조합이 본문 4절의 Base(1조 9,500억원·EPS 3,400원)를 재현하는 것이 검산이고, 편차가 나면 버그입니다. 파트 1(여객 yield·RPK)·파트 2(화물 yield·CTK)·파트 5(항공유·환율·전가율)의 미니패널은 같은 변수의 분기 창이며, 이 총괄판은 그 변수를 연간으로 늘린 것입니다.</p>
+
+<h2>6. 이 파트가 논쟁에 주는 답 — 그리고 아직 못 주는 답</h2>
+<p>이 파트의 답은 세 문장입니다. 첫째, 시가총액 10.7조원은 2027년 이익을 세고 있고, 2027E 컨센으로 PER 7.6배·우리 Base로 8.6배·우리 하단으로도 10.4배라 시총 축에서는 피어(8~13배) 하단입니다. 둘째, 기업가치 축에서는 순차입 17조원 때문에 EV/EBITDA 5.1~5.4배로 피어 상단이며, 이 두 축의 어긋남이 이 종목의 밸류 논쟁 그 자체입니다 — 주주 몫은 싸고 회사 전체는 싸지 않습니다. 셋째, 컨센과 우리의 2027E 간극 2,700억원<span class="est">E</span>은 아시아나(가장 큰 칸)와 유가에서 나고, yield(화물·여객)는 우리가 컨센보다 더 넣었으므로 10월 실적의 yield가 우리 쪽으로 나오면 간극의 방향이 바뀝니다. 허브는 이 산수를 "회복은 세고 있되 싸게 세고 있다"로 받습니다.</p>
+<p>아직 답하지 못한 것들을 미결로 남깁니다. ①컨센 EPS 3,634원의 집계 기준 주식수(합병 신주 반영 여부)(A급 — FnGuide 원자료 확인, 미반영이면 컨센 EPS는 3,444원으로 내려와 우리 Base와 같아짐). ②2027E 감가상각 3조 2,000억원<span class="est">E</span>과 금융비용 8,500억원<span class="est">E</span>(B급 — 신기재 인도 일정과 아시아나 차환 조건에 따라 ±3,000억원). ③통합 후 마일리지 회계(부채 재측정이 매출 차감인지 비용인지)가 2027E 영업이익 정의에 주는 영향(B급). ④피어 EV/EBITDA의 리스 포함 여부 통일(B급 — 회사마다 IFRS16 처리와 집계 소스가 달라 5.1배 대 2.9~5.4배의 비교에 ±0.5배 오차). ⑤항공우주 옵션의 값(C급 — 무인기 수출 계약 공시 전까지 미정).</p>
+
+<p class="foot">파트 7 끝. 대기열 완주 — 허브가 판정을 갱신합니다. 이 파트가 허브에 보태는 항목: 함의 PER(2027E 컨센 7.6배·우리 Base 8.6배·하단 10.4배)·EV/EBITDA 5.1~5.4배(피어 상단)·컨센 반영률 8종·EPS 사다리 4단·총괄 조정판(변수 6종, 파트 1·2·5와 공유), 미결 5건. 작성 Claude · 검증: 조정판 기본값 = 본문 Base 재현(영업이익 1조 9,500억원·EPS 3,400원)·함의 PER = 시총 ÷ 순이익 재계산·EV = 시총 + 순차입 정합 완료</p>
+
+</main></body></html>

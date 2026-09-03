@@ -1,0 +1,207 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="coverage" content="risks">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>대한항공(003490) 파트 6 — 리스크 · 2026-09-03</title>
+<style>
+body{margin:0;background:#faf8f4;color:#3a3630;font-family:'Noto Serif KR','Apple SD Gothic Neo','Malgun Gothic',serif;line-height:1.78;word-break:keep-all}
+main{max-width:920px;margin:0 auto;padding:44px 28px 80px}
+h1{font-size:23px;margin:0 0 6px;line-height:1.35} .sub{color:#8a857c;font-size:13px;margin-bottom:10px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;line-height:1.6}
+h2{font-size:17.5px;margin:36px 0 8px;padding-top:16px;border-top:1px solid #e3ded4}
+h3{font-size:15px;margin:22px 0 6px}
+p{max-width:700px;font-size:15px;margin:0 0 1.25em}
+p.reading{font-size:14px;color:#4a463f;background:#f4f0e8;border-radius:6px;padding:10px 14px;max-width:700px}
+figure{margin:14px 0 6px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px}
+figcaption{font-size:13px;font-weight:600;margin-bottom:8px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+svg{width:100%;height:auto;display:block}
+.src{font-size:11.5px;color:#8a857c;margin-top:6px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+table{border-collapse:collapse;font-size:13px;margin:10px 0 16px;font-family:Pretendard,'Apple SD Gothic Neo',-apple-system,sans-serif;background:#fff}
+td,th{border:1px solid #e0dbd0;padding:5px 10px;text-align:right;vertical-align:top} td:first-child,th:first-child{text-align:left} th{background:#f1ede4;font-weight:600;color:#5a5650}
+.gloss{display:grid;grid-template-columns:160px 1fr;gap:6px 14px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px;font-size:13.5px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;max-width:740px;line-height:1.55}
+.gloss b{font-size:13px}
+.judge{background:#f1ede4;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.ourview{background:#eef2f7;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.panel{background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px 16px;max-width:700px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;font-size:14px;margin:12px 0 18px}
+.panel input[type=range]{width:100%}
+.panel .out{margin-top:8px;font-weight:700}
+.panel .note{color:#8a857c;font-size:12.5px;margin-top:6px}
+.est{font-size:.72em;vertical-align:super;color:#a44a3f;font-weight:700}
+.foot{font-size:12px;color:#8a857c;max-width:700px;margin-top:30px;border-top:1px solid #e3ded4;padding-top:12px}
+.segdive{border:1px solid #e0dbd0;border-radius:8px;padding:6px 18px 4px;margin:14px 0 20px;background:#fdfcf9}
+.leadchain{background:#fff8ea;border:1px solid #e8d9b5;border-radius:6px;padding:12px 16px;max-width:700px;font-size:14px}
+.hubnav{font-size:12.5px;color:#8a857c;font-family:Pretendard,sans-serif;margin-bottom:14px}
+.hubnav a{color:#1f3a5f}
+a{color:#1f3a5f}
+@media print{.panel input{display:none}}
+</style></head><body><main>
+
+<h1>대한항공 파트 6 — 리스크: 유가·환율·아시아나가 같은 날 나빠질 확률, 그리고 그때의 자</h1>
+<div class="sub">파트제 커버리지 6편 · 작성 2026-09-03 · 주가 29,150원(9-03 종가) · 시총 10조 7,336억원 · $1=₩1,359.1 · 12월 결산 · 다음 실적 3Q26 잠정 2026년 10월 중순<span class="est">E</span> · 합병기일 2026-12-16 ·
+숫자 정본: 허브 상수 블록 · 소스: 반기보고서 II-5 위험관리(민감도 공시)·주석 11(아시아나 요약재무)·주석 39 우발채무·증권신고서(합병) VI 투자위험요소·신용평가(A0 긍정적, 2026-08 공모채)·키움 일봉(낙폭)·파트 0~5 산출</div>
+<div class="hubnav">현행 판정은 <a href="대한항공_허브.html">대한항공_허브.html</a>이 듭니다. 이 파트는 커버리지 층 risks를 맡습니다. 시나리오 주가는 쓰지 않습니다 — 하방의 자는 과거 실측 낙폭과 배수 밴드입니다.</div>
+
+<p>이 파트가 커버리지에서 맡는 자리입니다. 허브의 판정이 "회복은 온다, 크기가 문제다"라면, 이 파트는 회복이 안 오는 경우들을 하나씩 세워 각각의 메커니즘·영향·확률·관측 신호를 적습니다. 리스크를 한 줄로 나열하지 않습니다 — 리스크마다 왜 그 확률인지, 얼마가 어느 계정에서 빠지는지, 무엇을 보면 미리 아는지를 씁니다. 그리고 뷰를 접는 조건을 한 곳에 모읍니다. 마지막 절이 과거 실측 낙폭이라는 하방의 자입니다.</p>
+
+<p>먼저 푸는 용어 다섯 개입니다.</p>
+<div class="gloss">
+<b>영향 × 확률</b><span>리스크가 실현됐을 때 12개월 연결 영업이익에서 빠지는 금액(억원)에 12개월 안에 일어날 확률을 곱한 기대 손실. 확률은 작성자 설정E이고 근거를 각 절에 적습니다.</span>
+<b>등급 트리거</b><span>신용평가사가 등급을 내리는 재무 조건. 대한항공은 A0(긍정적)이며, 부채비율·차입금/EBITDA·이자보상배율이 지표입니다. 하향되면 차환 금리가 오르고 통합 시너지(차환 이자 절감)가 줄어듭니다.</span>
+<b>마일리지 부채 재측정</b><span>이연수익(4.07조원)은 마일 1점당 예상 사용 가치로 평가됩니다. 통합으로 전환비율이 정해지거나 사용 패턴이 바뀌면 부채가 늘어 손익에 잡힙니다 — 아시아나 2025년 손실 원인의 하나.</span>
+<b>운수권 배분 배제</b><span>2025년 12월 시행된 규정으로, 사망 사고를 낸 항공사는 1년간 국제선 운수권 배분에서 빠집니다. 항공사에 가장 무거운 규제 페널티입니다.</span>
+<b>디레이팅</b><span>이익이 그대로여도 배수가 내려 주가가 빠지는 것. 이 종목의 과거 큰 조정은 전부 디레이팅이었습니다(파트 4).</span>
+</div>
+
+<h2>1. 리스크 지도 — 열 개를 한 장에</h2>
+<figure class=""><figcaption>장표 1. 리스크 매트릭스 — 12개월 발생 확률(가로)과 실현 시 연결 영업이익 영향(세로, 억원). 원 크기 = 영향</figcaption><svg viewBox="0 0 880 360" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="70.0" y1="20" x2="70.0" y2="316" stroke="#d8d4cc" stroke-width="0.7"/><text x="70.0" y="332" text-anchor="middle" font-size="10.5" fill="#8a857c">0%</text>
+<line x1="200.0" y1="20" x2="200.0" y2="316" stroke="#d8d4cc" stroke-width="0.7"/><text x="200.0" y="332" text-anchor="middle" font-size="10.5" fill="#8a857c">10%</text>
+<line x1="330.0" y1="20" x2="330.0" y2="316" stroke="#d8d4cc" stroke-width="0.7"/><text x="330.0" y="332" text-anchor="middle" font-size="10.5" fill="#8a857c">20%</text>
+<line x1="460.0" y1="20" x2="460.0" y2="316" stroke="#d8d4cc" stroke-width="0.7"/><text x="460.0" y="332" text-anchor="middle" font-size="10.5" fill="#8a857c">30%</text>
+<line x1="590.0" y1="20" x2="590.0" y2="316" stroke="#d8d4cc" stroke-width="0.7"/><text x="590.0" y="332" text-anchor="middle" font-size="10.5" fill="#8a857c">40%</text>
+<line x1="720.0" y1="20" x2="720.0" y2="316" stroke="#d8d4cc" stroke-width="0.7"/><text x="720.0" y="332" text-anchor="middle" font-size="10.5" fill="#8a857c">50%</text>
+<line x1="850.0" y1="20" x2="850.0" y2="316" stroke="#d8d4cc" stroke-width="0.7"/><text x="850.0" y="332" text-anchor="middle" font-size="10.5" fill="#8a857c">60%</text>
+<line x1="70" y1="20.0" x2="850" y2="20.0" stroke="#d8d4cc" stroke-width="0.7"/><text x="64" y="24.0" text-anchor="end" font-size="10.5" fill="#8a857c">0</text>
+<line x1="70" y1="85.8" x2="850" y2="85.8" stroke="#d8d4cc" stroke-width="0.7"/><text x="64" y="89.8" text-anchor="end" font-size="10.5" fill="#8a857c">-2,000</text>
+<line x1="70" y1="151.6" x2="850" y2="151.6" stroke="#d8d4cc" stroke-width="0.7"/><text x="64" y="155.6" text-anchor="end" font-size="10.5" fill="#8a857c">-4,000</text>
+<line x1="70" y1="217.3" x2="850" y2="217.3" stroke="#d8d4cc" stroke-width="0.7"/><text x="64" y="221.3" text-anchor="end" font-size="10.5" fill="#8a857c">-6,000</text>
+<line x1="70" y1="283.1" x2="850" y2="283.1" stroke="#d8d4cc" stroke-width="0.7"/><text x="64" y="287.1" text-anchor="end" font-size="10.5" fill="#8a857c">-8,000</text>
+<text x="850" y="350" text-anchor="end" font-size="10.5" fill="#8a857c">가로 = 12개월 발생 확률(작성자 설정E) · 세로 = 발생 시 12개월 연결 영업이익 영향(억원, E)</text>
+<circle cx="525.0" cy="151.6" r="7.7" fill="#a44a3f" opacity="0.75"/>
+<text x="533.0" y="139.6" font-size="10.5" fill="#3a3630">유가 재상승(항공유 180달러 재돌파)</text>
+<circle cx="395.0" cy="118.7" r="7.0" fill="#b07d2b" opacity="0.75"/>
+<text x="403.0" y="106.7" font-size="10.5" fill="#3a3630">환율 재약세(1,500원 복귀)</text>
+<circle cx="525.0" cy="217.3" r="9.0" fill="#a44a3f" opacity="0.75"/>
+<text x="533.0" y="205.3" font-size="10.5" fill="#3a3630">아시아나 손실 장기화(분기 -2,500억 지속)</text>
+<circle cx="590.0" cy="69.3" r="6.0" fill="#b07d2b" opacity="0.75"/>
+<text x="598.0" y="57.3" font-size="10.5" fill="#3a3630">마일리지 승인 지연·부채 재측정</text>
+<circle cx="720.0" cy="69.3" r="6.0" fill="#8a857c" opacity="0.75"/>
+<text x="728.0" y="43.3" font-size="10.5" fill="#3a3630">중동 공역 재개로 환승 되돌림</text>
+<circle cx="330.0" cy="46.3" r="5.5" fill="#8a857c" opacity="0.75"/>
+<text x="338.0" y="29.3" font-size="10.5" fill="#3a3630">신용등급 하향(A0→A-)</text>
+<circle cx="460.0" cy="36.4" r="5.3" fill="#8a857c" opacity="0.75"/>
+<text x="468.0" y="15.3" font-size="10.5" fill="#3a3630">한진칼 경영권 분쟁 격화</text>
+<circle cx="135.0" cy="283.1" r="10.3" fill="#a44a3f" opacity="0.75"/>
+<text x="143.0" y="271.1" font-size="10.5" fill="#3a3630">안전사고·규제(운수권 배분 배제)</text>
+<circle cx="395.0" cy="102.2" r="6.7" fill="#b07d2b" opacity="0.75"/>
+<text x="403.0" y="90.2" font-size="10.5" fill="#3a3630">AI 화물 사이클 종료</text>
+<circle cx="590.0" cy="52.9" r="5.7" fill="#8a857c" opacity="0.75"/>
+<text x="598.0" y="1.3" font-size="10.5" fill="#3a3630">기재 인도 지연·정비(GTF·777X)</text>
+</svg><div class="src">자료: 회사 민감도 공시(유가 1달러 = 3,050만달러·환율 10원 = 560억원·금리 1%p = 710억원)와 파트 0~5 산출로 작성자 정량화E. 확률은 작성자 설정E — 각 절에 근거</div></figure>
+<p class="reading"><b>관찰.</b> 1) 영향이 가장 큰 것은 안전사고(-8,000억원{E})이지만 확률이 가장 낮고(5%), 기대 손실로는 아시아나 손실 장기화(35% × -6,000억원 = -2,100억원)와 유가 재상승(35% × -4,000억원 = -1,400억원)이 맨 앞입니다. 2) 확률이 가장 높은 것은 중동 공역 재개(50%)인데 영향은 중간(-1,500억원)입니다. 3) 유가·환율·아시아나 셋은 서로 독립이 아니라 같은 방향으로 묶여 있습니다 — 유가가 오르면 아시아나 손실이 커지고, 지정학 긴장이 환율을 올립니다. <b>원인.</b> 이 회사의 리스크는 사건 하나가 아니라 '유가·환율·아시아나'라는 세 변수의 상관에서 옵니다. 2Q26이 그 셋이 같은 분기에 나빠진 실측이고, 그때 연결 영업이익은 -2,071억원이었습니다. <b>함의.</b> 리스크 관리의 핵심 질문은 '세 변수가 다시 같은 날 나빠질 확률'이고, 우리는 12개월 안에 20~25%{E}로 봅니다(2월 28일 개전 이후 9월 1일 재충돌까지 여섯 달에 두 번 일어났습니다). 그 경우 2Q26과 비슷한 분기 적자가 재현되며, 이것이 아래 8절의 하방 자와 연결됩니다.</p>
+<table><tr><th>리스크</th><th>확률(12개월)<span class="est">E</span></th><th>영향(연결 영업이익, 12개월)<span class="est">E</span></th><th>관측 신호</th><th>다루는 파트</th></tr>
+<tr><td>1. 유가 재상승(항공유 180달러 재돌파)</td><td>35%</td><td>-4,000억원(항공유 +40달러 × 3,050만 배럴 × 전가율 50%)</td><td>브렌트 100달러·호르무즈 사건·유류할증료 25단계</td><td>파트 5</td></tr>
+<tr><td>2. 환율 재약세(1,500원 복귀)</td><td>25%</td><td>영업 -1,000억원(달러 부족 16억달러 × 100원 × 0.6) + 영업외 -7,900억원(56억달러 × 140원)</td><td>분기 말 환율·외국인 순매도</td><td>파트 5</td></tr>
+<tr><td>3. 아시아나 손실 장기화(분기 -2,500억원 지속)</td><td>35%</td><td>-6,000억원(컨센 2027E 대비, 손실 0 가정 붕괴)</td><td>4Q26 아시아나 OP·통합 AOC 일정·노조</td><td>파트 3</td></tr>
+<tr><td>4. 마일리지 승인 지연·부채 재측정</td><td>40%</td><td>-1,500억원(재측정 손실 + 고객 이탈)</td><td>9-25 수정안 제출 후 공정위 의결, 이연수익 증감</td><td>파트 3</td></tr>
+<tr><td>5. 중동 공역 재개로 환승 되돌림</td><td>50%</td><td>-1,500억원(환승 RPK -5%<span class="est">E</span> × yield)</td><td>인천 환승객 증가율·중동계 인천 운항 재개</td><td>파트 1</td></tr>
+<tr><td>6. 신용등급 하향(A0→A-)</td><td>20%</td><td>-800억원(차환 금리 +50bp × 차입 11조 × 절반 차환<span class="est">E</span>)</td><td>부채비율 400%·이자보상배율 1배 미만 지속·정기평정</td><td>파트 0</td></tr>
+<tr><td>7. 한진칼 경영권 분쟁 격화</td><td>30%</td><td>-500억원(의사결정 지연·통합 실행 비용)</td><td>산업은행 지분 처리·호반 지분 변동 공시</td><td>파트 0</td></tr>
+<tr><td>8. 안전사고·규제 페널티</td><td>5%</td><td>-8,000억원(운수권 배분 1년 배제 + 브랜드)</td><td>사고 보도·국토부 안전 감사</td><td>이 파트</td></tr>
+<tr><td>9. AI 화물 사이클 종료</td><td>25%</td><td>-2,500억원(화물 yield 700→520원 × CTK)</td><td>BAI 전년비 +10% 하회·아시아→북미 CTK 한 자릿수</td><td>파트 2</td></tr>
+<tr><td>10. 기재 인도 지연·엔진 정비 병목</td><td>40%</td><td>-1,000억원(공급 성장 0·정비비 증가) — 단 운임 상승으로 일부 상쇄</td><td>보잉 777X 인증·GTF 계류 대수·A350 인도 일정</td><td>파트 3</td></tr>
+</table>
+<div class="src">자료: 작성자 정량화E. 영향은 각 파트의 민감도 산식으로 계산, 확률은 2026년 실측 빈도와 일정으로 설정. 확률 근거는 아래 각 절</div>
+
+<h2>2. 유가 — 이 회사의 첫 번째 리스크이고, 2026년에 두 번 실현됐다</h2>
+<p><b>메커니즘.</b> 항공유가 배럴당 10달러 오르면 연간 연료비가 3억 500만달러(약 4,150억원) 늘고, 유류할증료가 한 달 시차로 절반 안팎<span class="est">E</span>을 되돌립니다. 그래서 순영향은 10달러당 연 -2,000억원<span class="est">E</span>, 분기로 -500억원<span class="est">E</span>입니다. 2Q26에 항공유 분기 평균이 전년 대비 +85달러였으므로 순영향 -4,300억원<span class="est">E</span>이고, 실제 별도 영업이익 감소 -1,371억원(3,989→2,618억원)은 화물·yield가 그중 3,000억원을 메운 결과입니다. 아시아나·LCC는 화물·프리미엄 완충재가 없어 같은 유가에 두세 배로 반응합니다.</p>
+<p><b>확률 35%의 근거.</b> 2026년 2월 28일 개전 이후 항공유가 180달러를 넘은 구간이 3월 초~5월 중순 두 달 반이었고, 9월 1일 재충돌로 브렌트가 다시 95달러입니다. 미국 정보 당국과 시장 서베이(로이터 8월)가 "2026년 내내 브렌트 80달러 이상"을 본다면 항공유는 크랙 스프레드 55~60달러를 더해 135~155달러가 기준선이고, 180달러 재돌파는 호르무즈 사건 하나면 충분합니다. 여섯 달에 두 번 일어난 사건의 12개월 재발 확률을 3분의 1로 둡니다.</p>
+<p><b>관측 신호.</b> 브렌트 100달러, 싱가포르 제트 크랙 60달러 이상, 유류할증료 산정유가(매월 16일 확정) 160달러 이상, 그리고 10월 국제선 할증료 25단계 이상입니다. 이 신호가 나오면 3Q 회복 경로의 절반(연료 효과 +2,700억원<span class="est">E</span>)이 사라지는 것으로 읽습니다.</p>
+
+<h2>3. 환율 — 영업이익보다 순이익을 세 배 크게 흔든다</h2>
+<p><b>메커니즘.</b> 두 경로입니다. 영업 경로는 연간 달러 부족 16억달러(연료·리스·정비 지급이 달러 매출보다 큼)로, 10원당 160억원의 현금 부담이고 원가 상승은 이보다 큽니다(연료비 환율 효과 2Q26 +1,338억원). 영업외 경로는 순외화부채 56억달러의 평가로 10원당 560억원입니다. 환율이 1,359원에서 1,500원으로 돌아가면 영업외 -7,900억원, 영업 -1,000억원<span class="est">E</span>입니다.</p>
+<p><b>확률 25%의 근거.</b> 원/달러는 7월 2일 1,555.8원에서 두 달 만에 1,359원으로 12.6% 절상됐고, 이 속도는 2009년 이후 가장 빠릅니다. 되돌림의 조건은 지정학(유가와 같은 사건)과 외국인 자금 이탈인데, 2026년 상반기의 1,500원대가 33거래일 이어졌다는 실측이 있으므로 12개월 안 재발을 4분의 1로 둡니다. 유가와 상관이 높아 리스크 1과 같은 날 옵니다.</p>
+<p><b>관측 신호.</b> 분기 말 환율(9월 30일·12월 31일), 외국인 코스피 순매도, 그리고 회사가 반기마다 갱신하는 순외화부채 잔액(56억달러 → 통합 후 아시아나 외화부채 합산으로 커질 수 있음<span class="est">E</span>).</p>
+
+<h2>4. 아시아나 — 가장 큰 기대 손실, 그리고 합병 전 마지막 분기</h2>
+<figure class=""><figcaption>장표 2. 아시아나항공 연결 자본총계 추이 — 2Q26 말 2,136억원, 한 분기 더 적자면 0에 닿는다 (억원)</figcaption><svg viewBox="0 0 880 230" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="186.0" x2="860" y2="186.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="190.0" text-anchor="end" font-size="11" fill="#8a857c">0</text>
+<line x1="62" y1="158.0" x2="860" y2="158.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="162.0" text-anchor="end" font-size="11" fill="#8a857c">2,000</text>
+<line x1="62" y1="130.0" x2="860" y2="130.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="134.0" text-anchor="end" font-size="11" fill="#8a857c">4,000</text>
+<line x1="62" y1="102.0" x2="860" y2="102.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="106.0" text-anchor="end" font-size="11" fill="#8a857c">6,000</text>
+<line x1="62" y1="74.0" x2="860" y2="74.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="78.0" text-anchor="end" font-size="11" fill="#8a857c">8,000</text>
+<line x1="62" y1="46.0" x2="860" y2="46.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="50.0" text-anchor="end" font-size="11" fill="#8a857c">10,000</text>
+<line x1="62" y1="18.0" x2="860" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">12,000</text>
+<text x="141.8" y="204" text-anchor="middle" font-size="10" fill="#8a857c">2023말</text>
+<text x="301.4" y="204" text-anchor="middle" font-size="10" fill="#8a857c">2024말</text>
+<text x="461.0" y="204" text-anchor="middle" font-size="10" fill="#8a857c">2025말</text>
+<text x="620.6" y="204" text-anchor="middle" font-size="10" fill="#8a857c">1Q26말</text>
+<text x="780.2" y="204" text-anchor="middle" font-size="10" fill="#8a857c">2Q26말</text>
+<rect x="85.9" y="33.5" width="110.7" height="152.5" fill="#a44a3f" opacity="0.9"/>
+<text x="141.8" y="29.5" text-anchor="middle" font-size="9.5" fill="#a44a3f">10,893</text>
+<rect x="245.5" y="69.9" width="110.7" height="116.1" fill="#a44a3f" opacity="0.9"/>
+<text x="301.4" y="65.9" text-anchor="middle" font-size="9.5" fill="#a44a3f">8,290</text>
+<rect x="405.1" y="69.9" width="110.7" height="116.1" fill="#a44a3f" opacity="0.9"/>
+<text x="461.0" y="65.9" text-anchor="middle" font-size="9.5" fill="#a44a3f">8,290</text>
+<rect x="564.7" y="98.9" width="110.7" height="87.1" fill="#a44a3f" opacity="0.9"/>
+<text x="620.6" y="94.9" text-anchor="middle" font-size="9.5" fill="#a44a3f">6,220</text>
+<rect x="724.3" y="156.1" width="110.7" height="29.9" fill="#a44a3f" opacity="0.9"/>
+<text x="780.2" y="152.1" text-anchor="middle" font-size="9.5" fill="#a44a3f">2,136</text>
+</svg><div class="src">자료: 반기보고서 주석 11(2Q26)·네이버 분기 재무(2025말·1Q26)·아시아나 사업보고서(2023~2024). 2025말·1Q26은 네이버 표기 기준E</div></figure>
+<p><b>메커니즘.</b> 아시아나는 2025년 -3,452억원, 2026년 상반기 -4,086억원(연결)의 영업손실을 냈고, 자본은 2Q26 말 2,136억원입니다. 손실의 절반<span class="est">E</span>은 유가·환율이고 절반<span class="est">E</span>은 구조(화물기 매각 후 벨리만 남은 수익 구조, 마일리지·통상임금)입니다. 합병 뒤에는 이 손실이 대한항공 손익 안에 통합돼 따로 보이지 않게 되고, 그것이 시장이 "손실 0"을 넣기 쉬운 이유입니다. 손실이 분기 -2,500억원으로 이어지면 2027년 연결 영업이익은 컨센(2.2조원)보다 6,000억원 낮은 1.6조원<span class="est">E</span>입니다.</p>
+<p><b>확률 35%의 근거.</b> 파트 3의 아워뷰가 2027년 아시아나 부문 -1,000억~0원이고, 그 경로가 깨질 조건은 유가 재상승(35%)과 통합 실행 지연(AOC·노조)입니다. 두 조건이 상관이 있어 합산이 아니라 35%로 둡니다. 합병 전 마지막 단독 분기인 4Q26이 첫 채점이고, 자본이 0에 닿는 것 자체는 합병으로 소멸하므로 회계 사건일 뿐 현금 사건은 아닙니다 — 다만 채권자 이의(8월 13일~9월 14일)와 차환에서 아시아나 부채의 조건이 나빠질 수 있습니다.</p>
+<p><b>관측 신호.</b> 4Q26 아시아나 연결 영업이익(2027년 2월), 통합 AOC 인가 일정, 조종사·승무원 노조 통합 협상, 그리고 합병 후 첫 분기(1Q27)에 회사가 옛 아시아나 부문을 따로 공시하는지 여부 — 따로 공시하지 않으면 채점 자체가 어려워지고, 그것이 정보 리스크입니다.</p>
+
+<h2>5. 마일리지 — 4조원짜리 부채의 값이 바뀌는 날</h2>
+<p><b>메커니즘.</b> 연결 이연수익 4조 675억원은 마일 1점당 예상 사용 가치로 평가돼 있습니다. 통합안(탑승 1:1, 제휴 1:0.82)이 승인되면 아시아나 마일이 대한항공 마일로 바뀌면서 두 가지가 일어납니다 — 전환비율이 회사 예상보다 고객에게 유리하게 확정되면 부채가 늘어 손실이 잡히고(아시아나 2025년 손실 원인 중 하나가 마일리지 부채 재측정), 통합 뒤 보너스 좌석 공급을 공정위가 관리하게 되면 마일리지 사용률이 올라 부채 소멸(매출 인식)이 늦어집니다. 반대로 승인이 늦어지면 두 제도를 따로 운영하는 비용과 고객 이탈이 생깁니다.</p>
+<p><b>확률 40%의 근거.</b> 2025년 6월 첫 제출 뒤 두 번 반려됐고 9월 25일 세 번째 수정안이 들어갑니다. 합병기일(12월 16일) 전 승인은 절반 확률<span class="est">E</span>이고, 승인이 되더라도 회사안보다 고객 유리 쪽으로 조정될 확률이 높습니다. 영향은 -1,500억원<span class="est">E</span>(재측정 손실 1,000억원 + 고객 이탈·이중 운영 500억원)이고, 회계 층에서는 영업이익이 아니라 매출 차감·기타비용으로 갈 수 있어 계정을 확인해야 합니다.</p>
+
+<h2>6. 중동 공역 — 순풍이 사라지는 리스크</h2>
+<p><b>메커니즘.</b> 2026년의 yield 프리미엄과 환승 증가(인천 상반기 +18.1%)의 일부는 중동계 3사가 인천·유럽 노선을 줄인 결과입니다. 공역이 열리고 에미레이트·카타르가 복귀하면 유럽↔아시아 환승의 일부가 도하·두바이로 돌아가고, 화물에서도 걸프 공급(-17%)이 돌아옵니다. 영향은 환승 RPK -5%<span class="est">E</span>에 yield 130원을 곱해 연 -1,500억원<span class="est">E</span>이고, 화물 쪽 -500억원<span class="est">E</span>을 더하면 -2,000억원<span class="est">E</span>입니다.</p>
+<p><b>확률 50%의 근거.</b> 이것은 리스크이자 '전쟁이 끝나는' 좋은 사건의 뒷면입니다. 12개월 안에 공역이 열릴 확률을 절반으로 두는 것은 4월 8일 휴전·6월 MOU·9월 1일 재충돌이라는 궤적이 어느 쪽으로도 갈 수 있기 때문이고, 열리면 유가(리스크 1)는 반대로 좋아집니다. 즉 이 리스크는 유가 리스크와 부호가 반대라 포트폴리오 안에서 상쇄되고, 순영향은 유가 하락 효과가 더 크므로 '공역 재개'는 전체로는 플러스 사건입니다. 그럼에도 여객 yield 채점(파트 1)에서는 되돌림으로 잡히므로 따로 적습니다.</p>
+
+<h2>7. 나머지 넷 — 등급·경영권·안전·기재</h2>
+<p><b>신용등급(20%).</b> A0(긍정적)는 2026년 8월 공모채 발행에서 확인된 등급이고, 연결 부채비율 390.7%·이자보상배율 0.66배(상반기)는 등급 유지 조건의 경계입니다. 다만 통합 뒤 아시아나 부채가 대한항공 등급으로 차환되는 것이 시너지의 몸통이라, 하향은 시너지의 크기를 직접 깎습니다. 3Q 별도 영업이익 5,000억원대 회복이면 이자보상배율이 1배 위로 돌아오므로 12개월 확률을 20%로 둡니다. 신호는 부채비율 400% 지속과 정기평정(2027년 상반기).</p>
+<p><b>한진칼 경영권(30%).</b> 조원태 측 20.56% 대 호반 20.15%이고, 합병 완료 뒤 산업은행 10.56%의 처리가 방아쇠입니다. 대한항공 손익에는 직접 닿지 않지만 통합 실행(인력·기재·브랜드 결정)의 속도를 늦출 수 있고, 한진칼 주가(9월 3일 -3.8%)가 그 불안을 먼저 반영합니다. 확률 30%는 산업은행이 2027년 안에 지분을 움직일 가능성이고, 영향은 의사결정 지연 비용 -500억원<span class="est">E</span>으로 작게 둡니다 — 이 리스크의 본질은 손익이 아니라 지배주주 교체 가능성이라는 거버넌스 사건입니다.</p>
+<p><b>안전사고(5%).</b> 확률은 낮지만 영향이 가장 큽니다. 2025년 12월 시행된 규정으로 사망 사고 항공사는 1년간 국제선 운수권 배분에서 빠지고, 통합 직후 두 회사의 정비·운항 체계가 섞이는 시기가 역사적으로 사고 위험이 높은 국면입니다. 영향 -8,000억원<span class="est">E</span>은 운수권 1년 배제(신규 노선 상실)와 브랜드·수요 타격을 합친 자릿수이고, 관측 신호는 국토부 안전 감사 결과와 통합 AOC 심사입니다.</p>
+<p><b>기재 인도·정비(40%).</b> 보잉 777X 인증 지연으로 A380 운용이 2030년 이후까지 늘어나고, GTF 엔진(A321neo) 지상 계류가 세계적으로 600~800대입니다. 대한항공에는 두 방향입니다 — 공급을 못 늘려 매출 성장이 0에 묶이는 손해와, 산업 전체가 같은 병목이라 운임이 유지되는 이익입니다. 순영향을 -1,000억원<span class="est">E</span>으로 작게 두는 이유이고, 확률 40%는 2027년 인도 일정 가운데 일부 지연이 거의 확실하다는 뜻입니다. 정비비(기타 계정)가 튀는지가 신호입니다.</p>
+
+<h2>8. 하방의 자 — 과거 실측 낙폭과 배수 밴드</h2>
+<figure class=""><figcaption>장표 3. 이 종목의 과거 큰 조정 네 번 — 고점 대비 낙폭(%)</figcaption><svg viewBox="0 0 880 240" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="196.0" x2="860" y2="196.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="200.0" text-anchor="end" font-size="11" fill="#8a857c">-40%</text>
+<line x1="62" y1="151.5" x2="860" y2="151.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="155.5" text-anchor="end" font-size="11" fill="#8a857c">-30%</text>
+<line x1="62" y1="107.0" x2="860" y2="107.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="111.0" text-anchor="end" font-size="11" fill="#8a857c">-20%</text>
+<line x1="62" y1="62.5" x2="860" y2="62.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="66.5" text-anchor="end" font-size="11" fill="#8a857c">-10%</text>
+<line x1="62" y1="18.0" x2="860" y2="18.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">0%</text>
+<text x="161.8" y="214" text-anchor="middle" font-size="10" fill="#8a857c">2021-05→08 (화물 정점)</text>
+<text x="361.2" y="214" text-anchor="middle" font-size="10" fill="#8a857c">2022-03→10 (이익 정점·디레이팅)</text>
+<text x="560.8" y="214" text-anchor="middle" font-size="10" fill="#8a857c">2025-04→11 (화물 정상화·연결 첫 적자)</text>
+<text x="760.2" y="214" text-anchor="middle" font-size="10" fill="#8a857c">2026-06→07 (2Q 연결 적자·유가 재상승)</text>
+<rect x="91.9" y="18.0" width="138.6" height="111.2" fill="#3a6ea5" opacity="0.9"/>
+<text x="161.8" y="140.2" text-anchor="middle" font-size="9.5" fill="#3a6ea5">-25</text>
+<rect x="291.4" y="18.0" width="138.6" height="164.7" fill="#3a6ea5" opacity="0.9"/>
+<text x="361.2" y="193.7" text-anchor="middle" font-size="9.5" fill="#3a6ea5">-37</text>
+<rect x="490.9" y="18.0" width="138.6" height="93.5" fill="#3a6ea5" opacity="0.9"/>
+<text x="560.8" y="122.5" text-anchor="middle" font-size="9.5" fill="#3a6ea5">-21</text>
+<rect x="690.4" y="18.0" width="138.6" height="75.7" fill="#3a6ea5" opacity="0.9"/>
+<text x="760.2" y="104.7" text-anchor="middle" font-size="9.5" fill="#3a6ea5">-17</text>
+</svg><div class="src">자료: 키움 일봉(수정주가). 2021년 8월 저점은 주봉 기준 작성자 추정E, 나머지는 일봉 실측</div></figure>
+<p class="reading"><b>관찰.</b> 1) 네 번의 조정은 -17%에서 -37%까지였고, 가장 깊은 2022년(-37%)은 화물 이익이 정점을 찍은 뒤의 디레이팅이었습니다. 2) 2025년 -21%는 화물 정상화와 연결 첫 적자(3Q25)가 겹친 국면입니다. 3) 2026년 6~7월 -17%는 2Q 연결 적자·유가 재상승·환율 1,556원이 겹친 국면입니다. <b>원인.</b> 이 종목의 큰 조정은 이익 자체보다 '이익의 방향이 바뀌는 순간의 배수 되돌림'에서 났습니다. 배수는 2023~2025년 박스에서 PBR 0.76~0.93배였습니다. <b>함의.</b> 지금 PBR 1.02배(BPS 28,464원)가 박스로 돌아가면 22,000~26,500원{E}이고, 현재가 대비 -9%~-25%입니다. 2Q26형 분기 적자가 재현되고 통합 서사가 소진되는 경우가 그 자리이며, 과거 네 번의 낙폭 중앙값(-23%)과 맞습니다. 이것은 목표가 아니라 자입니다 — 허브 판정의 '접는 조건'이 실현됐을 때 어디까지 갈 수 있는지를 과거가 말해 줍니다.</p>
+
+<h2>9. 뷰를 접는 조건 — 한 곳에 모아</h2>
+<table><tr><th>논쟁</th><th>접는 조건</th><th>관측 시점</th></tr>
+<tr><td>1. 3Q26 별도 영업이익 5,000억원대 회복</td><td>3Q 별도 영업이익 3,500억원 미만, 또는 항공유 180달러 재돌파가 분기 내 4주 이상</td><td>10월 중순 잠정실적 · 주간 유가</td></tr>
+<tr><td>2. 아시아나 통합은 플러스(2027E 1.9조~2.0조원)</td><td>4Q26 아시아나 영업손실 -2,500억원 초과, 또는 1Q27 통합 연결 영업이익이 옛 별도 추정 미달, 또는 마일리지 승인 2027년 하반기 이후</td><td>2027년 2월·5월 · 공정위 의결</td></tr>
+<tr><td>3. 화물 yield 620~660원 유지</td><td>3Q 화물 yield 550원 미만, 또는 BAI 전년비 +10% 하회 지속</td><td>10월 중순 · 주간 BAI</td></tr>
+<tr><td>4. 여객 yield 130~135원·2027년 128~132원</td><td>3Q 국제선 yield 125원 미만, 또는 두 분기 연속 전년비 마이너스, 또는 1Q27 yield 124원 미만</td><td>10월 중순 · 2027년 4~5월</td></tr>
+<tr><td>전체(세 변수 동시 악화)</td><td>유가 180달러·환율 1,500원·아시아나 -2,500억원이 한 분기에 겹치면 2Q26형 연결 적자 재현 — 판정 보류</td><td>분기 말 세 지표 동시 확인</td></tr>
+</table>
+<div class="src">자료: 파트 1~5 반증 조건 집약. 허브 논쟁 카드와 같은 값</div>
+
+<h2>10. 이 파트가 논쟁에 주는 답 — 그리고 아직 못 주는 답</h2>
+<p>이 파트가 허브에 보태는 것은 리스크의 순위와 상관입니다. 기대 손실 순위는 아시아나 손실 장기화(-2,100억원<span class="est">E</span>) > 유가 재상승(-1,400억원<span class="est">E</span>) > 환율(-2,200억원<span class="est">E</span>, 영업외 포함) > 중동 공역 재개(-750억원<span class="est">E</span>) > AI 화물 종료(-625억원<span class="est">E</span>) 순이고, 앞의 셋이 같은 사건(지정학)에 묶여 있어 분산이 되지 않습니다. 그래서 이 종목의 리스크 관리는 열 개를 따로 보는 것이 아니라 '호르무즈 지표 하나'를 보는 것에 가깝고, 그 지표가 나쁠 때의 자는 PBR 박스 0.76~0.93배(22,000~26,500원<span class="est">E</span>)입니다. 반대로 공역 재개는 리스크 목록에 있지만 전체로는 플러스 사건이며, 그때는 유가 리스크가 먼저 사라집니다.</p>
+<p>아직 답하지 못한 것들을 미결로 남깁니다. ①확률 열 개가 전부 작성자 설정E입니다 — 2026년 실측 빈도(개전·휴전·재충돌)와 일정으로 뒀지만 검증 수단이 없습니다(구조적 한계, 분기마다 재설정). ②통합 후 순외화부채 규모(B급 — 아시아나 외화부채 합산 시 56억달러가 얼마로 커지는지, 통합 후 첫 반기보고서). ③등급 유지 조건의 정확한 수치(B급 — 신용평가 보고서 원문). ④마일리지 재측정이 손익의 어느 계정으로 가는지(B급 — 아시아나 2025 사업보고서 주석). ⑤안전 규제 페널티의 실제 적용 사례와 운수권 배제의 매출 환산(C급 — 2025년 12월 규정 시행 이후 사례 없음).</p>
+
+<p class="foot">파트 6 끝. 다음 파트: 파트 7 밸류에이션·조정 모델 총괄판. 이 파트가 허브에 보태는 항목: 리스크 매트릭스 10종(영향×확률)·기대 손실 순위·세 변수 동시 악화 확률 20~25%E·하방 자(PBR 0.76~0.93배 = 22,000~26,500원E)·뷰 접는 조건 통합표, 미결 5건. 작성 Claude · 검증: 산술 검산(민감도 = 회사 공시값 × 변동폭, 기대 손실 = 확률 × 영향, 배수 자 = BPS × 밴드) 완료</p>
+
+</main></body></html>
