@@ -1,0 +1,257 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="coverage" content="valuation,model,debate">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>헥토파이낸셜 파트 7 — 밸류에이션·조정 모델 · 2026-09-04</title>
+<style>
+body{margin:0;background:#faf8f4;color:#3a3630;font-family:'Noto Serif KR','Apple SD Gothic Neo','Malgun Gothic',serif;line-height:1.78;word-break:keep-all}
+main{max-width:920px;margin:0 auto;padding:44px 28px 80px}
+h1{font-size:23px;margin:0 0 6px;line-height:1.35} .sub{color:#8a857c;font-size:13px;margin-bottom:10px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;line-height:1.6}
+h2{font-size:17.5px;margin:36px 0 8px;padding-top:16px;border-top:1px solid #e3ded4}
+h3{font-size:15px;margin:22px 0 6px}
+p{max-width:700px;font-size:15px;margin:0 0 1.25em}
+p.reading{font-size:14px;color:#4a463f;background:#f4f0e8;border-radius:6px;padding:10px 14px;max-width:700px}
+figure{margin:14px 0 6px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px}
+figcaption{font-size:13px;font-weight:600;margin-bottom:8px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+svg{width:100%;height:auto;display:block}
+.src{font-size:11.5px;color:#8a857c;margin-top:6px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+table{border-collapse:collapse;font-size:13px;margin:10px 0 16px;font-family:Pretendard,'Apple SD Gothic Neo',-apple-system,sans-serif;background:#fff}
+td,th{border:1px solid #e0dbd0;padding:5px 10px;text-align:right;vertical-align:top} td:first-child,th:first-child{text-align:left} th{background:#f1ede4;font-weight:600;color:#5a5650}
+.gloss{display:grid;grid-template-columns:160px 1fr;gap:6px 14px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px;font-size:13.5px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;max-width:740px;line-height:1.55}
+.gloss b{font-size:13px}
+.judge{background:#f1ede4;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.ourview{background:#eef2f7;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.panel{background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px 16px;max-width:700px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;font-size:14px;margin:12px 0 18px}
+.panel input[type=range]{width:100%}
+.panel .out{margin-top:8px;font-weight:700}
+.panel .note{color:#8a857c;font-size:12.5px;margin-top:6px}
+.est{font-size:.72em;vertical-align:super;color:#a44a3f;font-weight:700}
+.foot{font-size:12px;color:#8a857c;max-width:700px;margin-top:30px;border-top:1px solid #e3ded4;padding-top:12px}
+.segdive{border:1px solid #e0dbd0;border-radius:8px;padding:6px 18px 4px;margin:14px 0 20px;background:#fdfcf9}
+.leadchain{background:#fff8ea;border:1px solid #e8d9b5;border-radius:6px;padding:12px 16px;max-width:700px;font-size:14px}
+.hubnav{font-size:12.5px;color:#8a857c;font-family:Pretendard,sans-serif;margin-bottom:14px}
+.hubnav a{color:#1f3a5f}
+a{color:#1f3a5f}
+@media print{.panel input{display:none}}
+</style></head><body><main>
+
+<div class="hubnav">헥토파이낸셜 파트제 커버리지 · <a href="헥토파이낸셜_허브.html">허브(판정·상수 블록·논쟁 지도)</a> · 파트 0 / 1 / 2 / 3 / 4 / 5 / 6 / <b>7</b></div>
+<h1>헥토파이낸셜 파트 7 — 밸류에이션·조정 모델 총괄판: 본업의 자와 옵션의 잔여</h1>
+<p class="sub">작성 2026-09-04 · 주가 25,600원(9-04 종가) · 시총 3,576억원 · $1 = ₩1,358.5 · 12월 결산(2026년 = 제27기) · 다음 실적 3Q26 잠정 2026년 11월 초<span class="est">E</span> · 숫자의 정본은 허브 상수 블록이며 이 파트는 인용만 합니다 · 논쟁 4(시총 3,576억에 옵션이 얼마나 들어 있는가)의 본문 · 이 파트는 목표주가·시나리오 주가·확률가중 가치를 싣지 않습니다</p>
+
+<div class="judge"><b>이 파트의 답.</b> 시총 3,576억원을 두 조각으로 나눕니다. 본업의 자는 2026E Base 순이익 192억원<span class="est">E</span>에 PG 피어 상단과 인프라 피어 하단 사이의 배수 12~15배<span class="est">E</span>를 곱한 2,040~3,225억원<span class="est">E</span>이고, Base(13.5배)는 2,590억원<span class="est">E</span>입니다. 시총에서 그것을 뺀 잔여 990억원<span class="est">E</span>(시총의 28%)이 시장이 스테이블코인·토큰증권 옵션에 붙인 값입니다. 파트 2의 조정판이 2027년 CPN 매출을 10~30억원<span class="est">E</span>으로 놓았으니, 잔여 990억원은 그 매출의 30~100배<span class="est">E</span>이고 '매출'이 아니라 '규제가 풀렸을 때 헥토가 정산 층에 서 있을 권리'의 값입니다. 우리는 이 권리의 값이 0은 아니되 시장이 매긴 것보다 작다고 보며(파트 3: 발행·유통이 아닌 정산 하청), 근거는 2027E 함의 PER Base 14.9배<span class="est">E</span>가 성장주 배수가 아니라는 것과, 7월 30일 시총 2,111억원(옵션 0에 가까운 좌표)이 실측으로 존재한다는 것입니다. 이 판단을 접는 조건은 본업 이익이 컨센을 20% 이상 밑도는 것이며, 그때는 옵션 논의 자체가 무의미해집니다.</div>
+
+<h2>1. 컨센 지형 — 여덟 개의 2026E 영업이익</h2>
+<figure class=""><figcaption>장표 1. 2026E 연결 영업이익 — 하우스별 추정과 우리 하단·Base·상단(억원)</figcaption><svg viewBox="0 0 880 260" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="216.0" x2="860" y2="216.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="220.0" text-anchor="end" font-size="11" fill="#8a857c">0</text>
+<line x1="62" y1="183.0" x2="860" y2="183.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="187.0" text-anchor="end" font-size="11" fill="#8a857c">50</text>
+<line x1="62" y1="150.0" x2="860" y2="150.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="154.0" text-anchor="end" font-size="11" fill="#8a857c">100</text>
+<line x1="62" y1="117.0" x2="860" y2="117.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="121.0" text-anchor="end" font-size="11" fill="#8a857c">150</text>
+<line x1="62" y1="84.0" x2="860" y2="84.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="88.0" text-anchor="end" font-size="11" fill="#8a857c">200</text>
+<line x1="62" y1="51.0" x2="860" y2="51.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="55.0" text-anchor="end" font-size="11" fill="#8a857c">250</text>
+<line x1="62" y1="18.0" x2="860" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">300</text>
+<text x="111.9" y="234" text-anchor="middle" font-size="10" fill="#8a857c">유진 3-23</text>
+<text x="211.6" y="234" text-anchor="middle" font-size="10" fill="#8a857c">iM 3-09</text>
+<text x="311.4" y="234" text-anchor="middle" font-size="10" fill="#8a857c">유진 5-08</text>
+<text x="411.1" y="234" text-anchor="middle" font-size="10" fill="#8a857c">iM 8-31</text>
+<text x="510.9" y="234" text-anchor="middle" font-size="10" fill="#8a857c">네이버 컨센 9-04</text>
+<text x="610.6" y="234" text-anchor="middle" font-size="10" fill="#8a857c">우리 하단</text>
+<text x="710.4" y="234" text-anchor="middle" font-size="10" fill="#8a857c">우리 Base</text>
+<text x="810.1" y="234" text-anchor="middle" font-size="10" fill="#8a857c">우리 상단</text>
+<rect x="77.0" y="89.3" width="68.8" height="126.7" fill="#d8d4cc" opacity="0.9"/>
+<text x="111.9" y="85.3" text-anchor="middle" font-size="9.5" fill="#d8d4cc">192</text>
+<rect x="176.7" y="62.9" width="68.8" height="153.1" fill="#d8d4cc" opacity="0.9"/>
+<text x="211.6" y="58.9" text-anchor="middle" font-size="9.5" fill="#d8d4cc">232</text>
+<rect x="276.5" y="30.5" width="68.8" height="185.5" fill="#d8d4cc" opacity="0.9"/>
+<text x="311.4" y="26.5" text-anchor="middle" font-size="9.5" fill="#d8d4cc">281</text>
+<rect x="376.2" y="47.0" width="68.8" height="169.0" fill="#d8d4cc" opacity="0.9"/>
+<text x="411.1" y="43.0" text-anchor="middle" font-size="9.5" fill="#d8d4cc">256</text>
+<rect x="476.0" y="44.4" width="68.8" height="171.6" fill="#d8d4cc" opacity="0.9"/>
+<text x="510.9" y="40.4" text-anchor="middle" font-size="9.5" fill="#d8d4cc">260</text>
+<rect x="575.7" y="64.2" width="68.8" height="151.8" fill="#d8d4cc" opacity="0.9"/>
+<text x="610.6" y="60.2" text-anchor="middle" font-size="9.5" fill="#d8d4cc">230</text>
+<rect x="675.5" y="54.3" width="68.8" height="161.7" fill="#d8d4cc" opacity="0.9"/>
+<text x="710.4" y="50.3" text-anchor="middle" font-size="9.5" fill="#d8d4cc">245</text>
+<rect x="775.2" y="24.6" width="68.8" height="191.4" fill="#d8d4cc" opacity="0.9"/>
+<text x="810.1" y="20.6" text-anchor="middle" font-size="9.5" fill="#d8d4cc">290</text>
+</svg><div class="src">자료: 유진투자증권 3-23·5-08, iM증권 3-09·8-31, 신한 5-07(뉴스 인용), 네이버 컨센 9-04(추정기관 2곳). 빈티지 2026-09-04</div></figure>
+<table class=""><tr><th>하우스(날짜)</th><th>2026E 매출</th><th>2026E 영업이익</th><th>2026E 순이익·EPS</th><th>2027E</th><th>핵심 전제</th></tr><tr><td>유진 박종선(3-23)</td><td>2,134</td><td>192</td><td>EPS 1,084</td><td>—</td><td>간편 +72%, 종속 편입</td></tr><tr><td>iM 이상헌(3-09)</td><td>2,132</td><td>232</td><td>178 / 1,288</td><td>—</td><td>내통장결제 수익성</td></tr><tr><td>유진(5-08)</td><td>2,183</td><td>281</td><td>—</td><td>2,420 / 323</td><td>1Q 서프라이즈 반영, 2Q 505/46</td></tr><tr><td>신한 김유민(5-07)</td><td>—</td><td>—</td><td>EPS 1,706</td><td>—</td><td>수익 구조 전환(저마진 PG→고마진)</td></tr><tr><td>iM(8-31)</td><td>2,213</td><td>256</td><td>—</td><td>—</td><td>본업 개선+스테이블코인 가시화</td></tr><tr><td>네이버 컨센(9-04, 2곳)</td><td>2,223</td><td>260</td><td>207 / 1,537</td><td>—</td><td>하반기 분기 61억</td></tr><tr><td>우리 하단</td><td>2,100</td><td>230</td><td>170</td><td>2,200 / 250</td><td>간편 116억 고착</td></tr><tr><td>우리 Base</td><td>2,170</td><td>245</td><td>192</td><td>2,350 / 300</td><td>간편 150억 부분 재개</td></tr><tr><td>우리 상단</td><td>2,250</td><td>290</td><td>215</td><td>2,500 / 340</td><td>완전 재개·크로스보더 지속</td></tr></table>
+<p class="src">단위 억원. 우리 추정<span class="est">E</span>의 전제는 파트 1·5의 조정판(간편현금결제 분기 매출·원가율·PG·고정비 층)입니다.</p>
+<p class="reading"><b>관찰.</b> 2026E 영업이익 추정은 3월 192억원(유진)에서 5월 281억원(유진, 1분기 서프라이즈 뒤)으로 올랐다가 8월 256억원(iM)으로 내려왔고, 네이버 컨센은 260억원입니다. 추정기관이 2곳뿐이라 컨센은 '두 하우스의 평균'이며, 신한의 EPS 1,706원은 컨센(1,537원)보다 11% 높습니다. <b>원인.</b> 3월 추정은 2025년 실적(156억원)의 연장이었고, 5월 추정은 1분기 91억원을 연간화한 것이었으며, 8월 추정은 2분기 46억원을 반영해 그 중간으로 돌아온 것입니다. 하우스들이 하반기에 분기 60억원 안팎을 놓고 있다는 점에서 우리 Base(245억원{E})와 같은 자리입니다. <b>함의.</b> 컨센 260억원이 성립하려면 하반기 분기 61억원이 필요하고, 그것은 파트 5 조정판에서 간편 155억원·원가율 31%{E}입니다. 우리 Base가 컨센보다 15억원 낮은 것은 부분 재개(150억원)를 전제하기 때문이고, 상단 290억원은 완전 재개입니다. 컨센 반영률로 말하면 시장은 이미 '부분 재개'를 값에 넣었고 '완전 재개'는 넣지 않았습니다.</p>
+
+<h2>2. 함의 배수 — 시총을 이익으로 나누면</h2>
+<figure class=""><figcaption>장표 2. 함의 PER 사다리 — 시총 3,576억을 각 순이익으로 나눈 값(배)</figcaption><svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="206.0" x2="860" y2="206.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="210.0" text-anchor="end" font-size="11" fill="#8a857c">0.0</text>
+<line x1="62" y1="159.0" x2="860" y2="159.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="163.0" text-anchor="end" font-size="11" fill="#8a857c">10.0</text>
+<line x1="62" y1="112.0" x2="860" y2="112.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="116.0" text-anchor="end" font-size="11" fill="#8a857c">20.0</text>
+<line x1="62" y1="65.0" x2="860" y2="65.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="69.0" text-anchor="end" font-size="11" fill="#8a857c">30.0</text>
+<line x1="62" y1="18.0" x2="860" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">40.0</text>
+<text x="128.5" y="224" text-anchor="middle" font-size="10" fill="#8a857c">2025A</text>
+<text x="261.5" y="224" text-anchor="middle" font-size="10" fill="#8a857c">2026E 하단</text>
+<text x="394.5" y="224" text-anchor="middle" font-size="10" fill="#8a857c">2026E Base</text>
+<text x="527.5" y="224" text-anchor="middle" font-size="10" fill="#8a857c">2026E 컨센</text>
+<text x="660.5" y="224" text-anchor="middle" font-size="10" fill="#8a857c">2026E 상단</text>
+<text x="793.5" y="224" text-anchor="middle" font-size="10" fill="#8a857c">2027E Base</text>
+<rect x="82.0" y="25.0" width="92.1" height="180.9" fill="#1f3a5f" opacity="0.9"/>
+<text x="128.5" y="21.0" text-anchor="middle" font-size="9.5" fill="#1f3a5f">38.5</text>
+<rect x="214.9" y="107.3" width="92.1" height="98.7" fill="#1f3a5f" opacity="0.9"/>
+<text x="261.5" y="103.3" text-anchor="middle" font-size="9.5" fill="#1f3a5f">21.0</text>
+<rect x="347.9" y="118.6" width="92.1" height="87.4" fill="#1f3a5f" opacity="0.9"/>
+<text x="394.5" y="114.6" text-anchor="middle" font-size="9.5" fill="#1f3a5f">18.6</text>
+<rect x="480.9" y="124.7" width="92.1" height="81.3" fill="#1f3a5f" opacity="0.9"/>
+<text x="527.5" y="120.7" text-anchor="middle" font-size="9.5" fill="#1f3a5f">17.3</text>
+<rect x="614.0" y="128.0" width="92.1" height="78.0" fill="#1f3a5f" opacity="0.9"/>
+<text x="660.5" y="124.0" text-anchor="middle" font-size="9.5" fill="#1f3a5f">16.6</text>
+<rect x="747.0" y="136.0" width="92.1" height="70.0" fill="#1f3a5f" opacity="0.9"/>
+<text x="793.5" y="132.0" text-anchor="middle" font-size="9.5" fill="#1f3a5f">14.9</text>
+</svg><div class="src">자료: 키움 시총 9-04, 순이익은 2025A 실측(지배 93억)과 우리 추정E. 빈티지 2026-09-04</div></figure>
+<table class=""><tr><th>자</th><th>값</th><th>계산</th><th>읽기</th></tr><tr><td>함의 PER 2025A</td><td>38.5배</td><td>3,576 ÷ 93억</td><td>실적 기준으로는 성장주 배수</td></tr><tr><td>함의 PER 2026E 컨센</td><td>17.3배</td><td>3,576 ÷ 207억</td><td>PG 피어(6~14배) 위, 인프라 피어(14~28배) 안</td></tr><tr><td>함의 PER 2026E Base</td><td>18.6배</td><td>3,576 ÷ 192억<span class="est">E</span></td><td>우리 Base</td></tr><tr><td>함의 PER 2027E Base</td><td>14.9배</td><td>3,576 ÷ 240억<span class="est">E</span></td><td>2027년 성장 25%{E} 반영</td></tr><tr><td>PBR</td><td>1.9배</td><td>3,576 ÷ 자본 1,872억</td><td>2023~2025 박스 0.8~1.7배 위</td></tr><tr><td>EV/영업이익 2026E</td><td>10.5배</td><td>(3,576 − 순금융자산 850<span class="est">E</span>) ÷ 260</td><td>예수금 제외 후</td></tr><tr><td>본업 자 하단~상단</td><td>2,040~3,225억{E}</td><td>PER 12~15{E} × 순이익 170~215{E}</td><td>시총의 57~90%</td></tr><tr><td>잔여(옵션 값)</td><td>350~1,540억{E}</td><td>3,576 − 본업 자</td><td>Base 기준 990억{E} = 시총의 28%</td></tr></table>
+<p class="reading"><b>관찰.</b> 2025년 실적으로 38배, 2026E 컨센으로 17.3배, 우리 Base로 18.6배, 2027E Base로 14.9배입니다. PBR은 1.9배, 예수금을 제외한 EV/영업이익은 10.5배입니다. <b>원인.</b> 2025년 순이익이 88억원(지배 93억원)으로 영업이익 156억원보다 훨씬 작았던 것은 4분기 영업외 손실 때문이고, 2026년은 상반기 순이익이 110억원으로 이미 2025년 연간을 넘었습니다. 그래서 2025A 배수는 이 회사의 값을 말하지 않고, 2026E 배수가 첫 의미 있는 자입니다. <b>함의.</b> 17~19배는 카드 PG 피어(NHN KCP 11.4·KG이니시스 5.7·한국정보통신 8.2배)보다 높고 정산·API 인프라 피어(쿠콘 14.3·더즌 21.4·갤럭시아 28.2배)의 가운데입니다. 시장은 헥토를 PG가 아니라 인프라로 값 매기고 있으며, 그 위에 옵션을 얹었습니다.</p>
+
+<h2>3. 피어 산점 — 어느 그룹의 배수인가</h2>
+<figure class=""><figcaption>장표 3. 피어 12종 — PER(가로)과 영업이익률(세로)</figcaption><svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62.0" y1="20" x2="62.0" y2="276" stroke="#d8d4cc" stroke-width="0.7"/><text x="62.0" y="292" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 0배</text>
+<line x1="219.6" y1="20" x2="219.6" y2="276" stroke="#d8d4cc" stroke-width="0.7"/><text x="219.6" y="292" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 10배</text>
+<line x1="377.2" y1="20" x2="377.2" y2="276" stroke="#d8d4cc" stroke-width="0.7"/><text x="377.2" y="292" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 20배</text>
+<line x1="534.8" y1="20" x2="534.8" y2="276" stroke="#d8d4cc" stroke-width="0.7"/><text x="534.8" y="292" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 30배</text>
+<line x1="692.4" y1="20" x2="692.4" y2="276" stroke="#d8d4cc" stroke-width="0.7"/><text x="692.4" y="292" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 40배</text>
+<line x1="850.0" y1="20" x2="850.0" y2="276" stroke="#d8d4cc" stroke-width="0.7"/><text x="850.0" y="292" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 50배</text>
+<line x1="62" y1="276.0" x2="850" y2="276.0" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="280.0" text-anchor="end" font-size="10.5" fill="#8a857c">OPM 0%</text>
+<line x1="62" y1="202.9" x2="850" y2="202.9" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="206.9" text-anchor="end" font-size="10.5" fill="#8a857c">OPM 10%</text>
+<line x1="62" y1="129.7" x2="850" y2="129.7" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="133.7" text-anchor="end" font-size="10.5" fill="#8a857c">OPM 20%</text>
+<line x1="62" y1="56.6" x2="850" y2="56.6" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="60.6" text-anchor="end" font-size="10.5" fill="#8a857c">OPM 30%</text>
+<circle cx="334.6" cy="190.4" r="7" fill="#1f3a5f" opacity="0.85"/>
+<text x="334.6" y="180.4" text-anchor="middle" font-size="10" fill="#1f3a5f">헥토파이낸셜 26E</text>
+<circle cx="241.7" cy="246.0" r="5" fill="#8a857c" opacity="0.85"/>
+<text x="241.7" y="236.0" text-anchor="middle" font-size="10" fill="#8a857c">NHN KCP</text>
+<circle cx="151.8" cy="224.8" r="5" fill="#8a857c" opacity="0.85"/>
+<text x="151.8" y="214.8" text-anchor="middle" font-size="10" fill="#8a857c">KG이니시스</text>
+<circle cx="534.8" cy="254.1" r="5" fill="#8a857c" opacity="0.85"/>
+<text x="534.8" y="244.1" text-anchor="middle" font-size="10" fill="#8a857c">다날</text>
+<circle cx="191.2" cy="236.5" r="5" fill="#8a857c" opacity="0.85"/>
+<text x="191.2" y="201.8" text-anchor="middle" font-size="10" fill="#8a857c">한국정보통신</text>
+<circle cx="287.4" cy="71.2" r="5" fill="#2b7a78" opacity="0.85"/>
+<text x="287.4" y="61.2" text-anchor="middle" font-size="10" fill="#2b7a78">쿠콘</text>
+<circle cx="399.3" cy="110.0" r="5" fill="#2b7a78" opacity="0.85"/>
+<text x="399.3" y="100.0" text-anchor="middle" font-size="10" fill="#2b7a78">더즌</text>
+<circle cx="151.8" cy="44.9" r="5" fill="#2b7a78" opacity="0.85"/>
+<text x="151.8" y="34.9" text-anchor="middle" font-size="10" fill="#2b7a78">코나아이</text>
+<circle cx="506.4" cy="172.1" r="5" fill="#b07d2b" opacity="0.85"/>
+<text x="506.4" y="162.1" text-anchor="middle" font-size="10" fill="#b07d2b">갤럭시아머니트리</text>
+<circle cx="810.6" cy="179.5" r="5" fill="#b07d2b" opacity="0.85"/>
+<text x="810.6" y="169.5" text-anchor="middle" font-size="10" fill="#b07d2b">카카오페이</text>
+<circle cx="246.4" cy="256.3" r="5" fill="#b07d2b" opacity="0.85"/>
+<text x="246.4" y="223.0" text-anchor="middle" font-size="10" fill="#b07d2b">아이티센글로벌</text>
+<circle cx="180.2" cy="180.2" r="5" fill="#8a857c" opacity="0.85"/>
+<text x="180.2" y="170.2" text-anchor="middle" font-size="10" fill="#8a857c">헥토이노베이션</text>
+<text x="850" y="32" text-anchor="end" font-size="10.5" fill="#8a857c">가로 = PER(컨센 있으면 26E, 없으면 TTM) · 세로 = 최근 연간(2025 또는 26E) 영업이익률 · 회색 = 카드 PG, 청록 = 정산·API 인프라, 황토 = 스테이블코인 테마</text>
+</svg><div class="src">자료: 네이버 integration·annual 9-04(PER은 컨센 있으면 26E, 없으면 TTM), 영업이익률은 2025 또는 26E. 빈티지 2026-09-04</div></figure>
+<p class="reading"><b>관찰.</b> 카드 PG 그룹(회색)은 PER 6~11배·이익률 3~7%, 인프라 그룹(청록)은 PER 6~21배·이익률 23~32%, 스테이블코인 테마 그룹(황토)은 PER 12~48배·이익률 3~14%입니다. 헥토(17.3배·11.7%)는 세 그룹 어디에도 정확히 속하지 않고, 인프라 그룹의 배수에 PG 그룹의 이익률을 갖고 있습니다. <b>원인.</b> 이익률이 인프라 그룹의 절반인데 배수가 인프라 그룹인 것은 2026년 상반기 이익률 12.8%(1분기 15.9%)가 인프라 쪽으로 가고 있다는 기대와 스테이블코인 옵션 둘의 합입니다. 코나아이(5.7배·31.6%)처럼 이익률이 높아도 배수가 낮은 종목이 있다는 것은 시장이 이익률만으로 배수를 주지 않는다는 뜻입니다. <b>함의.</b> 헥토의 배수가 어느 그룹으로 수렴하는지는 논쟁 1(이익률이 15%에 정착하는가)이 정합니다. 15%면 인프라 그룹의 배수가 본업만으로 정당화되고 옵션은 덤이 되며, 9%면 PG 그룹 상단(11배)이 본업의 자가 되어 옵션 값이 시총의 절반{E}까지 커집니다. 우리 Base 13.5배는 그 중간이고, 이 파트의 잔여 990억원{E}은 그 배수의 함수입니다.</p>
+
+<h2>4. 시총 분해 — 본업의 자와 잔여</h2>
+<figure class=""><figcaption>장표 4. 시총 3,576억의 분해 — 본업 자 세 좌표(억원)와 순금융자산</figcaption><svg viewBox="0 0 880 260" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="216.0" x2="860" y2="216.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="220.0" text-anchor="end" font-size="11" fill="#8a857c">0</text>
+<line x1="62" y1="166.5" x2="860" y2="166.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="170.5" text-anchor="end" font-size="11" fill="#8a857c">1,000</text>
+<line x1="62" y1="117.0" x2="860" y2="117.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="121.0" text-anchor="end" font-size="11" fill="#8a857c">2,000</text>
+<line x1="62" y1="67.5" x2="860" y2="67.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="71.5" text-anchor="end" font-size="11" fill="#8a857c">3,000</text>
+<line x1="62" y1="18.0" x2="860" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">4,000</text>
+<text x="141.8" y="234" text-anchor="middle" font-size="10" fill="#8a857c">본업 하단(PER 12 × 170억)</text>
+<text x="301.4" y="234" text-anchor="middle" font-size="10" fill="#8a857c">본업 Base(PER 13.5 × 192억)</text>
+<text x="461.0" y="234" text-anchor="middle" font-size="10" fill="#8a857c">본업 상단(PER 15 × 215억)</text>
+<text x="620.6" y="234" text-anchor="middle" font-size="10" fill="#8a857c">순금융자산</text>
+<text x="780.2" y="234" text-anchor="middle" font-size="10" fill="#8a857c">현재 시총</text>
+<rect x="85.9" y="115.0" width="110.7" height="101.0" fill="#1f3a5f" opacity="0.9"/>
+<text x="141.8" y="111.0" text-anchor="middle" font-size="9.5" fill="#1f3a5f">2,040</text>
+<rect x="245.5" y="87.8" width="110.7" height="128.2" fill="#1f3a5f" opacity="0.9"/>
+<text x="301.4" y="83.8" text-anchor="middle" font-size="9.5" fill="#1f3a5f">2,590</text>
+<rect x="405.1" y="56.4" width="110.7" height="159.6" fill="#1f3a5f" opacity="0.9"/>
+<text x="461.0" y="52.4" text-anchor="middle" font-size="9.5" fill="#1f3a5f">3,225</text>
+<rect x="564.7" y="173.9" width="110.7" height="42.1" fill="#1f3a5f" opacity="0.9"/>
+<text x="620.6" y="169.9" text-anchor="middle" font-size="9.5" fill="#1f3a5f">850</text>
+<rect x="724.3" y="39.0" width="110.7" height="177.0" fill="#1f3a5f" opacity="0.9"/>
+<text x="780.2" y="35.0" text-anchor="middle" font-size="9.5" fill="#1f3a5f">3,576</text>
+</svg><div class="src">자료: 파트 0(순금융자산 850억E = 현금·단기금융 4,096 − 정산부채 3,190 − 차입 100 + 회사 몫 조정E), 순이익 170~215억E × PER 12~15배E. 빈티지 2026-09-04</div></figure>
+<p>본업의 자는 세 좌표입니다. 하단은 간편현금결제 116억원이 고착될 때의 순이익 170억원<span class="est">E</span>에 PG 그룹 상단 12배<span class="est">E</span>를 곱한 2,040억원<span class="est">E</span>, Base는 부분 재개 192억원<span class="est">E</span>에 13.5배<span class="est">E</span>를 곱한 2,590억원<span class="est">E</span>, 상단은 완전 재개 215억원<span class="est">E</span>에 인프라 그룹 하단 15배<span class="est">E</span>를 곱한 3,225억원<span class="est">E</span>입니다. 시총 3,576억원은 상단 위에 있으므로, 완전 재개를 넣어도 350억원<span class="est">E</span>, Base로는 990억원<span class="est">E</span>, 하단으로는 1,540억원<span class="est">E</span>이 옵션의 잔여입니다.</p>
+<p>이 잔여를 순금융자산(850억원<span class="est">E</span>, 예수금 제외)으로 설명할 수 있는가 하면, Base 기준으로는 거의 그렇습니다(990 대 850). 즉 '시총 = 본업 Base × 13.5배 + 회사 몫 현금'으로 읽으면 옵션 값은 140억원<span class="est">E</span>에 불과합니다. 다만 이 회사의 현금은 정산 예수금과 섞여 있고 회사 몫 850억원<span class="est">E</span> 자체가 추정이라, 우리는 순금융자산을 자에 더하지 않고 옵션 잔여의 '설명 가능한 부분'으로만 적어 둡니다. 두 읽기를 합치면, 시총이 옵션에 매긴 값은 140~990억원<span class="est">E</span>이고 그 값이 파트 2 조정판의 2027년 CPN 매출(10~30억원<span class="est">E</span>)에 비해 크다는 결론은 두 읽기 모두에서 같습니다.</p>
+
+<h2>5. 컨센 반영률 여덟 가지 — 시장이 이미 넣은 것과 안 넣은 것</h2>
+<table>
+<tr><th>항목</th><th>시장(컨센·주가)이 넣은 것</th><th>우리 읽기</th><th>반영률</th></tr>
+<tr><td>중단 서비스 재개</td><td>부분(하반기 분기 61억)</td><td>부분(Base 59~61억)</td><td>반영됨</td></tr>
+<tr><td>완전 재개(1분기 91억 복귀)</td><td>미반영</td><td>확률 30%<span class="est">E</span></td><td>미반영 — 상방</td></tr>
+<tr><td>크로스보더 성장(기타 분기 60→70억)</td><td>일부</td><td>2027년 지속</td><td>절반</td></tr>
+<tr><td>CPN 상용 개시</td><td>배수에 반영(잔여 990억<span class="est">E</span>)</td><td>2027년 매출 10~30억<span class="est">E</span></td><td>과잉 반영</td></tr>
+<tr><td>기본법 연내 통과</td><td>주가 5막(+69%)에 부분 반영</td><td>확률 40%<span class="est">E</span></td><td>절반</td></tr>
+<tr><td>토스·카카오 CPN 등재(선점 소멸)</td><td>미반영</td><td>확률 45%<span class="est">E</span></td><td>미반영 — 하방</td></tr>
+<tr><td>4분기 영업외 손실</td><td>컨센 순이익 207억은 미반영</td><td>-20~-30억<span class="est">E</span></td><td>미반영 — 하방</td></tr>
+<tr><td>토큰증권 1단계 가상계좌 수요</td><td>9-04 급등에 과잉 반영</td><td>가상계좌 연간 매출의 10%<span class="est">E</span></td><td>과잉 반영</td></tr>
+</table>
+<p>여덟 항목 중 시장이 과잉 반영한 것이 둘(CPN·토큰증권), 미반영한 상방이 하나(완전 재개), 미반영한 하방이 둘(선점 소멸·영업외)입니다. 순으로 놓으면 시장은 옵션을 후하게, 본업 상방을 박하게 세고 있습니다. 이것이 판정의 요지이고, 3분기 실적(11월 초)이 이 표의 첫 행을 채점합니다.</p>
+
+<h2>5-1. 옵션 잔여의 역사 — 다섯 시점의 시총 분해</h2>
+<table>
+<tr><th>시점</th><th>주가</th><th>시총(억)</th><th>그때의 12개월 순이익 기대<span class="est">E</span></th><th>본업 자(13.5배<span class="est">E</span>)</th><th>잔여(옵션)</th><th>잔여/시총</th></tr>
+<tr><td>2025-04-04 저점</td><td>8,295</td><td>1,160</td><td>90(2024 실적)</td><td>1,215</td><td>-55</td><td>0%</td></tr>
+<tr><td>2025-06-24 1차 랠리 고점</td><td>21,922</td><td>3,060</td><td>110(2025E 당시)</td><td>1,485</td><td>1,575</td><td>51%</td></tr>
+<tr><td>2026-03-17 천장</td><td>45,000</td><td>6,287</td><td>178(iM 3-09)</td><td>2,400</td><td>3,887</td><td>62%</td></tr>
+<tr><td>2026-07-30 바닥</td><td>14,180</td><td>1,981</td><td>207(컨센)</td><td>2,795</td><td>-814</td><td>0%</td></tr>
+<tr><td>2026-09-04</td><td>25,600</td><td>3,576</td><td>192(우리 Base)</td><td>2,590</td><td>990</td><td>28%</td></tr>
+</table>
+<p class="src">시총은 수정주가 × 현재 주식 수(무상증자 반영). 순이익 기대는 각 시점의 컨센 또는 직전 실적(작성자 선택E). 7월 바닥의 잔여가 음수인 것은 시장이 본업 이익도 컨센 아래로 봤다는 뜻입니다.</p>
+<p class="reading"><b>관찰.</b> 옵션 잔여는 2025년 4월 0, 6월 1,575억원(51%), 2026년 3월 3,887억원(62%), 7월 -814억원, 9월 990억원(28%)으로 오갔습니다. 본업 자는 같은 기간 1,215억원에서 2,590억원으로 두 배가 됐습니다. <b>원인.</b> 잔여의 진폭(-800~+3,900억원)이 본업 자의 변화(+1,400억원)의 세 배입니다. 이 종목의 시총 변동은 대부분 옵션 잔여의 변동이었고, 본업 자는 그 아래서 꾸준히 올라왔습니다. <b>함의.</b> 판정의 요지가 이 표에 있습니다. 본업 자는 2년에 두 배가 된 실재하는 값이고, 옵션 잔여는 규제 뉴스로 0과 4,000억원 사이를 오가는 값입니다. 우리가 '옵션은 과잉이되 본업은 저평가'라고 말할 때 뜻하는 것은, 시장이 다음 규제 뉴스에서 잔여를 다시 0으로 보내더라도 본업 자 2,590억원{E}(18,600원{E})은 남는다는 것입니다.</p>
+
+<h2>5-2. 모회사 경유의 밸류 — 헥토이노베이션 할인</h2>
+<p>헥토이노베이션(214180)은 헥토파이낸셜 38.50%(시총 기준 1,377억원)와 헥토월렛원 47.15%(취득가 929억원)를 갖고, 자체 사업(본인인증·데이터·헬스케어)으로 2025년 별도 영업이익 303억원을 냈습니다. 시총은 1,931억원(9-04), PER 7.5배, PBR 0.82배입니다. 즉 헥토이노베이션의 시총은 헥토파이낸셜 지분 가치의 1.4배에 불과하고, 자체 사업 영업이익 300억원과 헥토월렛원을 거의 0으로 셉니다. 스테이블코인 옵션이 헥토파이낸셜에는 990억원<span class="est">E</span>으로 붙고 헥토이노베이션(지갑·VASP를 직접 가진 회사)에는 붙지 않은 것은 시장이 '스테이블코인 = 헥토파이낸셜'로 이름을 붙였기 때문이며, 파트 2가 보인 대로 CPN 구조에서 이익의 일부는 헥토월렛원 몫입니다. 같은 옵션을 사려면 헥토이노베이션 쪽이 배수가 낮다는 것은 사실이지만, 이 킷은 헥토파이낸셜의 판정이므로 그것을 매매 의견이 아니라 '옵션 값이 계열 안에서 한 회사에 몰려 있다'는 관찰로만 적어 둡니다.</p>
+
+<h2>6. EPS 사다리와 주식 수</h2>
+<p>발행주식 1,397만 주에서 자사주 18.3만 주를 뺀 1,379만 주가 EPS의 분모입니다. 컨센 EPS 1,537원에 분모를 곱하면 212억원으로 컨센 순이익 207억원과 맞으니 컨센은 유통주식 기준입니다. 우리 Base 순이익 192억원<span class="est">E</span>은 EPS 1,390원<span class="est">E</span>, 하단 170억원은 1,230원<span class="est">E</span>, 상단 215억원은 1,560원<span class="est">E</span>, 2027E Base 240억원은 1,740원<span class="est">E</span>입니다. RSU 2차 부여는 시총 1조 5,000억원 조건이라 지금 분모에 넣지 않지만, 조건이 채워지는 세계에서는 1~2%<span class="est">E</span>의 희석이 따라옵니다. 배당은 2025년 220원(배당성향 32.2%)이고 회사가 매년 1%포인트 이상 상향을 말했으므로, 2026년 순이익 192억원<span class="est">E</span>에 33%<span class="est">E</span>면 주당 460원<span class="est">E</span>, 시가배당률 1.8%<span class="est">E</span>입니다.</p>
+
+<h2>7. 논쟁 4 — 시총 3,576억에 옵션이 얼마나 들어 있는가</h2>
+<p><b>주장.</b> Base 기준 990억원<span class="est">E</span>(28%), 완전 재개를 넣어도 350억원<span class="est">E</span>, 회사 몫 현금을 자에 더하면 140억원<span class="est">E</span>입니다. 어느 읽기로도 2027년 CPN 매출 10~30억원<span class="est">E</span>보다 크고, 그 크기의 근거는 매출이 아니라 '규제가 풀리면 정산 층에 서 있을 권리'입니다. 우리는 그 권리가 실재하되(파트 3) 시장이 '허브'로 읽은 만큼은 아니라고 봅니다.</p>
+<p><b>근거 1 — 배수의 자리.</b> 2027E Base 함의 PER 14.9배<span class="est">E</span>는 성장주 배수가 아닙니다. 옵션이 크게 들어 있다면 2027년 이익으로도 20배<span class="est">E</span> 위에 있어야 하고, 그렇지 않다는 것은 시장이 옵션을 '크게'가 아니라 '있게' 넣었다는 뜻입니다. 즉 옵션 값은 과잉이되 거품은 아닙니다.</p>
+<p><b>근거 2 — 실측 좌표 둘.</b> 7월 30일 시총 2,111억원은 컨센 순이익의 10배이자 우리 하단 자(2,040억원<span class="est">E</span>) 근처였습니다. 옵션이 0에 가까웠던 날이 두 달 전에 있었다는 것은 옵션 값이 규제 뉴스 하나로 0과 1,000억원<span class="est">E</span> 사이를 오간다는 뜻입니다. 3월 17일 시총 6,287억원은 옵션 3,700억원<span class="est">E</span>이었습니다.</p>
+<p><b>근거 3 — 옵션의 상한.</b> 파트 2 조정판의 상한(40억달러·100bp·100% 귀속)으로 매출 326억원<span class="est">E</span>, 영업이익률 60%면 196억원<span class="est">E</span>입니다. 이것이 5년 뒤<span class="est">E</span>의 상한이라면 지금 값으로 1,000억원<span class="est">E</span> 안팎이 상한의 현재가치이고, 시장의 Base 잔여 990억원<span class="est">E</span>은 '상한을 확실한 것으로 세는' 값입니다.</p>
+<p><b>반대 논거.</b> 규제가 연내 통과되고 헥토가 컨소시엄 파트너십을 공식화하면 시장은 옵션을 다시 3,000억원대<span class="est">E</span>로 매길 수 있습니다(3월 실측). 또 본업 이익률이 15%에 정착하면 본업 자 자체가 인프라 배수(15~20배<span class="est">E</span>)로 올라가 잔여가 0이 되면서도 시총은 유지됩니다. 즉 우리가 '과잉'이라 부른 잔여는 논쟁 1이 상단으로 풀리면 사라지는 과잉입니다.</p>
+<p><b>채점.</b> 본업 이익이 컨센(영업이익 260억원)의 ±10% 안이면 유지, -10~-20%면 경보, -20% 이상 미달이면 옵션 논의를 접고 본업 자로만 봅니다. 잔여의 크기는 매 분기 이 표를 다시 계산해 갱신합니다.</p>
+
+<h2>8. 조정판 — 변수 6종 총괄</h2>
+<div class="panel"><b>조정판 — 변수 6종에서 2026E·2027E 순이익과 함의 PER까지</b><br><br>
+2026 하반기 간편현금결제 분기 매출(억원) <span id="a_v">150</span><br><input type="range" id="a" min="100" max="200" step="5" value="150"><br>
+간편현금결제 원가율(%) <span id="b_v">32</span><br><input type="range" id="b" min="24" max="42" step="1" value="32"><br>
+하반기 PG 분기 매출(억원) <span id="c_v">240</span><br><input type="range" id="c" min="200" max="300" step="5" value="240"><br>
+하반기 그 밖의 영업비용 분기(억원) <span id="d_v">185</span><br><input type="range" id="d" min="150" max="220" step="5" value="185"><br>
+2027년 영업이익 성장률(%) <span id="e_v">22</span><br><input type="range" id="e" min="-10" max="60" step="2" value="22"><br>
+2027년 CPN·스테이블코인 매출(억원, 영업이익률 60%) <span id="f_v">15</span><br><input type="range" id="f" min="0" max="150" step="5" value="15"><br>
+<div class="out">2026E 영업이익 <span id="o1">—</span>억 · 순이익 <span id="o2">—</span>억(세율 26%) · 함의 PER <span id="o3">—</span>배 | 2027E 영업이익 <span id="o4">—</span>억 · 순이익 <span id="o5">—</span>억 · 함의 PER <span id="o6">—</span>배 · 본업 자(PER 13.5<span class="est">E</span>) 대비 시총 잔여 <span id="o7">—</span>억</div>
+<div class="note">식: 하반기 분기 영업이익 = 간편(1−원가율) + PG×0.15 + 기타 기여 125<span class="est">E</span> − 고정비. 2026E = 상반기 실측 137.5 + 하반기 2분기. 2027E = 2026E × (1+성장률) + CPN 매출 × 60%. 순이익 = 영업이익 × 0.74(영업외 0 가정). 함의 PER = 시총 3,576억 ÷ 순이익. 잔여 = 시총 − 2026E 순이익 × 13.5. 파트 1·2·5의 조정판과 같은 변수·같은 식이며, 목표주가는 계산하지 않습니다.</div>
+<script>
+(function(){var ids=["a","b","c","d","e","f"];function f(){var a=+document.getElementById("a").value,b=+document.getElementById("b").value,c=+document.getElementById("c").value,d=+document.getElementById("d").value,e=+document.getElementById("e").value,g=+document.getElementById("f").value;ids.forEach(function(i){document.getElementById(i+"_v").textContent=document.getElementById(i).value});var q=a*(1-b/100)+c*0.15+125-d;var op26=137.5+2*q;var ni26=op26*0.74;var op27=op26*(1+e/100)+g*0.6;var ni27=op27*0.74;var M=3576;document.getElementById("o1").textContent=op26.toFixed(0);document.getElementById("o2").textContent=ni26.toFixed(0);document.getElementById("o3").textContent=(M/ni26).toFixed(1);document.getElementById("o4").textContent=op27.toFixed(0);document.getElementById("o5").textContent=ni27.toFixed(0);document.getElementById("o6").textContent=(M/ni27).toFixed(1);document.getElementById("o7").textContent=(M-ni26*13.5).toFixed(0);}ids.forEach(function(i){document.getElementById(i).addEventListener("input",f)});f();})();
+</script></div>
+
+<h2>8-1. 조정판의 세 가지 사용 예</h2>
+<p><b>첫째, 컨센을 재현하기.</b> 간편 155·원가율 31·PG 240·고정비 185·성장률 22·CPN 15를 넣으면 2026E 영업이익 261억원, 순이익 193억원, 함의 PER 18.5배가 나옵니다. 컨센 260억원이 '부분 재개보다 조금 나은 하반기'를 전제한다는 것을 슬라이더로 확인할 수 있습니다. <b>둘째, 2분기 반복.</b> 간편 116·원가율 37·나머지 그대로면 2026E 영업이익 229억원, 순이익 170억원, 함의 PER 21배이고, 잔여(시총 − 순이익 × 13.5)는 1,280억원<span class="est">E</span>으로 커집니다. 본업이 약해지면 같은 시총에서 옵션 값이 커진다는 것, 즉 시장이 그 시총을 유지하려면 옵션을 더 믿어야 한다는 것이 이 계산의 뜻입니다. <b>셋째, 완전 재개와 CPN 상한.</b> 간편 180·원가율 26·성장률 30·CPN 150을 넣으면 2027E 영업이익 460억원<span class="est">E</span>, 순이익 340억원<span class="est">E</span>, 함의 PER 10.5배<span class="est">E</span>입니다. 이것이 3월 17일 시총 6,287억원이 전제했던 세계이고, 그 세계에서도 2027E PER은 18배<span class="est">E</span>였다는 점(6,287 ÷ 340)에서 3월의 값이 얼마나 앞서 있었는지가 드러납니다. 세 사용 예의 공통점은 어느 경우에도 슬라이더가 '목표주가'를 내지 않는다는 것이며, 이 킷은 함의 배수와 잔여만 보여 주고 값의 판단은 읽는 분께 둡니다.</p>
+
+<h2>8-2. 갱신 규칙</h2>
+<p>이 파트의 숫자는 세 시점에 바뀝니다. 11월 초 3분기 잠정실적이 나오면 하반기 슬라이더 기본값(간편 150·원가율 32)을 실측으로 바꾸고 2026E 하단·Base·상단을 다시 놓습니다. 12월 9일 정기국회가 끝나면 시나리오 확률(연내 40%<span class="est">E</span>)을 결과로 바꾸고 옵션 잔여의 '시간 가치' 문단을 다시 씁니다. 2027년 2월 결산이 나오면 2025A 행을 2026A로 밀고 2027E를 첫 의미 있는 자로 옮깁니다. 컨센 표본이 2곳에서 늘어나면(신한·iM·유진 외 신규 커버) 컨센 지형 장표를 다시 그립니다. 피어 배수는 분기마다 네이버 integration에서 갱신하며, 인프라 그룹(쿠콘·더즌·코나아이) 표본이 작다는 미결은 그때도 남습니다.</p>
+
+<h2>9. 미결</h2>
+<p>A급: 컨센의 표본(추정기관 2곳)과 2027E 컨센 부재 · 회사 몫 순금융자산의 정확한 크기(예수금 분리 공시 없음). B급: 피어 PER의 기준 시점 혼재(26E 대 TTM) · 인프라 그룹 배수의 타당성(쿠콘·더즌·코나아이 3종은 표본이 작음) · RSU 2차 희석률. C급: 배당성향 상향의 공식 정책화 여부 · 자사주 처분 계획의 세부.</p>
+<div class="foot">데이터 계보: 네이버 finance(컨센·피어), 키움 ka10001(시총·주식 수), DART 반기보고서(자본·자사주), 증권사 추정은 뉴스 인용(이데일리 3-23·5-08, 머니투데이 4-13·5-07·8-31, 아시아경제 8-10). 우리 추정·배수·잔여는 전부 작성자 계산<span class="est">E</span>이며 목표주가가 아닙니다. 투자 권유가 아닙니다.</div>
+
+</main></body></html>

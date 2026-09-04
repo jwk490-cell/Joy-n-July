@@ -1,0 +1,421 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="coverage" content="finsnap,stock,valuation">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스테이블코인·토큰증권 파트 3 — 종목 스크리닝 30종 · 2026-09-04</title>
+<style>
+body{margin:0;background:#faf8f4;color:#3a3630;font-family:'Noto Serif KR','Apple SD Gothic Neo','Malgun Gothic',serif;line-height:1.78;word-break:keep-all}
+main{max-width:920px;margin:0 auto;padding:44px 28px 80px}
+h1{font-size:23px;margin:0 0 6px;line-height:1.35} .sub{color:#8a857c;font-size:13px;margin-bottom:10px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;line-height:1.6}
+h2{font-size:17.5px;margin:36px 0 8px;padding-top:16px;border-top:1px solid #e3ded4}
+h3{font-size:15px;margin:22px 0 6px}
+p{max-width:700px;font-size:15px;margin:0 0 1.25em}
+p.reading{font-size:14px;color:#4a463f;background:#f4f0e8;border-radius:6px;padding:10px 14px;max-width:700px}
+figure{margin:14px 0 6px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px}
+figcaption{font-size:13px;font-weight:600;margin-bottom:8px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+svg{width:100%;height:auto;display:block}
+.src{font-size:11.5px;color:#8a857c;margin-top:6px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+table{border-collapse:collapse;font-size:13px;margin:10px 0 16px;font-family:Pretendard,'Apple SD Gothic Neo',-apple-system,sans-serif;background:#fff}
+td,th{border:1px solid #e0dbd0;padding:5px 10px;text-align:right;vertical-align:top} td:first-child,th:first-child{text-align:left} th{background:#f1ede4;font-weight:600;color:#5a5650}
+.gloss{display:grid;grid-template-columns:160px 1fr;gap:6px 14px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px;font-size:13.5px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;max-width:740px;line-height:1.55}
+.gloss b{font-size:13px}
+.judge{background:#f1ede4;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.ourview{background:#eef2f7;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.panel{background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px 16px;max-width:700px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;font-size:14px;margin:12px 0 18px}
+.panel input[type=range]{width:100%}
+.panel .out{margin-top:8px;font-weight:700}
+.panel .note{color:#8a857c;font-size:12.5px;margin-top:6px}
+.est{font-size:.72em;vertical-align:super;color:#a44a3f;font-weight:700}
+.foot{font-size:12px;color:#8a857c;max-width:700px;margin-top:30px;border-top:1px solid #e3ded4;padding-top:12px}
+.segdive{border:1px solid #e0dbd0;border-radius:8px;padding:6px 18px 4px;margin:14px 0 20px;background:#fdfcf9}
+.leadchain{background:#fff8ea;border:1px solid #e8d9b5;border-radius:6px;padding:12px 16px;max-width:700px;font-size:14px}
+.hubnav{font-size:12.5px;color:#8a857c;font-family:Pretendard,sans-serif;margin-bottom:14px}
+.hubnav a{color:#1f3a5f}
+a{color:#1f3a5f}
+@media print{.panel input{display:none}}
+</style></head><body><main>
+
+<div class="hubnav">스테이블코인·토큰증권 국내 종목 파트제 · <a href="스테이블코인_토큰증권_허브.html">허브(판정·상수 블록·논쟁 지도)</a> · 파트 0 / 1 / 2 / <b>3</b> / 4 · 종목 킷: <a href="../헥토파이낸셜/헥토파이낸셜_허브.html">헥토파이낸셜 허브</a></div>
+<h1>파트 3 — 종목 스크리닝 30종: 실체 등급 × 본업 배수 × 고점 대비</h1>
+<p class="sub">작성 2026-09-04 · 코스닥 801.2 · $1 = ₩1,358.5 · 시총·PER·PBR은 키움 ka10001(9-04 종가, PER은 TTM), 2025 실적은 키움 기본정보(연결) · 숫자의 정본은 허브 상수 블록이며 이 파트는 인용만 합니다 · 이 파트는 매매 추천이 아니라 스크리닝 표이며 목표주가를 싣지 않습니다</p>
+
+<div class="judge"><b>이 파트의 답.</b> 30종을 실체 등급(A 실행 12·B 계약 8·C 선언 8·D 미확인 4)과 본업 배수(PER·영업이익률)와 고점 대비 낙폭으로 놓으면, '등급 A·B이면서 PER 15배 이하·영업이익률 5% 이상'인 스크린 구역에 8종이 남습니다(KG이니시스, 쿠콘, 헥토이노베이션, 한화투자증권, 우리기술투자, 코나아이, 한국정보통신, 한국정보인증). 경계에 NHN KCP(OPM 4.4%)·아이티센글로벌(3.2%)이 있고, 헥토파이낸셜(PER 38배 TTM, 컨센 17배)·카카오페이(141배)·다날(적자)·갤럭시아(29배)는 밖입니다. 테마 12종 동일가중 지수는 2025년 초 100에서 191(2025-06)·172(2026-03)·100(2026-07)·144(9-04)를 지났고 코스닥은 같은 기간 118입니다. 30종 전부가 2025년 6월 이후 고점 대비 -20~-66%이며, 3차 반등(8월 24일 이후)은 1개월 +7~78%로 다시 회전율이 높은 소형주부터 올랐습니다. 스크리닝의 결론은 '규제 이벤트를 사려면 등급 A 소형 정산주, 법 통과 뒤 이익을 보려면 스크린 구역의 중형주, 은행주는 이 테마의 도구가 아님'입니다.</div>
+
+<h2>1. 테마 지수 — 세 번의 봉우리</h2>
+<figure class=""><figcaption>장표 1. 스테이블코인 12종 동일가중 지수와 코스닥(2025-01-02 = 100)</figcaption><svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="256.0" x2="730" y2="256.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="260.0" text-anchor="end" font-size="11" fill="#8a857c">50</text>
+<line x1="62" y1="222.0" x2="730" y2="222.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="226.0" text-anchor="end" font-size="11" fill="#8a857c">75</text>
+<line x1="62" y1="188.0" x2="730" y2="188.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="192.0" text-anchor="end" font-size="11" fill="#8a857c">100</text>
+<line x1="62" y1="154.0" x2="730" y2="154.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="158.0" text-anchor="end" font-size="11" fill="#8a857c">125</text>
+<line x1="62" y1="120.0" x2="730" y2="120.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="124.0" text-anchor="end" font-size="11" fill="#8a857c">150</text>
+<line x1="62" y1="86.0" x2="730" y2="86.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="90.0" text-anchor="end" font-size="11" fill="#8a857c">175</text>
+<line x1="62" y1="52.0" x2="730" y2="52.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="56.0" text-anchor="end" font-size="11" fill="#8a857c">200</text>
+<line x1="62" y1="18.0" x2="730" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">225</text>
+<text x="62.0" y="274" text-anchor="middle" font-size="10" fill="#8a857c">25.01</text>
+<text x="130.9" y="274" text-anchor="middle" font-size="10" fill="#8a857c">25.03</text>
+<text x="199.9" y="274" text-anchor="middle" font-size="10" fill="#8a857c">25.05</text>
+<text x="268.8" y="274" text-anchor="middle" font-size="10" fill="#8a857c">25.07</text>
+<text x="337.7" y="274" text-anchor="middle" font-size="10" fill="#8a857c">25.09</text>
+<text x="406.7" y="274" text-anchor="middle" font-size="10" fill="#8a857c">25.11</text>
+<text x="475.6" y="274" text-anchor="middle" font-size="10" fill="#8a857c">26.01</text>
+<text x="544.5" y="274" text-anchor="middle" font-size="10" fill="#8a857c">26.03</text>
+<text x="613.5" y="274" text-anchor="middle" font-size="10" fill="#8a857c">26.05</text>
+<text x="682.4" y="274" text-anchor="middle" font-size="10" fill="#8a857c">26.07</text>
+<text x="730.0" y="274" text-anchor="middle" font-size="10" fill="#8a857c">26.09</text>
+<polyline points="62.0,188.0 63.6,180.2 65.3,175.9 66.9,179.2 68.6,181.7 70.2,186.5 71.8,186.1 73.5,188.8 75.1,187.3 76.8,187.0 78.4,186.3 80.1,187.1 81.7,188.0 83.3,188.5 85.0,187.2 86.6,189.9 88.3,190.6 89.9,189.2 91.5,193.5 93.2,188.4 94.8,182.5 96.5,182.7 98.1,183.4 99.7,183.3 101.4,183.8 103.0,185.3 104.7,184.7 106.3,184.0 108.0,180.5 109.6,180.3 111.2,179.0 112.9,178.2 114.5,180.3 116.2,181.4 117.8,182.5 119.4,177.9 121.1,179.5 122.7,184.1 124.4,188.8 126.0,186.4 127.7,184.5 129.3,186.9 130.9,186.0 132.6,187.4 134.2,187.1 135.9,186.9 137.5,185.8 139.1,185.6 140.8,184.9 142.4,185.8 144.1,187.9 145.7,189.3 147.3,189.7 149.0,191.2 150.6,189.5 152.3,191.0 153.9,193.1 155.6,197.9 157.2,193.2 158.8,194.1 160.5,193.9 162.1,191.3 163.8,189.3 165.4,187.5 167.0,188.7 168.7,183.9 170.3,182.8 172.0,180.5 173.6,184.2 175.2,184.5 176.9,182.8 178.5,179.4 180.2,176.3 181.8,179.1 183.5,178.1 185.1,179.9 186.7,180.5 188.4,174.1 190.0,171.7 191.7,174.7 193.3,178.0 194.9,172.4 196.6,172.9 198.2,175.3 199.9,174.0 201.5,174.6 203.1,174.6 204.8,176.8 206.4,178.1 208.1,183.6 209.7,183.0 211.4,182.6 213.0,183.1 214.6,182.1 216.3,181.4 217.9,180.6 219.6,177.8 221.2,176.4 222.8,178.8 224.5,176.2 226.1,168.6 227.8,159.1 229.4,132.8 231.1,124.3 232.7,118.6 234.3,120.8 236.0,117.9 237.6,106.8 239.3,111.4 240.9,95.6 242.5,94.6 244.2,84.0 245.8,79.6 247.5,64.9 249.1,76.7 250.7,97.7 252.4,98.7 254.0,108.4 255.7,95.7 257.3,105.6 259.0,105.0 260.6,98.8 262.2,82.9 263.9,81.5 265.5,67.7 267.2,53.6 268.8,54.5 270.4,67.2 272.1,75.5 273.7,66.8 275.4,75.4 277.0,72.3 278.6,76.7 280.3,74.5 281.9,79.9 283.6,88.1 285.2,73.1 286.9,79.3 288.5,82.4 290.1,87.8 291.8,86.4 293.4,102.6 295.1,96.8 296.7,95.6 298.3,95.5 300.0,88.4 301.6,87.1 303.3,88.3 304.9,90.7 306.6,93.8 308.2,93.4 309.8,92.9 311.5,92.2 313.1,101.6 314.8,101.4 316.4,98.9 318.0,93.9 319.7,101.7 321.3,103.8 323.0,106.0 324.6,104.8 326.2,103.5 327.9,105.2 329.5,109.0 331.2,107.0 332.8,111.0 334.5,111.4 336.1,106.8 337.7,98.6 339.4,99.7 341.0,92.1 342.7,94.0 344.3,97.7 345.9,102.1 347.6,94.6 349.2,77.6 350.9,84.5 352.5,92.8 354.1,92.9 355.8,77.9 357.4,74.1 359.1,72.1 360.7,82.2 362.4,89.4 364.0,88.7 365.6,86.7 367.3,95.5 368.9,93.8 370.6,91.0 372.2,96.0 373.8,105.1 375.5,102.5 377.1,102.2 378.8,101.2 380.4,103.2 382.0,104.9 383.7,102.2 385.3,101.8 387.0,101.9 388.6,110.9 390.3,111.7 391.9,114.9 393.5,114.6 395.2,117.7 396.8,116.4 398.5,121.7 400.1,114.8 401.7,121.9 403.4,109.2 405.0,107.8 406.7,114.0 408.3,115.8 410.0,124.1 411.6,123.4 413.2,117.9 414.9,121.3 416.5,122.1 418.2,127.3 419.8,123.2 421.4,125.3 423.1,121.2 424.7,122.1 426.4,124.0 428.0,122.4 429.6,124.6 431.3,124.7 432.9,124.5 434.6,125.0 436.2,121.7 437.9,121.0 439.5,118.7 441.1,122.2 442.8,130.8 444.4,130.7 446.1,132.2 447.7,126.8 449.3,120.5 451.0,121.9 452.6,125.6 454.3,128.1 455.9,125.4 457.5,128.6 459.2,122.7 460.8,121.7 462.5,119.0 464.1,126.7 465.8,131.5 467.4,127.3 469.0,127.9 470.7,126.3 472.3,126.9 474.0,126.5 475.6,131.4 477.2,133.9 478.9,126.2 480.5,134.5 482.2,132.6 483.8,87.8 485.4,69.7 487.1,64.5 488.7,79.2 490.4,67.8 492.0,71.7 493.7,76.3 495.3,65.2 496.9,62.8 498.6,72.4 500.2,84.7 501.9,69.7 503.5,72.0 505.1,79.7 506.8,78.4 508.4,80.3 510.1,75.1 511.7,73.4 513.4,75.3 515.0,79.3 516.6,87.6 518.3,77.4 519.9,79.4 521.6,92.7 523.2,125.7 524.8,93.7 526.5,89.6 528.1,98.4 529.8,88.6 531.4,89.5 533.0,90.0 534.7,88.8 536.3,89.8 538.0,86.5 539.6,87.5 541.3,90.4 542.9,82.2 544.5,95.4 546.2,108.7 547.8,110.4 549.5,118.1 551.1,115.1 552.7,123.8 554.4,131.1 556.0,121.1 557.7,134.4 559.3,132.3 560.9,119.8 562.6,128.1 564.2,115.0 565.9,117.3 567.5,107.2 569.2,106.5 570.8,99.1 572.4,76.9 574.1,62.5 575.7,70.5 577.4,61.1 579.0,63.7 580.6,62.0 582.3,62.0 583.9,66.2 585.6,65.8 587.2,66.2 588.9,67.1 590.5,72.4 592.1,65.2 593.8,47.7 595.4,59.3 597.1,63.6 598.7,53.7 600.3,60.0 602.0,66.6 603.6,65.3 605.3,86.1 606.9,91.2 608.5,98.2 610.2,105.9 611.8,99.5 613.5,86.1 615.1,81.3 616.8,97.8 618.4,106.4 620.0,107.0 621.7,110.6 623.3,117.5 625.0,120.9 626.6,126.3 628.2,142.2 629.9,133.0 631.5,138.1 633.2,136.2 634.8,131.0 636.4,127.5 638.1,126.8 639.7,126.8 641.4,134.7 643.0,142.5 644.7,145.7 646.3,159.3 647.9,158.7 649.6,161.1 651.2,171.9 652.9,158.1 654.5,162.3 656.1,160.2 657.8,168.4 659.4,165.0 661.1,166.4 662.7,170.0 664.3,175.9 666.0,176.9 667.6,167.1 669.3,174.5 670.9,176.9 672.6,170.3 674.2,174.1 675.8,181.6 677.5,180.4 679.1,179.1 680.8,167.7 682.4,174.6 684.0,170.0 685.7,180.6 687.3,187.7 689.0,187.4 690.6,176.7 692.3,173.1 693.9,164.3 695.5,162.0 697.2,162.4 698.8,165.9 700.5,153.5 702.1,152.2 703.7,152.9 705.4,153.1 707.0,150.0 708.7,158.4 710.3,163.3 711.9,148.3 713.6,149.5 715.2,143.9 716.9,137.5 718.5,141.1 720.2,142.4 721.8,129.4 723.4,136.1 725.1,133.6 726.7,140.0 728.4,142.9 730.0,128.6" fill="none" stroke="#b07d2b" stroke-width="2"/>
+<polyline points="62.0,188.0 63.6,183.9 65.3,181.2 66.9,181.2 68.6,181.2 70.2,181.2 71.8,181.2 73.5,183.9 75.1,181.2 76.8,182.6 78.4,181.2 80.1,179.8 81.7,179.8 83.3,179.8 85.0,178.5 86.6,181.2 88.3,179.8 89.9,179.8 91.5,183.9 93.2,181.2 94.8,179.8 96.5,177.1 98.1,177.1 99.7,175.8 101.4,175.8 103.0,175.8 104.7,175.8 106.3,174.4 108.0,171.7 109.6,170.3 111.2,170.3 112.9,171.7 114.5,170.3 116.2,170.3 117.8,171.7 119.4,171.7 121.1,171.7 122.7,177.1 124.4,178.5 126.0,175.8 127.7,178.5 129.3,179.8 130.9,179.8 132.6,181.2 134.2,179.8 135.9,181.2 137.5,178.5 139.1,177.1 140.8,175.8 142.4,177.1 144.1,179.8 145.7,181.2 147.3,181.2 149.0,182.6 150.6,182.6 152.3,183.9 153.9,186.6 155.6,190.7 157.2,186.6 158.8,188.0 160.5,188.0 162.1,188.0 163.8,194.8 165.4,193.4 167.0,196.2 168.7,189.4 170.3,186.6 172.0,183.9 173.6,182.6 175.2,185.3 176.9,182.6 178.5,181.2 180.2,182.6 181.8,182.6 183.5,179.8 185.1,179.8 186.7,179.8 188.4,181.2 190.0,179.8 191.7,182.6 193.3,181.2 194.9,181.2 196.6,179.8 198.2,181.2 199.9,179.8 201.5,178.5 203.1,177.1 204.8,178.5 206.4,179.8 208.1,182.6 209.7,182.6 211.4,181.2 213.0,181.2 214.6,182.6 216.3,179.8 217.9,179.8 219.6,179.8 221.2,178.5 222.8,178.5 224.5,177.1 226.1,175.8 227.8,174.4 229.4,173.0 231.1,171.7 232.7,167.6 234.3,167.6 236.0,171.7 237.6,170.3 239.3,170.3 240.9,169.0 242.5,169.0 244.2,167.6 245.8,169.0 247.5,164.9 249.1,166.2 250.7,167.6 252.4,169.0 254.0,169.0 255.7,169.0 257.3,169.0 259.0,166.2 260.6,170.3 262.2,170.3 263.9,169.0 265.5,167.6 267.2,166.2 268.8,164.9 270.4,166.2 272.1,163.5 273.7,163.5 275.4,162.2 277.0,160.8 278.6,160.8 280.3,163.5 281.9,163.5 283.6,163.5 285.2,163.5 286.9,164.9 288.5,164.9 290.1,164.9 291.8,164.9 293.4,170.3 295.1,169.0 296.7,166.2 298.3,164.9 300.0,164.9 301.6,163.5 303.3,163.5 304.9,163.5 306.6,162.2 308.2,162.2 309.8,166.2 311.5,167.6 313.1,170.3 314.8,170.3 316.4,169.0 318.0,166.2 319.7,164.9 321.3,164.9 323.0,166.2 324.6,166.2 326.2,169.0 327.9,166.2 329.5,166.2 331.2,164.9 332.8,163.5 334.5,162.2 336.1,160.8 337.7,159.4 339.4,158.1 341.0,156.7 342.7,155.4 344.3,155.4 345.9,156.7 347.6,154.0 349.2,152.6 350.9,151.3 352.5,151.3 354.1,154.0 355.8,155.4 357.4,158.1 359.1,156.7 360.7,156.7 362.4,156.7 364.0,155.4 365.6,154.0 367.3,154.0 368.9,156.7 370.6,152.6 372.2,152.6 373.8,154.0 375.5,149.9 377.1,151.3 378.8,149.9 380.4,151.3 382.0,148.6 383.7,145.8 385.3,144.5 387.0,145.8 388.6,147.2 390.3,145.8 391.9,143.1 393.5,140.4 395.2,145.8 396.8,145.8 398.5,149.9 400.1,148.6 401.7,148.6 403.4,144.5 405.0,141.8 406.7,145.8 408.3,145.8 410.0,149.9 411.6,151.3 413.2,147.2 414.9,152.6 416.5,154.0 418.2,154.0 419.8,149.9 421.4,149.9 423.1,143.1 424.7,141.8 426.4,140.4 428.0,139.0 429.6,140.4 431.3,140.4 432.9,140.4 434.6,139.0 436.2,139.0 437.9,139.0 439.5,137.7 441.1,137.7 442.8,143.1 444.4,143.1 446.1,145.8 447.7,143.1 449.3,140.4 451.0,141.8 452.6,143.1 454.3,141.8 455.9,139.0 457.5,140.4 459.2,136.3 460.8,135.0 462.5,135.0 464.1,136.3 465.8,137.7 467.4,136.3 469.0,136.3 470.7,136.3 472.3,137.7 474.0,135.0 475.6,135.0 477.2,132.2 478.9,130.9 480.5,135.0 482.2,132.2 483.8,126.8 485.4,113.2 487.1,109.1 488.7,99.6 490.4,92.8 492.0,96.9 493.7,106.4 495.3,96.9 496.9,96.9 498.6,105.0 500.2,110.5 501.9,101.0 503.5,103.7 505.1,103.7 506.8,101.0 508.4,105.0 510.1,94.2 511.7,95.5 513.4,95.5 515.0,92.8 516.6,92.8 518.3,88.7 519.9,87.4 521.6,98.2 523.2,130.9 524.8,102.3 526.5,95.5 528.1,105.0 529.8,98.2 531.4,98.2 533.0,96.9 534.7,95.5 536.3,98.2 538.0,98.2 539.6,92.8 541.3,96.9 542.9,94.2 544.5,106.4 546.2,102.3 547.8,94.2 549.5,98.2 551.1,98.2 552.7,105.0 554.4,115.9 556.0,102.3 557.7,114.6 559.3,113.2 560.9,115.9 562.6,118.6 564.2,107.8 565.9,110.5 567.5,107.8 569.2,106.4 570.8,102.3 572.4,95.5 574.1,94.2 575.7,92.8 577.4,91.4 579.0,90.1 580.6,90.1 582.3,91.4 583.9,86.0 585.6,80.6 587.2,83.3 588.9,81.9 590.5,87.4 592.1,83.3 593.8,84.6 595.4,86.0 597.1,84.6 598.7,84.6 600.3,90.1 602.0,91.4 603.6,88.7 605.3,99.6 606.9,103.7 608.5,109.1 610.2,114.6 611.8,105.0 613.5,94.2 615.1,91.4 616.8,99.6 618.4,105.0 620.0,110.5 621.7,115.9 623.3,121.4 625.0,115.9 626.6,125.4 628.2,143.1 629.9,132.2 631.5,135.0 633.2,126.8 634.8,120.0 636.4,118.6 638.1,122.7 639.7,120.0 641.4,125.4 643.0,132.2 644.7,132.2 646.3,147.2 647.9,144.5 649.6,148.6 651.2,155.4 652.9,141.8 654.5,143.1 656.1,140.4 657.8,152.6 659.4,152.6 661.1,156.7 662.7,159.4 664.3,169.0 666.0,166.2 667.6,158.1 669.3,166.2 670.9,169.0 672.6,159.4 674.2,167.6 675.8,175.8 677.5,174.4 679.1,175.8 680.8,167.6 682.4,175.8 684.0,173.0 685.7,183.9 687.3,192.1 689.0,196.2 690.6,181.2 692.3,178.5 693.9,169.0 695.5,166.2 697.2,164.9 698.8,166.2 700.5,155.4 702.1,154.0 703.7,154.0 705.4,154.0 707.0,152.6 708.7,159.4 710.3,160.8 711.9,158.1 713.6,164.9 715.2,163.5 716.9,160.8 718.5,160.8 720.2,158.1 721.8,158.1 723.4,158.1 725.1,160.8 726.7,164.9 728.4,167.6 730.0,164.9" fill="none" stroke="#8a857c" stroke-width="2"/>
+<text x="736" y="132.6" font-size="11" fill="#b07d2b">스테이블코인 12종 동일가중(2025-01-02=100) 144</text>
+<text x="736" y="168.9" font-size="11" fill="#8a857c">코스닥 117</text>
+<text x="247.5" y="52.9" text-anchor="middle" font-size="10.5" fill="#a44a3f">25-06-24 191</text>
+<text x="536.3" y="77.8" text-anchor="middle" font-size="10.5" fill="#a44a3f">26-03-16 172</text>
+<text x="689.0" y="197.4" text-anchor="middle" font-size="10.5" fill="#a44a3f">26-07-30 100</text>
+</svg><div class="src">자료: 키움 ka10081 12종(헥토·카카오페이·다날·KG이니시스·NHN KCP·갤럭시아·더즌·쿠콘·아톤·라온시큐어·드림시큐리티·핑거), 네이버 코스닥. 작성자 구성E. 빈티지 2026-09-04</div></figure>
+<p class="reading"><b>관찰.</b> 지수는 2025년 6월 24일 191(정부 출범·기본법 발의), 2026년 3월 16일 172(CPN·라이선스·서클 실적), 7월 30일 100(당국 검토·지방선거·논의 중단), 9월 4일 144(CLARITY·정무위·STO 협의체)입니다. 코스닥은 같은 기간 118로 완만히 올랐습니다. <b>원인.</b> 세 봉우리의 재료는 전부 규제·정책 기대였고 국내 법은 셋 다 없었습니다. 두 번의 되돌림(-25%, -42%)은 법안 지연의 결과였으며, 3차 반등은 미국 CLARITY와 시점이 있는 토큰증권 로드맵이 대신했습니다. <b>함의.</b> 테마 지수가 코스닥을 이긴 것은 2025년 6월 이후 1년 3개월 동안 +26%포인트인데 그 사이 최대 낙폭이 -48%(191에서 100)였습니다. 위험 조정으로는 코스닥에 뒤졌고, 이것이 '바구니'가 아니라 '스크린'이 필요한 이유입니다.</p>
+
+<h2>2. 30종 표</h2>
+<table class=""><tr><th>종목(코드)</th><th>층</th><th>등급</th><th>시총(억)</th><th>PER</th><th>PBR</th><th>2025 매출</th><th>2025 OP</th><th>OPM</th><th>YTD</th><th>1M</th><th>고점 대비</th></tr><tr><td>카카오페이(377300)</td><td>유통·발행컨소</td><td>A</td><td>63,849</td><td>140.8</td><td>3.36</td><td>9,584</td><td>504</td><td>5.3%</td><td>-4%</td><td>8%</td><td>-59%</td></tr><tr><td>NHN KCP(060250)</td><td>정산</td><td>A</td><td>6,325</td><td>14.0</td><td>2.02</td><td>12,349</td><td>547</td><td>4.4%</td><td>6%</td><td>19%</td><td>-38%</td></tr><tr><td>헥토파이낸셜(234340)</td><td>정산·외환</td><td>A</td><td>3,583</td><td>38.6</td><td>1.98</td><td>1,874</td><td>156</td><td>8.3%</td><td>66%</td><td>42%</td><td>-43%</td></tr><tr><td>KG이니시스(035600)</td><td>정산(KB)</td><td>A</td><td>2,871</td><td>6.0</td><td>0.56</td><td>13,589</td><td>986</td><td>7.3%</td><td>2%</td><td>6%</td><td>-20%</td></tr><tr><td>다날(064260)</td><td>유통·정산</td><td>A</td><td>3,956</td><td>—</td><td>1.30</td><td>2,254</td><td>23</td><td>1.0%</td><td>-28%</td><td>9%</td><td>-54%</td></tr><tr><td>쿠콘(294570)</td><td>정산 API</td><td>A</td><td>3,128</td><td>14.7</td><td>1.82</td><td>695</td><td>189</td><td>27.2%</td><td>9%</td><td>73%</td><td>-40%</td></tr><tr><td>갤럭시아머니트리(094480)</td><td>유통·STO</td><td>A</td><td>2,448</td><td>29.5</td><td>2.06</td><td>1,297</td><td>184</td><td>14.2%</td><td>-32%</td><td>22%</td><td>-61%</td></tr><tr><td>헥토이노베이션(214180)</td><td>인프라(VASP)</td><td>A</td><td>1,931</td><td>6.4</td><td>0.84</td><td>3,758</td><td>502</td><td>13.4%</td><td>-8%</td><td>3%</td><td>-42%</td></tr><tr><td>아이티센글로벌(124500)</td><td>발행(금 RWA)</td><td>A</td><td>8,272</td><td>17.7</td><td>6.60</td><td>88,708</td><td>2,799</td><td>3.2%</td><td>18%</td><td>53%</td><td>-53%</td></tr><tr><td>한화투자증권(003530)</td><td>거래소 지분</td><td>A</td><td>10,920</td><td>10.9</td><td>0.54</td><td>4,694</td><td>1,477</td><td>31.5%</td><td>8%</td><td>18%</td><td>-51%</td></tr><tr><td>우리기술투자(041190)</td><td>거래소 지분</td><td>A</td><td>5,342</td><td>4.8</td><td>0.69</td><td>1,489</td><td>1,381</td><td>92.7%</td><td>-14%</td><td>40%</td><td>-52%</td></tr><tr><td>미래에셋증권(006800)</td><td>증권(STO·코빗)</td><td>A</td><td>184,084</td><td>15.7</td><td>1.80</td><td>39,094</td><td>19,151</td><td>49.0%</td><td>46%</td><td>0%</td><td>-61%</td></tr><tr><td>코나아이(052400)</td><td>발행(지역화폐)</td><td>B</td><td>5,469</td><td>7.3</td><td>2.07</td><td>3,092</td><td>889</td><td>28.8%</td><td>-17%</td><td>-9%</td><td>-56%</td></tr><tr><td>더즌(462860)</td><td>정산(크로스보더)</td><td>B</td><td>2,497</td><td>22.0</td><td>3.37</td><td>600</td><td>136</td><td>22.7%</td><td>-8%</td><td>78%</td><td>-49%</td></tr><tr><td>한국정보통신(025770)</td><td>VAN·CBDC</td><td>B</td><td>2,947</td><td>8.1</td><td>0.82</td><td>8,363</td><td>452</td><td>5.4%</td><td>3%</td><td>-2%</td><td>-52%</td></tr><tr><td>아톤(158430)</td><td>인프라(발행 플랫폼)</td><td>B</td><td>1,179</td><td>77.0</td><td>1.14</td><td>676</td><td>104</td><td>15.4%</td><td>-22%</td><td>12%</td><td>-66%</td></tr><tr><td>핑거(163730)</td><td>인프라(MPC)</td><td>B</td><td>1,161</td><td>305.9</td><td>1.91</td><td>916</td><td>15</td><td>1.6%</td><td>-3%</td><td>-2%</td><td>-62%</td></tr><tr><td>한국정보인증(053300)</td><td>인프라(지분)</td><td>B</td><td>2,042</td><td>8.2</td><td>0.98</td><td>1,385</td><td>271</td><td>19.6%</td><td>-15%</td><td>12%</td><td>-53%</td></tr><tr><td>케이뱅크(279570)</td><td>은행(하나 연합 유력)</td><td>B</td><td>22,678</td><td>18.6</td><td>0.97</td><td>10,796</td><td>1,171</td><td>10.8%</td><td>—</td><td>-1%</td><td>-43%</td></tr><tr><td>카카오뱅크(323410)</td><td>은행(카카오)</td><td>B</td><td>104,012</td><td>21.6</td><td>1.54</td><td>24,569</td><td>6,494</td><td>26.4%</td><td>1%</td><td>0%</td><td>-44%</td></tr><tr><td>드림시큐리티(203650)</td><td>인프라(PKI)</td><td>C</td><td>2,054</td><td>24.1</td><td>1.59</td><td>3,189</td><td>225</td><td>7.1%</td><td>23%</td><td>7%</td><td>-58%</td></tr><tr><td>라온시큐어(042510)</td><td>인프라(DID)</td><td>C</td><td>965</td><td>28.8</td><td>1.75</td><td>638</td><td>28</td><td>4.4%</td><td>-5%</td><td>7%</td><td>-49%</td></tr><tr><td>이니텍(053350)</td><td>발행(KRWc)</td><td>C</td><td>944</td><td>30.8</td><td>0.66</td><td>328</td><td>-24</td><td>-7.3%</td><td>5%</td><td>17%</td><td>-66%</td></tr><tr><td>케이옥션(102370)</td><td>STO(미술품)</td><td>C</td><td>853</td><td>—</td><td>0.79</td><td>123</td><td>-41</td><td>-33.3%</td><td>-7%</td><td>5%</td><td>-41%</td></tr><tr><td>서울옥션(063170)</td><td>STO(미술품)</td><td>C</td><td>1,100</td><td>—</td><td>1.07</td><td>213</td><td>-40</td><td>-18.8%</td><td>-11%</td><td>20%</td><td>-47%</td></tr><tr><td>세종텔레콤(036630)</td><td>STO(부동산)</td><td>C</td><td>1,256</td><td>42.5</td><td>0.53</td><td>2,842</td><td>-108</td><td>-3.8%</td><td>-9%</td><td>27%</td><td>-42%</td></tr><tr><td>티사이언티픽(057680)</td><td>거래소 지분(빗썸)</td><td>C</td><td>292</td><td>—</td><td>0.15</td><td>364</td><td>3</td><td>0.8%</td><td>-55%</td><td>11%</td><td>-79%</td></tr><tr><td>SK증권(001510)</td><td>증권(펄스)</td><td>C</td><td>5,597</td><td>20.0</td><td>0.90</td><td>3,052</td><td>78</td><td>2.6%</td><td>88%</td><td>15%</td><td>-61%</td></tr><tr><td>케이사인(192250)</td><td>테마 태그</td><td>D</td><td>511</td><td>21.3</td><td>0.53</td><td>484</td><td>29</td><td>6.0%</td><td>-27%</td><td>-1%</td><td>-55%</td></tr><tr><td>한국전자인증(041460)</td><td>테마 태그</td><td>D</td><td>675</td><td>14.4</td><td>1.01</td><td>367</td><td>67</td><td>18.3%</td><td>-5%</td><td>6%</td><td>-33%</td></tr><tr><td>웹케시(053580)</td><td>테마 태그</td><td>D</td><td>939</td><td>7.9</td><td>0.79</td><td>744</td><td>135</td><td>18.1%</td><td>-26%</td><td>8%</td><td>-71%</td></tr><tr><td>대신증권(003540)</td><td>STO 소멸</td><td>D</td><td>12,560</td><td>12.9</td><td>0.58</td><td>8,846</td><td>3,014</td><td>34.1%</td><td>-2%</td><td>1%</td><td>-49%</td></tr></table>
+<p class="src">등급 정의는 파트 1·2와 같음(A 실행·B 계약·C 선언·D 미확인). PER은 키움 TTM(적자·비정상은 빈칸), 2025 매출·영업이익은 키움 연결(증권·은행은 영업이익 기준이 달라 참고). 고점은 2025-06-01 이후 장중 고가. 빈티지 2026-09-04</p>
+
+<h2>3. 산점 — 실체 등급과 본업 배수</h2>
+<figure class=""><figcaption>장표 2. PER(가로) × 2025 영업이익률(세로), 실체 등급 색, 시총 크기</figcaption><svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62.0" y1="20" x2="62.0" y2="296" stroke="#d8d4cc" stroke-width="0.7"/><text x="62.0" y="312" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 0배</text>
+<line x1="219.6" y1="20" x2="219.6" y2="296" stroke="#d8d4cc" stroke-width="0.7"/><text x="219.6" y="312" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 10배</text>
+<line x1="377.2" y1="20" x2="377.2" y2="296" stroke="#d8d4cc" stroke-width="0.7"/><text x="377.2" y="312" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 20배</text>
+<line x1="534.8" y1="20" x2="534.8" y2="296" stroke="#d8d4cc" stroke-width="0.7"/><text x="534.8" y="312" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 30배</text>
+<line x1="692.4" y1="20" x2="692.4" y2="296" stroke="#d8d4cc" stroke-width="0.7"/><text x="692.4" y="312" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 40배</text>
+<line x1="850.0" y1="20" x2="850.0" y2="296" stroke="#d8d4cc" stroke-width="0.7"/><text x="850.0" y="312" text-anchor="middle" font-size="10.5" fill="#8a857c">PER 50+배</text>
+<line x1="62" y1="296.0" x2="850" y2="296.0" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="300.0" text-anchor="end" font-size="10.5" fill="#8a857c">OPM -10%</text>
+<line x1="62" y1="234.7" x2="850" y2="234.7" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="238.7" text-anchor="end" font-size="10.5" fill="#8a857c">OPM 0%</text>
+<line x1="62" y1="173.3" x2="850" y2="173.3" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="177.3" text-anchor="end" font-size="10.5" fill="#8a857c">OPM 10%</text>
+<line x1="62" y1="112.0" x2="850" y2="112.0" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="116.0" text-anchor="end" font-size="10.5" fill="#8a857c">OPM 20%</text>
+<line x1="62" y1="50.7" x2="850" y2="50.7" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="54.7" text-anchor="end" font-size="10.5" fill="#8a857c">OPM 30%</text>
+<rect x="62.0" y="20.0" width="236.4" height="184.0" fill="#2b7a78" opacity="0.07"/><text x="77.8" y="32.3" font-size="10" fill="#2b7a78">스크린 구역: PER ≤15 · OPM ≥5%</text>
+<circle cx="850.0" cy="202.2" r="10.3" fill="#1f3a5f" opacity="0.75"/>
+<text x="850.0" y="193.2" text-anchor="middle" font-size="9.5" fill="#1f3a5f">카카오페이</text>
+<circle cx="282.0" cy="207.7" r="6.0" fill="#1f3a5f" opacity="0.75"/>
+<text x="282.0" y="198.7" text-anchor="middle" font-size="9.5" fill="#1f3a5f">NHN KCP</text>
+<circle cx="671.0" cy="183.8" r="5.5" fill="#1f3a5f" opacity="0.75"/>
+<text x="671.0" y="174.8" text-anchor="middle" font-size="9.5" fill="#1f3a5f">헥토파이낸셜</text>
+<circle cx="156.9" cy="189.9" r="5.3" fill="#1f3a5f" opacity="0.75"/>
+<text x="156.9" y="180.9" text-anchor="middle" font-size="9.5" fill="#1f3a5f">KG이니시스</text>
+<circle cx="294.1" cy="67.8" r="5.4" fill="#1f3a5f" opacity="0.75"/>
+<text x="294.1" y="58.8" text-anchor="middle" font-size="9.5" fill="#1f3a5f">쿠콘</text>
+<circle cx="526.9" cy="147.6" r="5.2" fill="#1f3a5f" opacity="0.75"/>
+<text x="526.9" y="138.6" text-anchor="middle" font-size="9.5" fill="#1f3a5f">갤럭시아머니트리</text>
+<circle cx="162.5" cy="152.5" r="5.1" fill="#1f3a5f" opacity="0.75"/>
+<text x="162.5" y="143.5" text-anchor="middle" font-size="9.5" fill="#1f3a5f">헥토이노베이션</text>
+<circle cx="341.4" cy="215.0" r="6.3" fill="#1f3a5f" opacity="0.75"/>
+<text x="341.4" y="186.7" text-anchor="middle" font-size="9.5" fill="#1f3a5f">아이티센글로벌</text>
+<circle cx="234.4" cy="41.5" r="6.6" fill="#1f3a5f" opacity="0.75"/>
+<text x="234.4" y="32.5" text-anchor="middle" font-size="9.5" fill="#1f3a5f">한화투자증권</text>
+<circle cx="138.1" cy="20.0" r="5.8" fill="#1f3a5f" opacity="0.75"/>
+<text x="138.1" y="11.0" text-anchor="middle" font-size="9.5" fill="#1f3a5f">우리기술투자</text>
+<circle cx="310.1" cy="20.0" r="14.7" fill="#1f3a5f" opacity="0.75"/>
+<text x="310.1" y="11.0" text-anchor="middle" font-size="9.5" fill="#1f3a5f">미래에셋증권</text>
+<circle cx="177.8" cy="58.0" r="5.8" fill="#b07d2b" opacity="0.75"/>
+<text x="177.8" y="49.0" text-anchor="middle" font-size="9.5" fill="#b07d2b">코나아이</text>
+<circle cx="409.4" cy="95.4" r="5.2" fill="#b07d2b" opacity="0.75"/>
+<text x="409.4" y="86.4" text-anchor="middle" font-size="9.5" fill="#b07d2b">더즌</text>
+<circle cx="188.9" cy="201.5" r="5.4" fill="#b07d2b" opacity="0.75"/>
+<text x="188.9" y="168.9" text-anchor="middle" font-size="9.5" fill="#b07d2b">한국정보통신</text>
+<circle cx="850.0" cy="140.2" r="4.9" fill="#b07d2b" opacity="0.75"/>
+<text x="850.0" y="131.2" text-anchor="middle" font-size="9.5" fill="#b07d2b">아톤</text>
+<circle cx="850.0" cy="224.9" r="4.9" fill="#b07d2b" opacity="0.75"/>
+<text x="850.0" y="215.9" text-anchor="middle" font-size="9.5" fill="#b07d2b">핑거</text>
+<circle cx="190.4" cy="114.5" r="5.1" fill="#b07d2b" opacity="0.75"/>
+<text x="190.4" y="105.5" text-anchor="middle" font-size="9.5" fill="#b07d2b">한국정보인증</text>
+<circle cx="355.9" cy="168.4" r="7.8" fill="#b07d2b" opacity="0.75"/>
+<text x="355.9" y="159.4" text-anchor="middle" font-size="9.5" fill="#b07d2b">케이뱅크</text>
+<circle cx="403.2" cy="72.7" r="12.1" fill="#b07d2b" opacity="0.75"/>
+<text x="403.2" y="63.7" text-anchor="middle" font-size="9.5" fill="#b07d2b">카카오뱅크</text>
+<circle cx="442.3" cy="191.1" r="5.1" fill="#8a857c" opacity="0.75"/>
+<text x="442.3" y="182.1" text-anchor="middle" font-size="9.5" fill="#8a857c">드림시큐리티</text>
+<circle cx="515.7" cy="207.7" r="4.8" fill="#8a857c" opacity="0.75"/>
+<text x="515.7" y="198.7" text-anchor="middle" font-size="9.5" fill="#8a857c">라온시큐어</text>
+<circle cx="547.3" cy="279.4" r="4.8" fill="#8a857c" opacity="0.75"/>
+<text x="547.3" y="270.4" text-anchor="middle" font-size="9.5" fill="#8a857c">이니텍</text>
+<circle cx="732.4" cy="258.0" r="4.9" fill="#8a857c" opacity="0.75"/>
+<text x="732.4" y="249.0" text-anchor="middle" font-size="9.5" fill="#8a857c">세종텔레콤</text>
+<circle cx="377.4" cy="218.7" r="5.9" fill="#8a857c" opacity="0.75"/>
+<text x="377.4" y="209.7" text-anchor="middle" font-size="9.5" fill="#8a857c">SK증권</text>
+<circle cx="397.8" cy="197.9" r="4.6" fill="#d8d4cc" opacity="0.75"/>
+<text x="397.8" y="170.1" text-anchor="middle" font-size="9.5" fill="#d8d4cc">케이사인</text>
+<circle cx="289.7" cy="122.4" r="4.6" fill="#d8d4cc" opacity="0.75"/>
+<text x="289.7" y="113.4" text-anchor="middle" font-size="9.5" fill="#d8d4cc">한국전자인증</text>
+<circle cx="187.0" cy="123.7" r="4.8" fill="#d8d4cc" opacity="0.75"/>
+<text x="187.0" y="93.5" text-anchor="middle" font-size="9.5" fill="#d8d4cc">웹케시</text>
+<circle cx="265.1" cy="25.5" r="6.8" fill="#d8d4cc" opacity="0.75"/>
+<text x="265.1" y="-1.0" text-anchor="middle" font-size="9.5" fill="#d8d4cc">대신증권</text>
+<text x="850" y="32" text-anchor="end" font-size="10.5" fill="#8a857c">가로 = PER(키움 TTM, 50 이상은 50에 표시) · 세로 = 2025 영업이익률 · 색 = 실체 등급(남색 A·황토 B·회색 C·연회색 D) · 크기 = 시총</text>
+</svg><div class="src">자료: 위 표. 스크린 구역은 PER 15배 이하·OPM 5% 이상(작성자 설정E). 빈티지 2026-09-04</div></figure>
+<p class="reading"><b>관찰.</b> 스크린 구역 안에 등급 A는 NHN KCP(11.4배·4.4%는 경계)·KG이니시스(5.7배·7.3%)·쿠콘(14.3배·27%)·헥토이노베이션(7.5배·13%)·아이티센글로벌(11.7배·3.2%는 경계)·한화투자증권·우리기술투자·미래에셋이 있고, B는 코나아이(5.7배·29%)·한국정보통신(8.2배·5.4%)·한국정보인증(10.9배·20%)이 있습니다. 헥토파이낸셜은 PER 38배(TTM)로 오른쪽, 카카오페이는 141배로 표 밖, 드림시큐리티·라온시큐어·아톤·핑거는 C·B이면서 PER 24~300배입니다. <b>원인.</b> 본업이 있는 정산·PG·인증·발행 인프라는 PER이 낮고, 지갑·보안·DID 소형주는 본업 이익이 작아 PER이 높습니다. 스테이블코인 기대가 큰 종목일수록 산점의 오른쪽에 있고, 그 기대가 본업 이익으로 바뀐 종목은 아직 없습니다. <b>함의.</b> 이 산점에서 '왼쪽 위(낮은 PER·높은 OPM)'는 규제와 무관하게 버티는 종목이고 '오른쪽 아래'는 규제에만 기대는 종목입니다. 종목 선별의 첫 질문은 '규제가 2027년으로 밀리면 이 회사는 무엇으로 배수를 지키는가'이며, 그 답이 있는 종목만 스크린에 남겼습니다.</p>
+<table class=""><tr><th>종목</th><th>층</th><th>등급</th><th>PER</th><th>OPM</th><th>고점 대비</th><th>왜 남는가</th></tr><tr><td>KG이니시스</td><td>정산(KB)</td><td>A</td><td>6.0</td><td>7.3%</td><td>-20%</td><td>PG 2위, KB 진영 PoC, PER 6배·2025 OP +62%</td></tr><tr><td>쿠콘</td><td>정산 API</td><td>A</td><td>14.7</td><td>27.2%</td><td>-40%</td><td>API 정산 인프라, iM뱅크 검증, OPM 27%</td></tr><tr><td>헥토이노베이션</td><td>인프라(VASP)</td><td>A</td><td>6.4</td><td>13.4%</td><td>-42%</td><td>VASP 지갑 보유, 자체 사업 OP 300억, PBR 0.8</td></tr><tr><td>한화투자증권</td><td>거래소 지분</td><td>A</td><td>10.9</td><td>31.5%</td><td>-51%</td><td>두나무 9.84%, PBR 0.5</td></tr><tr><td>우리기술투자</td><td>거래소 지분</td><td>A</td><td>4.8</td><td>92.7%</td><td>-52%</td><td>두나무 7.20%, PER 5(평가익)</td></tr><tr><td>코나아이</td><td>발행(지역화폐)</td><td>B</td><td>7.3</td><td>28.8%</td><td>-56%</td><td>지역화폐 발행 인프라, 2025 OP +166%, PER 6배</td></tr><tr><td>한국정보통신</td><td>VAN·CBDC</td><td>B</td><td>8.1</td><td>5.4%</td><td>-52%</td><td>VAN 본업, 한강 2단계, PER 8배</td></tr><tr><td>한국정보인증</td><td>인프라(지분)</td><td>B</td><td>8.2</td><td>19.6%</td><td>-53%</td><td>인증 본업 OP 271억, 페어스퀘어랩 20%</td></tr></table>
+<p class="src">스크린 구역(등급 A·B, PER ≤15, OPM ≥5%)에 남는 종목과 이유. NHN KCP·아이티센글로벌은 OPM 5% 미만이라 기계적으로는 밖이지만 '왜 남는가' 열에 경계 종목으로 적었습니다. 작성자 판정E.</p>
+
+<h2>4. 고점 대비 낙폭과 3차 반등</h2>
+<figure class=""><figcaption>장표 3. 30종의 2025년 6월 이후 고점 대비 낙폭(%)</figcaption><svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="256.0" x2="860" y2="256.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="260.0" text-anchor="end" font-size="11" fill="#8a857c">-80%</text>
+<line x1="62" y1="196.5" x2="860" y2="196.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="200.5" text-anchor="end" font-size="11" fill="#8a857c">-60%</text>
+<line x1="62" y1="137.0" x2="860" y2="137.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="141.0" text-anchor="end" font-size="11" fill="#8a857c">-40%</text>
+<line x1="62" y1="77.5" x2="860" y2="77.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="81.5" text-anchor="end" font-size="11" fill="#8a857c">-20%</text>
+<line x1="62" y1="18.0" x2="860" y2="18.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">0%</text>
+<text x="74.5" y="274" text-anchor="middle" font-size="10" fill="#8a857c">티사이언티픽</text>
+<text x="99.4" y="274" text-anchor="middle" font-size="10" fill="#8a857c">웹케시</text>
+<text x="124.3" y="274" text-anchor="middle" font-size="10" fill="#8a857c">아톤</text>
+<text x="149.3" y="274" text-anchor="middle" font-size="10" fill="#8a857c">이니텍</text>
+<text x="174.2" y="274" text-anchor="middle" font-size="10" fill="#8a857c">핑거</text>
+<text x="199.2" y="274" text-anchor="middle" font-size="10" fill="#8a857c">갤럭시아머니트리</text>
+<text x="224.1" y="274" text-anchor="middle" font-size="10" fill="#8a857c">미래에셋증권</text>
+<text x="249.0" y="274" text-anchor="middle" font-size="10" fill="#8a857c">SK증권</text>
+<text x="274.0" y="274" text-anchor="middle" font-size="10" fill="#8a857c">카카오페이</text>
+<text x="298.9" y="274" text-anchor="middle" font-size="10" fill="#8a857c">드림시큐리티</text>
+<text x="323.8" y="274" text-anchor="middle" font-size="10" fill="#8a857c">코나아이</text>
+<text x="348.8" y="274" text-anchor="middle" font-size="10" fill="#8a857c">케이사인</text>
+<text x="373.7" y="274" text-anchor="middle" font-size="10" fill="#8a857c">다날</text>
+<text x="398.7" y="274" text-anchor="middle" font-size="10" fill="#8a857c">아이티센글로벌</text>
+<text x="423.6" y="274" text-anchor="middle" font-size="10" fill="#8a857c">한국정보인증</text>
+<text x="448.5" y="274" text-anchor="middle" font-size="10" fill="#8a857c">우리기술투자</text>
+<text x="473.5" y="274" text-anchor="middle" font-size="10" fill="#8a857c">한국정보통신</text>
+<text x="498.4" y="274" text-anchor="middle" font-size="10" fill="#8a857c">한화투자증권</text>
+<text x="523.3" y="274" text-anchor="middle" font-size="10" fill="#8a857c">더즌</text>
+<text x="548.3" y="274" text-anchor="middle" font-size="10" fill="#8a857c">라온시큐어</text>
+<text x="573.2" y="274" text-anchor="middle" font-size="10" fill="#8a857c">대신증권</text>
+<text x="598.2" y="274" text-anchor="middle" font-size="10" fill="#8a857c">서울옥션</text>
+<text x="623.1" y="274" text-anchor="middle" font-size="10" fill="#8a857c">카카오뱅크</text>
+<text x="648.0" y="274" text-anchor="middle" font-size="10" fill="#8a857c">헥토파이낸셜</text>
+<text x="673.0" y="274" text-anchor="middle" font-size="10" fill="#8a857c">케이뱅크</text>
+<text x="697.9" y="274" text-anchor="middle" font-size="10" fill="#8a857c">헥토이노베이션</text>
+<text x="722.8" y="274" text-anchor="middle" font-size="10" fill="#8a857c">세종텔레콤</text>
+<text x="747.8" y="274" text-anchor="middle" font-size="10" fill="#8a857c">케이옥션</text>
+<text x="772.7" y="274" text-anchor="middle" font-size="10" fill="#8a857c">쿠콘</text>
+<text x="797.7" y="274" text-anchor="middle" font-size="10" fill="#8a857c">NHN KCP</text>
+<text x="822.6" y="274" text-anchor="middle" font-size="10" fill="#8a857c">한국전자인증</text>
+<text x="847.5" y="274" text-anchor="middle" font-size="10" fill="#8a857c">KG이니시스</text>
+<rect x="65.7" y="18.0" width="16.5" height="235.0" fill="#a44a3f" opacity="0.9"/>
+<rect x="90.7" y="18.0" width="16.5" height="211.2" fill="#a44a3f" opacity="0.9"/>
+<rect x="115.6" y="18.0" width="16.5" height="196.3" fill="#a44a3f" opacity="0.9"/>
+<rect x="140.6" y="18.0" width="16.5" height="196.3" fill="#a44a3f" opacity="0.9"/>
+<rect x="165.5" y="18.0" width="16.5" height="184.5" fill="#a44a3f" opacity="0.9"/>
+<rect x="190.4" y="18.0" width="16.5" height="181.5" fill="#a44a3f" opacity="0.9"/>
+<rect x="215.4" y="18.0" width="16.5" height="181.5" fill="#a44a3f" opacity="0.9"/>
+<rect x="240.3" y="18.0" width="16.5" height="181.5" fill="#a44a3f" opacity="0.9"/>
+<rect x="265.2" y="18.0" width="16.5" height="175.5" fill="#a44a3f" opacity="0.9"/>
+<rect x="290.2" y="18.0" width="16.5" height="172.5" fill="#a44a3f" opacity="0.9"/>
+<rect x="315.1" y="18.0" width="16.5" height="166.6" fill="#a44a3f" opacity="0.9"/>
+<rect x="340.1" y="18.0" width="16.5" height="163.6" fill="#a44a3f" opacity="0.9"/>
+<rect x="365.0" y="18.0" width="16.5" height="160.7" fill="#a44a3f" opacity="0.9"/>
+<rect x="389.9" y="18.0" width="16.5" height="157.7" fill="#a44a3f" opacity="0.9"/>
+<rect x="414.9" y="18.0" width="16.5" height="157.7" fill="#a44a3f" opacity="0.9"/>
+<rect x="439.8" y="18.0" width="16.5" height="154.7" fill="#a44a3f" opacity="0.9"/>
+<rect x="464.7" y="18.0" width="16.5" height="154.7" fill="#a44a3f" opacity="0.9"/>
+<rect x="489.7" y="18.0" width="16.5" height="151.7" fill="#a44a3f" opacity="0.9"/>
+<rect x="514.6" y="18.0" width="16.5" height="145.8" fill="#a44a3f" opacity="0.9"/>
+<rect x="539.6" y="18.0" width="16.5" height="145.8" fill="#a44a3f" opacity="0.9"/>
+<rect x="564.5" y="18.0" width="16.5" height="145.8" fill="#a44a3f" opacity="0.9"/>
+<rect x="589.4" y="18.0" width="16.5" height="139.8" fill="#a44a3f" opacity="0.9"/>
+<rect x="614.4" y="18.0" width="16.5" height="130.9" fill="#a44a3f" opacity="0.9"/>
+<rect x="639.3" y="18.0" width="16.5" height="127.9" fill="#a44a3f" opacity="0.9"/>
+<rect x="664.2" y="18.0" width="16.5" height="127.9" fill="#a44a3f" opacity="0.9"/>
+<rect x="689.2" y="18.0" width="16.5" height="124.9" fill="#a44a3f" opacity="0.9"/>
+<rect x="714.1" y="18.0" width="16.5" height="124.9" fill="#a44a3f" opacity="0.9"/>
+<rect x="739.1" y="18.0" width="16.5" height="122.0" fill="#a44a3f" opacity="0.9"/>
+<rect x="764.0" y="18.0" width="16.5" height="119.0" fill="#a44a3f" opacity="0.9"/>
+<rect x="788.9" y="18.0" width="16.5" height="113.1" fill="#a44a3f" opacity="0.9"/>
+<rect x="813.9" y="18.0" width="16.5" height="98.2" fill="#a44a3f" opacity="0.9"/>
+<rect x="838.8" y="18.0" width="16.5" height="59.5" fill="#a44a3f" opacity="0.9"/>
+</svg><div class="src">자료: 키움 ka10081. 빈티지 2026-09-04</div></figure>
+<figure class=""><figcaption>장표 4. 2026 YTD와 최근 1개월 수익률(%) — YTD 순</figcaption><svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="256.0" x2="730" y2="256.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="260.0" text-anchor="end" font-size="11" fill="#8a857c">-75%</text>
+<line x1="62" y1="222.0" x2="730" y2="222.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="226.0" text-anchor="end" font-size="11" fill="#8a857c">-50%</text>
+<line x1="62" y1="188.0" x2="730" y2="188.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="192.0" text-anchor="end" font-size="11" fill="#8a857c">-25%</text>
+<line x1="62" y1="154.0" x2="730" y2="154.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="158.0" text-anchor="end" font-size="11" fill="#8a857c">0%</text>
+<line x1="62" y1="120.0" x2="730" y2="120.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="124.0" text-anchor="end" font-size="11" fill="#8a857c">25%</text>
+<line x1="62" y1="86.0" x2="730" y2="86.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="90.0" text-anchor="end" font-size="11" fill="#8a857c">50%</text>
+<line x1="62" y1="52.0" x2="730" y2="52.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="56.0" text-anchor="end" font-size="11" fill="#8a857c">75%</text>
+<line x1="62" y1="18.0" x2="730" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">100%</text>
+<text x="72.8" y="274" text-anchor="middle" font-size="10" fill="#8a857c">SK증권</text>
+<text x="94.3" y="274" text-anchor="middle" font-size="10" fill="#8a857c">헥토파이낸셜</text>
+<text x="115.9" y="274" text-anchor="middle" font-size="10" fill="#8a857c">미래에셋증권</text>
+<text x="137.4" y="274" text-anchor="middle" font-size="10" fill="#8a857c">드림시큐리티</text>
+<text x="159.0" y="274" text-anchor="middle" font-size="10" fill="#8a857c">아이티센글로벌</text>
+<text x="180.5" y="274" text-anchor="middle" font-size="10" fill="#8a857c">쿠콘</text>
+<text x="202.1" y="274" text-anchor="middle" font-size="10" fill="#8a857c">한화투자증권</text>
+<text x="223.6" y="274" text-anchor="middle" font-size="10" fill="#8a857c">NHN KCP</text>
+<text x="245.2" y="274" text-anchor="middle" font-size="10" fill="#8a857c">이니텍</text>
+<text x="266.7" y="274" text-anchor="middle" font-size="10" fill="#8a857c">한국정보통신</text>
+<text x="288.3" y="274" text-anchor="middle" font-size="10" fill="#8a857c">KG이니시스</text>
+<text x="309.8" y="274" text-anchor="middle" font-size="10" fill="#8a857c">카카오뱅크</text>
+<text x="331.4" y="274" text-anchor="middle" font-size="10" fill="#8a857c">대신증권</text>
+<text x="352.9" y="274" text-anchor="middle" font-size="10" fill="#8a857c">핑거</text>
+<text x="374.5" y="274" text-anchor="middle" font-size="10" fill="#8a857c">카카오페이</text>
+<text x="396.0" y="274" text-anchor="middle" font-size="10" fill="#8a857c">라온시큐어</text>
+<text x="417.5" y="274" text-anchor="middle" font-size="10" fill="#8a857c">한국전자인증</text>
+<text x="439.1" y="274" text-anchor="middle" font-size="10" fill="#8a857c">케이옥션</text>
+<text x="460.6" y="274" text-anchor="middle" font-size="10" fill="#8a857c">헥토이노베이션</text>
+<text x="482.2" y="274" text-anchor="middle" font-size="10" fill="#8a857c">더즌</text>
+<text x="503.7" y="274" text-anchor="middle" font-size="10" fill="#8a857c">세종텔레콤</text>
+<text x="525.3" y="274" text-anchor="middle" font-size="10" fill="#8a857c">서울옥션</text>
+<text x="546.8" y="274" text-anchor="middle" font-size="10" fill="#8a857c">우리기술투자</text>
+<text x="568.4" y="274" text-anchor="middle" font-size="10" fill="#8a857c">한국정보인증</text>
+<text x="589.9" y="274" text-anchor="middle" font-size="10" fill="#8a857c">코나아이</text>
+<text x="611.5" y="274" text-anchor="middle" font-size="10" fill="#8a857c">아톤</text>
+<text x="633.0" y="274" text-anchor="middle" font-size="10" fill="#8a857c">웹케시</text>
+<text x="654.6" y="274" text-anchor="middle" font-size="10" fill="#8a857c">케이사인</text>
+<text x="676.1" y="274" text-anchor="middle" font-size="10" fill="#8a857c">다날</text>
+<text x="697.7" y="274" text-anchor="middle" font-size="10" fill="#8a857c">갤럭시아머니트리</text>
+<text x="719.2" y="274" text-anchor="middle" font-size="10" fill="#8a857c">티사이언티픽</text>
+<rect x="65.2" y="34.3" width="6.5" height="119.7" fill="#1f3a5f" opacity="0.9"/>
+<rect x="72.8" y="133.6" width="6.5" height="20.4" fill="#b07d2b" opacity="0.9"/>
+<rect x="86.8" y="64.2" width="6.5" height="89.8" fill="#1f3a5f" opacity="0.9"/>
+<rect x="94.3" y="96.9" width="6.5" height="57.1" fill="#b07d2b" opacity="0.9"/>
+<rect x="108.3" y="91.4" width="6.5" height="62.6" fill="#1f3a5f" opacity="0.9"/>
+<rect x="115.9" y="154.0" width="6.5" height="0.0" fill="#b07d2b" opacity="0.9"/>
+<rect x="129.9" y="122.7" width="6.5" height="31.3" fill="#1f3a5f" opacity="0.9"/>
+<rect x="137.4" y="144.5" width="6.5" height="9.5" fill="#b07d2b" opacity="0.9"/>
+<rect x="151.4" y="129.5" width="6.5" height="24.5" fill="#1f3a5f" opacity="0.9"/>
+<rect x="159.0" y="81.9" width="6.5" height="72.1" fill="#b07d2b" opacity="0.9"/>
+<rect x="173.0" y="141.8" width="6.5" height="12.2" fill="#1f3a5f" opacity="0.9"/>
+<rect x="180.5" y="54.7" width="6.5" height="99.3" fill="#b07d2b" opacity="0.9"/>
+<rect x="194.5" y="143.1" width="6.5" height="10.9" fill="#1f3a5f" opacity="0.9"/>
+<rect x="202.1" y="129.5" width="6.5" height="24.5" fill="#b07d2b" opacity="0.9"/>
+<rect x="216.1" y="145.8" width="6.5" height="8.2" fill="#1f3a5f" opacity="0.9"/>
+<rect x="223.6" y="128.2" width="6.5" height="25.8" fill="#b07d2b" opacity="0.9"/>
+<rect x="237.6" y="147.2" width="6.5" height="6.8" fill="#1f3a5f" opacity="0.9"/>
+<rect x="245.2" y="130.9" width="6.5" height="23.1" fill="#b07d2b" opacity="0.9"/>
+<rect x="259.2" y="149.9" width="6.5" height="4.1" fill="#1f3a5f" opacity="0.9"/>
+<rect x="266.7" y="154.0" width="6.5" height="2.7" fill="#b07d2b" opacity="0.9"/>
+<rect x="280.7" y="151.3" width="6.5" height="2.7" fill="#1f3a5f" opacity="0.9"/>
+<rect x="288.3" y="145.8" width="6.5" height="8.2" fill="#b07d2b" opacity="0.9"/>
+<rect x="302.3" y="152.6" width="6.5" height="1.4" fill="#1f3a5f" opacity="0.9"/>
+<rect x="309.8" y="154.0" width="6.5" height="0.0" fill="#b07d2b" opacity="0.9"/>
+<rect x="323.8" y="154.0" width="6.5" height="2.7" fill="#1f3a5f" opacity="0.9"/>
+<rect x="331.4" y="152.6" width="6.5" height="1.4" fill="#b07d2b" opacity="0.9"/>
+<rect x="345.4" y="154.0" width="6.5" height="4.1" fill="#1f3a5f" opacity="0.9"/>
+<rect x="352.9" y="154.0" width="6.5" height="2.7" fill="#b07d2b" opacity="0.9"/>
+<rect x="366.9" y="154.0" width="6.5" height="5.4" fill="#1f3a5f" opacity="0.9"/>
+<rect x="374.5" y="143.1" width="6.5" height="10.9" fill="#b07d2b" opacity="0.9"/>
+<rect x="388.5" y="154.0" width="6.5" height="6.8" fill="#1f3a5f" opacity="0.9"/>
+<rect x="396.0" y="144.5" width="6.5" height="9.5" fill="#b07d2b" opacity="0.9"/>
+<rect x="410.0" y="154.0" width="6.5" height="6.8" fill="#1f3a5f" opacity="0.9"/>
+<rect x="417.5" y="145.8" width="6.5" height="8.2" fill="#b07d2b" opacity="0.9"/>
+<rect x="431.6" y="154.0" width="6.5" height="9.5" fill="#1f3a5f" opacity="0.9"/>
+<rect x="439.1" y="147.2" width="6.5" height="6.8" fill="#b07d2b" opacity="0.9"/>
+<rect x="453.1" y="154.0" width="6.5" height="10.9" fill="#1f3a5f" opacity="0.9"/>
+<rect x="460.6" y="149.9" width="6.5" height="4.1" fill="#b07d2b" opacity="0.9"/>
+<rect x="474.7" y="154.0" width="6.5" height="10.9" fill="#1f3a5f" opacity="0.9"/>
+<rect x="482.2" y="47.9" width="6.5" height="106.1" fill="#b07d2b" opacity="0.9"/>
+<rect x="496.2" y="154.0" width="6.5" height="12.2" fill="#1f3a5f" opacity="0.9"/>
+<rect x="503.7" y="117.3" width="6.5" height="36.7" fill="#b07d2b" opacity="0.9"/>
+<rect x="517.7" y="154.0" width="6.5" height="15.0" fill="#1f3a5f" opacity="0.9"/>
+<rect x="525.3" y="126.8" width="6.5" height="27.2" fill="#b07d2b" opacity="0.9"/>
+<rect x="539.3" y="154.0" width="6.5" height="19.0" fill="#1f3a5f" opacity="0.9"/>
+<rect x="546.8" y="99.6" width="6.5" height="54.4" fill="#b07d2b" opacity="0.9"/>
+<rect x="560.8" y="154.0" width="6.5" height="20.4" fill="#1f3a5f" opacity="0.9"/>
+<rect x="568.4" y="137.7" width="6.5" height="16.3" fill="#b07d2b" opacity="0.9"/>
+<rect x="582.4" y="154.0" width="6.5" height="23.1" fill="#1f3a5f" opacity="0.9"/>
+<rect x="589.9" y="154.0" width="6.5" height="12.2" fill="#b07d2b" opacity="0.9"/>
+<rect x="603.9" y="154.0" width="6.5" height="29.9" fill="#1f3a5f" opacity="0.9"/>
+<rect x="611.5" y="137.7" width="6.5" height="16.3" fill="#b07d2b" opacity="0.9"/>
+<rect x="625.5" y="154.0" width="6.5" height="35.4" fill="#1f3a5f" opacity="0.9"/>
+<rect x="633.0" y="143.1" width="6.5" height="10.9" fill="#b07d2b" opacity="0.9"/>
+<rect x="647.0" y="154.0" width="6.5" height="36.7" fill="#1f3a5f" opacity="0.9"/>
+<rect x="654.6" y="154.0" width="6.5" height="1.4" fill="#b07d2b" opacity="0.9"/>
+<rect x="668.6" y="154.0" width="6.5" height="38.1" fill="#1f3a5f" opacity="0.9"/>
+<rect x="676.1" y="141.8" width="6.5" height="12.2" fill="#b07d2b" opacity="0.9"/>
+<rect x="690.1" y="154.0" width="6.5" height="43.5" fill="#1f3a5f" opacity="0.9"/>
+<rect x="697.7" y="124.1" width="6.5" height="29.9" fill="#b07d2b" opacity="0.9"/>
+<rect x="711.7" y="154.0" width="6.5" height="74.8" fill="#1f3a5f" opacity="0.9"/>
+<rect x="719.2" y="139.0" width="6.5" height="15.0" fill="#b07d2b" opacity="0.9"/>
+<rect x="736" y="18" width="10" height="10" fill="#1f3a5f"/>
+<text x="750" y="27" font-size="11" fill="#8a857c">2026 YTD %</text>
+<rect x="736" y="34" width="10" height="10" fill="#b07d2b"/>
+<text x="750" y="43" font-size="11" fill="#8a857c">최근 1개월 %</text>
+</svg><div class="src">자료: 키움 ka10081(YTD 기준 2025-12-30 종가, 1개월 기준 2026-08-04). 빈티지 2026-09-04</div></figure>
+<p class="reading"><b>관찰.</b> 고점 대비 낙폭이 가장 큰 것은 아톤(-66%)·핑거(-62%)·갤럭시아(-61%)·카카오페이(-59%)·드림시큐리티(-58%)이고 가장 작은 것은 KG이니시스(-20%)·한국정보통신(-52%는 4월 상한가 뒤)·NHN KCP(-38%)입니다. YTD 플러스는 헥토(+66%)·드림시큐리티(+23%)·아이티센(+18%)·쿠콘(+9%)·NHN KCP(+6%)·KG이니시스(+2%)·한화투자증권(+8%)이고, 1개월은 더즌(+78%)·쿠콘(+73%)·아이티센(+53%)·헥토(+42%)·우리기술투자(+40%)가 앞섭니다. <b>원인.</b> 본업이 있는 종목(KG이니시스·NHN KCP·쿠콘)은 낙폭이 작고 YTD가 플러스이며, 기대만 있던 종목(아톤·핑거·드림·라온)은 낙폭이 크고 YTD가 마이너스입니다. 3차 반등은 1개월 수익률이 큰 순서가 시총이 작고 회전율이 높은 순서와 겹칩니다. <b>함의.</b> 규제 이벤트 매매의 자는 '고점 대비 -50% 아래·등급 A·소형'이고, 이익 매매의 자는 '스크린 구역·낙폭 -40% 안'입니다. 두 자는 겹치지 않으며, 같은 종목을 두 자로 동시에 사는 것이 2026년 상반기의 실수였습니다(헥토 3월 45,000원이 그 사례).</p>
+<figure class=""><figcaption>장표 5. 층별 시총가중 YTD(%)</figcaption><svg viewBox="0 0 880 240" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="196.0" x2="860" y2="196.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="200.0" text-anchor="end" font-size="11" fill="#8a857c">-20.0%</text>
+<line x1="62" y1="151.5" x2="860" y2="151.5" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="155.5" text-anchor="end" font-size="11" fill="#8a857c">0.0%</text>
+<line x1="62" y1="107.0" x2="860" y2="107.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="111.0" text-anchor="end" font-size="11" fill="#8a857c">20.0%</text>
+<line x1="62" y1="62.5" x2="860" y2="62.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="66.5" text-anchor="end" font-size="11" fill="#8a857c">40.0%</text>
+<line x1="62" y1="18.0" x2="860" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">60.0%</text>
+<text x="98.3" y="214" text-anchor="middle" font-size="10" fill="#8a857c">유통(3)</text>
+<text x="170.8" y="214" text-anchor="middle" font-size="10" fill="#8a857c">정산(4)</text>
+<text x="243.4" y="214" text-anchor="middle" font-size="10" fill="#8a857c">정산 API(1)</text>
+<text x="315.9" y="214" text-anchor="middle" font-size="10" fill="#8a857c">인프라(6)</text>
+<text x="388.5" y="214" text-anchor="middle" font-size="10" fill="#8a857c">발행(3)</text>
+<text x="461.0" y="214" text-anchor="middle" font-size="10" fill="#8a857c">거래소 지분(3)</text>
+<text x="533.5" y="214" text-anchor="middle" font-size="10" fill="#8a857c">증권(2)</text>
+<text x="606.1" y="214" text-anchor="middle" font-size="10" fill="#8a857c">VAN(1)</text>
+<text x="678.6" y="214" text-anchor="middle" font-size="10" fill="#8a857c">STO(3)</text>
+<text x="751.2" y="214" text-anchor="middle" font-size="10" fill="#8a857c">테마 태그(3)</text>
+<text x="823.7" y="214" text-anchor="middle" font-size="10" fill="#8a857c">STO 소멸(1)</text>
+<rect x="72.9" y="151.5" width="49.8" height="14.0" fill="#2b7a78" opacity="0.9"/>
+<text x="98.3" y="176.5" text-anchor="middle" font-size="9.5" fill="#2b7a78">-6.3</text>
+<rect x="145.4" y="113.7" width="49.8" height="37.8" fill="#2b7a78" opacity="0.9"/>
+<text x="170.8" y="109.7" text-anchor="middle" font-size="9.5" fill="#2b7a78">17.0</text>
+<rect x="218.0" y="131.5" width="49.8" height="20.0" fill="#2b7a78" opacity="0.9"/>
+<text x="243.4" y="127.5" text-anchor="middle" font-size="9.5" fill="#2b7a78">9.0</text>
+<rect x="290.5" y="151.5" width="49.8" height="7.8" fill="#2b7a78" opacity="0.9"/>
+<text x="315.9" y="170.3" text-anchor="middle" font-size="9.5" fill="#2b7a78">-3.5</text>
+<rect x="363.1" y="142.4" width="49.8" height="9.1" fill="#2b7a78" opacity="0.9"/>
+<text x="388.5" y="138.4" text-anchor="middle" font-size="9.5" fill="#2b7a78">4.1</text>
+<rect x="435.6" y="151.5" width="49.8" height="0.4" fill="#2b7a78" opacity="0.9"/>
+<text x="461.0" y="162.9" text-anchor="middle" font-size="9.5" fill="#2b7a78">-0.2</text>
+<rect x="508.2" y="46.5" width="49.8" height="105.0" fill="#2b7a78" opacity="0.9"/>
+<text x="533.5" y="42.5" text-anchor="middle" font-size="9.5" fill="#2b7a78">47.2</text>
+<rect x="580.7" y="144.8" width="49.8" height="6.7" fill="#2b7a78" opacity="0.9"/>
+<text x="606.1" y="140.8" text-anchor="middle" font-size="9.5" fill="#2b7a78">3.0</text>
+<rect x="653.2" y="151.5" width="49.8" height="20.5" fill="#2b7a78" opacity="0.9"/>
+<text x="678.6" y="183.0" text-anchor="middle" font-size="9.5" fill="#2b7a78">-9.2</text>
+<rect x="725.8" y="151.5" width="49.8" height="43.6" fill="#2b7a78" opacity="0.9"/>
+<text x="751.2" y="206.1" text-anchor="middle" font-size="9.5" fill="#2b7a78">-19.6</text>
+<rect x="798.3" y="151.5" width="49.8" height="4.5" fill="#2b7a78" opacity="0.9"/>
+<text x="823.7" y="167.0" text-anchor="middle" font-size="9.5" fill="#2b7a78">-2.0</text>
+</svg><div class="src">자료: 위 표의 층 분류. 빈티지 2026-09-04</div></figure>
+
+<h2>4-1. 두 자를 겹치면 — 네 칸의 지도</h2>
+<table>
+<tr><th></th><th>본업 배수 안(PER ≤15·OPM ≥5%)</th><th>본업 배수 밖</th></tr>
+<tr><td><b>실체 A(실행)</b></td><td>KG이니시스 · 쿠콘 · 헥토이노베이션 · 한화투자증권 · 우리기술투자 · 미래에셋 — '법이 늦어도 버티고, 오면 받는다'</td><td>헥토파이낸셜 · 카카오페이 · 다날 · 갤럭시아머니트리 · NHN KCP(경계) · 아이티센글로벌(경계) — '실행은 있으나 값이 앞서 있다'</td></tr>
+<tr><td><b>실체 B·C(계약·선언)</b></td><td>코나아이 · 한국정보통신 · 한국정보인증 — '본업으로 사고 옵션은 덤'</td><td>아톤 · 드림시큐리티 · 라온시큐어 · 핑거 · 더즌 · 이니텍 · 세종텔레콤 · 케이옥션 · 서울옥션 — '규제 이벤트 베타'</td></tr>
+</table>
+<p class="src">작성자 분류E. 카카오뱅크·케이뱅크·KB·신한·하나·우리는 은행 층이라 이 표에서 뺐습니다(파트 1: 은행주는 이 테마의 도구가 아님).</p>
+<p>왼쪽 위 여섯은 규제가 2027년으로 밀려도 2025년 실적 배수(PER 5~14배)로 버티는 종목이고, 그중 정산주(KG이니시스·쿠콘)는 법이 오면 실제 거래를 먼저 잡을 후보(논쟁 2)입니다. 거래소 지분주 셋(한화·우리기술·미래에셋)은 두나무·코빗 밸류가 변수라 스테이블코인법보다 11월 19일 두나무 주총이 채점일입니다. 오른쪽 위 여섯은 실행 단계가 앞서 있어 첫 상용 거래 발표가 나올 후보이지만 배수가 그것을 이미 세고 있으며, 헥토(옵션 잔여 990억원<span class="est">E</span>, 헥토 킷 파트 7)·카카오페이(PER 141배)·다날(적자)이 그 예입니다. 왼쪽 아래 셋은 본업(지역화폐·VAN·인증)이 배수를 받치고 스테이블코인은 아직 계약 단계라 '본업으로 사고 옵션은 덤'인 자리이며, 오른쪽 아래 아홉은 본업 이익이 작고 실체가 선언 단계라 규제 뉴스에만 반응합니다. 이 아홉은 2026년 4월 15일(드림시큐리티 2연속 상한가·라온 +30%·아톤 +28%) 하루로 그 성격을 보였고, 고점 대비 -58~-66%로 그 대가를 치렀습니다.</p>
+
+<h2>4-2. 층별 대표 종목의 2분기 — 본업이 무엇을 하고 있었는가</h2>
+<p>테마와 무관하게 2분기(4~6월) 본업은 이렇게 움직였습니다. 카카오페이 매출 3,351억원·영업이익 586억원(금융 부문 견인, 1분기 322억원에서 급증), NHN KCP 3,834억원·154억원(거래액 17조원, 영업이익률 4.0%), KG이니시스 3,718억원·286억원(7.7%), 코나아이 846억원·214억원(25.3%, 지역화폐 예산 확대), 쿠콘 180억원·50억원(27.8%), 더즌 150억원·36억원(24.0%), 갤럭시아머니트리 359억원·56억원(15.6%), 다날 605억원·18억원(3.0%), 헥토파이낸셜 501억원·46억원(9.2%, 1분기 91억원에서 반토막), 한국정보통신 2,376억원·119억원(5.0%), 헥토이노베이션 1,028억원·129억원(12.5%). 3분기 컨센이 있는 종목은 NHN KCP(3,802·149)·KG이니시스(3,840·271)·카카오페이(3,259·448)·쿠콘(184·52)·코나아이(1,078·374)·헥토(546·58)·헥토이노(1,138·160)이고, 11월 실적 시즌에 이 숫자와 '스테이블코인 매출 첫 인식'을 함께 봅니다. 본업이 2분기에 커진 곳(카카오페이·코나아이·KG이니시스)과 줄어든 곳(헥토·NHN KCP 이익률)이 갈렸고, 그 차이가 테마 안에서 배수의 차이로 이어지고 있습니다.</p>
+
+<h2>5. 수급과 외국인 — 누가 들고 있는가</h2>
+<p>외국인 지분율은 카카오페이·NHN KCP·KG이니시스가 10% 안팎<span class="est">E</span>, 헥토파이낸셜 2.1%, 소형 인프라주는 1~3%<span class="est">E</span>입니다. 헥토 킷 파트 4가 보인 대로 이 테마의 외국인은 이벤트 매매자에 가깝고(헥토 8월 -170억원 순매도 대 개인 +162억원), 기관은 1월 매수 뒤 5월 이후 순매도였습니다. 3차 반등이 개인 위주라는 것은 반등의 질이 1차(개인·사모)·2차(기관·외국인)보다 얕다는 뜻이며, 9월 통합안 발의 뒤 기관·외국인이 돌아오는지가 4차 봉우리의 첫 신호입니다. 국내 스테이블코인 테마 ETF는 2026년 9월 현재 상장된 것이 확인되지 않아(에이전트 확인) 패시브 수급도 없습니다.</p>
+
+<h2>6. 이 파트가 논쟁에 주는 것과 미결</h2>
+<p>논쟁 2(유통·정산 층)에는 스크린 구역의 정산주 넷(NHN KCP·KG이니시스·쿠콘·한국정보통신)을, 논쟁 3(토큰증권)에는 갤럭시아(고점 대비 -61%, PER 29배)와 아이티센글로벌(본업 OP 2,799억원)의 대조를, 논쟁 4(거래소 지분)에는 한화투자증권(PBR 0.54)·우리기술투자(PER 4.9, 평가익)의 배수를 넘깁니다. 헥토파이낸셜은 이 스크린에서 '등급 A·PER 밖'이라 헥토 킷 파트 7의 옵션 분해로 따로 다룹니다.</p>
+<p><b>미결.</b> A급: 2026E 컨센이 있는 종목이 절반 미만(PER TTM 기준의 한계) · 증권·은행의 영업이익 기준 통일. B급: 외국인·기관 지분율 시계열(종목별 ka10059 미수집) · 테마 지수 12종 선정의 타당성 · 층 분류의 중복(카카오페이 유통+발행). C급: D 등급 4종의 실체 재확인 · 거래정지 종목(비덴트·버킷스튜디오) 제외의 영향.</p>
+<div class="foot">데이터 계보: 키움 ka10001(시총·PER·PBR·2025 실적)·ka10081(일봉 2025-01~), 네이버 코스닥 일봉, 웹 에이전트 유니버스 리포트(등급 근거). 등급·스크린 기준·층 분류는 작성자 설정<span class="est">E</span>. 투자 권유가 아니며 목표주가를 싣지 않습니다.</div>
+
+</main></body></html>

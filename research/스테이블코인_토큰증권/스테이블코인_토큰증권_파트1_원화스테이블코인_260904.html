@@ -1,0 +1,227 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="coverage" content="segdive,debate">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스테이블코인·토큰증권 파트 1 — 원화 스테이블코인 밸류체인 · 2026-09-04</title>
+<style>
+body{margin:0;background:#faf8f4;color:#3a3630;font-family:'Noto Serif KR','Apple SD Gothic Neo','Malgun Gothic',serif;line-height:1.78;word-break:keep-all}
+main{max-width:920px;margin:0 auto;padding:44px 28px 80px}
+h1{font-size:23px;margin:0 0 6px;line-height:1.35} .sub{color:#8a857c;font-size:13px;margin-bottom:10px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;line-height:1.6}
+h2{font-size:17.5px;margin:36px 0 8px;padding-top:16px;border-top:1px solid #e3ded4}
+h3{font-size:15px;margin:22px 0 6px}
+p{max-width:700px;font-size:15px;margin:0 0 1.25em}
+p.reading{font-size:14px;color:#4a463f;background:#f4f0e8;border-radius:6px;padding:10px 14px;max-width:700px}
+figure{margin:14px 0 6px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px}
+figcaption{font-size:13px;font-weight:600;margin-bottom:8px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+svg{width:100%;height:auto;display:block}
+.src{font-size:11.5px;color:#8a857c;margin-top:6px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+table{border-collapse:collapse;font-size:13px;margin:10px 0 16px;font-family:Pretendard,'Apple SD Gothic Neo',-apple-system,sans-serif;background:#fff}
+td,th{border:1px solid #e0dbd0;padding:5px 10px;text-align:right;vertical-align:top} td:first-child,th:first-child{text-align:left} th{background:#f1ede4;font-weight:600;color:#5a5650}
+.gloss{display:grid;grid-template-columns:160px 1fr;gap:6px 14px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px;font-size:13.5px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;max-width:740px;line-height:1.55}
+.gloss b{font-size:13px}
+.judge{background:#f1ede4;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.ourview{background:#eef2f7;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.panel{background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px 16px;max-width:700px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;font-size:14px;margin:12px 0 18px}
+.panel input[type=range]{width:100%}
+.panel .out{margin-top:8px;font-weight:700}
+.panel .note{color:#8a857c;font-size:12.5px;margin-top:6px}
+.est{font-size:.72em;vertical-align:super;color:#a44a3f;font-weight:700}
+.foot{font-size:12px;color:#8a857c;max-width:700px;margin-top:30px;border-top:1px solid #e3ded4;padding-top:12px}
+.segdive{border:1px solid #e0dbd0;border-radius:8px;padding:6px 18px 4px;margin:14px 0 20px;background:#fdfcf9}
+.leadchain{background:#fff8ea;border:1px solid #e8d9b5;border-radius:6px;padding:12px 16px;max-width:700px;font-size:14px}
+.hubnav{font-size:12.5px;color:#8a857c;font-family:Pretendard,sans-serif;margin-bottom:14px}
+.hubnav a{color:#1f3a5f}
+a{color:#1f3a5f}
+@media print{.panel input{display:none}}
+</style></head><body><main>
+
+<div class="hubnav">스테이블코인·토큰증권 국내 종목 파트제 · <a href="스테이블코인_토큰증권_허브.html">허브(판정·상수 블록·논쟁 지도)</a> · 파트 0 / <b>1</b> / 2 / 3 / 4 · 종목 킷: <a href="../헥토파이낸셜/헥토파이낸셜_허브.html">헥토파이낸셜 허브</a></div>
+<h1>파트 1 — 원화 스테이블코인 밸류체인과 종목 지도: 다섯 층, 세 진영, 실체 등급</h1>
+<p class="sub">작성 2026-09-04 · 코스닥 801.2 · $1 = ₩1,358.5 · 디지털자산기본법 미통과(9월 통합안 발의 예고) · 숫자의 정본은 허브 상수 블록이며 이 파트는 인용만 합니다 · 논쟁 1(발행 컨소시엄의 이익 크기)·논쟁 2(유통·정산 층의 첫 거래)의 본문 · 시총은 키움 9-04 종가</p>
+
+<div class="judge"><b>이 파트의 답.</b> 원화 스테이블코인 관련주는 다섯 층에 서 있습니다. 발행(은행 컨소시엄), 유통(지갑·앱), 정산·온오프램프·PG, 인프라(지갑 API·인증·보안·SI), 거래소 지분. 층마다 돈이 다르게 들어옵니다. 발행은 준비금 이자(1조원당 연 250억원<span class="est">E</span>)라 은행 순이익 3~5.8조원 앞에서 시총을 움직이지 못하고, 유통·정산은 발행사 배분과 거래액 × bp라 접점과 거래액이 큰 순서로 배분되며, 인프라는 구축 매출이라 일회성이고, 거래소 지분은 두나무·빗썸 밸류의 대리 변수입니다. 30종을 실체 등급(A 실행·B 계약·C 선언·D 미확인)으로 나누면 A는 여덟(카카오페이·NHN KCP·헥토·KG이니시스·다날·쿠콘·갤럭시아·헥토이노베이션)이고, 그중 2026년 손익에 스테이블코인 매출이 잡힌 곳은 없습니다. 논쟁 1의 답은 '은행주에는 재료가 아니다'이고, 논쟁 2의 답은 '첫 상용 거래는 정산 층(헥토·NHN KCP·KG이니시스)에서 2026년 4분기~2027년 상반기에 나오되 크기는 수십억원<span class="est">E</span>'입니다.</div>
+
+<h2>1. 다섯 층 — 돈이 들어오는 길</h2>
+<figure class=""><figcaption>장표 1. 원화 스테이블코인 밸류체인 5층과 층별 이익 자(2026-09-04)</figcaption><svg viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<defs><marker id="ar1" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a857c"/></marker></defs>
+<rect x="20" y="20" width="840" height="64" rx="6" fill="#fff" stroke="#1f3a5f" stroke-width="1.5"/><text x="30" y="40" font-size="12" font-weight="700" fill="#1f3a5f">1층 발행 — 은행 컨소시엄(한은 요구 50%+1) · 준비금 이자가 수익</text><text x="30" y="58" font-size="10.5">하나 연합(하나+BNK·iM·SC제일·OK·JB / 두나무·네이버파이낸셜·케이뱅크) · KB(+토스) · 카카오 3사·신한·우리·농협 · 상장: KB금융 61조·신한 52조·하나 38조·우리 25조·카카오뱅크 10조·케이뱅크 2.3조</text><text x="30" y="75" font-size="10" fill="#a44a3f">이익 자: 발행 1조당 연 250억<span class="est">E</span>(금리 2.5%<span class="est">E</span>) — 은행 순이익 3~5.8조 대비 1% 미만</text>
+<line x1="440" y1="84" x2="440" y2="104" stroke="#8a857c" marker-end="url(#ar1)"/>
+<rect x="20" y="106" width="840" height="64" rx="6" fill="#fff" stroke="#2b7a78" stroke-width="1.5"/><text x="30" y="126" font-size="12" font-weight="700" fill="#2b7a78">2층 유통(지갑·앱) — 소비자 접점 · 발행사 배분 + 결제 수수료</text><text x="30" y="144" font-size="10.5">카카오페이 6.4조(지갑 4천만, 컨소시엄+유통 이중) · 토스(비상장, 서클 MOU·단말 50만대) · 네이버페이(NAVER 32조, 두나무 편입) · 다날 4,000억(페이코인·K.ONDA) · 갤럭시아머니트리 2,400억(GXA 지갑 400만)</text><text x="30" y="161" font-size="10" fill="#a44a3f">이익 자: 유통 층 수수료 풀 발행 1조당 125억<span class="est">E</span> — 접점 큰 순서로 배분</text>
+<line x1="440" y1="170" x2="440" y2="190" stroke="#8a857c" marker-end="url(#ar1)"/>
+<rect x="20" y="192" width="840" height="64" rx="6" fill="#f1ede4" stroke="#1f3a5f" stroke-width="1.5"/><text x="30" y="212" font-size="12" font-weight="700" fill="#1f3a5f">3층 정산·온오프램프·PG — 가맹점·해외 정산 · 거래액 × bp</text><text x="30" y="230" font-size="10.5">헥토파이낸셜 3,600억(CPN·외환) · NHN KCP 6,300억(아발란체 정산망) · KG이니시스 2,900억(KB 진영 PoC) · 쿠콘 3,100억(API·iM뱅크 검증) · 더즌 2,500억(크로스보더·솔라나) · 코나아이 5,500억(지역화폐 KSC) · 한국정보통신 2,900억(VAN·한강 2단계)</text><text x="30" y="247" font-size="10" fill="#a44a3f">이익 자: 거래액 1조당 10~40bp<span class="est">E</span> = 10~40억 — 법 이전에도 달러 SC 정산 매출 가능(헥토·다날)</text>
+<line x1="440" y1="256" x2="440" y2="276" stroke="#8a857c" marker-end="url(#ar1)"/>
+<rect x="20" y="278" width="840" height="64" rx="6" fill="#fff" stroke="#b07d2b" stroke-width="1.5"/><text x="30" y="298" font-size="12" font-weight="700" fill="#b07d2b">4층 인프라(지갑 API·인증·보안·SI) — 구축·라이선스 매출, 거래액 무관</text><text x="30" y="316" font-size="10.5">헥토이노베이션 1,900억(헥토월렛원 VASP) · 아톤 1,200억(발행 플랫폼 밴티지) · 라온시큐어 1,000억(DID) · 드림시큐리티 2,000억(PKI) · 핑거 1,200억(MPC·준비금 증명) · 한국정보인증 2,000억(페어스퀘어랩 20%) · 삼성SDS 18조 · LG CNS 7조</text><text x="30" y="333" font-size="10" fill="#a44a3f">이익 자: 컨소시엄당 구축 수십억<span class="est">E</span>, 연 유지보수 10%<span class="est">E</span> — 소형주 시총 대비 의미 있으나 일회성</text>
+<line x1="440" y1="342" x2="440" y2="362" stroke="#8a857c" marker-end="url(#ar1)"/>
+<rect x="20" y="364" width="840" height="48" rx="6" fill="#fff" stroke="#8a857c" stroke-width="1.5"/><text x="30" y="384" font-size="12" font-weight="700" fill="#8a857c">5층 거래소 지분 — 두나무(밸류 15.3조)·빗썸의 대리 변수 · 규제(대주주 15~20%)의 직접 대상</text><text x="30" y="402" font-size="10.5">한화투자증권 1.1조(두나무 9.84%) · 우리기술투자 5,300억(7.20%) · 하나금융(6.55%) · 삼성 3사(4%) · 티사이언티픽 290억(빗썸 7.17%) · 비덴트(거래정지, 빗썸홀딩스 30%) · NAVER(네이버파이낸셜 편입 11-19 주총)</text>
+</svg><div class="src">자료: 웹 에이전트 규제·유니버스 리포트, 키움 ka10001 시총, 헥토 킷 파트 3. 이익 자는 작성자 계산E. 빈티지 2026-09-04</div></figure>
+<p class="reading"><b>관찰.</b> 발행 층의 상장사는 은행지주 4곳과 인터넷은행 2곳이고 시총 합 188조원입니다. 유통 층은 카카오페이·NAVER·다날·갤럭시아 4곳 7조원, 정산 층은 7곳 2.7조원, 인프라 소형주 6곳 9,300억원, 거래소 지분 3곳 1.7조원입니다. <b>원인.</b> 층이 아래로 갈수록 시총은 작고 스테이블코인 노출은 큽니다. 은행에게 발행은 2025년 순이익의 1% 미만{E}인 신사업이고, 정산·인프라 소형주에게는 시총의 수십 퍼센트에 해당하는 옵션입니다. <b>함의.</b> 그래서 같은 규제 뉴스에 은행주는 1~2%, 정산·인프라주는 10~20% 움직입니다(4절). 종목 선별은 '어느 층인가'를 먼저 정한 뒤 그 층 안에서 실체 등급과 본업 배수를 보는 순서여야 하고, 층을 섞어 '관련주 바구니'로 사는 것은 은행주의 무거움과 소형주의 변동성을 동시에 사는 것입니다.</p>
+<figure class=""><figcaption>장표 2. 층별 상장사 시총 합(조원)</figcaption><svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="206.0" x2="860" y2="206.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="210.0" text-anchor="end" font-size="11" fill="#8a857c">0.0</text>
+<line x1="62" y1="159.0" x2="860" y2="159.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="163.0" text-anchor="end" font-size="11" fill="#8a857c">50.0</text>
+<line x1="62" y1="112.0" x2="860" y2="112.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="116.0" text-anchor="end" font-size="11" fill="#8a857c">100.0</text>
+<line x1="62" y1="65.0" x2="860" y2="65.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="69.0" text-anchor="end" font-size="11" fill="#8a857c">150.0</text>
+<line x1="62" y1="18.0" x2="860" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">200.0</text>
+<text x="141.8" y="224" text-anchor="middle" font-size="10" fill="#8a857c">1층 발행(은행 6사 시총 합, 조)</text>
+<text x="301.4" y="224" text-anchor="middle" font-size="10" fill="#8a857c">2층 유통(4사, 조)</text>
+<text x="461.0" y="224" text-anchor="middle" font-size="10" fill="#8a857c">3층 정산(7사, 조)</text>
+<text x="620.6" y="224" text-anchor="middle" font-size="10" fill="#8a857c">4층 인프라(6사 소형, 조)</text>
+<text x="780.2" y="224" text-anchor="middle" font-size="10" fill="#8a857c">5층 거래소 지분(3사, 조)</text>
+<rect x="85.9" y="28.9" width="110.7" height="177.1" fill="#1f3a5f" opacity="0.9"/>
+<text x="141.8" y="24.9" text-anchor="middle" font-size="9.5" fill="#1f3a5f">188.4</text>
+<rect x="245.5" y="199.3" width="110.7" height="6.7" fill="#1f3a5f" opacity="0.9"/>
+<text x="301.4" y="195.3" text-anchor="middle" font-size="9.5" fill="#1f3a5f">7.1</text>
+<rect x="405.1" y="203.5" width="110.7" height="2.5" fill="#1f3a5f" opacity="0.9"/>
+<text x="461.0" y="199.5" text-anchor="middle" font-size="9.5" fill="#1f3a5f">2.7</text>
+<rect x="564.7" y="205.1" width="110.7" height="0.9" fill="#1f3a5f" opacity="0.9"/>
+<text x="620.6" y="201.1" text-anchor="middle" font-size="9.5" fill="#1f3a5f">0.9</text>
+<rect x="724.3" y="204.4" width="110.7" height="1.6" fill="#1f3a5f" opacity="0.9"/>
+<text x="780.2" y="200.4" text-anchor="middle" font-size="9.5" fill="#1f3a5f">1.7</text>
+</svg><div class="src">자료: 키움 ka10001 9-04. 발행 = KB·신한·하나·우리·카카오뱅크·케이뱅크, 유통 = 카카오페이·NAVER·다날·갤럭시아, 정산 = 헥토·NHN KCP·KG이니시스·쿠콘·더즌·코나아이·한국정보통신, 인프라 = 헥토이노·아톤·라온·드림·핑거·한국정보인증, 거래소 = 한화투자증권·우리기술투자·티사이언티픽. 빈티지 2026-09-04</div></figure>
+
+<h2>2. 발행 층 — 세 진영과 논쟁 1</h2>
+<table class=""><tr><th>은행·플랫폼</th><th>진영</th><th>지분·행위</th><th>상표</th><th>2025 순이익</th><th>시총</th></tr><tr><td>하나금융지주</td><td>하나 연합(발행)</td><td>하나은행 두나무 6.55% 1조33억(6-15), 지방은행 5곳</td><td>16건</td><td>4조 370억</td><td>375,061억</td></tr><tr><td>KB금융</td><td>KB(발행)-토스(유통)</td><td>해외송금 PoC(5-17), 6-1 연대 간담회 주도</td><td>32건(시중은행 최초)</td><td>5조 8,000억</td><td>612,191억</td></tr><tr><td>신한지주</td><td>신한(미확정)</td><td>땡겨요 PoC, 비자 협약(8-24), OUSD</td><td>21건</td><td>5조 850억</td><td>522,498억</td></tr><tr><td>우리금융지주</td><td>미확정</td><td>거래소 지분투자 공식화, BDACS KRW1 예치</td><td>미출원</td><td>3조 2,300억</td><td>247,929억</td></tr><tr><td>카카오뱅크</td><td>카카오 3사</td><td>코인원 실명계좌, TF(계좌 신뢰 인프라), OUSD</td><td>12건</td><td>4,803억</td><td>104,012억</td></tr><tr><td>케이뱅크</td><td>하나 연합(유력)</td><td>업비트 계좌 10월 만료·재계약, 카시콘·Changer 송금</td><td>12건</td><td>1,126억</td><td>22,678억</td></tr><tr><td>NAVER</td><td>하나 연합</td><td>네이버파이낸셜–두나무 주식교환(주총 11-19, 교환 12-31)</td><td>네이버페이 출원</td><td>2조 2,100억(OP)</td><td>320,881억</td></tr><tr><td>카카오</td><td>카카오 3사</td><td>두나무 10.58%→0.13% 매각(2.2조), 서클 MOU</td><td>—</td><td>7,320억(OP)</td><td>158,815억</td></tr></table>
+<p class="src">자료: 웹 에이전트 규제·유니버스 리포트(블록미디어 5-15, 이코노빌 6-1, 부산일보 6-3, EBN 2025-07-07, 딜사이트 3-11 등), 키움 시총. 빈티지 2026-09-04</p>
+<p class="reading"><b>관찰.</b> 하나은행은 두나무 6.55%를 1조33억원에 사고 지방은행 5곳과 네이버파이낸셜을 묶어 가장 앞선 발행 진영을 만들었습니다. KB국민은행은 상표 32건과 토스·KG이니시스 PoC로 두 번째 진영이고, 카카오 3사는 TF와 서클 MOU로 세 번째이며 신한·우리·농협은 미확정입니다. 케이뱅크는 하나 연합 합류가 유력하고 업비트 실명계좌가 10월 만료됩니다. <b>원인.</b> 은행법 15% 출자 한도 때문에 50%+1 컨소시엄에는 은행 4곳 이상이 필요하고, 그래서 하나가 지방은행을 먼저 모았습니다. 금융위가 1월 '스테이블코인 발행업을 은행 자회사 업종에 추가'를 검토한 것은 이 한도를 풀어 주려는 것입니다. <b>함의.</b> 논쟁 1의 답은 이익 자에서 나옵니다. 발행 잔액이 2028년 5조원{E}이라도 준비금 이자 1,250억원{E}을 은행 4~6곳이 나누면 은행당 200~300억원{E}이고, KB·신한·하나의 순이익 4~5.8조원의 0.5%입니다. 하나금융이 두나무 인수 발표 뒤 이틀 -10% 움직인 것(5-14~18)은 CET1 -0.11%포인트 우려였지 스테이블코인 기대가 아니었습니다. 은행주에서 스테이블코인은 배수를 바꾸는 재료가 아니라 '디지털 자산 밸류체인의 지분 투자(두나무 6.55%)'의 재료이며, 그 지분 가치(하나은행 1조원 → 두나무-네이버 교환 시 네이버파이낸셜 약 5%{E}, 메리츠)가 은행주에 남는 것입니다.</p>
+
+<h2>3. 유통·정산·인프라 층 — 실체 등급 30종</h2>
+<table class=""><tr><th>종목(코드)</th><th>층</th><th>실체 등급</th><th>근거(2026)</th><th>시총(억)</th><th>본업 2025 OP(억)</th></tr><tr><td>카카오페이(377300)</td><td>발행 컨소+유통</td><td>A 실행</td><td>카카오 3사 TF·서클 MOU(7-23)·x402·상표 18건, 지갑 4천만</td><td>63,849</td><td>504</td></tr><tr><td>NHN KCP(060250)</td><td>정산</td><td>A 실행</td><td>아발란체 L1 메인넷(4-14), 3Q VASP·4Q 전환, 페이코 PoC 승인 2초</td><td>6,325</td><td>547</td></tr><tr><td>헥토파이낸셜(234340)</td><td>정산·외환</td><td>A 실행(규제 공백)</td><td>CPN 파트너(2-03), 송금 사전신청(5-13), 당국 검토 중, x402·AP2</td><td>3,583</td><td>156</td></tr><tr><td>KG이니시스(035600)</td><td>정산(KB 진영)</td><td>A 실행</td><td>KB·카이아·오픈에셋 해외송금 PoC(5-17), 라인넥스트(8-10)</td><td>2,871</td><td>986</td></tr><tr><td>다날(064260)</td><td>유통·정산</td><td>A 실행</td><td>페이코인 편의점, USDC 온보딩, 인엑스 VASP MOU(9-02), K.ONDA</td><td>3,956</td><td>23</td></tr><tr><td>쿠콘(294570)</td><td>정산 API</td><td>A 실행</td><td>iM뱅크·비토즈 검증, 트리플에이 온·오프램프, 싱가포르 법인(8-06)</td><td>3,128</td><td>189</td></tr><tr><td>갤럭시아머니트리(094480)</td><td>유통·STO 플랫폼</td><td>A 실행</td><td>코빗 제휴, 세빛섬 PoC, GXA 지갑, 갤럭시아에프엔 인가 재신청</td><td>2,448</td><td>184</td></tr><tr><td>헥토이노베이션(214180)</td><td>인프라(VASP 지갑)</td><td>A 실행</td><td>헥토월렛원 47.15%, USDC 옥텟 킷, Arc 테스트넷</td><td>1,931</td><td>502</td></tr><tr><td>코나아이(052400)</td><td>발행 후보(지역화폐)</td><td>B 계약·PoC</td><td>KSC 시연(2025-07), 부국증권 MOU, 월 이용자 511만</td><td>5,469</td><td>889</td></tr><tr><td>더즌(462860)</td><td>정산(크로스보더)</td><td>B 계약·PoC</td><td>솔라나재단 MOU(6-19), 트리플에이, 카카오페이 2대주주</td><td>2,497</td><td>136</td></tr><tr><td>한국정보통신(025770)</td><td>VAN·CBDC</td><td>B 계약·PoC</td><td>프로젝트 한강 2단계 결제 파트너(4-16), SC 직접 링크 미확인</td><td>2,947</td><td>452</td></tr><tr><td>아톤(158430)</td><td>인프라(발행 플랫폼)</td><td>B 계약·PoC</td><td>B2B 발행·운영 플랫폼 밴티지 개발 완료(5-22), 금융권 실증</td><td>1,179</td><td>103</td></tr><tr><td>핑거(163730)</td><td>인프라(MPC·준비금)</td><td>B 계약·PoC</td><td>MPC 디지털볼트·ZKP 준비금 증명, 문페이 투자</td><td>1,161</td><td>15</td></tr><tr><td>한국정보인증(053300)</td><td>인프라(지분)</td><td>B 지분</td><td>페어스퀘어랩 20.05%(은행 PoC 수행)</td><td>2,042</td><td>271</td></tr><tr><td>드림시큐리티(203650)</td><td>인프라(PKI)</td><td>C 상표·선언</td><td>18개 은행 공동인증·거래소 본인인증, 4-15 2연속 상한가</td><td>2,054</td><td>225</td></tr><tr><td>라온시큐어(042510)</td><td>인프라(DID)</td><td>C 상표·선언</td><td>옴니원 DID, 2026 STO·SC 실체 미확인</td><td>965</td><td>28</td></tr><tr><td>이니텍(053350)</td><td>발행(자체 KRWc)</td><td>C 선언</td><td>KRWc 추진(2025-06), 2026 진척 미확인, 2025 영업적자</td><td>944</td><td>-24</td></tr><tr><td>케이사인·한국전자인증·웹케시·인포뱅크·한네트</td><td>테마 태그</td><td>D 미확인</td><td>2026 스테이블코인 실체 미확인(에이전트 전수)</td><td>—</td><td>—</td></tr></table>
+<p class="src">등급 정의: A = 계약·PoC 완료·서비스 개시 중 둘 이상 실행, B = 계약·PoC 하나 또는 지분, C = 상표·선언·테마 편입만, D = 실체 미확인. 시총 키움 9-04, 2025 영업이익 네이버·알파스퀘어. 빈티지 2026-09-04</p>
+<figure class=""><figcaption>장표 3. 실체 등급 A·B·C 종목의 시총(억원)</figcaption><svg viewBox="0 0 880 280" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="236.0" x2="860" y2="236.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="240.0" text-anchor="end" font-size="11" fill="#8a857c">0</text>
+<line x1="62" y1="181.5" x2="860" y2="181.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="185.5" text-anchor="end" font-size="11" fill="#8a857c">20,000</text>
+<line x1="62" y1="127.0" x2="860" y2="127.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="131.0" text-anchor="end" font-size="11" fill="#8a857c">40,000</text>
+<line x1="62" y1="72.5" x2="860" y2="72.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="76.5" text-anchor="end" font-size="11" fill="#8a857c">60,000</text>
+<line x1="62" y1="18.0" x2="860" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">80,000</text>
+<text x="88.6" y="254" text-anchor="middle" font-size="10" fill="#8a857c">카카오페이</text>
+<text x="141.8" y="254" text-anchor="middle" font-size="10" fill="#8a857c">NHN KCP</text>
+<text x="195.0" y="254" text-anchor="middle" font-size="10" fill="#8a857c">코나아이</text>
+<text x="248.2" y="254" text-anchor="middle" font-size="10" fill="#8a857c">헥토파이낸셜</text>
+<text x="301.4" y="254" text-anchor="middle" font-size="10" fill="#8a857c">다날</text>
+<text x="354.6" y="254" text-anchor="middle" font-size="10" fill="#8a857c">쿠콘</text>
+<text x="407.8" y="254" text-anchor="middle" font-size="10" fill="#8a857c">KG이니시스</text>
+<text x="461.0" y="254" text-anchor="middle" font-size="10" fill="#8a857c">한국정보통신</text>
+<text x="514.2" y="254" text-anchor="middle" font-size="10" fill="#8a857c">더즌</text>
+<text x="567.4" y="254" text-anchor="middle" font-size="10" fill="#8a857c">갤럭시아머니트리</text>
+<text x="620.6" y="254" text-anchor="middle" font-size="10" fill="#8a857c">드림시큐리티</text>
+<text x="673.8" y="254" text-anchor="middle" font-size="10" fill="#8a857c">헥토이노베이션</text>
+<text x="727.0" y="254" text-anchor="middle" font-size="10" fill="#8a857c">아톤</text>
+<text x="780.2" y="254" text-anchor="middle" font-size="10" fill="#8a857c">핑거</text>
+<text x="833.4" y="254" text-anchor="middle" font-size="10" fill="#8a857c">라온시큐어</text>
+<rect x="70.0" y="62.0" width="36.2" height="174.0" fill="#d8d4cc" opacity="0.9"/>
+<rect x="123.2" y="218.8" width="36.2" height="17.2" fill="#d8d4cc" opacity="0.9"/>
+<rect x="176.4" y="221.1" width="36.2" height="14.9" fill="#d8d4cc" opacity="0.9"/>
+<rect x="229.6" y="226.2" width="36.2" height="9.8" fill="#d8d4cc" opacity="0.9"/>
+<rect x="282.8" y="225.2" width="36.2" height="10.8" fill="#d8d4cc" opacity="0.9"/>
+<rect x="336.0" y="227.5" width="36.2" height="8.5" fill="#d8d4cc" opacity="0.9"/>
+<rect x="389.2" y="228.2" width="36.2" height="7.8" fill="#d8d4cc" opacity="0.9"/>
+<rect x="442.4" y="228.0" width="36.2" height="8.0" fill="#d8d4cc" opacity="0.9"/>
+<rect x="495.6" y="229.2" width="36.2" height="6.8" fill="#d8d4cc" opacity="0.9"/>
+<rect x="548.8" y="229.3" width="36.2" height="6.7" fill="#d8d4cc" opacity="0.9"/>
+<rect x="602.0" y="230.4" width="36.2" height="5.6" fill="#d8d4cc" opacity="0.9"/>
+<rect x="655.2" y="230.7" width="36.2" height="5.3" fill="#d8d4cc" opacity="0.9"/>
+<rect x="708.4" y="232.8" width="36.2" height="3.2" fill="#d8d4cc" opacity="0.9"/>
+<rect x="761.6" y="232.8" width="36.2" height="3.2" fill="#d8d4cc" opacity="0.9"/>
+<rect x="814.8" y="233.4" width="36.2" height="2.6" fill="#d8d4cc" opacity="0.9"/>
+</svg><div class="src">자료: 키움 ka10001 9-04. 등급은 표 참조. 빈티지 2026-09-04</div></figure>
+<p class="reading"><b>관찰.</b> 등급 A 여덟 종목의 시총 합은 8.7조원인데 카카오페이(6.4조)가 73%입니다. 카카오페이를 빼면 A 일곱의 합은 2.3조원이고, 그 안에서 NHN KCP(6,300억)·다날(4,000억)·헥토(3,600억)·쿠콘(3,100억)·KG이니시스(2,900억)·갤럭시아(2,400억)·헥토이노(1,900억) 순입니다. 등급 B·C는 대부분 1,000~2,500억원의 소형주입니다. <b>원인.</b> A 등급은 '실제 거래를 시험했거나 계약을 맺은' 곳이고 그 대부분이 정산·PG입니다. 정산은 은행·플랫폼이 직접 짓기 번거로운 인프라라 발행 진영이 파트너로 데려가는 층이기 때문입니다. B·C는 상표·플랫폼 개발·인증 기술로 '준비된' 곳이며, 컨소시엄이 정해지면 누가 선택받는지가 갈립니다. <b>함의.</b> 2026년 손익에 스테이블코인 매출이 잡힌 곳은 30종 중 0곳입니다(에이전트 전수 확인). 그래서 등급 A조차 '실행 중'이지 '매출 중'이 아니고, 파트 3의 스크리닝은 등급과 본업 배수를 곱해 봅니다. 등급 A이면서 본업 PER 15배 이하인 종목은 NHN KCP(11.4배)·KG이니시스(5.7배)·쿠콘(14.3배)·헥토이노베이션(7.5배) 넷이며, 이것이 이 파트가 파트 3에 넘기는 첫 후보군입니다.</p>
+
+<h2>3-1. 등급 A 여덟의 2026년 실행 일지 — 무엇을 실제로 했는가</h2>
+<p><b>카카오페이.</b> 2월 2025년 첫 연간 흑자 발표와 함께 스테이블코인·AI 확장 선언, 5월 6일 컨콜에서 '카카오 그룹 컨소시엄(발행·인프라)과 개별사(유통)의 양축' 구조와 4천만 지갑에 송금·결제·투자 통합 계획 공개, x402 참여, 7월 23일 카카오·카카오페이·카카오뱅크–서클 전략 MOU. 1분기 매출 3,003억원(+41.7%)·영업이익 322억원으로 본업이 커졌고, 2분기 영업이익 586억원은 금융 부문이 견인했습니다. <b>NHN KCP.</b> 4월 14일 아발란체 L1 기반 결제 메인넷 구축 발표(3분기 VASP 취득·4분기 메인넷 전환 목표), KRWPS 상표 출원, 5월 18일부터 2주간 임직원 700~800명·2,300건의 페이코 연계 온·오프라인 PoC(승인 2초·정산 1시간), 7월 Ava Labs와 정산망 PoC 결과 공개(가맹점 정산 2~3일에서 1시간). 2분기 매출 3,834억원·거래액 17조원. <b>헥토파이낸셜.</b> 헥토 킷 파트 2 참조 — CPN 등재·사전신청·당국 검토. <b>KG이니시스.</b> KG모빌리언스(KG파이낸셜로 사명 변경, VASP 준비)와 상표 공동출원, 5월 17일 KB국민은행·카이아·오픈에셋과 원화 스테이블코인 발행·QR 결제·자동정산·베트남 수취 통합 PoC(해외송금 3분·수수료 87% 절감), 8월 10일 라인넥스트 유니파이 페이 MOU. <b>다날.</b> 페이코인 편의점 4사 결제 재개, PCI를 USDC로 자동 전환하는 마스터카드, 바이낸스페이 연동, 라인넥스트 JPYC, 7월 K.ONDA 외국인 선불카드, 9월 2일 인엑스(VASP)와 결제·정산망 MOU(T+0 정산, 혁신금융서비스 신청 검토). 1H26 연결 매출 928억원·영업이익 69억원. <b>쿠콘.</b> iM뱅크·비토즈와 발행·결제 검증 완료, 트리플에이와 온·오프램프, 업비트 협업, 8월 6일 싱가포르 법인. <b>갤럭시아머니트리.</b> 4월 9일 코빗 제휴, 7월 세빛섬·쎄덱·뮤제 오프라인 PoC, 400만 머니트리 회원에 GXA 지갑 연동, x402 재단. <b>헥토이노베이션.</b> 헥토월렛원 사명 변경(1월), USDC 옥텟 킷(5월), Arc 얼리버드 파트너 모집, 오버테이크·아이템베이·Sui 4자 MOU(6월). 여덟 곳의 공통점은 '2026년에 기술 검증과 계약을 끝냈고 매출은 아직'이며, 차이는 어느 발행 진영에 붙었는가(KG이니시스=KB, 다날·헥토=서클·달러, 카카오페이=카카오, 나머지=미정)입니다.</p>
+
+<h2>3-2. 상표권 — 준비의 흔적, 이익의 증거는 아님</h2>
+<p>2025년 6~7월 특허청 집계로 KB국민은행 32건(KRWB·BKRW·KBKRW), 신한 21건, 하나 16건, IBK 10건, iM뱅크 12건, 토스뱅크 24~48건(집계 시점 차이), 카카오뱅크 12건, 케이뱅크 12건, 카카오페이 18건(PKRW·KKRW·KRWP 등 6종×3류), 코스콤 5건(KSDC·KRW24·KRW365·KOSWON·KORWON), NHN KCP 다수(KRWPS), KG이니시스·KG모빌리언스 공동출원이 있고, 테더는 국내 누적 15건입니다. 우리·농협은 미출원입니다. 상표는 발행 의사의 흔적이지 인가의 근거가 아니고, 2025년 6월 1차 랠리 때 상표 출원 뉴스 하나로 상한가가 나온 종목(한국정보통신·드림시큐리티 등)의 2026년 실체 등급이 B·C인 것이 그 증거입니다. 이 파트가 상표를 등급 산정에서 C(선언)로만 친 이유입니다.</p>
+
+<h2>4. 규제 이벤트 세 번의 반응 — 층별 베타</h2>
+<figure class=""><figcaption>장표 4. 2026년 7월 23일·8월 24일·9월 4일 세 이벤트의 당일 등락(%)</figcaption><svg viewBox="0 0 880 280" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="236.0" x2="730" y2="236.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="240.0" text-anchor="end" font-size="11" fill="#8a857c">0.0%</text>
+<line x1="62" y1="181.5" x2="730" y2="181.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="185.5" text-anchor="end" font-size="11" fill="#8a857c">5.0%</text>
+<line x1="62" y1="127.0" x2="730" y2="127.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="131.0" text-anchor="end" font-size="11" fill="#8a857c">10.0%</text>
+<line x1="62" y1="72.5" x2="730" y2="72.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="76.5" text-anchor="end" font-size="11" fill="#8a857c">15.0%</text>
+<line x1="62" y1="18.0" x2="730" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">20.0%</text>
+<text x="99.1" y="254" text-anchor="middle" font-size="10" fill="#8a857c">헥토파이낸셜</text>
+<text x="173.3" y="254" text-anchor="middle" font-size="10" fill="#8a857c">다날</text>
+<text x="247.6" y="254" text-anchor="middle" font-size="10" fill="#8a857c">NHN KCP</text>
+<text x="321.8" y="254" text-anchor="middle" font-size="10" fill="#8a857c">더즌</text>
+<text x="396.0" y="254" text-anchor="middle" font-size="10" fill="#8a857c">카카오페이</text>
+<text x="470.2" y="254" text-anchor="middle" font-size="10" fill="#8a857c">쿠콘</text>
+<text x="544.4" y="254" text-anchor="middle" font-size="10" fill="#8a857c">아이티센글로벌</text>
+<text x="618.7" y="254" text-anchor="middle" font-size="10" fill="#8a857c">우리기술투자</text>
+<text x="692.9" y="254" text-anchor="middle" font-size="10" fill="#8a857c">티사이언티픽</text>
+<rect x="73.1" y="160.8" width="16.3" height="75.2" fill="#d8d4cc" opacity="0.9"/>
+<text x="81.8" y="156.8" text-anchor="middle" font-size="9.5" fill="#d8d4cc">6.9</text>
+<rect x="90.5" y="104.1" width="16.3" height="131.9" fill="#b07d2b" opacity="0.9"/>
+<text x="99.1" y="100.1" text-anchor="middle" font-size="9.5" fill="#b07d2b">12.1</text>
+<rect x="107.8" y="71.4" width="16.3" height="164.6" fill="#1f3a5f" opacity="0.9"/>
+<text x="116.4" y="67.4" text-anchor="middle" font-size="9.5" fill="#1f3a5f">15.1</text>
+<rect x="147.4" y="32.2" width="16.3" height="203.8" fill="#d8d4cc" opacity="0.9"/>
+<text x="156.0" y="28.2" text-anchor="middle" font-size="9.5" fill="#d8d4cc">18.7</text>
+<rect x="164.7" y="159.7" width="16.3" height="76.3" fill="#b07d2b" opacity="0.9"/>
+<text x="173.3" y="155.7" text-anchor="middle" font-size="9.5" fill="#b07d2b">7.0</text>
+<rect x="182.0" y="155.3" width="16.3" height="80.7" fill="#1f3a5f" opacity="0.9"/>
+<text x="190.7" y="151.3" text-anchor="middle" font-size="9.5" fill="#1f3a5f">7.4</text>
+<rect x="221.6" y="160.8" width="16.3" height="75.2" fill="#d8d4cc" opacity="0.9"/>
+<text x="230.2" y="156.8" text-anchor="middle" font-size="9.5" fill="#d8d4cc">6.9</text>
+<rect x="238.9" y="117.2" width="16.3" height="118.8" fill="#b07d2b" opacity="0.9"/>
+<text x="247.6" y="113.2" text-anchor="middle" font-size="9.5" fill="#b07d2b">10.9</text>
+<rect x="256.2" y="131.4" width="16.3" height="104.6" fill="#1f3a5f" opacity="0.9"/>
+<text x="264.9" y="127.4" text-anchor="middle" font-size="9.5" fill="#1f3a5f">9.6</text>
+<rect x="295.8" y="122.6" width="16.3" height="113.4" fill="#d8d4cc" opacity="0.9"/>
+<text x="304.5" y="118.6" text-anchor="middle" font-size="9.5" fill="#d8d4cc">10.4</text>
+<rect x="313.1" y="79.0" width="16.3" height="157.0" fill="#b07d2b" opacity="0.9"/>
+<text x="321.8" y="75.0" text-anchor="middle" font-size="9.5" fill="#b07d2b">14.4</text>
+<rect x="387.3" y="179.3" width="16.3" height="56.7" fill="#b07d2b" opacity="0.9"/>
+<text x="396.0" y="175.3" text-anchor="middle" font-size="9.5" fill="#b07d2b">5.2</text>
+<rect x="404.7" y="167.3" width="16.3" height="68.7" fill="#1f3a5f" opacity="0.9"/>
+<text x="413.3" y="163.3" text-anchor="middle" font-size="9.5" fill="#1f3a5f">6.3</text>
+<rect x="478.9" y="26.7" width="16.3" height="209.3" fill="#1f3a5f" opacity="0.9"/>
+<text x="487.5" y="22.7" text-anchor="middle" font-size="9.5" fill="#1f3a5f">19.2</text>
+<rect x="518.5" y="62.7" width="16.3" height="173.3" fill="#d8d4cc" opacity="0.9"/>
+<text x="527.1" y="58.7" text-anchor="middle" font-size="9.5" fill="#d8d4cc">15.9</text>
+<rect x="610.0" y="107.4" width="16.3" height="128.6" fill="#b07d2b" opacity="0.9"/>
+<text x="618.7" y="103.4" text-anchor="middle" font-size="9.5" fill="#b07d2b">11.8</text>
+<rect x="627.3" y="88.8" width="16.3" height="147.2" fill="#1f3a5f" opacity="0.9"/>
+<text x="636.0" y="84.8" text-anchor="middle" font-size="9.5" fill="#1f3a5f">13.5</text>
+<rect x="684.2" y="19.1" width="16.3" height="216.9" fill="#b07d2b" opacity="0.9"/>
+<text x="692.9" y="15.1" text-anchor="middle" font-size="9.5" fill="#b07d2b">19.9</text>
+<rect x="736" y="18" width="10" height="10" fill="#d8d4cc"/>
+<text x="750" y="27" font-size="11" fill="#8a857c">7-23 카카오–서클 MOU 당일 %</text>
+<rect x="736" y="34" width="10" height="10" fill="#b07d2b"/>
+<text x="750" y="43" font-size="11" fill="#8a857c">8-24 정무위 논의 기대 %</text>
+<rect x="736" y="50" width="10" height="10" fill="#1f3a5f"/>
+<text x="750" y="59" font-size="11" fill="#8a857c">9-04 STO 협의체 %</text>
+</svg><div class="src">자료: 국제뉴스 7-23·8-24, 데일리안 8-24, 뉴스1 9-04, 알파스퀘어. 빈칸은 당일 특징주 보도 없음. 빈티지 2026-09-04</div></figure>
+<p class="reading"><b>관찰.</b> 세 이벤트에서 헥토는 +6.9·+12.1·+15.1%, 다날 +18.7·+7.0·+7.4%, NHN KCP +6.9·+10.9·+9.6%, 더즌 +10.4·+14.4%, 쿠콘 +19.2%(9-04), 우리기술투자 +11.8·+13.5%, 티사이언티픽 +19.9%(8-24)였습니다. 카카오페이는 +5.2·+6.3%, 은행주는 1~2%{E}였습니다. <b>원인.</b> 정산·인프라 소형주의 당일 반응이 플랫폼 대형주의 두세 배이고, 거래소 지분주(우리기술투자·티사이언티픽)는 두나무·빗썸 뉴스와 규제 뉴스 둘 다에 반응합니다. 7월 23일은 카카오–서클 MOU였는데 다날이 가장 크게 오른 것은 테마 안에서 유동성이 큰 종목으로 매수가 몰리는 패턴입니다. <b>함의.</b> 이 베타는 상방에서도 하방에서도 같습니다. 알파스퀘어 테마 지수는 1년 -21%, 6개월 -16%였고 개별 종목은 2025년 6월 고점 대비 -40~-66%입니다(파트 3). 규제 이벤트로 매매하는 투자자에게는 정산·인프라 소형주가, 법 통과 뒤 실제 이익을 보려는 투자자에게는 본업이 있는 정산·PG 중형주가 맞는 층이며, 은행주는 이 테마의 도구가 아닙니다.</p>
+
+<h2>5. 논쟁 1 — 발행 컨소시엄의 이익은 은행 시총을 움직일 크기인가</h2>
+<p><b>주장.</b> 아닙니다. 발행 잔액 5조원<span class="est">E</span>(2028년)에서 준비금 이자 1,250억원<span class="est">E</span>, 은행당 200~300억원<span class="est">E</span>은 순이익의 0.5%이고, 이자 지급 금지·100% 준비금이라는 정부안 골격에서 발행사 이익은 그 이상 커지지 않습니다. 은행주에서 실재하는 것은 두나무 지분(하나 6.55%·1조원)과 네이버파이낸셜 편입 시의 지분 가치이며, 그것은 스테이블코인이 아니라 거래소 밸류의 함수입니다.</p>
+<p><b>근거.</b> 서클의 2분기 매출 7억달러가 유통 733억달러에서 나왔으니 유통 대비 연 3.8%<span class="est">E</span>이고, 절반은 유통 배분입니다. 한국 금리(2.5%<span class="est">E</span>)와 이자 금지 구조를 적용하면 원화 발행사의 순마진은 유통 대비 1.25%<span class="est">E</span>입니다. 5조원 잔액에 625억원<span class="est">E</span>, 20조원이라도 2,500억원<span class="est">E</span>이며 20조원은 한국경제연구원의 '총예금 10% 이동' 시나리오(265조)의 8%<span class="est">E</span>에 해당하는 낙관적 수치입니다.</p>
+<p><b>반대 논거.</b> 발행사가 결제·송금 수수료와 데이터를 함께 갖는다면(하나-두나무-네이버의 유통 결합) 준비금 이자 밖의 수익이 붙고, 예금 이탈을 막는 방어 가치도 있습니다. 또 은행주의 스테이블코인 재료는 이익이 아니라 '디지털 금융 지주로의 재평가' 서사일 수 있습니다(하나증권 최정욱 '은행주 새 모멘텀').</p>
+<p><b>채점.</b> 통합안의 발행 요건(은행 지분·자본금) · 첫 인가 컨소시엄 구성 · 2027~2028 발행 잔액(5조원 선) · 하나금융의 두나무 지분 처리(네이버파이낸셜 교환). 접는 조건: 발행사가 준비금 이자 외 결제 수수료를 직접 가져가는 구조가 법에 명시되고 잔액이 2028년 10조원을 넘는 것.</p>
+
+<h2>6. 논쟁 2 — 유통·정산 층에서 누가 실제 거래를 먼저 잡는가</h2>
+<p><b>주장.</b> 정산 층입니다. 헥토(CPN 타발송금, 당국 검토 중)·NHN KCP(4분기 메인넷 전환, VASP 취득)·KG이니시스(KB 진영 PoC 완료)·다날(인엑스 T+0 정산) 넷이 2026년 4분기~2027년 상반기에 첫 상용 거래를 발표할 후보이고, 크기는 각 수십억원<span class="est">E</span> 매출입니다. 플랫폼(카카오페이·토스)은 법 통과 뒤 발행 컨소시엄 안에서 유통을 열고, 그 시점은 정산 층보다 늦습니다.</p>
+<p><b>근거.</b> 법 이전에 매출이 가능한 것은 달러 스테이블코인의 온·오프램프(정산 층)뿐이고(파트 0), 원화 스테이블코인의 유통(플랫폼 층)은 법이 전제입니다. NHN KCP의 페이코 PoC(승인 2초·정산 1시간)와 KG이니시스의 해외송금 PoC(3분·-87%)는 이미 기술 검증을 끝냈고, 헥토는 사전신청까지 받았습니다.</p>
+<p><b>반대 논거.</b> 정산 층의 첫 거래도 특금법·외국환거래법의 입법 공백(헥토 사례)에 걸릴 수 있고, 카카오 3사가 서클과 함께 원화 스테이블코인 전 단계로 USDC 결제를 카카오톡 안에서 먼저 열면 유통 층이 앞설 수 있습니다. 토스의 단말 50만대도 오프라인 결제에서 정산 층을 건너뛰는 경로입니다.</p>
+<p><b>채점.</b> 첫 상용 거래·정산 발표(회사·시점) · 거래액 공시 · VASP 취득(NHN KCP 3분기) · 헥토 당국 검토 결론. 접는 조건: 2027년 상반기까지 정산 층 넷 중 어디도 상용 거래를 발표하지 못하는 것.</p>
+
+<h2>6-1. 이 파트가 다른 파트에 넘기는 것</h2>
+<p>파트 3(스크리닝)에는 실체 등급 30종과 층 분류를 그대로 넘겨 본업 배수와 곱하게 하고, 파트 4(리스크)에는 세 진영의 갈림(하나·KB·카카오)과 층별 베타(정산·인프라 소형주가 플랫폼의 두세 배)를 넘겨 시나리오 A/B/C의 층별 함의를 쓰게 합니다. 파트 2(토큰증권)에는 거래소 지분주 셋과 두나무 주주 구성을 넘깁니다. 헥토 킷 파트 3에는 이 파트의 진영 지도가 그대로 인용돼 있으며, 두 킷의 진영 표는 같은 출처(웹 에이전트 규제·유니버스 리포트)에서 같은 날 만들었습니다. 통합안이 나오면 이 파트의 표 두 개(은행·플랫폼 진영, 실체 등급)가 먼저 바뀌고, 그 뒤에 파트 3·4가 따라 바뀝니다.</p>
+<h2>7. 미결</h2>
+<p>A급: 통합안의 발행 요건과 유통업 정의 · 두나무 편입 이후 하나·NAVER의 지분 구조. B급: 발행사의 유통 배분율(서클-코인베이스 계약 조건의 한국 판) · 카카오페이의 컨소시엄 지분율(34%<span class="est">E</span> 상한) · 더즌에 대한 카카오페이 지분율 · 케이뱅크의 하나 연합 합류 여부. C급: 이니텍 KRWc 진척 · 케이사인 등 D 등급의 실체.</p>
+<div class="foot">데이터 계보: 웹 에이전트 4개(출처 URL·날짜 보관), 키움 ka10001 시총(9-04), 네이버 finance(2025 영업이익), 헥토 킷 파트 2·3. 이익 자·등급은 작성자 설정<span class="est">E</span>. 투자 권유가 아니며 목표주가를 싣지 않습니다.</div>
+
+</main></body></html>

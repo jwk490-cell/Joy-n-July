@@ -1,0 +1,193 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="coverage" content="risks">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>헥토파이낸셜 파트 6 — 리스크 · 2026-09-04</title>
+<style>
+body{margin:0;background:#faf8f4;color:#3a3630;font-family:'Noto Serif KR','Apple SD Gothic Neo','Malgun Gothic',serif;line-height:1.78;word-break:keep-all}
+main{max-width:920px;margin:0 auto;padding:44px 28px 80px}
+h1{font-size:23px;margin:0 0 6px;line-height:1.35} .sub{color:#8a857c;font-size:13px;margin-bottom:10px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;line-height:1.6}
+h2{font-size:17.5px;margin:36px 0 8px;padding-top:16px;border-top:1px solid #e3ded4}
+h3{font-size:15px;margin:22px 0 6px}
+p{max-width:700px;font-size:15px;margin:0 0 1.25em}
+p.reading{font-size:14px;color:#4a463f;background:#f4f0e8;border-radius:6px;padding:10px 14px;max-width:700px}
+figure{margin:14px 0 6px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px}
+figcaption{font-size:13px;font-weight:600;margin-bottom:8px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+svg{width:100%;height:auto;display:block}
+.src{font-size:11.5px;color:#8a857c;margin-top:6px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+table{border-collapse:collapse;font-size:13px;margin:10px 0 16px;font-family:Pretendard,'Apple SD Gothic Neo',-apple-system,sans-serif;background:#fff}
+td,th{border:1px solid #e0dbd0;padding:5px 10px;text-align:right;vertical-align:top} td:first-child,th:first-child{text-align:left} th{background:#f1ede4;font-weight:600;color:#5a5650}
+.gloss{display:grid;grid-template-columns:160px 1fr;gap:6px 14px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px;font-size:13.5px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;max-width:740px;line-height:1.55}
+.gloss b{font-size:13px}
+.judge{background:#f1ede4;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.ourview{background:#eef2f7;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.panel{background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px 16px;max-width:700px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;font-size:14px;margin:12px 0 18px}
+.panel input[type=range]{width:100%}
+.panel .out{margin-top:8px;font-weight:700}
+.panel .note{color:#8a857c;font-size:12.5px;margin-top:6px}
+.est{font-size:.72em;vertical-align:super;color:#a44a3f;font-weight:700}
+.foot{font-size:12px;color:#8a857c;max-width:700px;margin-top:30px;border-top:1px solid #e3ded4;padding-top:12px}
+.segdive{border:1px solid #e0dbd0;border-radius:8px;padding:6px 18px 4px;margin:14px 0 20px;background:#fdfcf9}
+.leadchain{background:#fff8ea;border:1px solid #e8d9b5;border-radius:6px;padding:12px 16px;max-width:700px;font-size:14px}
+.hubnav{font-size:12.5px;color:#8a857c;font-family:Pretendard,sans-serif;margin-bottom:14px}
+.hubnav a{color:#1f3a5f}
+a{color:#1f3a5f}
+@media print{.panel input{display:none}}
+</style></head><body><main>
+
+<div class="hubnav">헥토파이낸셜 파트제 커버리지 · <a href="헥토파이낸셜_허브.html">허브(판정·상수 블록·논쟁 지도)</a> · 파트 0 / 1 / 2 / 3 / 4 / 5 / <b>6</b> / 7</div>
+<h1>헥토파이낸셜 파트 6 — 리스크: 열 개의 매트릭스와 접는 조건</h1>
+<p class="sub">작성 2026-09-04 · 주가 25,600원(9-04 종가) · 시총 3,576억원 · $1 = ₩1,358.5 · 12월 결산(2026년 = 제27기) · 다음 실적 3Q26 잠정 2026년 11월 초<span class="est">E</span> · 숫자의 정본은 허브 상수 블록이며 이 파트는 인용만 합니다 · 확률은 전부 작성자 설정<span class="est">E</span>이며 분기마다 재설정합니다</p>
+
+<div class="judge"><b>이 파트의 답.</b> 헥토파이낸셜의 리스크는 세 묶음입니다. 규제(기본법 지연·CPN 적법성·예금토큰), 집중(한 서비스에 66억원·세 플랫폼 고객·간편현금결제 한 품목), 그리고 주가 자체(5년에 -40% 다섯 번, 2026년 -62%)입니다. 12개월 확률과 영업이익 영향을 곱한 기대손실 합은 -70억원<span class="est">E</span>으로 컨센 2026E 영업이익 260억원의 27%이고, 그중 절반이 '중단 서비스 미재개'와 '기본법 지연' 둘에서 나옵니다. 판정을 접는 조건은 논쟁 카드마다 적어 두었으며, 논쟁 1(본업)과 논쟁 3(규제)이 같은 분기에 접히면 판정을 보류합니다. 그때의 하방 좌표는 2026년 7월 30일의 시총 2,111억원(컨센 순이익의 10배)이고, 본업 악화가 겹치면 그 아래입니다.</div>
+
+<h2>1. 리스크 매트릭스 — 확률 × 영향</h2>
+<figure class=""><figcaption>장표 1. 리스크 10종 — 12개월 발생 확률과 발생 시 연결 영업이익 영향(억원)</figcaption><svg viewBox="0 0 880 360" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="70.0" y1="20" x2="70.0" y2="316" stroke="#d8d4cc" stroke-width="0.7"/><text x="70.0" y="332" text-anchor="middle" font-size="10.5" fill="#8a857c">0%</text>
+<line x1="181.4" y1="20" x2="181.4" y2="316" stroke="#d8d4cc" stroke-width="0.7"/><text x="181.4" y="332" text-anchor="middle" font-size="10.5" fill="#8a857c">10%</text>
+<line x1="292.9" y1="20" x2="292.9" y2="316" stroke="#d8d4cc" stroke-width="0.7"/><text x="292.9" y="332" text-anchor="middle" font-size="10.5" fill="#8a857c">20%</text>
+<line x1="404.3" y1="20" x2="404.3" y2="316" stroke="#d8d4cc" stroke-width="0.7"/><text x="404.3" y="332" text-anchor="middle" font-size="10.5" fill="#8a857c">30%</text>
+<line x1="515.7" y1="20" x2="515.7" y2="316" stroke="#d8d4cc" stroke-width="0.7"/><text x="515.7" y="332" text-anchor="middle" font-size="10.5" fill="#8a857c">40%</text>
+<line x1="627.1" y1="20" x2="627.1" y2="316" stroke="#d8d4cc" stroke-width="0.7"/><text x="627.1" y="332" text-anchor="middle" font-size="10.5" fill="#8a857c">50%</text>
+<line x1="738.6" y1="20" x2="738.6" y2="316" stroke="#d8d4cc" stroke-width="0.7"/><text x="738.6" y="332" text-anchor="middle" font-size="10.5" fill="#8a857c">60%</text>
+<line x1="850.0" y1="20" x2="850.0" y2="316" stroke="#d8d4cc" stroke-width="0.7"/><text x="850.0" y="332" text-anchor="middle" font-size="10.5" fill="#8a857c">70%</text>
+<line x1="70" y1="20.0" x2="850" y2="20.0" stroke="#d8d4cc" stroke-width="0.7"/><text x="64" y="24.0" text-anchor="end" font-size="10.5" fill="#8a857c">0</text>
+<line x1="70" y1="85.8" x2="850" y2="85.8" stroke="#d8d4cc" stroke-width="0.7"/><text x="64" y="89.8" text-anchor="end" font-size="10.5" fill="#8a857c">-20</text>
+<line x1="70" y1="151.6" x2="850" y2="151.6" stroke="#d8d4cc" stroke-width="0.7"/><text x="64" y="155.6" text-anchor="end" font-size="10.5" fill="#8a857c">-40</text>
+<line x1="70" y1="217.3" x2="850" y2="217.3" stroke="#d8d4cc" stroke-width="0.7"/><text x="64" y="221.3" text-anchor="end" font-size="10.5" fill="#8a857c">-60</text>
+<line x1="70" y1="283.1" x2="850" y2="283.1" stroke="#d8d4cc" stroke-width="0.7"/><text x="64" y="287.1" text-anchor="end" font-size="10.5" fill="#8a857c">-80</text>
+<text x="850" y="350" text-anchor="end" font-size="10.5" fill="#8a857c">가로 = 12개월 발생 확률(작성자 설정E) · 세로 = 발생 시 12개월 연결 영업이익 영향(억원, E) · 컨센 2026E 영업이익 260억 기준</text>
+<circle cx="738.6" cy="118.7" r="7.5" fill="#a44a3f" opacity="0.75"/>
+<text x="730.6" y="106.7" text-anchor="end" font-size="10" fill="#a44a3f">기본법 연내 미통과·2027 하반기 이후로 지연</text>
+<circle cx="460.0" cy="85.8" r="6.7" fill="#b07d2b" opacity="0.75"/>
+<text x="468.0" y="73.8" text-anchor="start" font-size="10" fill="#b07d2b">CPN 서비스 미신고 VASP 판단·구조 변경</text>
+<circle cx="515.7" cy="217.3" r="10.0" fill="#a44a3f" opacity="0.75"/>
+<text x="523.7" y="205.3" text-anchor="start" font-size="10" fill="#a44a3f">중단 서비스 미재개(간편 116억 고착)</text>
+<circle cx="292.9" cy="151.6" r="8.3" fill="#b07d2b" opacity="0.75"/>
+<text x="300.9" y="139.6" text-anchor="start" font-size="10" fill="#b07d2b">대형 고객(알리·테무·틱톡) 정산 정책 변경</text>
+<circle cx="571.4" cy="69.3" r="6.2" fill="#8a857c" opacity="0.75"/>
+<text x="563.4" y="57.3" text-anchor="end" font-size="10" fill="#8a857c">토스·카카오의 서클 CPN 등재·정산 내재화</text>
+<circle cx="404.3" cy="52.9" r="5.8" fill="#8a857c" opacity="0.75"/>
+<text x="412.3" y="40.9" text-anchor="start" font-size="10" fill="#8a857c">PG 카드수수료 재산정·마진 축소</text>
+<circle cx="627.1" cy="102.2" r="7.1" fill="#b07d2b" opacity="0.75"/>
+<text x="619.1" y="90.2" text-anchor="end" font-size="10" fill="#b07d2b">종속회사 손상·수준3 금융자산 평가손(4Q)</text>
+<circle cx="404.3" cy="36.4" r="5.4" fill="#8a857c" opacity="0.75"/>
+<text x="412.3" y="24.4" text-anchor="start" font-size="10" fill="#8a857c">RSU 2차 부여·자사주 처분 물량</text>
+<circle cx="125.7" cy="283.1" r="11.7" fill="#a44a3f" opacity="0.75"/>
+<text x="133.7" y="271.1" text-anchor="start" font-size="10" fill="#a44a3f">전자금융 사고·보안(손해배상)</text>
+<circle cx="404.3" cy="85.8" r="6.7" fill="#8a857c" opacity="0.75"/>
+<text x="412.3" y="11.4" text-anchor="start" font-size="10" fill="#8a857c">규제 통과 후 예금토큰·은행 직접 정산으로 자리 축소</text>
+</svg><div class="src">자료: 파트 1~5의 실측과 언론·공시. 확률·영향은 작성자 설정E. 빈티지 2026-09-04</div></figure>
+<p class="reading"><b>관찰.</b> 영향이 큰 순서는 전자금융 사고(-80억원, 5%), 중단 서비스 미재개(-60억원, 40%), 대형 고객 정책 변경(-40억원, 20%), 기본법 지연(-30억원, 60%)입니다. 확률이 큰 순서는 기본법 지연(60%), 4분기 손상(50%), 토스·카카오 CPN 등재(45%)입니다. <b>원인.</b> 기대손실(확률 × 영향)로 줄 세우면 중단 서비스 미재개 -24억원, 기본법 지연 -18억원, 4분기 손상 -12.5억원, 대형 고객 -8억원, CPN 구조 변경 -7억원, 예금토큰 -6억원, 토스·카카오 -7억원 순이고 합이 -70억원{E}입니다. 영업이익에 직접 닿는 것은 본업 리스크(미재개·고객·PG)이고, 규제 리스크는 영업이익보다 배수(옵션 값)에 닿습니다. <b>함의.</b> 그래서 규제 리스크의 영향을 영업이익 -30억원으로 적은 것은 과소입니다. 기본법이 2027년 하반기로 밀리면 영업이익은 거의 변하지 않지만 시총은 옵션 값(파트 7 추정 600~900억원{E})만큼 줄 수 있습니다. 매트릭스는 손익 리스크의 도구이고, 배수 리스크는 4절의 시나리오 나무로 따로 봅니다.</p>
+
+<h2>2. 규제 리스크 세 가지</h2>
+<p><b>기본법 지연.</b> 446일 계류, 정부안 미제출, 정무위 2년간 0건 처리(파트 3). 9월 발의가 예고됐지만 통과는 정무위 소위·전체회의·법사위·본회의를 지나야 하고 한은·금융위 쟁점(발행 주체·정책기구)이 미합의입니다. 12월 9일 정기국회 종료가 첫 데드라인이며, 우리는 연내 통과 40%<span class="est">E</span>, 2027년 상반기 40%<span class="est">E</span>, 그 이후 또는 헥토에 불리한 구조 20%<span class="est">E</span>로 놓습니다. 지연의 손익 영향은 작지만(2027년 CPN 매출 10~30억원<span class="est">E</span>이 뒤로 밀리는 정도), 주가 영향은 2026년 3~4월(-43%)과 5~7월(-62%)이 실측입니다.</p>
+<p><b>CPN 적법성.</b> 5월 16일 시작된 금융위·재경부·FIU·한은의 검토가 9월 4일까지 결론 없이 이어지고 있고, 9월 1일 재경부는 '입법 공백'을 말했습니다. 최악은 헥토파이낸셜의 총괄 운영이 미신고 가상자산사업자로 판단되는 것으로, 이 경우 특금법 위반(형사)과 서비스 중단이 함께 옵니다. 회사가 헥토월렛원의 가상자산이전업 등록(12월)을 준비하는 것은 이 위험을 구조로 피하려는 것이고, 그러면 헥토파이낸셜의 귀속 비율이 줄어듭니다. 확률 35%<span class="est">E</span>, 영향은 2027년 매출 -20억원<span class="est">E</span>이지만 '스테이블코인 사업자'라는 정체성의 손상이 더 큽니다.</p>
+<p><b>예금토큰과 은행 직접 정산.</b> 프로젝트 한강 2단계가 9개 은행 실거래로 가고 신현송 총재가 예금토큰에 중점을 두면, 원화 디지털 결제의 주도권이 은행 안에서 완결될 수 있습니다. 또 하나-두나무-네이버 동맹처럼 컨소시엄이 준비금 수탁·체인·유통을 안에서 나눠 가지면 헥토 같은 외부 정산자의 자리는 좁아집니다. 확률 30%<span class="est">E</span>, 영향은 옵션 값의 소멸입니다.</p>
+
+<h2>3. 집중 리스크 세 가지</h2>
+<p><b>한 서비스, 66억원.</b> 2026년 1분기 간편현금결제 182억원 중 66억원이 한 신규 가맹점 서비스였고, 2분기에 회사 판단으로 멈췄습니다. 회사는 업종·고객·재개 조건을 밝히지 않았습니다. 재개되지 않으면 하반기 영업이익은 컨센보다 30억원<span class="est">E</span> 낮고, 확률 40%<span class="est">E</span>입니다. 2023년 하반기의 고객 이탈(간편 128억원에서 94억원)이 7분기 걸려 회복된 전례가 있습니다.</p>
+<p><b>세 플랫폼 고객.</b> 크로스보더 정산의 고객은 알리익스프레스·테무·틱톡이고 최종원 대표가 '2026년 주력 수익원'이라고 부른 사업입니다. 이 플랫폼들의 한국 정산 정책(직접 정산 전환·정산 사업자 교체·수수료 인하)이 바뀌면 기타 매출 60억원과 그에 연결된 간편현금결제 매출이 함께 흔들립니다. 확률 20%<span class="est">E</span>, 영향 -40억원<span class="est">E</span>. 미국·EU의 테무·알리 규제(소액 면세 폐지)가 한국 판매자 거래액을 줄이는 경로도 있습니다.</p>
+<p><b>한 품목이 이익의 절반.</b> 파트 1·5가 보인 대로 간편현금결제 기여이익이 2026년 1분기 전체의 46%, 2분기 31%입니다. 이 품목의 원가율이 5%포인트 오르면(백엔드형 비중 증가) 분기 영업이익이 6~9억원 줄고, 페이 사업자 고객 하나가 은행 직접 연동으로 갈아타면 그 이상입니다. 카카오뱅크 MOU는 이 리스크의 반대편(협력)이면서 같은 편(은행이 직접 하면)입니다.</p>
+
+<h2>3-1. 집중의 정량 — 상위 고객이 얼마나 큰가</h2>
+<p>회사는 고객별 매출을 공시하지 않으므로 세 조각으로 역산합니다. 첫째, 1분기 간편현금결제 182억원 중 2분기에 빠진 66억원이 '일부 신규 가맹점 서비스'였으니 그 서비스 하나가 1분기 연결 매출의 11.5%, 기여이익의 20%<span class="est">E</span>였습니다. 둘째, 크로스보더 정산은 알리·테무·틱톡 세 곳이 사실상 전부이고(회사 발표), 분기 매출 30~40억원<span class="est">E</span>에 그 정산으로 유입된 가맹점의 계좌 결제가 얹히므로 세 플랫폼에 연결된 매출은 분기 80~120억원<span class="est">E</span>, 연결 매출의 16~24%<span class="est">E</span>입니다. 셋째, 백엔드형 간편현금결제의 고객은 쿠팡페이·네이버파이낸셜 등 페이 사업자로 상위 3곳<span class="est">E</span>이 백엔드 매출의 절반 이상일 가능성이 큽니다. 세 조각을 합치면 상위 5개 고객군<span class="est">E</span>이 연결 매출의 35~45%<span class="est">E</span>, 기여이익의 절반<span class="est">E</span>에 닿습니다. 매출 1,874억원 회사로는 높은 집중이고, 2023년 하반기(고객 이탈로 간편 -27%)와 2026년 2분기(-36%)가 그 집중의 실측 결과였습니다. 이 수치는 회사가 공시하지 않는 한 추정으로 남으며, 채점은 '기타 매출 두 분기 연속 감소'와 '간편현금결제 110억원 미만'이라는 결과값으로 합니다.</p>
+
+<h2>3-2. 우선순위 — 무엇부터 볼 것인가</h2>
+<p>열 개를 한꺼번에 볼 수는 없으므로 순서를 정합니다. 첫째는 논쟁 1의 본업(중단 서비스 재개)입니다. 기대손실이 가장 크고(-24억원<span class="est">E</span>), 채점 시점이 가장 가깝고(11월), 결과가 옵션 논의의 전제(파트 7: 본업이 컨센 -20%면 옵션 논의 무의미)이기 때문입니다. 둘째는 규제 일정(9월 통합안·12월 9일)입니다. 손익에는 작지만 시총의 28%<span class="est">E</span>(옵션 잔여)를 정하고 다른 세 리스크(CPN·예금토큰·선점 소멸)를 같이 켜고 끕니다. 셋째는 CPN 검토 결론입니다. 헥토 고유 리스크이고 회사가 통제할 수 없으며, 결론이 부정이면 '스테이블코인 종목'이라는 이름 자체가 흔들립니다. 넷째가 4분기 영업외, 다섯째가 물량입니다. 이 순서는 확률이 아니라 '켜졌을 때 판정을 얼마나 바꾸는가'로 정한 것이고, 첫째와 둘째가 같은 분기(4분기)에 결판나므로 2026년 11~12월이 이 종목의 리스크 밀도가 가장 높은 두 달입니다.</p>
+
+<h2>4. 배수 리스크 — 규제 시나리오 나무와 하방 좌표</h2>
+<figure class=""><figcaption>장표 2. 9월 통합안 발의 이후의 세 갈래와 헥토의 자리</figcaption><svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<defs><marker id="ar6" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a857c"/></marker></defs>
+<rect x="20" y="110" width="170" height="70" rx="6" fill="#f1ede4" stroke="#1f3a5f" stroke-width="1.5"/><text x="105" y="135" text-anchor="middle" font-size="11.5" font-weight="700">9월 통합안 발의</text><text x="105" y="153" text-anchor="middle" font-size="10">유동수 '추석 전'</text><text x="105" y="169" text-anchor="middle" font-size="10" fill="#8a857c">확률 80%<span class="est">E</span></text>
+<line x1="190" y1="130" x2="300" y2="60" stroke="#8a857c" marker-end="url(#ar6)"/><line x1="190" y1="145" x2="300" y2="145" stroke="#8a857c" marker-end="url(#ar6)"/><line x1="190" y1="160" x2="300" y2="235" stroke="#8a857c" marker-end="url(#ar6)"/>
+<rect x="302" y="30" width="230" height="60" rx="6" fill="#fff" stroke="#2b7a78"/><text x="417" y="52" text-anchor="middle" font-size="11" font-weight="700">A. 정기국회 내 통과(12-09)</text><text x="417" y="70" text-anchor="middle" font-size="10">40%<span class="est">E</span> · 시행 2027 하반기~2028 초</text><text x="417" y="84" text-anchor="middle" font-size="10" fill="#2b7a78">옵션 시간가치 유지, 인가 경쟁 개시</text>
+<rect x="302" y="115" width="230" height="60" rx="6" fill="#fff" stroke="#b07d2b"/><text x="417" y="137" text-anchor="middle" font-size="11" font-weight="700">B. 2027 상반기 통과</text><text x="417" y="155" text-anchor="middle" font-size="10">40%<span class="est">E</span> · 시행 2028</text><text x="417" y="169" text-anchor="middle" font-size="10" fill="#b07d2b">옵션 값 절반<span class="est">E</span>, 주가는 본업 배수로</text>
+<rect x="302" y="205" width="230" height="60" rx="6" fill="#fff" stroke="#a44a3f"/><text x="417" y="227" text-anchor="middle" font-size="11" font-weight="700">C. 발행 은행 독점·유통 인가제</text><text x="417" y="245" text-anchor="middle" font-size="10">20%<span class="est">E</span> · 비은행 정산 자리 축소</text><text x="417" y="259" text-anchor="middle" font-size="10" fill="#a44a3f">옵션 0, 7월 저점 재시험</text>
+<line x1="532" y1="60" x2="640" y2="60" stroke="#8a857c" marker-end="url(#ar6)"/><line x1="532" y1="145" x2="640" y2="145" stroke="#8a857c" marker-end="url(#ar6)"/><line x1="532" y1="235" x2="640" y2="235" stroke="#8a857c" marker-end="url(#ar6)"/>
+<text x="650" y="55" font-size="10.5">CPN 상용 개시 + 컨소시엄 파트너십 → 2027E 스테이블코인 매출 30~60억<span class="est">E</span></text><text x="650" y="70" font-size="10" fill="#8a857c">헥토 자리의 상한 시나리오</text>
+<text x="650" y="140" font-size="10.5">본업 자(2026E 순이익 192~207억 × PER 12~15배<span class="est">E</span>)로 회귀</text><text x="650" y="155" font-size="10" fill="#8a857c">= 시총 2,300~3,100억<span class="est">E</span></text>
+<text x="650" y="230" font-size="10.5">2026-07-30 시총 2,111억(순이익 10배)이 실측 바닥</text><text x="650" y="245" font-size="10" fill="#8a857c">본업 악화가 겹치면 그 아래</text>
+</svg><div class="src">자료: 파트 3·7. 확률과 시총 자는 작성자 설정E. 빈티지 2026-09-04</div></figure>
+<figure class=""><figcaption>장표 3. 과거 25% 지그재그 하락 국면의 낙폭(%) — 2021년부터 9회</figcaption><svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="206.0" x2="860" y2="206.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="210.0" text-anchor="end" font-size="11" fill="#8a857c">-80.0%</text>
+<line x1="62" y1="159.0" x2="860" y2="159.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="163.0" text-anchor="end" font-size="11" fill="#8a857c">-60.0%</text>
+<line x1="62" y1="112.0" x2="860" y2="112.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="116.0" text-anchor="end" font-size="11" fill="#8a857c">-40.0%</text>
+<line x1="62" y1="65.0" x2="860" y2="65.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="69.0" text-anchor="end" font-size="11" fill="#8a857c">-20.0%</text>
+<line x1="62" y1="18.0" x2="860" y2="18.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">0.0%</text>
+<text x="106.3" y="224" text-anchor="middle" font-size="10" fill="#8a857c">21-01~22-07</text>
+<text x="195.0" y="224" text-anchor="middle" font-size="10" fill="#8a857c">22-09~23-01</text>
+<text x="283.7" y="224" text-anchor="middle" font-size="10" fill="#8a857c">23-02~23-11</text>
+<text x="372.3" y="224" text-anchor="middle" font-size="10" fill="#8a857c">24-01~24-06</text>
+<text x="461.0" y="224" text-anchor="middle" font-size="10" fill="#8a857c">24-07~25-04</text>
+<text x="549.7" y="224" text-anchor="middle" font-size="10" fill="#8a857c">25-06~25-07</text>
+<text x="638.3" y="224" text-anchor="middle" font-size="10" fill="#8a857c">25-07~25-09</text>
+<text x="727.0" y="224" text-anchor="middle" font-size="10" fill="#8a857c">26-03~26-04</text>
+<text x="815.7" y="224" text-anchor="middle" font-size="10" fill="#8a857c">26-05~26-07</text>
+<rect x="75.3" y="18.0" width="61.1" height="105.8" fill="#a44a3f" opacity="0.9"/>
+<text x="106.3" y="134.8" text-anchor="middle" font-size="9.5" fill="#a44a3f">-45.0</text>
+<rect x="164.0" y="18.0" width="61.1" height="62.7" fill="#a44a3f" opacity="0.9"/>
+<text x="195.0" y="91.7" text-anchor="middle" font-size="9.5" fill="#a44a3f">-26.7</text>
+<rect x="252.6" y="18.0" width="61.1" height="98.9" fill="#a44a3f" opacity="0.9"/>
+<text x="283.7" y="127.9" text-anchor="middle" font-size="9.5" fill="#a44a3f">-42.1</text>
+<rect x="341.3" y="18.0" width="61.1" height="107.9" fill="#a44a3f" opacity="0.9"/>
+<text x="372.3" y="136.9" text-anchor="middle" font-size="9.5" fill="#a44a3f">-45.9</text>
+<rect x="430.0" y="18.0" width="61.1" height="112.1" fill="#a44a3f" opacity="0.9"/>
+<text x="461.0" y="141.1" text-anchor="middle" font-size="9.5" fill="#a44a3f">-47.7</text>
+<rect x="518.6" y="18.0" width="61.1" height="79.4" fill="#a44a3f" opacity="0.9"/>
+<text x="549.7" y="108.4" text-anchor="middle" font-size="9.5" fill="#a44a3f">-33.8</text>
+<rect x="607.3" y="18.0" width="61.1" height="63.9" fill="#a44a3f" opacity="0.9"/>
+<text x="638.3" y="92.9" text-anchor="middle" font-size="9.5" fill="#a44a3f">-27.2</text>
+<rect x="696.0" y="18.0" width="61.1" height="100.8" fill="#a44a3f" opacity="0.9"/>
+<text x="727.0" y="129.8" text-anchor="middle" font-size="9.5" fill="#a44a3f">-42.9</text>
+<rect x="784.6" y="18.0" width="61.1" height="145.5" fill="#a44a3f" opacity="0.9"/>
+<text x="815.7" y="174.5" text-anchor="middle" font-size="9.5" fill="#a44a3f">-61.9</text>
+</svg><div class="src">자료: 키움 ka10081 수정주가, 파트 4 국면표. 빈티지 2026-09-04</div></figure>
+<p class="reading"><b>관찰.</b> 9회 하락 국면의 낙폭 중앙값은 -42.9%이고 -60%를 넘긴 것은 2026년 5~7월 한 번입니다. 다섯 번의 -40% 초과 하락 중 넷이 직전 +50% 이상 급등 뒤에 왔습니다. <b>원인.</b> 급등의 재료가 이익이 아니라 기대(규제·CPN)였고, 유통 물량의 30%가 하루에 도는 회전율(파트 4)이 진폭을 키웠습니다. <b>함의.</b> 5막(+69%)이 같은 조건이라, 다음 하락 국면의 자는 '-43%(중앙값)'입니다. 25,600원에서 -43%는 14,600원{E}으로 7월 저점 14,180원과 같은 자리이고, 시총 2,000억원대(순이익 10배)입니다. 이것이 규제가 좌절될 때의 실측 하방이며, 본업까지 접히면(논쟁 1 실패) 순이익 160억원{E} × 10배 = 1,600억원{E}까지 내려갑니다. PBR로는 0.9배{E}(자본 1,872억원)입니다.</p>
+<p>시나리오 나무의 A(정기국회 내 통과, 40%<span class="est">E</span>)에서도 헥토의 자리는 파트 3이 정리한 대로 '정산·백엔드'라 2027E 스테이블코인 매출은 30~60억원<span class="est">E</span>에 그칩니다. 즉 A가 와도 손익은 크게 안 바뀌고 배수가 바뀝니다. B(2027년 상반기, 40%<span class="est">E</span>)에서는 옵션의 시간 가치가 절반으로 줄어 시총이 본업 자(2,300~3,100억원<span class="est">E</span>)로 회귀하고, C(20%<span class="est">E</span>)에서는 옵션이 0이 됩니다. 세 시나리오의 확률가중 시총을 적지 않는 것은 이 킷의 규칙(목표주가·확률가중 EV 금지)이며, 대신 각 시나리오에서 무엇을 관측하면 그 갈래로 들어선 것인지를 접는 조건표에 적습니다.</p>
+
+<h2>5. 그 밖의 리스크</h2>
+<p><b>4분기 영업외.</b> 2024·2025년 4분기 지배순이익이 각 -22억·-15억원이었습니다. 종속회사 손상과 수준 3 금융자산(330억원) 평가손이 원인이고, 2026년에도 신규 편입사(엠트웰브·허니콘)와 헥토데이터의 손상검사가 4분기에 옵니다. 확률 50%<span class="est">E</span>, 영향 -25억원<span class="est">E</span>(순이익 기준). 영업이익 논쟁에는 안 닿지만 컨센 순이익 207억원에는 닿습니다.</p>
+<p><b>RSU와 물량.</b> 2차 RSU 조건이 시총 1조 5,000억원이라 부여 자체는 멀지만, 1차 교부분 218,600주(2026년 3월)의 매도는 3월 24일 -23%의 배경으로 추정됩니다<span class="est">E</span>. 자사주 182,772주는 소각이 아니라 보상용으로 남아 있고, 3월 주주총회가 처분 계획을 승인했습니다. 임원 매도(3월 30일 김성현 이사 3,500주)도 공시로 확인됩니다.</p>
+<p><b>모회사와 계열.</b> 헥토이노베이션(38.50%)이 스테이블코인 사업의 지갑·VASP를 헥토월렛원으로 갖고 있어, 그 사업의 이익 배분과 계열 간 거래 조건은 헥토파이낸셜 소액주주에게 정보 비대칭입니다. 헥토월렛원의 풋·콜옵션(2028년 영업이익 기준)은 헥토이노베이션의 리스크이지 헥토파이낸셜의 것이 아니지만, 사업 자체가 그 회사 없이 성립하지 않습니다.</p>
+<p><b>전자금융 사고.</b> 간편현금결제는 계좌에서 바로 돈이 나가므로 부정 결제·해킹 시 손해배상 책임이 회사에 있습니다(전자금융거래법 9조, 준비금 적립). 확률은 낮지만(5%<span class="est">E</span>) 발생 시 영향은 -80억원<span class="est">E</span> 이상이고 신뢰 손상이 더 큽니다.</p>
+<p><b>경쟁.</b> NHN KCP의 아발란체 정산망(4분기 전환), KG이니시스의 KB 진영 PoC, 다날·인엑스, 토스·카카오의 서클 MOU는 헥토가 먼저 서 있던 자리에 후발주자가 오고 있다는 뜻입니다. 확률 45%<span class="est">E</span>(12개월 내 토스 또는 카카오의 CPN 등재), 영향은 선점 프리미엄의 소멸(-15억원<span class="est">E</span>, 옵션 값 축소).</p>
+
+<h2>5-1. 관측 신호표 — 리스크가 켜졌는지 무엇으로 아는가</h2>
+<table>
+<tr><th>리스크</th><th>선행 신호(켜지기 전)</th><th>확정 신호(켜진 뒤)</th><th>어디서</th></tr>
+<tr><td>기본법 지연</td><td>9월 통합안 미발의, 소위 일정 없음</td><td>12-09 정기국회 종료 시 소위 미통과</td><td>국회 의안정보·정무위 일정</td></tr>
+<tr><td>CPN 적법성</td><td>검토 4개월 초과(이미 해당), 회사 IR에서 오픈 시점 언급 없음</td><td>FIU 미신고 VASP 판단·서비스 구조 변경 공시</td><td>FIU·재경부 보도, 회사 공시</td></tr>
+<tr><td>중단 서비스 미재개</td><td>2분기 선불충전금 100억 하회</td><td>3분기 간편현금결제 <130억, 원가율 >35%</td><td>금감원 통계(9월), 분기보고서(11월)</td></tr>
+<tr><td>대형 고객 정책 변경</td><td>알리·테무 한국 정산 정책 보도, 미국·EU 소액면세 규제</td><td>기타 매출 두 분기 연속 감소</td><td>언론, 분기보고서</td></tr>
+<tr><td>토스·카카오 CPN 등재</td><td>서클 Arc 메인넷(9-16) 파트너 목록</td><td>CPN 파트너 등재 발표</td><td>서클 보도자료</td></tr>
+<tr><td>4분기 영업외</td><td>3분기 보고서의 종속회사 손익</td><td>4분기 잠정 순이익 < 영업이익 × 0.6</td><td>2월 잠정실적</td></tr>
+<tr><td>예금토큰 대체</td><td>한강 2단계 실거래 개시·참여 결제사 목록</td><td>은행권 예금토큰 결제 상용화, 헥토 미참여</td><td>한국은행 보도</td></tr>
+<tr><td>RSU·물량</td><td>임원 소유 보고(주식 감소)</td><td>대량보유 보고 지분율 하락</td><td>DART</td></tr>
+</table>
+<p class="src">선행·확정 신호는 작성자 정의. 확정 신호 하나가 켜지면 해당 논쟁 카드의 '경보' 또는 '접는 조건'과 대조합니다.</p>
+
+<h2>5-2. 리스크의 상관 구조 — 따로 오지 않는 것들</h2>
+<p>열 개 리스크는 세 원인으로 묶입니다. 첫째 원인 '입법 공백'에서 기본법 지연·CPN 적법성·예금토큰 대체·토스·카카오 선점이 함께 나옵니다. 법이 늦어지면 당국 검토도 결론이 늦어지고, 그 사이 한은의 예금토큰과 서클의 다른 파트너가 자리를 채웁니다. 이 네 개는 한 방향으로 같이 움직이고, 반대로 법이 통과되면 넷이 같이 풀립니다. 둘째 원인 '고객 집중'에서 중단 서비스 미재개와 대형 고객 정책 변경이 나옵니다. 1분기 급증분이 해외 플랫폼 연계 가맹점이었다면 두 리스크는 같은 고객군의 앞뒤이고, 하나가 켜지면 다른 하나의 확률이 오릅니다. 셋째 원인 '회계·물량'에서 4분기 영업외와 RSU가 나오며, 이 둘은 앞의 둘과 독립입니다. 따라서 12개월 안에 경보 둘 이상이 동시에 켜질 확률을 독립 가정의 곱(각 40%·60%면 24%)보다 높은 30%<span class="est">E</span>로 놓았고, '동시 악화' 행을 접는 조건표에 따로 둔 이유가 이것입니다. 첫째 원인이 풀리는 순간(통과)과 켜지는 순간(좌절)이 주가에 가장 큰 사건이며, 그 순간은 12월 9일 전후에 올 가능성이 가장 큽니다.</p>
+
+<h2>5-3. 통과 이후의 리스크 — 좋은 소식에 숨은 것</h2>
+<p>기본법이 통과돼도 리스크가 0이 되지 않습니다. 첫째, 인가 경쟁입니다. 발행 인가는 은행 컨소시엄이 받겠지만 유통·정산·지갑 사업자에게도 등록·인가 요건(자본금·전산·내부통제·AML)이 붙을 것이고, 헥토파이낸셜(자본 1,872억원)은 요건을 채우겠지만 헥토월렛원(자본 미공개, 2025년 순손실 18억원)은 증자가 필요할 수 있습니다. 둘째, 시행령의 범위입니다. 토큰증권법이 통과(1월)와 시행(2027년 2월) 사이 13개월 동안 하위법규 지연으로 '발행만 되고 거래는 못 할 수도' 있다는 우려(이데일리 8-19)를 낳은 것처럼, 스테이블코인법도 통과 뒤 12~15개월<span class="est">E</span>은 인가 신청과 시행령 사이의 공백기이며 그 기간 주가는 '통과 재료 소진'을 겪을 수 있습니다. 셋째, 발행사의 유통망 선택입니다. 하나 연합이 네이버페이·업비트를, KB가 토스를 유통으로 두었듯 컨소시엄은 자기 유통망을 먼저 쓰고, 헥토 같은 외부 정산자는 두 번째 순서입니다. 통과는 옵션을 '권리'에서 '경쟁'으로 바꾸는 사건이고, 그때부터 채점 지표는 규제 일정이 아니라 헥토가 어느 컨소시엄의 정산 파트너로 이름을 올리는가입니다.</p>
+
+<h2>6. 접는 조건 통합표</h2>
+<table class=""><tr><th>논쟁</th><th>유지선</th><th>경보</th><th>접는 조건</th><th>채점 시점</th></tr><tr><td>1. 15.9%의 재현</td><td>3Q 간편 ≥140억 · 원가율 ≤32% · OPM ≥11%</td><td>간편 120~140억, OPM 9~11%</td><td>간편 <110억 두 분기 연속, 4Q 진입까지 재개 언급 없음</td><td>11월 초 잠정 · 11월 중순 분기보고서</td></tr><tr><td>2. CPN 매출화</td><td>연내 첫 상용 거래 발표 · 12월 이전업 등록</td><td>당국 검토 장기화·오픈 재연기</td><td>미신고 VASP 판단·서비스 중단, 1Q27까지 매출 공시 없음</td><td>12월 · 2027-02 결산</td></tr><tr><td>3. 법제화 후 자리</td><td>통합안에 비은행 유통·정산 조항 · 소위 통과</td><td>통합안 발의만, 소위 일정 없음</td><td>발행·유통 은행·인가 플랫폼 한정, 2027 상반기까지 소위 미통과</td><td>9월 말 · 12-09 · 2027 상반기</td></tr><tr><td>4. 옵션 값</td><td>본업 이익 컨센(260억)의 ±10%</td><td>본업 이익 컨센 -10~-20%</td><td>본업 이익 컨센 -20% 이상 미달</td><td>11월 초 · 2027-02</td></tr><tr><td>동시 악화</td><td>—</td><td>둘 이상 경보</td><td>1·3이 같은 분기에 접히면 판정 보류</td><td>—</td></tr></table>
+<p class="src">각 논쟁의 유지선·경보·접는 조건은 파트 1·2·3·7 본문과 같습니다. '동시 악화' 행이 판정 보류의 조건입니다.</p>
+
+<h2>6-1. 노션 스터디의 리스크 3과 지금 — 무엇이 현실이 됐는가</h2>
+<p>공자께서 3월 10일 적으신 리스크는 셋이었습니다. 첫째 '법안 통과 지연 또는 은행 컨소시엄 중심 설계로 헥토가 주변부로 밀릴 가능성', 둘째 '후발 핀테크 대형사의 소액해외송금 진입 경쟁', 셋째 '52주 고점(34,500원)·12개월 +255.7%로 기대치 선반영'. 6개월 뒤의 채점은 이렇습니다. 첫째는 절반이 현실이 됐습니다. 통과는 지연됐고(446일), 은행 컨소시엄 중심 설계는 한은 요구·절충안 보도로 굳어 가고 있으며, 헥토는 어느 진영에도 이름이 없습니다. 다만 '주변부'는 '정산 층'으로 구체화됐고 그 자리는 실재합니다(파트 3). 둘째는 방향이 달랐습니다. 경쟁은 소액해외송금이 아니라 스테이블코인 정산·유통에서 왔고(토스·카카오의 서클 MOU, NHN KCP 메인넷, 다날·인엑스), 소액해외송금 플랫폼은 아직 출시되지 않아 경쟁 이전 단계입니다. 셋째는 가장 정확했습니다. 주가는 그 시점 34,500원에서 45,000원까지 30% 더 갔다가 14,180원으로 -68% 되돌렸고, '기대치 선반영'은 -62% 국면으로 실현됐습니다. 이 킷이 노션 스터디에 더한 리스크는 집중(한 서비스 66억원·세 플랫폼)·계열(헥토월렛원 귀속)·회계(4분기 손상)·물량(RSU) 넷이고, 뺀 것은 없습니다.</p>
+
+<h2>7. 리스크가 논쟁에 주는 답과 미결</h2>
+<p>논쟁 1에는 '미재개' 확률 40%<span class="est">E</span>를, 논쟁 2에는 '미신고 VASP' 확률 35%<span class="est">E</span>를, 논쟁 3에는 시나리오 C 20%<span class="est">E</span>를, 논쟁 4에는 하방 좌표 두 개(시총 2,111억원 실측·1,600억원<span class="est">E</span> 본업 악화 시)를 넘깁니다. 이 확률들은 서로 독립이 아닙니다. 기본법 지연(60%)과 CPN 검토 장기화(35%)는 같은 원인(입법 공백)에서 나오고, 미재개(40%)와 대형 고객(20%)도 같은 고객군에서 나올 수 있습니다. 상관을 반영하면 '둘 이상 동시'의 확률은 곱보다 크며, 우리는 12개월 안에 경보 둘 이상이 동시에 켜질 확률을 30%<span class="est">E</span>로 봅니다.</p>
+<p>마지막으로 리스크의 반대편도 적어 둡니다. 열 개 리스크의 확률이 낮아지는 사건은 셋입니다. 9월 통합안에 비은행 유통·정산업 조항이 들어가는 것(규제 3종의 확률이 함께 내려감), 11월 분기보고서에서 간편현금결제가 150억원 위로 돌아오는 것(집중 2종), 그리고 당국이 CPN 구조를 헥토월렛원 전면으로 정리해 허용하는 것(적법성 1종·귀속 비율 하락과 맞바꿈). 셋 중 둘이 4분기 안에 오면 판정의 하방 자는 2,111억원에서 본업 Base 2,590억원<span class="est">E</span>으로 올라가고, 셋 다 오지 않으면 파트 4의 낙폭 중앙값(-43%)이 다음 국면의 자가 됩니다. 리스크 파트가 상방을 적는 이유는 접는 조건과 유지선이 같은 자의 양 끝이기 때문입니다.</p>
+<p><b>미결.</b> A급: 중단 서비스의 업종·재개 조건 · CPN 당국 검토 결론. B급: 알리·테무·틱톡 정산 계약 기간·조건 · 종속회사 손상검사 기준 · RSU 1차 교부분 매도 현황. C급: 전자금융 준비금 적립액 · 보험 가입 여부.</p>
+<div class="foot">데이터 계보: 파트 1~5 실측, DART 공시(RSU·임원 소유·주총), 언론(이데일리 5-16, 헤럴드경제 9-01, 블로터 8-06, 파이낸셜뉴스 7-20). 확률·영향·시나리오 가중은 전부 작성자 설정<span class="est">E</span>. 투자 권유가 아니며 목표주가·확률가중 가치를 싣지 않습니다.</div>
+
+</main></body></html>

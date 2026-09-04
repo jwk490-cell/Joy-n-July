@@ -1,0 +1,411 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="coverage" content="costs,model">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>헥토파이낸셜 파트 5 — 비용·마진 · 2026-09-04</title>
+<style>
+body{margin:0;background:#faf8f4;color:#3a3630;font-family:'Noto Serif KR','Apple SD Gothic Neo','Malgun Gothic',serif;line-height:1.78;word-break:keep-all}
+main{max-width:920px;margin:0 auto;padding:44px 28px 80px}
+h1{font-size:23px;margin:0 0 6px;line-height:1.35} .sub{color:#8a857c;font-size:13px;margin-bottom:10px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;line-height:1.6}
+h2{font-size:17.5px;margin:36px 0 8px;padding-top:16px;border-top:1px solid #e3ded4}
+h3{font-size:15px;margin:22px 0 6px}
+p{max-width:700px;font-size:15px;margin:0 0 1.25em}
+p.reading{font-size:14px;color:#4a463f;background:#f4f0e8;border-radius:6px;padding:10px 14px;max-width:700px}
+figure{margin:14px 0 6px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px}
+figcaption{font-size:13px;font-weight:600;margin-bottom:8px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+svg{width:100%;height:auto;display:block}
+.src{font-size:11.5px;color:#8a857c;margin-top:6px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+table{border-collapse:collapse;font-size:13px;margin:10px 0 16px;font-family:Pretendard,'Apple SD Gothic Neo',-apple-system,sans-serif;background:#fff}
+td,th{border:1px solid #e0dbd0;padding:5px 10px;text-align:right;vertical-align:top} td:first-child,th:first-child{text-align:left} th{background:#f1ede4;font-weight:600;color:#5a5650}
+.gloss{display:grid;grid-template-columns:160px 1fr;gap:6px 14px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px;font-size:13.5px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;max-width:740px;line-height:1.55}
+.gloss b{font-size:13px}
+.judge{background:#f1ede4;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.ourview{background:#eef2f7;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.panel{background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px 16px;max-width:700px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;font-size:14px;margin:12px 0 18px}
+.panel input[type=range]{width:100%}
+.panel .out{margin-top:8px;font-weight:700}
+.panel .note{color:#8a857c;font-size:12.5px;margin-top:6px}
+.est{font-size:.72em;vertical-align:super;color:#a44a3f;font-weight:700}
+.foot{font-size:12px;color:#8a857c;max-width:700px;margin-top:30px;border-top:1px solid #e3ded4;padding-top:12px}
+.segdive{border:1px solid #e0dbd0;border-radius:8px;padding:6px 18px 4px;margin:14px 0 20px;background:#fdfcf9}
+.leadchain{background:#fff8ea;border:1px solid #e8d9b5;border-radius:6px;padding:12px 16px;max-width:700px;font-size:14px}
+.hubnav{font-size:12.5px;color:#8a857c;font-family:Pretendard,sans-serif;margin-bottom:14px}
+.hubnav a{color:#1f3a5f}
+a{color:#1f3a5f}
+@media print{.panel input{display:none}}
+</style></head><body><main>
+
+<div class="hubnav">헥토파이낸셜 파트제 커버리지 · <a href="헥토파이낸셜_허브.html">허브(판정·상수 블록·논쟁 지도)</a> · 파트 0 / 1 / 2 / 3 / 4 / <b>5</b> / 6 / 7</div>
+<h1>헥토파이낸셜 파트 5 — 비용·마진: 수수료원가 한 층과 고정비 한 층</h1>
+<p class="sub">작성 2026-09-04 · 주가 25,600원(9-04 종가) · 시총 3,576억원 · $1 = ₩1,358.5 · 12월 결산(2026년 = 제27기) · 다음 실적 3Q26 잠정 2026년 11월 초<span class="est">E</span> · 숫자의 정본은 허브 상수 블록이며 이 파트는 인용만 합니다 · 파트 1·7과 조정판 변수를 공유합니다</p>
+
+<div class="judge"><b>이 파트의 답.</b> 헥토파이낸셜의 영업비용은 두 층입니다. 은행·카드사에 내는 수수료원가(2026년 2분기 267억원, 매출의 53%)와 그 밖의 영업비용(188억원, 매출의 37%)입니다. 첫째 층은 매출과 함께 움직이되 품목마다 비율이 다르고(간편현금결제 30%·가상계좌 40%·PG 85%), 둘째 층은 인건비(88억원)·대손(14억원)·감가상각(17억원)이 주축인 고정비라 매출이 12.8% 줄어든 2분기에 5.8%만 줄었습니다. 그래서 영업이익률은 '간편현금결제 비중'의 함수가 되고, 16분기 회귀로 간편 비중 1%포인트가 영업이익률 0.14%포인트<span class="est">E</span>에 대응합니다. 3분기 Base(간편 150억·원가율 32%·PG 240억·기타 150억·고정비 185억)에서 영업이익은 59억원<span class="est">E</span>, 이익률 10.9%<span class="est">E</span>이며, 이것이 파트 1의 논쟁 1과 파트 7의 컨센 역산이 공유하는 숫자입니다.</div>
+
+<h2>1. 회계 인식 지도 — 매출원가가 없는 손익계산서</h2>
+<p>이 회사의 손익계산서에는 매출원가 줄이 없습니다. 은행·카드사에 내는 수수료를 영업비용의 '지급수수료'로, 종속회사의 상품 매출 원가만 '상품매출원가'로 잡습니다. 그래서 매출총이익이라는 개념이 없고, 회사가 IR에서 말하는 '매출이익률 70%'(크로스보더)는 관리회계상의 값입니다. 대신 정기보고서의 '수수료 원가 현황' 표가 품목별 은행 지급 원가를 공시하고, 2026년 보고서부터 '비용의 성격별 분류' 주석이 15개 계정을 공시합니다. 이 두 표를 겹치면 영업비용을 '수수료원가'와 '그 밖의 비용' 두 층으로 나눌 수 있고, 이 파트의 산수는 그 나눔 위에 서 있습니다. 2025년 이전 보고서에는 성격별 주석이 없어 고정비 층의 계정별 분해는 2026년 상반기 두 분기와 전년 동기 비교만 가능합니다.</p>
+
+<h2>2. 두 층의 14분기</h2>
+<figure class=""><figcaption>장표 1. 연결 영업비용의 두 층 — 수수료원가와 그 밖의 영업비용(억원), 2023년 1분기부터 14분기</figcaption><svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="256.0" x2="730" y2="256.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="260.0" text-anchor="end" font-size="11" fill="#8a857c">0</text>
+<line x1="62" y1="216.3" x2="730" y2="216.3" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="220.3" text-anchor="end" font-size="11" fill="#8a857c">100</text>
+<line x1="62" y1="176.7" x2="730" y2="176.7" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="180.7" text-anchor="end" font-size="11" fill="#8a857c">200</text>
+<line x1="62" y1="137.0" x2="730" y2="137.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="141.0" text-anchor="end" font-size="11" fill="#8a857c">300</text>
+<line x1="62" y1="97.3" x2="730" y2="97.3" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="101.3" text-anchor="end" font-size="11" fill="#8a857c">400</text>
+<line x1="62" y1="57.7" x2="730" y2="57.7" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="61.7" text-anchor="end" font-size="11" fill="#8a857c">500</text>
+<line x1="62" y1="18.0" x2="730" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">600</text>
+<text x="85.9" y="274" text-anchor="middle" font-size="10" fill="#8a857c">'23년 1Q</text>
+<text x="181.3" y="274" text-anchor="middle" font-size="10" fill="#8a857c">3Q</text>
+<text x="276.7" y="274" text-anchor="middle" font-size="10" fill="#8a857c">'24년 1Q</text>
+<text x="372.1" y="274" text-anchor="middle" font-size="10" fill="#8a857c">3Q</text>
+<text x="467.6" y="274" text-anchor="middle" font-size="10" fill="#8a857c">'25년 1Q</text>
+<text x="563.0" y="274" text-anchor="middle" font-size="10" fill="#8a857c">3Q</text>
+<text x="658.4" y="274" text-anchor="middle" font-size="10" fill="#8a857c">'26년 1Q</text>
+<text x="706.1" y="274" text-anchor="middle" font-size="10" fill="#8a857c">2Q</text>
+<rect x="71.5" y="174.2" width="28.6" height="81.8" fill="#d8d4cc" opacity="0.9"/>
+<rect x="71.5" y="123.3" width="28.6" height="50.9" fill="#1f3a5f" opacity="0.9"/>
+<rect x="119.3" y="169.5" width="28.6" height="86.5" fill="#d8d4cc" opacity="0.9"/>
+<rect x="119.3" y="115.4" width="28.6" height="54.1" fill="#1f3a5f" opacity="0.9"/>
+<rect x="167.0" y="166.6" width="28.6" height="89.4" fill="#d8d4cc" opacity="0.9"/>
+<rect x="167.0" y="113.8" width="28.6" height="52.9" fill="#1f3a5f" opacity="0.9"/>
+<rect x="214.7" y="171.8" width="28.6" height="84.2" fill="#d8d4cc" opacity="0.9"/>
+<rect x="214.7" y="114.3" width="28.6" height="57.5" fill="#1f3a5f" opacity="0.9"/>
+<rect x="262.4" y="177.2" width="28.6" height="78.8" fill="#d8d4cc" opacity="0.9"/>
+<rect x="262.4" y="124.9" width="28.6" height="52.2" fill="#1f3a5f" opacity="0.9"/>
+<rect x="310.1" y="174.4" width="28.6" height="81.6" fill="#d8d4cc" opacity="0.9"/>
+<rect x="310.1" y="119.2" width="28.6" height="55.1" fill="#1f3a5f" opacity="0.9"/>
+<rect x="357.8" y="170.8" width="28.6" height="85.2" fill="#d8d4cc" opacity="0.9"/>
+<rect x="357.8" y="116.0" width="28.6" height="54.8" fill="#1f3a5f" opacity="0.9"/>
+<rect x="405.5" y="160.0" width="28.6" height="96.0" fill="#d8d4cc" opacity="0.9"/>
+<rect x="405.5" y="84.7" width="28.6" height="75.3" fill="#1f3a5f" opacity="0.9"/>
+<rect x="453.3" y="154.9" width="28.6" height="101.1" fill="#d8d4cc" opacity="0.9"/>
+<rect x="453.3" y="88.1" width="28.6" height="66.8" fill="#1f3a5f" opacity="0.9"/>
+<rect x="501.0" y="163.8" width="28.6" height="92.2" fill="#d8d4cc" opacity="0.9"/>
+<rect x="501.0" y="94.6" width="28.6" height="69.2" fill="#1f3a5f" opacity="0.9"/>
+<rect x="548.7" y="166.3" width="28.6" height="89.7" fill="#d8d4cc" opacity="0.9"/>
+<rect x="548.7" y="92.4" width="28.6" height="73.9" fill="#1f3a5f" opacity="0.9"/>
+<rect x="596.4" y="153.0" width="28.6" height="103.0" fill="#d8d4cc" opacity="0.9"/>
+<rect x="596.4" y="67.2" width="28.6" height="85.8" fill="#1f3a5f" opacity="0.9"/>
+<rect x="644.1" y="143.3" width="28.6" height="112.7" fill="#d8d4cc" opacity="0.9"/>
+<rect x="644.1" y="64.3" width="28.6" height="79.0" fill="#1f3a5f" opacity="0.9"/>
+<rect x="691.8" y="150.0" width="28.6" height="106.0" fill="#d8d4cc" opacity="0.9"/>
+<rect x="691.8" y="75.4" width="28.6" height="74.6" fill="#1f3a5f" opacity="0.9"/>
+<polyline points="85.9,111.9 133.6,103.4 181.3,98.6 229.0,102.8 276.7,108.9 324.4,105.1 372.1,99.6 419.9,78.6 467.6,73.6 515.3,79.4 563.0,74.5 610.7,53.1 658.4,28.0 706.1,57.1" fill="none" stroke="#b07d2b" stroke-width="2"/>
+<circle cx="85.9" cy="111.9" r="2.4" fill="#b07d2b"/>
+<circle cx="133.6" cy="103.4" r="2.4" fill="#b07d2b"/>
+<circle cx="181.3" cy="98.6" r="2.4" fill="#b07d2b"/>
+<circle cx="229.0" cy="102.8" r="2.4" fill="#b07d2b"/>
+<circle cx="276.7" cy="108.9" r="2.4" fill="#b07d2b"/>
+<circle cx="324.4" cy="105.1" r="2.4" fill="#b07d2b"/>
+<circle cx="372.1" cy="99.6" r="2.4" fill="#b07d2b"/>
+<circle cx="419.9" cy="78.6" r="2.4" fill="#b07d2b"/>
+<circle cx="467.6" cy="73.6" r="2.4" fill="#b07d2b"/>
+<circle cx="515.3" cy="79.4" r="2.4" fill="#b07d2b"/>
+<circle cx="563.0" cy="74.5" r="2.4" fill="#b07d2b"/>
+<circle cx="610.7" cy="53.1" r="2.4" fill="#b07d2b"/>
+<circle cx="658.4" cy="28.0" r="2.4" fill="#b07d2b"/>
+<circle cx="706.1" cy="57.1" r="2.4" fill="#b07d2b"/>
+<rect x="736" y="18" width="10" height="10" fill="#d8d4cc"/>
+<text x="750" y="27" font-size="11" fill="#8a857c">수수료원가(은행·카드사 지급)</text>
+<rect x="736" y="34" width="10" height="10" fill="#1f3a5f"/>
+<text x="750" y="43" font-size="11" fill="#8a857c">그 밖의 영업비용(인건비·감가·대손·기타)</text>
+<rect x="736" y="50" width="10" height="10" fill="#b07d2b"/>
+<text x="750" y="59" font-size="11" fill="#8a857c">연결 매출(선)</text>
+</svg><div class="src">자료: DART 정기보고서 '수수료 원가 현황'(누적을 분기로 환산)과 OpenDART 손익(영업비용 = 매출 − 영업이익). 2023 1Q는 합계 미공시로 품목 합. 빈티지 2026-08-14</div></figure>
+<figure class=""><figcaption>장표 2. 매출 대비 비율 — 수수료원가·그 밖의 영업비용·영업이익률(%)</figcaption><svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="256.0" x2="730" y2="256.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="260.0" text-anchor="end" font-size="11" fill="#8a857c">0%</text>
+<line x1="62" y1="216.3" x2="730" y2="216.3" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="220.3" text-anchor="end" font-size="11" fill="#8a857c">10%</text>
+<line x1="62" y1="176.7" x2="730" y2="176.7" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="180.7" text-anchor="end" font-size="11" fill="#8a857c">20%</text>
+<line x1="62" y1="137.0" x2="730" y2="137.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="141.0" text-anchor="end" font-size="11" fill="#8a857c">30%</text>
+<line x1="62" y1="97.3" x2="730" y2="97.3" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="101.3" text-anchor="end" font-size="11" fill="#8a857c">40%</text>
+<line x1="62" y1="57.7" x2="730" y2="57.7" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="61.7" text-anchor="end" font-size="11" fill="#8a857c">50%</text>
+<line x1="62" y1="18.0" x2="730" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">60%</text>
+<text x="62.0" y="274" text-anchor="middle" font-size="10" fill="#8a857c">'23년 1Q</text>
+<text x="164.8" y="274" text-anchor="middle" font-size="10" fill="#8a857c">3Q</text>
+<text x="267.5" y="274" text-anchor="middle" font-size="10" fill="#8a857c">'24년 1Q</text>
+<text x="370.3" y="274" text-anchor="middle" font-size="10" fill="#8a857c">3Q</text>
+<text x="473.1" y="274" text-anchor="middle" font-size="10" fill="#8a857c">'25년 1Q</text>
+<text x="575.8" y="274" text-anchor="middle" font-size="10" fill="#8a857c">3Q</text>
+<text x="678.6" y="274" text-anchor="middle" font-size="10" fill="#8a857c">'26년 1Q</text>
+<text x="730.0" y="274" text-anchor="middle" font-size="10" fill="#8a857c">2Q</text>
+<polyline points="62.0,30.7 113.4,31.1 164.8,30.7 216.2,37.8 267.5,43.4 318.9,41.4 370.3,39.8 421.7,41.4 473.1,36.2 524.5,48.9 575.8,60.0 627.2,54.9 678.6,60.0 730.0,44.6" fill="none" stroke="#8a857c" stroke-width="2"/>
+<circle cx="62.0" cy="30.7" r="2.4" fill="#8a857c"/>
+<circle cx="113.4" cy="31.1" r="2.4" fill="#8a857c"/>
+<circle cx="164.8" cy="30.7" r="2.4" fill="#8a857c"/>
+<circle cx="216.2" cy="37.8" r="2.4" fill="#8a857c"/>
+<circle cx="267.5" cy="43.4" r="2.4" fill="#8a857c"/>
+<circle cx="318.9" cy="41.4" r="2.4" fill="#8a857c"/>
+<circle cx="370.3" cy="39.8" r="2.4" fill="#8a857c"/>
+<circle cx="421.7" cy="41.4" r="2.4" fill="#8a857c"/>
+<circle cx="473.1" cy="36.2" r="2.4" fill="#8a857c"/>
+<circle cx="524.5" cy="48.9" r="2.4" fill="#8a857c"/>
+<circle cx="575.8" cy="60.0" r="2.4" fill="#8a857c"/>
+<circle cx="627.2" cy="54.9" r="2.4" fill="#8a857c"/>
+<circle cx="678.6" cy="60.0" r="2.4" fill="#8a857c"/>
+<circle cx="730.0" cy="44.6" r="2.4" fill="#8a857c"/>
+<polyline points="62.0,116.0 113.4,115.2 164.8,122.7 216.2,107.2 267.5,115.2 318.9,111.2 370.3,117.2 421.7,87.4 473.1,110.8 524.5,100.5 575.8,94.6 627.2,88.2 678.6,118.4 730.0,107.2" fill="none" stroke="#1f3a5f" stroke-width="2"/>
+<circle cx="62.0" cy="116.0" r="2.4" fill="#1f3a5f"/>
+<circle cx="113.4" cy="115.2" r="2.4" fill="#1f3a5f"/>
+<circle cx="164.8" cy="122.7" r="2.4" fill="#1f3a5f"/>
+<circle cx="216.2" cy="107.2" r="2.4" fill="#1f3a5f"/>
+<circle cx="267.5" cy="115.2" r="2.4" fill="#1f3a5f"/>
+<circle cx="318.9" cy="111.2" r="2.4" fill="#1f3a5f"/>
+<circle cx="370.3" cy="117.2" r="2.4" fill="#1f3a5f"/>
+<circle cx="421.7" cy="87.4" r="2.4" fill="#1f3a5f"/>
+<circle cx="473.1" cy="110.8" r="2.4" fill="#1f3a5f"/>
+<circle cx="524.5" cy="100.5" r="2.4" fill="#1f3a5f"/>
+<circle cx="575.8" cy="94.6" r="2.4" fill="#1f3a5f"/>
+<circle cx="627.2" cy="88.2" r="2.4" fill="#1f3a5f"/>
+<circle cx="678.6" cy="118.4" r="2.4" fill="#1f3a5f"/>
+<circle cx="730.0" cy="107.2" r="2.4" fill="#1f3a5f"/>
+<polyline points="62.0,224.7 113.4,225.1 164.8,217.9 216.2,226.2 267.5,212.8 318.9,218.7 370.3,214.3 421.7,242.5 473.1,224.3 524.5,221.9 575.8,216.7 627.2,228.2 678.6,192.9 730.0,219.5" fill="none" stroke="#a44a3f" stroke-width="2"/>
+<circle cx="62.0" cy="224.7" r="2.4" fill="#a44a3f"/>
+<circle cx="113.4" cy="225.1" r="2.4" fill="#a44a3f"/>
+<circle cx="164.8" cy="217.9" r="2.4" fill="#a44a3f"/>
+<circle cx="216.2" cy="226.2" r="2.4" fill="#a44a3f"/>
+<circle cx="267.5" cy="212.8" r="2.4" fill="#a44a3f"/>
+<circle cx="318.9" cy="218.7" r="2.4" fill="#a44a3f"/>
+<circle cx="370.3" cy="214.3" r="2.4" fill="#a44a3f"/>
+<circle cx="421.7" cy="242.5" r="2.4" fill="#a44a3f"/>
+<circle cx="473.1" cy="224.3" r="2.4" fill="#a44a3f"/>
+<circle cx="524.5" cy="221.9" r="2.4" fill="#a44a3f"/>
+<circle cx="575.8" cy="216.7" r="2.4" fill="#a44a3f"/>
+<circle cx="627.2" cy="228.2" r="2.4" fill="#a44a3f"/>
+<circle cx="678.6" cy="192.9" r="2.4" fill="#a44a3f"/>
+<circle cx="730.0" cy="219.5" r="2.4" fill="#a44a3f"/>
+<text x="736" y="48.6" font-size="11" fill="#8a857c">수수료원가/매출 % 53%</text>
+<text x="736" y="111.2" font-size="11" fill="#1f3a5f">그 밖의 영업비용/매출 % 38%</text>
+<text x="736" y="223.5" font-size="11" fill="#a44a3f">영업이익률 % 9%</text>
+</svg><div class="src">자료: 위와 동일. 빈티지 2026-08-14</div></figure>
+<p class="reading"><b>관찰.</b> 수수료원가는 2023년 1분기 206억원(매출의 57%)에서 2026년 2분기 267억원(53%)으로 늘었고, 그 밖의 영업비용은 129억원(35%)에서 188억원(37%)으로 늘었습니다. 영업이익률은 그 사이 8%와 15.9% 사이를 오갔습니다. 2026년 1분기는 수수료원가 비율이 49%로 14분기 최저였고, 고정비 층은 35%였습니다. <b>원인.</b> 수수료원가 비율이 내려간 분기는 예외 없이 간편현금결제 비중이 오른 분기입니다(1Q26 31.6%). 고정비 층은 2024년 하반기부터 계단식으로 올랐는데, 종속회사 편입(헥토데이터·엠트웰브·허니콘)과 신사업(스테이블코인·AI 결제) 인력 충원이 원인입니다. 회사는 2분기 인건비 +12.6%·지급수수료 +15.9%(전년 동기 대비)를 '신규 사업 인력과 매출 연동 원가'로 설명했습니다. <b>함의.</b> 이익률을 올리는 길은 두 개뿐입니다. 간편현금결제 비중을 올리거나(수수료원가 비율 하락), 매출을 고정비 층보다 빨리 늘리거나(영업 레버리지). 2026년 1분기는 둘 다 됐고 2분기는 둘 다 안 됐습니다. 하반기 컨센(분기 영업이익 61억)은 첫째 길이 절반쯤 열리는 것을 전제합니다.</p>
+
+<h2>3. 품목별 원가율 — 세 개의 서로 다른 사업</h2>
+<figure class=""><figcaption>장표 3. 품목별 수수료원가율(%) — 2025년 1분기부터 6분기</figcaption><svg viewBox="0 0 880 280" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="236.0" x2="730" y2="236.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="240.0" text-anchor="end" font-size="11" fill="#8a857c">0%</text>
+<line x1="62" y1="192.4" x2="730" y2="192.4" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="196.4" text-anchor="end" font-size="11" fill="#8a857c">20%</text>
+<line x1="62" y1="148.8" x2="730" y2="148.8" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="152.8" text-anchor="end" font-size="11" fill="#8a857c">40%</text>
+<line x1="62" y1="105.2" x2="730" y2="105.2" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="109.2" text-anchor="end" font-size="11" fill="#8a857c">60%</text>
+<line x1="62" y1="61.6" x2="730" y2="61.6" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="65.6" text-anchor="end" font-size="11" fill="#8a857c">80%</text>
+<line x1="62" y1="18.0" x2="730" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">100%</text>
+<text x="62.0" y="254" text-anchor="middle" font-size="10" fill="#8a857c">'25년 1Q</text>
+<text x="195.6" y="254" text-anchor="middle" font-size="10" fill="#8a857c">2Q</text>
+<text x="329.2" y="254" text-anchor="middle" font-size="10" fill="#8a857c">3Q</text>
+<text x="462.8" y="254" text-anchor="middle" font-size="10" fill="#8a857c">4Q</text>
+<text x="596.4" y="254" text-anchor="middle" font-size="10" fill="#8a857c">'26년 1Q</text>
+<text x="730.0" y="254" text-anchor="middle" font-size="10" fill="#8a857c">2Q</text>
+<polyline points="62.0,158.6 195.6,160.8 329.2,161.4 462.8,174.3 596.4,178.7 730.0,155.6" fill="none" stroke="#1f3a5f" stroke-width="2"/>
+<circle cx="62.0" cy="158.6" r="2.4" fill="#1f3a5f"/>
+<circle cx="195.6" cy="160.8" r="2.4" fill="#1f3a5f"/>
+<circle cx="329.2" cy="161.4" r="2.4" fill="#1f3a5f"/>
+<circle cx="462.8" cy="174.3" r="2.4" fill="#1f3a5f"/>
+<circle cx="596.4" cy="178.7" r="2.4" fill="#1f3a5f"/>
+<circle cx="730.0" cy="155.6" r="2.4" fill="#1f3a5f"/>
+<polyline points="62.0,160.1 195.6,152.9 329.2,155.3 462.8,154.0 596.4,148.8 730.0,148.4" fill="none" stroke="#2b7a78" stroke-width="2"/>
+<circle cx="62.0" cy="160.1" r="2.4" fill="#2b7a78"/>
+<circle cx="195.6" cy="152.9" r="2.4" fill="#2b7a78"/>
+<circle cx="329.2" cy="155.3" r="2.4" fill="#2b7a78"/>
+<circle cx="462.8" cy="154.0" r="2.4" fill="#2b7a78"/>
+<circle cx="596.4" cy="148.8" r="2.4" fill="#2b7a78"/>
+<circle cx="730.0" cy="148.4" r="2.4" fill="#2b7a78"/>
+<polyline points="62.0,59.6 195.6,64.4 329.2,68.6 462.8,47.9 596.4,49.2 730.0,52.2" fill="none" stroke="#7fa3c9" stroke-width="2"/>
+<circle cx="62.0" cy="59.6" r="2.4" fill="#7fa3c9"/>
+<circle cx="195.6" cy="64.4" r="2.4" fill="#7fa3c9"/>
+<circle cx="329.2" cy="68.6" r="2.4" fill="#7fa3c9"/>
+<circle cx="462.8" cy="47.9" r="2.4" fill="#7fa3c9"/>
+<circle cx="596.4" cy="49.2" r="2.4" fill="#7fa3c9"/>
+<circle cx="730.0" cy="52.2" r="2.4" fill="#7fa3c9"/>
+<text x="736" y="56.2" font-size="11" fill="#7fa3c9">PG 원가율 % 84%</text>
+<text x="736" y="152.4" font-size="11" fill="#2b7a78">가상계좌 원가율 % 40%</text>
+<text x="736" y="167.4" font-size="11" fill="#1f3a5f">간편현금결제 원가율 % 37%</text>
+</svg><div class="src">자료: 정기보고서 '수수료 원가' ÷ '주요 제품' 표. 빈티지 2026-08-14</div></figure>
+<p class="reading"><b>관찰.</b> 간편현금결제 원가율은 36%(1Q25)에서 26%(1Q26)로 내려갔다가 37%(2Q26)로 올랐고, 가상계좌는 35~40%, PG는 79~86%입니다. PG 원가율은 2025년 2분기 79%가 가장 낮았고 2026년 1분기 86%가 가장 높았습니다. <b>원인.</b> 간편현금결제의 원가율은 백엔드형(정액·건당)과 자체 회원제(정률 레브쉐어)의 믹스가 정하고(파트 1), PG의 원가율은 카드사 수수료율과 가맹점 수수료율의 차이, 즉 헥토가 붙이는 마진이 정합니다. PG 원가율이 86%까지 오른 것은 대형 가맹점 확대로 마진이 얇아진 결과입니다. <b>함의.</b> PG 매출 246억원(1Q26)의 기여이익은 35억원인데 같은 분기 간편현금결제 182억원의 기여이익은 134억원입니다. 매출 1억원의 이익 가치가 네 배 차이라, 회사의 매출 성장률보다 '어느 품목이 컸는가'를 먼저 봐야 합니다. 컨센 매출 2,223억원(+18.6%)이 PG 위주면 영업이익은 200억원{E}에 그치고, 간편 위주면 280억원{E}을 넘습니다.</p>
+
+<h2>4. 고정비 층의 계정 — 성격별 비용 15개</h2>
+<figure class=""><figcaption>장표 4. 성격별 비용 주요 계정(억원) — 2025년 2분기와 2026년 2분기(각 3개월)</figcaption><svg viewBox="0 0 880 280" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="236.0" x2="730" y2="236.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="240.0" text-anchor="end" font-size="11" fill="#8a857c">0</text>
+<line x1="62" y1="199.7" x2="730" y2="199.7" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="203.7" text-anchor="end" font-size="11" fill="#8a857c">50</text>
+<line x1="62" y1="163.3" x2="730" y2="163.3" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="167.3" text-anchor="end" font-size="11" fill="#8a857c">100</text>
+<line x1="62" y1="127.0" x2="730" y2="127.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="131.0" text-anchor="end" font-size="11" fill="#8a857c">150</text>
+<line x1="62" y1="90.7" x2="730" y2="90.7" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="94.7" text-anchor="end" font-size="11" fill="#8a857c">200</text>
+<line x1="62" y1="54.3" x2="730" y2="54.3" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="58.3" text-anchor="end" font-size="11" fill="#8a857c">250</text>
+<line x1="62" y1="18.0" x2="730" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">300</text>
+<text x="99.1" y="254" text-anchor="middle" font-size="10" fill="#8a857c">지급수수료</text>
+<text x="173.3" y="254" text-anchor="middle" font-size="10" fill="#8a857c">종업원급여</text>
+<text x="247.6" y="254" text-anchor="middle" font-size="10" fill="#8a857c">복리후생</text>
+<text x="321.8" y="254" text-anchor="middle" font-size="10" fill="#8a857c">퇴직급여</text>
+<text x="396.0" y="254" text-anchor="middle" font-size="10" fill="#8a857c">감가상각</text>
+<text x="470.2" y="254" text-anchor="middle" font-size="10" fill="#8a857c">대손상각</text>
+<text x="544.4" y="254" text-anchor="middle" font-size="10" fill="#8a857c">상품매출원가</text>
+<text x="618.7" y="254" text-anchor="middle" font-size="10" fill="#8a857c">경상개발</text>
+<text x="692.9" y="254" text-anchor="middle" font-size="10" fill="#8a857c">기타</text>
+<rect x="73.1" y="67.4" width="25.0" height="168.6" fill="#d8d4cc" opacity="0.9"/>
+<text x="86.1" y="63.4" text-anchor="middle" font-size="9.5" fill="#d8d4cc">232</text>
+<rect x="99.1" y="34.9" width="25.0" height="201.1" fill="#1f3a5f" opacity="0.9"/>
+<text x="112.1" y="30.9" text-anchor="middle" font-size="9.5" fill="#1f3a5f">277</text>
+<rect x="147.4" y="178.4" width="25.0" height="57.6" fill="#d8d4cc" opacity="0.9"/>
+<text x="160.3" y="174.4" text-anchor="middle" font-size="9.5" fill="#d8d4cc">79</text>
+<rect x="173.3" y="172.4" width="25.0" height="63.6" fill="#1f3a5f" opacity="0.9"/>
+<text x="186.3" y="168.4" text-anchor="middle" font-size="9.5" fill="#1f3a5f">88</text>
+<rect x="221.6" y="228.9" width="25.0" height="7.1" fill="#d8d4cc" opacity="0.9"/>
+<text x="234.6" y="224.9" text-anchor="middle" font-size="9.5" fill="#d8d4cc">10</text>
+<rect x="247.6" y="227.3" width="25.0" height="8.7" fill="#1f3a5f" opacity="0.9"/>
+<text x="260.5" y="223.3" text-anchor="middle" font-size="9.5" fill="#1f3a5f">12</text>
+<rect x="295.8" y="232.1" width="25.0" height="3.9" fill="#d8d4cc" opacity="0.9"/>
+<text x="308.8" y="228.1" text-anchor="middle" font-size="9.5" fill="#d8d4cc">5</text>
+<rect x="321.8" y="231.1" width="25.0" height="4.9" fill="#1f3a5f" opacity="0.9"/>
+<text x="334.8" y="227.1" text-anchor="middle" font-size="9.5" fill="#1f3a5f">7</text>
+<rect x="370.0" y="225.3" width="25.0" height="10.7" fill="#d8d4cc" opacity="0.9"/>
+<text x="383.0" y="221.3" text-anchor="middle" font-size="9.5" fill="#d8d4cc">15</text>
+<rect x="396.0" y="226.0" width="25.0" height="10.0" fill="#1f3a5f" opacity="0.9"/>
+<text x="409.0" y="222.0" text-anchor="middle" font-size="9.5" fill="#1f3a5f">14</text>
+<rect x="444.2" y="221.5" width="25.0" height="14.5" fill="#d8d4cc" opacity="0.9"/>
+<text x="457.2" y="217.5" text-anchor="middle" font-size="9.5" fill="#d8d4cc">20</text>
+<rect x="470.2" y="225.6" width="25.0" height="10.4" fill="#1f3a5f" opacity="0.9"/>
+<text x="483.2" y="221.6" text-anchor="middle" font-size="9.5" fill="#1f3a5f">14</text>
+<rect x="518.5" y="227.7" width="25.0" height="8.3" fill="#d8d4cc" opacity="0.9"/>
+<text x="531.5" y="223.7" text-anchor="middle" font-size="9.5" fill="#d8d4cc">11</text>
+<rect x="544.4" y="228.8" width="25.0" height="7.2" fill="#1f3a5f" opacity="0.9"/>
+<text x="557.4" y="224.8" text-anchor="middle" font-size="9.5" fill="#1f3a5f">10</text>
+<rect x="592.7" y="233.2" width="25.0" height="2.8" fill="#d8d4cc" opacity="0.9"/>
+<text x="605.7" y="229.2" text-anchor="middle" font-size="9.5" fill="#d8d4cc">4</text>
+<rect x="618.7" y="232.9" width="25.0" height="3.1" fill="#1f3a5f" opacity="0.9"/>
+<text x="631.7" y="228.9" text-anchor="middle" font-size="9.5" fill="#1f3a5f">4</text>
+<rect x="666.9" y="223.1" width="25.0" height="12.9" fill="#d8d4cc" opacity="0.9"/>
+<text x="679.9" y="219.1" text-anchor="middle" font-size="9.5" fill="#d8d4cc">18</text>
+<rect x="692.9" y="224.0" width="25.0" height="12.0" fill="#1f3a5f" opacity="0.9"/>
+<text x="705.9" y="220.0" text-anchor="middle" font-size="9.5" fill="#1f3a5f">16</text>
+<rect x="736" y="18" width="10" height="10" fill="#d8d4cc"/>
+<text x="750" y="27" font-size="11" fill="#8a857c">2Q25 3개월(억원)</text>
+<rect x="736" y="34" width="10" height="10" fill="#1f3a5f"/>
+<text x="750" y="43" font-size="11" fill="#8a857c">2Q26 3개월(억원)</text>
+</svg><div class="src">자료: 반기보고서 2026.06 주석 26(연결). 빈티지 2026-08-14</div></figure>
+<table class=""><tr><th>성격별 비용(연결, 억원)</th><th>2Q25 3개월</th><th>2Q26 3개월</th><th>증감</th><th>1H25</th><th>1H26</th><th>증감</th></tr><tr><td>지급수수료</td><td>232.0</td><td>276.8</td><td>+19%</td><td>490.3</td><td>555.6</td><td>+13%</td></tr><tr><td>종업원급여</td><td>79.2</td><td>87.5</td><td>+10%</td><td>155.2</td><td>177.7</td><td>+14%</td></tr><tr><td>퇴직급여</td><td>5.4</td><td>6.8</td><td>+26%</td><td>11.0</td><td>13.0</td><td>+18%</td></tr><tr><td>복리후생</td><td>9.8</td><td>12.0</td><td>+22%</td><td>19.3</td><td>24.8</td><td>+28%</td></tr><tr><td>감가상각</td><td>14.7</td><td>13.8</td><td>-6%</td><td>28.0</td><td>27.6</td><td>-1%</td></tr><tr><td>무형상각</td><td>2.6</td><td>2.8</td><td>+8%</td><td>5.1</td><td>5.8</td><td>+14%</td></tr><tr><td>대손상각</td><td>20.0</td><td>14.3</td><td>-28%</td><td>40.3</td><td>34.2</td><td>-15%</td></tr><tr><td>상품매출원가</td><td>11.4</td><td>9.9</td><td>-13%</td><td>19.8</td><td>30.7</td><td>+55%</td></tr><tr><td>경상개발</td><td>3.9</td><td>4.3</td><td>+10%</td><td>7.8</td><td>8.7</td><td>+12%</td></tr><tr><td>임차료</td><td>1.0</td><td>3.4</td><td>+240%</td><td>2.1</td><td>6.7</td><td>+219%</td></tr><tr><td>접대비</td><td>3.0</td><td>4.0</td><td>+33%</td><td>5.6</td><td>7.6</td><td>+36%</td></tr><tr><td>전문용역</td><td>5.2</td><td>1.4</td><td>-73%</td><td>8.5</td><td>5.4</td><td>-36%</td></tr><tr><td>광고</td><td>0.6</td><td>1.5</td><td>+150%</td><td>2.1</td><td>2.2</td><td>+5%</td></tr><tr><td>주식보상</td><td>0.3</td><td>0.4</td><td>+33%</td><td>2.9</td><td>3.8</td><td>+31%</td></tr><tr><td>기타</td><td>17.8</td><td>16.5</td><td>-7%</td><td>32.2</td><td>34.9</td><td>+8%</td></tr><tr><td>합계</td><td>406.9</td><td>455.3</td><td>+12%</td><td>830.2</td><td>938.6</td><td>+13%</td></tr></table>
+<p class="src">단위 억원. 지급수수료에는 은행·카드사 수수료원가(2Q26 267억)와 그 밖의 지급수수료(10억)가 함께 들어 있습니다.</p>
+<p class="reading"><b>관찰.</b> 2분기 3개월 기준 종업원급여 87.5억원(+10.5%), 복리후생 12억원(+22%), 대손상각 14.3억원(-29%), 감가상각 13.8억원(-6%), 임차료 3.4억원(+240%), 지급수수료 276.8억원(+19%)입니다. 2026년 상반기 인건비 세 계정 합은 215억원으로 같은 기간 매출의 20%입니다. <b>원인.</b> 임차료 급증은 종속회사 편입에 따른 사무실이고, 대손상각 감소는 2025년 상반기의 특정 가맹점 채권 충당이 정상화된 것입니다. 인건비는 신사업 인력(스테이블코인·AI 결제·외환 플랫폼)이 매출보다 먼저 붙었습니다. 직원 223명(6월 말)의 상반기 1인 평균 급여는 4,780만원입니다. <b>함의.</b> 고정비 층 분기 185억원{E}은 이 회사의 손익분기 매출을 정합니다. 수수료원가 비율 53%로 나누면 매출 394억원{E}이 영업이익 0의 자리이고, 지금 매출(500억원)은 그보다 27% 위에 있습니다. 2023년 1분기(매출 363억원, 고정비 129억원)에는 33% 위였으므로, 매출이 늘었는데 손익분기 여유는 오히려 줄었습니다. 신사업 인력이 매출을 만들기 전까지는 이 여유가 더 줄어들 수 있습니다.</p>
+
+<h2>4-1. 인건비 층의 사람 수 산수</h2>
+<p>직원 223명(2026년 6월 말)의 상반기 급여 총액이 106.5억원이므로 연환산 1인당 4,780만원, 여기에 퇴직급여·복리후생을 더한 인건비 세 계정이 상반기 215억원입니다. 개발 99명·마케팅/영업 75명·사무 49명이고 평균 근속 3.5년, 마케팅/영업 남성의 1인 급여가 7,750만원(상반기 3,640만원)으로 가장 높습니다. 2025년 상반기 인건비 세 계정 186억원에서 1년에 16% 늘었는데 같은 기간 매출은 19% 늘었으니 인건비/매출은 20.5%에서 20.0%로 거의 같습니다. 문제는 분기 단위입니다. 2분기 인건비 106억원은 1분기 108억원과 같은데 매출이 74억원 줄어, 인건비/매출이 18.9%에서 21.2%로 뛰었습니다. 신사업 인력(스테이블코인·AI 결제·외환 플랫폼·일본 법인)은 매출이 생기기 전에 먼저 붙고, 회사는 2분기 설명에서 이것을 '신규 사업을 위한 인력 충원'이라고 했습니다. 인원이 분기 10명씩 늘면 인건비는 분기 2.4억원<span class="est">E</span>씩 계단을 오르며, 하반기 고정비 층 185억원<span class="est">E</span>은 그 계단을 한 번 반영한 값입니다.</p>
+
+<h2>4-2. 감가상각·투자 — 설비가 가벼운 회사</h2>
+<p>감가상각 13.8억원·무형자산상각 2.8억원(2분기)으로 합쳐 매출의 3.3%입니다. 회사는 생산설비가 없고 서버를 내부 서버실과 외부 IDC에 두며, 투자활동 현금흐름은 2021~2024년 연 30~90억원, 2025년 150억원(종속회사 인수 포함)이었습니다. 유형자산 투자만 보면 연 30~50억원<span class="est">E</span>으로 감가상각(연 60억원<span class="est">E</span>)보다 작아, 영업이익에서 순이익으로 가는 길에 자본적 지출의 부담이 없습니다. 이것이 파트 0이 현금 창출력을 '영업이익 − 세금 + 감가상각 − 설비투자 = 150억원<span class="est">E</span>'으로 놓은 근거이고, 스테이블코인·AI 결제 인프라 투자가 커지면 이 층이 먼저 움직입니다. 경상개발비는 분기 4억원대로 매출의 0.8%, 연구개발비/매출 비율은 2025년 0.84%입니다. 기술 회사치고 낮은 것은 개발 인력의 급여가 인건비로 잡히고 개발비 자산화가 없기 때문이며, 비용의 질로는 보수적입니다.</p>
+
+<h2>4-3. 피어의 비용 구조 — 같은 PG, 다른 원가율</h2>
+<p>NHN KCP는 2분기 매출 3,834억원에 영업이익 154억원(4.0%), KG이니시스는 3,718억원에 286억원(7.7%), 다날은 605억원에 18억원(3.0%)이고 헥토는 501억원에 46억원(9.2%)입니다. 카드 PG 3사의 영업이익률이 헥토보다 낮은 것은 분기 매출의 90% 이상이 카드사 수수료 통과분이기 때문이고, 헥토가 그들보다 높은 것은 계좌 결제와 가상계좌·데이터가 섞여 있기 때문입니다. 반대로 쿠콘(27.8%)·더즌(24.0%)·코나아이(25.3%)는 API·정산·플랫폼 매출이라 통과 원가가 없습니다. 헥토가 어느 쪽으로 가는가는 PG 매출을 줄이는 것이 아니라 간편현금결제·데이터·크로스보더를 PG보다 빨리 키우는 것에 달려 있고, 2026년 상반기는 그 방향(간편 +74.6%, 기타 +53%, PG +1.6%)이었습니다. 2분기 한 분기의 되돌림이 방향의 전환인지 정지인지가 논쟁 1이며, 이익률 좌표로는 '9%(PG 그룹 상단)에서 15%(인프라 그룹 하단)로 가는 길의 어디에 있는가'입니다.</p>
+
+<h2>4-4. 손익분기 민감도</h2>
+<table>
+<tr><th>고정비 층(분기)</th><th>수수료원가 비율 53%</th><th>50%</th><th>47%</th></tr>
+<tr><td>175억</td><td>손익분기 매출 372억</td><td>350억</td><td>330억</td></tr>
+<tr><td>185억</td><td>394억</td><td>370억</td><td>349억</td></tr>
+<tr><td>200억</td><td>426억</td><td>400억</td><td>377억</td></tr>
+</table>
+<p class="src">손익분기 매출 = 고정비 층 ÷ (1 − 수수료원가 비율). 작성자 계산<span class="est">E</span>. 2Q26 실측: 고정비 188억·원가 비율 53%·매출 501억.</p>
+<p>고정비 층이 200억원으로 오르고 원가 비율이 53%에 머물면 손익분기 매출이 426억원으로 올라가 지금 매출(500억원)과의 여유가 15%로 줄어듭니다. 반대로 간편현금결제 비중 확대로 원가 비율이 47%로 내려가면 고정비 200억원에서도 손익분기가 377억원이라 여유가 25%입니다. 이 표가 말하는 것은 이 회사의 이익 방어선이 매출 규모가 아니라 믹스에 있다는 것이며, 매출이 10% 늘어도 PG 위주면 방어선은 그대로입니다.</p>
+
+<h2>5. 믹스가 마진을 정한다 — 16분기의 산점</h2>
+<figure class=""><figcaption>장표 5. 간편현금결제 매출 비중(%)과 연결 영업이익률(%) — 2022년 3분기부터 16분기</figcaption><svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62.0" y1="20" x2="62.0" y2="256" stroke="#d8d4cc" stroke-width="0.7"/><text x="62.0" y="272" text-anchor="middle" font-size="10.5" fill="#8a857c">간편 비중 15%</text>
+<line x1="219.6" y1="20" x2="219.6" y2="256" stroke="#d8d4cc" stroke-width="0.7"/><text x="219.6" y="272" text-anchor="middle" font-size="10.5" fill="#8a857c">간편 비중 20%</text>
+<line x1="377.2" y1="20" x2="377.2" y2="256" stroke="#d8d4cc" stroke-width="0.7"/><text x="377.2" y="272" text-anchor="middle" font-size="10.5" fill="#8a857c">간편 비중 25%</text>
+<line x1="534.8" y1="20" x2="534.8" y2="256" stroke="#d8d4cc" stroke-width="0.7"/><text x="534.8" y="272" text-anchor="middle" font-size="10.5" fill="#8a857c">간편 비중 30%</text>
+<line x1="692.4" y1="20" x2="692.4" y2="256" stroke="#d8d4cc" stroke-width="0.7"/><text x="692.4" y="272" text-anchor="middle" font-size="10.5" fill="#8a857c">간편 비중 35%</text>
+<line x1="850.0" y1="20" x2="850.0" y2="256" stroke="#d8d4cc" stroke-width="0.7"/><text x="850.0" y="272" text-anchor="middle" font-size="10.5" fill="#8a857c">간편 비중 40%</text>
+<line x1="62" y1="256.0" x2="850" y2="256.0" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="260.0" text-anchor="end" font-size="10.5" fill="#8a857c">OPM 0%</text>
+<line x1="62" y1="197.0" x2="850" y2="197.0" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="201.0" text-anchor="end" font-size="10.5" fill="#8a857c">OPM 5%</text>
+<line x1="62" y1="138.0" x2="850" y2="138.0" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="142.0" text-anchor="end" font-size="10.5" fill="#8a857c">OPM 10%</text>
+<line x1="62" y1="79.0" x2="850" y2="79.0" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="83.0" text-anchor="end" font-size="10.5" fill="#8a857c">OPM 15%</text>
+<line x1="62" y1="20.0" x2="850" y2="20.0" stroke="#d8d4cc" stroke-width="0.7"/><text x="56" y="24.0" text-anchor="end" font-size="10.5" fill="#8a857c">OPM 20%</text>
+<line x1="125.0" y1="163.8" x2="787.0" y2="129.5" stroke="#8a857c" stroke-dasharray="4 3"/>
+<circle cx="787.0" cy="113.2" r="4" fill="#1f3a5f" opacity="0.85"/>
+<text x="795.0" y="117.2" font-size="10" fill="#1f3a5f">3Q</text>
+<circle cx="714.5" cy="159.2" r="4" fill="#1f3a5f" opacity="0.85"/>
+<circle cx="673.5" cy="162.8" r="4" fill="#1f3a5f" opacity="0.85"/>
+<circle cx="613.6" cy="164.0" r="4" fill="#1f3a5f" opacity="0.85"/>
+<circle cx="601.0" cy="142.7" r="4" fill="#1f3a5f" opacity="0.85"/>
+<circle cx="358.3" cy="167.5" r="4" fill="#1f3a5f" opacity="0.85"/>
+<circle cx="345.7" cy="127.4" r="4" fill="#1f3a5f" opacity="0.85"/>
+<circle cx="244.8" cy="145.1" r="4" fill="#1f3a5f" opacity="0.85"/>
+<text x="252.8" y="149.1" font-size="10" fill="#1f3a5f">2Q</text>
+<circle cx="232.2" cy="132.1" r="4" fill="#1f3a5f" opacity="0.85"/>
+<circle cx="156.6" cy="215.9" r="4" fill="#1f3a5f" opacity="0.85"/>
+<circle cx="147.1" cy="161.6" r="4" fill="#1f3a5f" opacity="0.85"/>
+<circle cx="219.6" cy="154.5" r="4" fill="#1f3a5f" opacity="0.85"/>
+<circle cx="323.6" cy="139.2" r="4" fill="#1f3a5f" opacity="0.85"/>
+<circle cx="440.2" cy="173.4" r="4" fill="#1f3a5f" opacity="0.85"/>
+<text x="448.2" y="177.4" font-size="10" fill="#1f3a5f">4Q</text>
+<circle cx="585.2" cy="68.4" r="6" fill="#a44a3f" opacity="0.85"/>
+<text x="593.2" y="72.4" font-size="10" fill="#a44a3f">26년 1Q</text>
+<circle cx="317.3" cy="147.4" r="6" fill="#a44a3f" opacity="0.85"/>
+<text x="325.3" y="151.4" font-size="10" fill="#a44a3f">2Q</text>
+<text x="850" y="32" text-anchor="end" font-size="10.5" fill="#8a857c">점선 = 16분기 회귀: OPM = 5.5 + 0.14 × 간편 비중 (비중 1%p당 0.14%p)</text>
+</svg><div class="src">자료: 정기보고서 품목별 매출, OpenDART 영업이익. 회귀는 작성자 계산E(단순 최소제곱). 빈티지 2026-08-14</div></figure>
+<p class="reading"><b>관찰.</b> 16개 점이 오른쪽 위로 늘어서 있고, 회귀 기울기는 간편 비중 1%포인트당 영업이익률 {b:.2f}%포인트{E}입니다. 2026년 1분기(비중 31.6%, 이익률 15.9%)는 선의 위쪽 끝에, 2분기(23.1%, 9.2%)는 선 위에 있습니다. <b>원인.</b> 간편현금결제의 기여이익률(매출 − 원가)이 63~74%이고 PG가 14~21%라, 두 품목의 비중이 바뀌면 전체 이익률이 기계적으로 따라옵니다. 회귀의 절편이 {a:.1f}%인 것은 간편현금결제가 없어도 가상계좌·데이터·기타의 기여이익이 고정비 층의 대부분을 감당한다는 뜻이고, 기울기가 0.14로 완만한 것은 16분기 중 2026년 1분기 하나가 선 위쪽에 멀리 떨어져 있어 단순 회귀가 그 점을 덜 반영하기 때문입니다. 기여이익률 차이(간편 70% 대 PG 15%)로 계산한 이론 기울기는 0.5%포인트{E} 안팎이며, 실측 기울기가 그보다 낮은 것은 간편 비중이 오른 분기에 고정비 층도 함께 올랐기 때문입니다. <b>함의.</b> 이 회귀는 예측 도구가 아니라 채점 도구입니다. 3분기 간편 비중이 27%{E}(150억 ÷ 555억)면 회귀값은 {a+b*27:.1f}%{E}이고, 24%(130억)면 {a+b*24:.1f}%{E}입니다. 실적이 나왔을 때 이익률이 이 선에서 3%포인트 이상 벗어나면 믹스 말고 다른 것(고정비 층의 계단, 원가율 변화)이 움직인 것이니 성격별 주석을 다시 봐야 합니다.</p>
+
+<h2>6. 조정판 — 3층 모델</h2>
+<div class="panel"><b>조정판 — 분기 손익 3층 모델(간편현금결제·PG·고정비)</b><br><br>
+간편현금결제 매출(억원) <span id="a_v">150</span><br><input type="range" id="a" min="80" max="220" step="5" value="150"><br>
+간편현금결제 원가율(%) <span id="b_v">32</span><br><input type="range" id="b" min="24" max="42" step="1" value="32"><br>
+PG 매출(억원) <span id="c_v">240</span><br><input type="range" id="c" min="200" max="300" step="5" value="240"><br>
+PG 원가율(%) <span id="d_v">85</span><br><input type="range" id="d" min="78" max="90" step="1" value="85"><br>
+가상계좌+펌뱅킹+데이터+기타 매출(억원) <span id="e_v">150</span><br><input type="range" id="e" min="120" max="190" step="5" value="150"><br>
+그 밖의 영업비용 — 인건비·감가·대손·기타(억원) <span id="f_v">185</span><br><input type="range" id="f" min="150" max="220" step="5" value="185"><br>
+<div class="out">분기 연결 매출 <span id="o1">—</span>억 · 영업이익 <span id="o2">—</span>억 · 영업이익률 <span id="o3">—</span>% · 연환산 영업이익 <span id="o4">—</span>억(컨센 2026E 260 대비 <span id="o5">—</span>%)</div>
+<div class="note">식: 영업이익 = 간편(1−원가율) + PG(1−원가율) + 기타매출×0.83(원가 17%<span class="est">E</span>) − 그 밖의 영업비용. 기본값은 3Q26 작성자 Base<span class="est">E</span>(간편 150·PG 240·기타 150·고정비 185). 2Q26 실측을 넣으면(116·37·236·84·150·188) 영업이익 46.3억으로 실측 46.1억과 맞습니다. 1Q26 실측(182·26·246·86·147·200)은 91.6억(실측 91.4). 파트 1의 미니 조정판과 같은 식이며 변수 범위만 넓힌 총괄판입니다.</div>
+<script>
+(function(){var ids=["a","b","c","d","e","f"];function f(){var a=+document.getElementById("a").value,b=+document.getElementById("b").value,c=+document.getElementById("c").value,d=+document.getElementById("d").value,e=+document.getElementById("e").value,g=+document.getElementById("f").value;ids.forEach(function(i){document.getElementById(i+"_v").textContent=document.getElementById(i).value});var rev=a+c+e;var opv=a*(1-b/100)+c*(1-d/100)+e*0.83-g;document.getElementById("o1").textContent=rev.toFixed(0);document.getElementById("o2").textContent=opv.toFixed(1);document.getElementById("o3").textContent=(opv/rev*100).toFixed(1);document.getElementById("o4").textContent=(opv*4).toFixed(0);document.getElementById("o5").textContent=(opv*4/260*100).toFixed(0);}ids.forEach(function(i){document.getElementById(i).addEventListener("input",f)});f();})();
+</script></div>
+<p>기본값 세트로 3분기 영업이익 59억원<span class="est">E</span>, 이익률 10.9%<span class="est">E</span>, 연환산 236억원<span class="est">E</span>이 나옵니다. 컨센 2026E 260억원은 상반기 137억원에 하반기 123억원을 더한 값이므로 분기 61억원이 필요하고, 조정판에서 그 값은 간편 155억원·원가율 31%<span class="est">E</span>에서 나옵니다. 1분기의 91억원을 다시 내려면 간편 180억원·원가율 26%가 필요하며, 그것은 중단 서비스의 완전 재개를 뜻합니다. 반대로 간편 116억원·원가율 37%가 이어지면(2분기 반복) 46억원이고 연환산 184억원, 연간으로는 상반기를 더해 230억원<span class="est">E</span>입니다. 이 셋(230·260·290억원<span class="est">E</span>)이 파트 7이 쓰는 2026E 영업이익의 하단·컨센·상단입니다.</p>
+
+<h2>7. 유효세율과 영업외 — 순이익까지의 층</h2>
+<p>2026년 상반기 세전이익 149.8억원에 순이익 110.4억원이라 유효세율은 26%<span class="est">E</span>입니다. 2025년은 영업이익 156억원에 순이익 88억원으로 세율보다 영업외가 문제였습니다. 4분기 지배순이익 -15억원은 종속회사 관련 손상·평가손이었고, 2024년 4분기도 같은 이유로 -22억원이었습니다. 수준 3 공정가치 금융자산 330억원(파트 0)과 종속회사 영업권이 매년 4분기 손상검사를 받으므로, 연간 순이익 추정에서 4분기 영업외 -20~-30억원<span class="est">E</span>을 기본으로 놓는 것이 안전합니다. 컨센 2026E 순이익 207억원은 영업이익 260억원에 세율 26%를 적용한 192억원보다 15억원 높은데, 이자수익(현금·예치금 4,000억원의 일부가 회사 몫, 연 20~30억원<span class="est">E</span>)을 반영한 값으로 읽힙니다. 우리는 영업외를 0으로 놓고 세후 192억원<span class="est">E</span>을 2026E Base 순이익으로 씁니다.</p>
+
+<h2>7-1. 금리·환율 층 — 작지만 방향이 정해진 두 변수</h2>
+<p>금리는 이자수익으로 들어옵니다. 현금·단기금융 4,096억원 중 회사 몫 850억원<span class="est">E</span>과 정산 예수금의 운용 여지를 합쳐 연 2~3%<span class="est">E</span>면 이자수익 20~30억원<span class="est">E</span>이고, 2026년 상반기 세전이익(149.8억원)이 영업이익(137.5억원)보다 12억원 많은 것이 그 흔적입니다. 기준금리가 25bp 내리면 연 5억원<span class="est">E</span>이 줄어드는 정도라 논쟁을 바꾸지 않지만, 컨센 순이익 207억원과 우리 Base 192억원<span class="est">E</span>의 차이 15억원이 대체로 이 층입니다. 환율은 크로스보더 정산에서 달러를 원화로 바꿀 때의 스프레드로 들어옵니다. 거래액 3,500억원(1분기)에 환전 마진 10~20bp<span class="est">E</span>면 분기 4~7억원<span class="est">E</span>이고, 환율 수준보다 변동성이 마진을 정합니다(변동성이 크면 스프레드가 넓어집니다). 2026년 상반기 원/달러가 1,541원(2분기 말)에서 1,358원(9월)으로 내려온 것은 정산 원화 금액을 12% 줄이는 방향이라 하반기 기타 매출에 소폭 역풍<span class="est">E</span>이며, 이것이 기타 매출 70억원 유지선을 보수적으로 잡은 이유 중 하나입니다.</p>
+
+<h2>7-2. 고정비 층의 계단 — 2023년부터 여섯 계단</h2>
+<table>
+<tr><th>분기</th><th>그 밖의 영업비용(억원)</th><th>매출 대비</th><th>계단의 원인</th></tr>
+<tr><td>1Q23</td><td>128.3</td><td>35.3%</td><td>기준</td></tr>
+<tr><td>4Q23</td><td>145.0</td><td>37.5%</td><td>간편 고객 이탈로 매출 감소, 비용 유지</td></tr>
+<tr><td>4Q24</td><td>189.9</td><td>42.5%</td><td>헥토데이터 확대·종속회사 손상 준비</td></tr>
+<tr><td>2Q25</td><td>174.4</td><td>39.2%</td><td>대손 40억(상반기)·신사업 인력</td></tr>
+<tr><td>1Q26</td><td>199.2</td><td>34.7%</td><td>엠트웰브·허니콘 편입, 스테이블코인·AI 인력</td></tr>
+<tr><td>2Q26</td><td>188.0</td><td>37.5%</td><td>매출 감소로 비율 상승</td></tr>
+</table>
+<p class="src">그 밖의 영업비용 = 영업비용 − 수수료원가(품목 합). 작성자 계산. 빈티지 2026-08-14</p>
+<p>고정비 층은 3년 반에 128.3억원에서 188.0억원으로 47% 늘었고, 같은 기간 매출은 38% 늘었습니다. 비용이 매출보다 빨리 늘었다는 뜻이며, 그런데도 2026년 상반기 이익률이 올라간 것은 믹스(간편현금결제) 덕이었습니다. 하반기에 이 층이 185억원<span class="est">E</span>에서 멈추는지, 종속회사와 신사업이 계단을 하나 더 올리는지가 조정판의 여섯째 변수이고, 200억원이면 같은 매출에서 영업이익이 15억원 줄어듭니다.</p>
+
+<h2>7-3. 이 파트가 다른 논쟁에 주는 것</h2>
+<p>논쟁 1에는 채점선 셋(간편 140억·원가율 32%·OPM 11%)의 산수를, 논쟁 4에는 2026E 영업이익의 하단·컨센·상단(230·260·290억원<span class="est">E</span>)과 순이익 Base 192억원<span class="est">E</span>을 넘깁니다. 논쟁 2에는 '증분 영업이익률 60%<span class="est">E</span>'의 근거, 즉 정산 매출은 수수료원가가 거의 없고 고정비 층이 이미 있으므로 증분이 대부분 이익이 된다는 구조를 넘깁니다. 이 파트의 조정판은 파트 1(미니)·파트 7(총괄)과 같은 식을 쓰므로 어느 파트에서 슬라이더를 움직여도 같은 답이 나옵니다.</p>
+
+<h2>8. 미결</h2>
+<p>이 파트가 노션 스터디에 더한 것은 '왜 8%대 영업이익률이었는가'의 답입니다. 스터디는 헥토가 결제수단 원천을 직접 보유해 중간 수수료 없이 마진을 가져간다고 적었는데, 실측은 매출의 절반이 은행·카드사 수수료로 나가고 그중 PG가 85%를 차지한다는 것이었습니다. 원천 보유의 이점은 간편현금결제(원가율 30%)와 가상계좌(40%)에서만 실재하고, PG에서는 없습니다. 스터디의 '8%대 영업이익률에서 구조적 이익 레버리지'는 그래서 '간편현금결제 비중이 오를 때만 성립하는 레버리지'로 고쳐 읽어야 합니다.</p>
+<p>A급: 2025년 이전 성격별 비용(미공시)으로 고정비 층의 장기 궤적 확인 불가 · 간편현금결제 안의 백엔드형·자체 회원제 비중(원가율 분해의 근거). B급: 종속회사별 인건비·영업권 · PG 가맹점 수수료율의 실제 분포 · 대손상각의 발생 가맹점 업종. C급: 이자수익의 회사 몫과 예수금 몫 구분 · 개발비 자산화 여부.</p>
+<div class="foot">데이터 계보: 반기보고서 2026.06 주석 26(성격별 비용) · 정기보고서 16건(수수료 원가·품목별 매출) · OpenDART 손익 · 블로터 8-06(회사 설명). 회귀·손익분기·조정판 기본값은 작성자 계산<span class="est">E</span>. 투자 권유가 아니며 목표주가를 싣지 않습니다.</div>
+
+</main></body></html>
