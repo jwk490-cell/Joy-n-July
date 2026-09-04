@@ -26,6 +26,22 @@ th{font-weight:600;color:var(--sub);white-space:nowrap}
 .tag.now{color:#fff;background:var(--accent);border-color:var(--accent)}
 ul{max-width:640px} li{margin-bottom:.35em}
 a{color:var(--navy)}
+.partlist{display:flex;flex-direction:column;gap:8px;margin:0 0 1.4em;font-family:"Pretendard","Apple SD Gothic Neo",sans-serif}
+.part{border:1px solid var(--line);border-radius:8px;background:#fff;overflow:hidden}
+.part summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:start;padding:11px 14px;font-size:.9em;line-height:1.55}
+.part summary::-webkit-details-marker{display:none}
+.part summary:hover{background:#f6f4ef}
+.part .pn{font-weight:700;color:var(--accent);white-space:nowrap}
+.part .pn::before{content:"▸ ";display:inline-block;transition:transform .15s}
+.part[open] .pn::before{transform:rotate(90deg)}
+.part .pd{display:block;color:var(--sub);font-size:.92em;margin-top:2px}
+.part .ps{white-space:nowrap}
+.part .pbar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:8px 14px;border-top:1px solid var(--line);background:#f6f4ef;font-size:.82em}
+.part .popen{font-weight:600}
+.part .pnote{color:var(--sub)}
+.part .pframe{border-top:1px solid var(--line);background:var(--bg)}
+.part iframe{display:block;width:100%;height:80vh;border:0;background:var(--bg)}
+@media (max-width:640px){.part summary{grid-template-columns:1fr;gap:4px}}
 </style></head><body>
 
 <h1>대한항공 — 허브</h1>
@@ -85,18 +101,49 @@ $1 = ₩1,359.1(9-03) · 2Q26 말 평가환율 1,541.5원 · 12월 결산(2026�
 <p class="src">자료: 회사 공시·뉴스룸·공정위 보도·국토부. 빈티지 2026-09-03</p>
 
 <h2>파트 지도 — 깊이 우선, 시간에 걸쳐</h2>
-<p>이 커버리지는 파트제로 만들었습니다. 파트 한 편이 주제 하나를 끝까지 내려가고, 완성될 때마다 이 허브의 판정을 갱신합니다. 숫자의 정본은 위 상수 블록이고, 각 파트에는 작성 시점 스탬프가 남습니다. 대기열 편성 근거는 <b>00_골격.md</b>에 있습니다.</p>
-<table class="parts">
-<tr><th>파트</th><th>주제</th><th>상태</th><th>산출물</th></tr>
-<tr><td>0</td><td>회사 진입편 — 정의·계보(아시아나 인수 6년)·한진칼 지배구조(20.56 대 20.15)·매출 믹스·22분기 손익·자본구조(순차입 17조)·현금흐름·기재 30조 계획·KPI 계기판·항공우주 사업부</td><td><span class="tag now">완료 v1 (2026-09-03)</span></td><td><a href="대한항공_파트0_회사진입_260903.html">대한항공_파트0_회사진입_260903.html</a></td></tr>
-<tr><td>1</td><td>여객사업 딥다이브 — 142대·96개 도시, 손님 3갈래(아웃바운드·인바운드·환승), 운임 3층·인식, yield 2019~2026, 할증료와 수요, 11개사 단위매출 비교, 논쟁 4</td><td><span class="tag now">완료 v1 (2026-09-03)</span></td><td><a href="대한항공_파트1_여객사업_260903.html">대한항공_파트1_여객사업_260903.html</a></td></tr>
-<tr><td>2</td><td>화물사업 딥다이브 — 프레이터 23대·인천 허브, 포워더와 세 화주, yield 두 층 분해(유가 120·기본 58), 2022년과의 차이, 9개사 화물 비교, 논쟁 3</td><td><span class="tag now">완료 v1 (2026-09-03)</span></td><td><a href="대한항공_파트2_화물사업_260903.html">대한항공_파트2_화물사업_260903.html</a></td></tr>
-<tr><td>3</td><td>산업·경쟁과 아시아나 통합 — 2026 한국 국제선 판, 밸류체인 플로우, 12개 FSC 재무·마진 비교, 해자 3버킷, 통합의 산수, 논쟁 2</td><td><span class="tag now">완료 v1 (2026-09-03)</span></td><td><a href="대한항공_파트3_통합과산업_260903.html">대한항공_파트3_통합과산업_260903.html</a></td></tr>
-<tr><td>4</td><td>주가추이 — 5년 국면(15% 지그재그)·TTM 이익 대응, 최근 1년 세 막(유가·환율·합병), 실적일 반응 10회, 상대성과, 수급, KPI 동행 판정, 과거 낙폭</td><td><span class="tag now">완료 v1 (2026-09-03)</span></td><td><a href="대한항공_파트4_주가추이_260903.html">대한항공_파트4_주가추이_260903.html</a></td></tr>
-<tr><td>5</td><td>비용·마진 — 회계 인식 지도, 성격별 비용 18분기, 연료 3조각 분해, 고정비 3계정, 환율 층, 조정판(항공유·환율·전가율)</td><td><span class="tag now">완료 v1 (2026-09-03)</span></td><td><a href="대한항공_파트5_비용마진_260903.html">대한항공_파트5_비용마진_260903.html</a></td></tr>
-<tr><td>6</td><td>리스크 — 매트릭스 10종(영향×확률), 유가·환율·아시아나의 상관, 마일리지·중동·등급·경영권·안전·기재, 과거 낙폭과 PBR 자, 접는 조건 통합표</td><td><span class="tag now">완료 v1 (2026-09-03)</span></td><td><a href="대한항공_파트6_리스크_260903.html">대한항공_파트6_리스크_260903.html</a></td></tr>
-<tr><td>7</td><td>밸류에이션·조정 모델 총괄판 — 컨센 지형, 함의 PER·EV/EBITDA 두 축, 피어 산점, 컨센 반영률 8종, EPS 사다리, 변수 6종 조정판(파트 1·2·5와 공유)</td><td><span class="tag now">완료 v1 (2026-09-03)</span></td><td><a href="대한항공_파트7_밸류모델_260903.html">대한항공_파트7_밸류모델_260903.html</a></td></tr>
-</table>
+<p>이 커버리지는 파트제로 만들었습니다. 파트 한 편이 주제 하나를 끝까지 내려가고, 완성될 때마다 이 허브의 판정을 갱신합니다. 아래 목록에서 파트를 누르면 본문이 이 자리에 펼쳐지고, 새 창으로도 열 수 있습니다. 숫자의 정본은 위 상수 블록이고, 각 파트에는 작성 시점 스탬프가 남습니다. 대기열 편성 근거는 <b>00_골격.md</b>에 있습니다.</p>
+<div class="partlist">
+<details class="part" data-file="대한항공_파트0_회사진입_260903.html">
+<summary><span class="pn">파트 0</span><span class="pt"><b>회사 진입편</b><span class="pd">정의·계보(아시아나 인수 6년)·한진칼 지배구조(20.56 대 20.15)·매출 믹스·22분기 손익·자본구조(순차입 17조)·현금흐름·기재 30조 계획·KPI 계기판·항공우주 사업부</span></span><span class="ps"><span class="tag now">완료 v1 (2026-09-03)</span></span></summary>
+<div class="pbar"><a class="popen" href="대한항공_파트0_회사진입_260903.html" target="_blank" rel="noopener">새 창에서 열기 ↗</a><span class="pnote">본문은 아래에 바로 펼쳐집니다. 조정판(슬라이더)도 그대로 동작합니다.</span></div>
+<div class="pframe"><iframe title="대한항공 파트 0" loading="lazy"></iframe></div>
+</details>
+<details class="part" data-file="대한항공_파트1_여객사업_260903.html">
+<summary><span class="pn">파트 1</span><span class="pt"><b>여객사업 딥다이브</b><span class="pd">142대·96개 도시, 손님 3갈래(아웃바운드·인바운드·환승), 운임 3층·인식, yield 2019~2026, 할증료와 수요, 11개사 단위매출 비교, 논쟁 4</span></span><span class="ps"><span class="tag now">완료 v1 (2026-09-03)</span></span></summary>
+<div class="pbar"><a class="popen" href="대한항공_파트1_여객사업_260903.html" target="_blank" rel="noopener">새 창에서 열기 ↗</a><span class="pnote">본문은 아래에 바로 펼쳐집니다. 조정판(슬라이더)도 그대로 동작합니다.</span></div>
+<div class="pframe"><iframe title="대한항공 파트 1" loading="lazy"></iframe></div>
+</details>
+<details class="part" data-file="대한항공_파트2_화물사업_260903.html">
+<summary><span class="pn">파트 2</span><span class="pt"><b>화물사업 딥다이브</b><span class="pd">프레이터 23대·인천 허브, 포워더와 세 화주, yield 두 층 분해(유가 120·기본 58), 2022년과의 차이, 9개사 화물 비교, 논쟁 3</span></span><span class="ps"><span class="tag now">완료 v1 (2026-09-03)</span></span></summary>
+<div class="pbar"><a class="popen" href="대한항공_파트2_화물사업_260903.html" target="_blank" rel="noopener">새 창에서 열기 ↗</a><span class="pnote">본문은 아래에 바로 펼쳐집니다. 조정판(슬라이더)도 그대로 동작합니다.</span></div>
+<div class="pframe"><iframe title="대한항공 파트 2" loading="lazy"></iframe></div>
+</details>
+<details class="part" data-file="대한항공_파트3_통합과산업_260903.html">
+<summary><span class="pn">파트 3</span><span class="pt"><b>산업·경쟁과 아시아나 통합</b><span class="pd">2026 한국 국제선 판, 밸류체인 플로우, 12개 FSC 재무·마진 비교, 해자 3버킷, 통합의 산수, 논쟁 2</span></span><span class="ps"><span class="tag now">완료 v1 (2026-09-03)</span></span></summary>
+<div class="pbar"><a class="popen" href="대한항공_파트3_통합과산업_260903.html" target="_blank" rel="noopener">새 창에서 열기 ↗</a><span class="pnote">본문은 아래에 바로 펼쳐집니다. 조정판(슬라이더)도 그대로 동작합니다.</span></div>
+<div class="pframe"><iframe title="대한항공 파트 3" loading="lazy"></iframe></div>
+</details>
+<details class="part" data-file="대한항공_파트4_주가추이_260903.html">
+<summary><span class="pn">파트 4</span><span class="pt"><b>주가추이</b><span class="pd">5년 국면(15% 지그재그)·TTM 이익 대응, 최근 1년 세 막(유가·환율·합병), 실적일 반응 10회, 상대성과, 수급, KPI 동행 판정, 과거 낙폭</span></span><span class="ps"><span class="tag now">완료 v1 (2026-09-03)</span></span></summary>
+<div class="pbar"><a class="popen" href="대한항공_파트4_주가추이_260903.html" target="_blank" rel="noopener">새 창에서 열기 ↗</a><span class="pnote">본문은 아래에 바로 펼쳐집니다. 조정판(슬라이더)도 그대로 동작합니다.</span></div>
+<div class="pframe"><iframe title="대한항공 파트 4" loading="lazy"></iframe></div>
+</details>
+<details class="part" data-file="대한항공_파트5_비용마진_260903.html">
+<summary><span class="pn">파트 5</span><span class="pt"><b>비용·마진</b><span class="pd">회계 인식 지도, 성격별 비용 18분기, 연료 3조각 분해, 고정비 3계정, 환율 층, 조정판(항공유·환율·전가율)</span></span><span class="ps"><span class="tag now">완료 v1 (2026-09-03)</span></span></summary>
+<div class="pbar"><a class="popen" href="대한항공_파트5_비용마진_260903.html" target="_blank" rel="noopener">새 창에서 열기 ↗</a><span class="pnote">본문은 아래에 바로 펼쳐집니다. 조정판(슬라이더)도 그대로 동작합니다.</span></div>
+<div class="pframe"><iframe title="대한항공 파트 5" loading="lazy"></iframe></div>
+</details>
+<details class="part" data-file="대한항공_파트6_리스크_260903.html">
+<summary><span class="pn">파트 6</span><span class="pt"><b>리스크</b><span class="pd">매트릭스 10종(영향×확률), 유가·환율·아시아나의 상관, 마일리지·중동·등급·경영권·안전·기재, 과거 낙폭과 PBR 자, 접는 조건 통합표</span></span><span class="ps"><span class="tag now">완료 v1 (2026-09-03)</span></span></summary>
+<div class="pbar"><a class="popen" href="대한항공_파트6_리스크_260903.html" target="_blank" rel="noopener">새 창에서 열기 ↗</a><span class="pnote">본문은 아래에 바로 펼쳐집니다. 조정판(슬라이더)도 그대로 동작합니다.</span></div>
+<div class="pframe"><iframe title="대한항공 파트 6" loading="lazy"></iframe></div>
+</details>
+<details class="part" data-file="대한항공_파트7_밸류모델_260903.html">
+<summary><span class="pn">파트 7</span><span class="pt"><b>밸류에이션·조정 모델 총괄판</b><span class="pd">컨센 지형, 함의 PER·EV/EBITDA 두 축, 피어 산점, 컨센 반영률 8종, EPS 사다리, 변수 6종 조정판(파트 1·2·5와 공유)</span></span><span class="ps"><span class="tag now">완료 v1 (2026-09-03)</span></span></summary>
+<div class="pbar"><a class="popen" href="대한항공_파트7_밸류모델_260903.html" target="_blank" rel="noopener">새 창에서 열기 ↗</a><span class="pnote">본문은 아래에 바로 펼쳐집니다. 조정판(슬라이더)도 그대로 동작합니다.</span></div>
+<div class="pframe"><iframe title="대한항공 파트 7" loading="lazy"></iframe></div>
+</details>
+</div>
 <p>남은 대기열은 없습니다. 다음 증축은 3Q26 잠정실적(10월 중순) 뒤 실적브리프 한 편이며, 그때 상수 블록과 논쟁 카드의 채점 결과를 갱신합니다. 커버리지 14층은 <b>coverage_check.py</b>로 검사했습니다(glossary·primer·finsnap·segdive → 파트 0·1·2, industry → 파트 3, stock → 파트 4, costs → 파트 5, risks → 파트 6, valuation·model → 파트 7, debate → 파트 1·2·3, pmsummary·debatemap·appendix → 허브).</p>
 
 <h2>부록 — 데이터 패킷 좌표와 미결 총람</h2>
@@ -108,4 +155,42 @@ $1 = ₩1,359.1(9-03) · 2Q26 말 평가환율 1,541.5원 · 12월 결산(2026�
 <li>v1 (2026-09-03) — 허브 신설, 파트 0~7 같은 날 완주(콜드스타트, 기존 커버리지 없음). 판정: 2Q26 연결 적자는 유가·환율·아시아나 3중 충격이고 3분기부터 부호가 바뀐다 — 회복은 오되 2027E 시장의 크기(2조 2,211억원)보다 2,700억원<span class="est">E</span> 작게 본다. 논쟁 4개 확정(3Q 회복·아시아나 흡수·화물 yield·여객 yield), 계기판 8종, 촉매 15건, 미결 A급 5·B급 9·C급 4. 밸류 좌표: 2027E 함의 PER 컨센 7.6배·우리 8.6배<span class="est">E</span>(시총 축 피어 하단), EV/EBITDA 5.1~5.4배(기업가치 축 피어 상단), PBR 1.02배 대 2023~2025 박스 0.76~0.93배. 하방 자 22,000~26,500원<span class="est">E</span>(박스 배수 × BPS). 세 변수 동시 악화 12개월 확률 20~25%<span class="est">E</span>.</li>
 </ul>
 
+<script>
+(function(){
+  // 허브가 %2F 인코딩 경로로 열려도 파트 파일을 같은 폴더에서 찾도록 절대 경로를 만든다
+  var path=location.pathname.replace(/%2F/gi,'/');
+  var dir=path.slice(0,path.lastIndexOf('/')+1);
+  function url(fn){return dir+encodeURIComponent(fn);}
+  function fit(ifr){
+    try{
+      var d=ifr.contentDocument; if(!d||!d.documentElement) return;
+      var h=Math.max(d.documentElement.scrollHeight,d.body?d.body.scrollHeight:0);
+      if(h>200) ifr.style.height=(h+24)+'px';
+    }catch(e){}
+  }
+  document.querySelectorAll('details.part').forEach(function(det){
+    var fn=det.getAttribute('data-file');
+    var ifr=det.querySelector('iframe');
+    var a=det.querySelector('a.popen'); if(a) a.href=url(fn);
+    det.addEventListener('toggle',function(){
+      if(!det.open||ifr.dataset.loaded) return;
+      ifr.dataset.loaded='1';
+      ifr.addEventListener('load',function(){
+        fit(ifr);
+        try{
+          var d=ifr.contentDocument;
+          // 파트 안의 허브 링크는 허브 페이지 자체(최상위)로 이동
+          d.querySelectorAll('a[href]').forEach(function(x){var hr=x.getAttribute('href');if(hr&&hr.charAt(0)!=='#'){x.target='_top';}});
+          if(window.ResizeObserver&&d.body){new ResizeObserver(function(){fit(ifr);}).observe(d.body);}
+          else{setInterval(function(){fit(ifr);},1500);}
+        }catch(e){}
+      });
+      ifr.src=url(fn);
+    });
+  });
+  // #part3 같은 해시로 열면 해당 파트를 자동 펼침
+  var mh=/^#part(\d)$/.exec(location.hash);
+  if(mh){var t=document.querySelector('details.part[data-file*="파트'+mh[1]+'_"]'); if(t){t.open=true; t.scrollIntoView();}}
+})();
+</script>
 </body></html>
