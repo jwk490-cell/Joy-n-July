@@ -1,0 +1,110 @@
+/* Research Lab 심층리서치 공통 테마 (토스 스타일) — html[data-rl=a|b|p] 계열별 스코프, html[data-theme=light|dark] */
+
+/* ===== A: 구형 단일 페이지(OCI형) ===== */
+html[data-rl=a][data-theme=light]{--bg:#F2F4F6;--card:#FFFFFF;--card2:#F9FAFB;--line:#E5E8EB;--line2:#F2F4F6;--txt:#191F28;--sub:#4E5968;--faint:#8B95A1;--accent:#3182F6;--blue-50:#E8F3FF;--up:#F04452;--down:#3182F6;--gold:#C9822B}
+html[data-rl=a][data-theme=dark]{--bg:#17171C;--card:#202027;--card2:#26262E;--line:#2C2C35;--line2:#33333D;--txt:#E5E8EB;--sub:#B0B8C1;--faint:#8B95A1;--accent:#4593FC;--blue-50:rgba(49,130,246,.16);--up:#FF6B6B;--down:#4593FC;--gold:#E0A857}
+html[data-rl=a] body{font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;font-size:14.5px;-webkit-font-smoothing:antialiased;word-break:keep-all}
+html[data-rl=a] .wrap{padding:36px 22px 90px}
+html[data-rl=a] .mast{border-bottom:0;padding-bottom:6px;margin-bottom:18px}
+html[data-rl=a] .mast h1{font-size:30px;letter-spacing:-.02em}
+html[data-rl=a] .mast .tkr{color:var(--accent);background:var(--blue-50);border-radius:999px;padding:3px 10px;display:inline-block}
+html[data-rl=a] .rating{background:var(--blue-50);border:0;color:var(--accent);font-weight:700;border-radius:999px}
+html[data-rl=a] .lead{background:var(--blue-50);border-left:0;border-radius:16px;padding:18px 20px}
+html[data-rl=a] section{background:var(--card);border-radius:20px;padding:22px 24px 16px;margin-bottom:14px;box-shadow:0 2px 10px rgba(25,31,40,.05)}
+html[data-rl=a][data-theme=dark] section{box-shadow:0 2px 10px rgba(0,0,0,.25)}
+html[data-rl=a] h2{border-bottom:0;font-size:19px;padding-bottom:0;margin-bottom:10px;letter-spacing:-.015em}
+html[data-rl=a] table{border-radius:12px;border-color:var(--line);background:var(--card2)}
+html[data-rl=a] th{background:var(--line2)}
+html[data-rl=a] td{border-bottom-color:var(--line)}
+html[data-rl=a] tr.hl td,html[data-rl=a] tr.tot td{background:var(--blue-50)}
+html[data-rl=a] .note,html[data-rl=a] .kpi{background:var(--card2);border-radius:14px}
+html[data-rl=a] .note.warn{background:rgba(201,130,43,.10);border-color:rgba(201,130,43,.35)}
+html[data-rl=a] .tag{border-radius:999px;background:var(--line2)}
+html[data-rl=a] .foot{border-top-color:var(--line)}
+html[data-rl=a] svg [fill="#6d7480"]{fill:var(--faint)} html[data-rl=a] svg [fill="#9aa2ad"]{fill:var(--sub)} html[data-rl=a] svg [stroke="#272930"]{stroke:var(--line)}
+html[data-rl=a] svg [fill="#4d7df5"]{fill:var(--accent)} html[data-rl=a] svg [stroke="#4d7df5"]{stroke:var(--accent)} html[data-rl=a] svg [fill="#3485fa"]{fill:var(--down)} html[data-rl=a] svg [stroke="#3485fa"]{stroke:var(--down)}
+html[data-rl=a] svg [fill="#f04452"]{fill:var(--up)} html[data-rl=a] svg [stroke="#f04452"]{stroke:var(--up)} html[data-rl=a] svg [fill="#c9a24a"]{fill:var(--gold)} html[data-rl=a] svg [stroke="#c9a24a"]{stroke:var(--gold)}
+
+/* ===== B: v2 탭형 ===== */
+html[data-rl=b][data-theme=light]{--bg:#F2F4F6;--paper:#FFFFFF;--card:#FFFFFF;--card2:#F9FAFB;--ink:#191F28;--ink2:#333D4B;--muted:#6B7684;--line:#E5E8EB;--line2:#E5E8EB;--accent:#3182F6;--accent2:#03B26C;--gold:#C9822B;--up:#F04452;--down:#3182F6;--chip:#F2F4F6;--shadow:rgba(25,31,40,.10);--blue-50:#E8F3FF}
+html[data-rl=b][data-theme=dark]{--bg:#17171C;--paper:#1B1B21;--card:#202027;--card2:#26262E;--ink:#E5E8EB;--ink2:#C3C9D1;--muted:#8B95A1;--line:#2C2C35;--line2:#3A3A45;--accent:#4593FC;--accent2:#2FCB8A;--gold:#E0A857;--up:#FF6B6B;--down:#4593FC;--chip:#2A2A33;--shadow:rgba(0,0,0,.5);--blue-50:rgba(49,130,246,.16)}
+html[data-rl=b]{--serif:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo",sans-serif;--mono:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo",sans-serif}
+html[data-rl=b] body{-webkit-font-smoothing:antialiased;word-break:keep-all}
+html[data-rl=b] .mast{background:var(--card);border-bottom:1px solid var(--line)}
+html[data-rl=b] .tkr{letter-spacing:0;font-weight:700;background:var(--blue-50);border-radius:999px;padding:2px 10px;font-size:13px}
+html[data-rl=b] .nm{font-weight:800;letter-spacing:-.02em}
+html[data-rl=b] .rating{color:#fff;background:var(--accent);border-radius:999px;padding:4px 12px}
+html[data-rl=b] .tabs{background:var(--bg);border-bottom-color:var(--line)}
+html[data-rl=b] .tab{font-size:12.5px;letter-spacing:0;font-weight:600;border-bottom-width:2px}
+html[data-rl=b] .tab b{color:var(--muted);font-weight:600}
+html[data-rl=b] .fxbar{background:var(--card2);border-bottom-color:var(--line);font-size:11.5px}
+html[data-rl=b] .eyebrow{letter-spacing:.04em;font-weight:700}
+html[data-rl=b] h1.big{font-weight:800;letter-spacing:-.02em}
+html[data-rl=b] h2.sec{font-weight:800;letter-spacing:-.015em;border-bottom-color:var(--line)}
+html[data-rl=b] em{color:var(--ink);background:linear-gradient(transparent 60%,rgba(49,130,246,.28) 60%)}
+html[data-rl=b] .src{letter-spacing:0;font-weight:700}
+html[data-rl=b] .src .tip{background:var(--ink);color:var(--bg);border-color:transparent}
+html[data-rl=b] .est{color:#fff;letter-spacing:0;text-transform:none;font-weight:700} html[data-rl=b] .est.bull{color:#fff}
+html[data-rl=b] .card,html[data-rl=b] .kpi,html[data-rl=b] .chart{border-radius:16px}
+html[data-rl=b] .note{background:var(--card2);border-radius:16px}
+html[data-rl=b] .note .h,html[data-rl=b] .kpi .lab,html[data-rl=b] .chart .ct{letter-spacing:.02em}
+html[data-rl=b] .kpi .val{font-weight:800;letter-spacing:-.01em}
+html[data-rl=b] table{border-radius:12px}
+html[data-rl=b] thead th{background:var(--card2);letter-spacing:0;text-transform:none;font-size:11.5px}
+html[data-rl=b] tbody tr:hover{background:var(--card2)}
+html[data-rl=b] tr.tot td{background:var(--card2)}
+html[data-rl=b] tr.hl td{background:var(--blue-50)}
+html[data-rl=b] .tag,html[data-rl=b] .pill{border-radius:999px;letter-spacing:0}
+html[data-rl=b] .bq{font-style:normal;border-left-color:var(--accent)}
+html[data-rl=b] .foot{border-top-color:var(--line)}
+/* B SVG 팔레트 → 토큰 (다크 팔레트 + 종이 팔레트 둘 다) */
+html[data-rl=b] svg [fill="#eaecef"],html[data-rl=b] svg [fill="#1A1814"],html[data-rl=b] svg [fill="#3C372F"]{fill:var(--ink)}
+html[data-rl=b] svg [fill="#bfc5ce"]{fill:var(--ink2)}
+html[data-rl=b] svg [fill="#828b98"],html[data-rl=b] svg [fill="#7a8290"],html[data-rl=b] svg [fill="#5a6472"],html[data-rl=b] svg [fill="#7A7264"]{fill:var(--muted)}
+html[data-rl=b] svg [stroke="#828b98"],html[data-rl=b] svg [stroke="#5a6472"],html[data-rl=b] svg [stroke="#7A7264"]{stroke:var(--muted)}
+html[data-rl=b] svg [stroke="#353b47"],html[data-rl=b] svg [stroke="#262a33"],html[data-rl=b] svg [stroke="#E2DCCF"],html[data-rl=b] svg [stroke="#D2C9B6"],html[data-rl=b] svg [stroke="#D8CDB4"],html[data-rl=b] svg [stroke="#22262f"],html[data-rl=b] svg [stroke="#20242c"]{stroke:var(--line2)}
+html[data-rl=b] svg [fill="#20242c"],html[data-rl=b] svg [fill="#22262f"],html[data-rl=b] svg [fill="#1a1d25"],html[data-rl=b] svg [fill="#FCFBF7"],html[data-rl=b] svg [fill="#EEE9DE"]{fill:var(--card2)}
+html[data-rl=b] svg [fill="#E2DCCF"],html[data-rl=b] svg [fill="#D2C9B6"],html[data-rl=b] svg [fill="#D8CDB4"],html[data-rl=b] svg [fill="#353b47"],html[data-rl=b] svg [fill="#262a33"]{fill:var(--line2)}
+html[data-rl=b] svg [fill="#e78a5c"],html[data-rl=b] svg [fill="#B8472E"]{fill:var(--accent)} html[data-rl=b] svg [stroke="#e78a5c"],html[data-rl=b] svg [stroke="#B8472E"]{stroke:var(--accent)}
+html[data-rl=b] svg [fill="#4bbf9a"],html[data-rl=b] svg [fill="#2E6B5E"]{fill:var(--accent2)} html[data-rl=b] svg [stroke="#4bbf9a"],html[data-rl=b] svg [stroke="#2E6B5E"]{stroke:var(--accent2)}
+html[data-rl=b] svg [fill="#cba24a"],html[data-rl=b] svg [fill="#9C7A2E"]{fill:var(--gold)} html[data-rl=b] svg [stroke="#cba24a"],html[data-rl=b] svg [stroke="#9C7A2E"]{stroke:var(--gold)}
+html[data-rl=b] svg [fill="#f0525f"]{fill:var(--up)} html[data-rl=b] svg [stroke="#f0525f"]{stroke:var(--up)}
+html[data-rl=b] svg [fill="#3c86f5"]{fill:var(--down)} html[data-rl=b] svg [stroke="#3c86f5"]{stroke:var(--down)}
+html[data-rl=b] .lgd i,html[data-rl=b] .mvbar>i{filter:none}
+
+/* ===== P: 파트제 파트 본문 ===== */
+html[data-rl=p]{--bg:#F2F4F6;--card:#FFFFFF;--bg2:#F9FAFB;--ink:#191F28;--sub:#4E5968;--dim:#8B95A1;--line:#E5E8EB;--blue:#3182F6;--blue-50:#E8F3FF;--red:#F04452;--gold:#C9822B;--teal:#03B26C;--lblue:#8FBCF3}
+html[data-rl=p][data-theme=dark]{--bg:#17171C;--card:#202027;--bg2:#26262E;--ink:#E5E8EB;--sub:#B0B8C1;--dim:#8B95A1;--line:#2C2C35;--blue:#4593FC;--blue-50:rgba(49,130,246,.16);--red:#FF6B6B;--gold:#E0A857;--teal:#2FCB8A;--lblue:#5E8FCC}
+html[data-rl=p] body{background:var(--bg);color:var(--ink);font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased}
+html[data-rl=p] main{padding:40px 24px 90px}
+html[data-rl=p] h1{font-size:27px;font-weight:800;letter-spacing:-.02em;line-height:1.3}
+html[data-rl=p] .sub,html[data-rl=p] .src,html[data-rl=p] .hubnav,html[data-rl=p] .foot,html[data-rl=p] .panel .note{color:var(--dim);font-family:inherit}
+html[data-rl=p] .hubnav{background:var(--card);border:1px solid var(--line);border-radius:999px;display:inline-block;padding:5px 14px}
+html[data-rl=p] h2{font-size:20px;font-weight:800;letter-spacing:-.015em;border-top:1px solid var(--line);padding-top:22px;margin-top:40px}
+html[data-rl=p] h3{font-size:16px;font-weight:700}
+html[data-rl=p] p{font-size:15px}
+html[data-rl=p] p.reading{background:var(--blue-50);color:var(--ink);border-radius:12px;padding:12px 16px}
+html[data-rl=p] figure{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+html[data-rl=p] figcaption{font-family:inherit;font-weight:700}
+html[data-rl=p] table{background:var(--card);font-family:inherit;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+html[data-rl=p] td,html[data-rl=p] th{border:0;border-bottom:1px solid var(--line);padding:7px 11px}
+html[data-rl=p] th{background:var(--bg2);color:var(--sub)}
+html[data-rl=p] tr:last-child td{border-bottom:0}
+html[data-rl=p] .gloss{background:var(--card);border-color:var(--line);border-radius:16px;font-family:inherit}
+html[data-rl=p] .judge{background:var(--bg2);border-left-color:var(--blue);border-radius:0 12px 12px 0}
+html[data-rl=p] .ourview{background:var(--blue-50);border-left-color:var(--blue);border-radius:0 12px 12px 0}
+html[data-rl=p] .panel{background:var(--card);border-color:var(--line);border-radius:16px;font-family:inherit}
+html[data-rl=p] .panel input[type=range]{accent-color:var(--blue)}
+html[data-rl=p] .est{color:var(--blue)}
+html[data-rl=p] .foot{border-top-color:var(--line)}
+html[data-rl=p] .segdive{border-color:var(--line);background:var(--card);border-radius:16px}
+html[data-rl=p] .leadchain{background:rgba(201,130,43,.10);border-color:rgba(201,130,43,.35);border-radius:12px}
+html[data-rl=p] a{color:var(--blue)}
+html[data-rl=p] svg [fill="#8a857c"]{fill:var(--dim)} html[data-rl=p] svg [stroke="#8a857c"]{stroke:var(--dim)}
+html[data-rl=p] svg [stroke="#d8d4cc"]{stroke:var(--line)} html[data-rl=p] svg [fill="#d8d4cc"]{fill:var(--line)}
+html[data-rl=p] svg [fill="#3a3630"]{fill:var(--ink)} html[data-rl=p] svg [fill="#fff"]{fill:var(--card)} html[data-rl=p] svg [fill="#f1ede4"]{fill:var(--bg2)}
+html[data-rl=p] svg [fill="#1f3a5f"]{fill:var(--blue)} html[data-rl=p] svg [stroke="#1f3a5f"]{stroke:var(--blue)}
+html[data-rl=p] svg [fill="#a44a3f"]{fill:var(--red)} html[data-rl=p] svg [stroke="#a44a3f"]{stroke:var(--red)}
+html[data-rl=p] svg [fill="#b07d2b"]{fill:var(--gold)} html[data-rl=p] svg [stroke="#b07d2b"]{stroke:var(--gold)}
+html[data-rl=p] svg [fill="#2b7a78"]{fill:var(--teal)} html[data-rl=p] svg [stroke="#2b7a78"]{stroke:var(--teal)}
+html[data-rl=p] svg [fill="#7fa3c9"]{fill:var(--lblue)} html[data-rl=p] svg [stroke="#7fa3c9"]{stroke:var(--lblue)}

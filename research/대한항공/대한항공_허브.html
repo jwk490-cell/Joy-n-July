@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<!doctype html><html lang="ko" data-rl="hub"><head><meta charset="utf-8">
 <meta name="coverage" content="pmsummary,debatemap,appendix">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>대한항공 허브 — 판정과 파트 지도 · 2026-09-03</title>
@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#F2F4F6">
 <style>
 :root{--blue:#3182F6;--blue-50:#E8F3FF;--blue-100:#C9E2FF;--blue-700:#1B64DA;--ink:#191F28;--sub:#4E5968;--dim:#8B95A1;--line:#E5E8EB;--bg:#F2F4F6;--bg2:#F9FAFB;--white:#fff;--red:#F04452;--r:20px;--shadow:0 2px 10px rgba(25,31,40,.05)}
+html[data-theme=dark]{--blue:#4593FC;--blue-50:rgba(49,130,246,.16);--blue-100:rgba(49,130,246,.35);--blue-700:#7BB1FF;--ink:#E5E8EB;--sub:#B0B8C1;--dim:#8B95A1;--line:#2C2C35;--bg:#17171C;--bg2:#26262E;--white:#202027;--red:#FF6B6B;--shadow:0 2px 10px rgba(0,0,0,.25)}
 *{box-sizing:border-box}
 html{background:var(--bg);scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;padding:0 0 96px;color:var(--ink);font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Noto Sans KR",system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.72;word-break:keep-all;-webkit-font-smoothing:antialiased}
@@ -38,12 +39,12 @@ p{margin:0 0 1.05em}
 .const .k{font-weight:700;color:var(--ink)}
 .const .k small{display:block;font-weight:500;color:var(--dim);font-size:11.5px;line-height:1.4;margin-top:2px}
 .const .v{color:var(--sub)}
-.topnav{position:sticky;top:0;z-index:20;background:rgba(242,244,246,.86);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);margin:6px -20px 18px;padding:10px 20px}
+.topnav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);margin:6px -20px 18px;padding:10px 20px}
 .topnav .in{max-width:880px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
 .topnav .in::-webkit-scrollbar{display:none}
 .topnav a{flex:none;font-size:13px;font-weight:600;color:var(--sub);background:var(--white);border-radius:999px;padding:7px 13px;box-shadow:var(--shadow)}
 .topnav a:hover{text-decoration:none;color:var(--ink)}
-.topnav a.on{color:#fff;background:var(--ink)}
+.topnav a.on{color:var(--bg);background:var(--ink)}
 .sec{background:var(--white);border-radius:var(--r);padding:26px 26px 22px;box-shadow:var(--shadow);margin:0 0 14px;scroll-margin-top:64px}
 .sec h2{font-size:21px;font-weight:800;letter-spacing:-.015em;line-height:1.35;margin:0 0 10px}
 .sec h2 .h2sub{display:block;font-size:14px;font-weight:500;color:var(--dim);margin-top:4px;letter-spacing:0}
@@ -84,8 +85,8 @@ td:first-child{white-space:nowrap;font-weight:600;color:var(--ink);font-variant-
 .part .pbar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:9px 18px;border-top:1px solid var(--line);background:var(--bg2);font-size:12.5px}
 .part .popen{font-weight:700}
 .part .pnote{color:var(--dim)}
-.part .pframe{border-top:1px solid var(--line);background:#faf9f6}
-.part iframe{display:block;width:100%;height:80vh;border:0;background:#faf9f6}
+.part .pframe{border-top:1px solid var(--line);background:var(--bg)}
+.part iframe{display:block;width:100%;height:80vh;border:0;background:var(--bg)}
 .log{list-style:none;padding:0;margin:8px 0 0}
 .log li{position:relative;padding:0 0 4px 22px;font-size:14px;color:var(--sub);line-height:1.7}
 .log li::before{content:"";position:absolute;left:4px;top:10px;width:9px;height:9px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px var(--blue-50)}
@@ -102,7 +103,8 @@ footer{color:var(--dim);font-size:12.5px;text-align:center;padding:14px 0 0;line
   .part summary{grid-template-columns:auto 1fr auto;gap:10px;padding:12px 14px}
   .part .ps{display:none}
 }
-</style></head><body>
+</style><script src="../theme.js"></script>
+</head><body>
 
 <div class="wrap">
 <header class="hero">
