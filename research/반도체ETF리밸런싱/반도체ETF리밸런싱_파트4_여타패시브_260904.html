@@ -1,0 +1,438 @@
+<!doctype html><html lang="ko" data-rl="p"><head><meta charset="utf-8">
+<meta name="coverage" content="industry">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>반도체 ETF 리밸런싱 파트 4 — 여타 패시브 지도 · 2026-09-04</title>
+<style>
+body{margin:0;background:#faf8f4;color:#3a3630;font-family:'Noto Serif KR','Apple SD Gothic Neo','Malgun Gothic',serif;line-height:1.78;word-break:keep-all}
+main{max-width:920px;margin:0 auto;padding:44px 28px 80px}
+h1{font-size:23px;margin:0 0 6px;line-height:1.35} .sub{color:#8a857c;font-size:13px;margin-bottom:10px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;line-height:1.6}
+h2{font-size:17.5px;margin:36px 0 8px;padding-top:16px;border-top:1px solid #e3ded4}
+h3{font-size:15px;margin:22px 0 6px}
+p{max-width:700px;font-size:15px;margin:0 0 1.25em}
+p.reading{font-size:14px;color:#4a463f;background:#f4f0e8;border-radius:6px;padding:10px 14px;max-width:700px}
+figure{margin:14px 0 6px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px}
+figcaption{font-size:13px;font-weight:600;margin-bottom:8px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+svg{width:100%;height:auto;display:block}
+.src{font-size:11.5px;color:#8a857c;margin-top:6px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+table{border-collapse:collapse;font-size:13px;margin:10px 0 16px;font-family:Pretendard,'Apple SD Gothic Neo',-apple-system,sans-serif;background:#fff}
+td,th{border:1px solid #e0dbd0;padding:5px 10px;text-align:right;vertical-align:top} td:first-child,th:first-child{text-align:left} th{background:#f1ede4;font-weight:600;color:#5a5650}
+.gloss{display:grid;grid-template-columns:160px 1fr;gap:6px 14px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px;font-size:13.5px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;max-width:740px;line-height:1.55}
+.gloss b{font-size:13px}
+.judge{background:#f1ede4;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.ourview{background:#eef2f7;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.panel{background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px 16px;max-width:700px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;font-size:14px;margin:12px 0 18px}
+.panel input[type=range]{width:100%}
+.panel .out{margin-top:8px;font-weight:700}
+.panel .note{color:#8a857c;font-size:12.5px;margin-top:6px}
+.est{font-size:.72em;vertical-align:super;color:#a44a3f;font-weight:700}
+.foot{font-size:12px;color:#8a857c;max-width:700px;margin-top:30px;border-top:1px solid #e3ded4;padding-top:12px}
+.segdive{border:1px solid #e0dbd0;border-radius:8px;padding:6px 18px 4px;margin:14px 0 20px;background:#fdfcf9}
+.leadchain{background:#fff8ea;border:1px solid #e8d9b5;border-radius:6px;padding:12px 16px;max-width:700px;font-size:14px}
+.hubnav{font-size:12.5px;color:#8a857c;font-family:Pretendard,sans-serif;margin-bottom:14px}
+.hubnav a{color:#1f3a5f}
+a{color:#1f3a5f}
+@media print{.panel input{display:none}}
+</style><link rel="stylesheet" href="../theme.css"><script src="../theme.js"></script></head><body><main>
+
+<h1>반도체 ETF 리밸런싱 파트 4 — 여타 패시브 지도: 9월 10일 다음에 오는 것들, 반도체 ETF 정기변경 캘린더와 연쇄</h1>
+<div class="sub">파트제 커버리지 8편 · 작성 2026-09-04 · 기준 순자산 6조 6,707억(KODEX 5조 2,416억 + TIGER 1조 2,663억 + 타겟위클리커버드콜 1,628억, 9-03) · 집행일 2026-09-10 종가<span class="est">E</span> · 다음 갱신 트리거: 미래에셋의 10월 TIGER 반도체TOP10 정기변경일 공지, 9-30 FnGuide 종목선정 기준일 시총 순위, 각 ETF 9-09·10-07 순자산, KRX 정기변경 공표 · 숫자 정본: 허브 상수 블록 · 소스: packet.json(네이버 ETF 순자산·상위 10 비중 9-03, 키움 일봉·ADTV), 삼성증권 ETP전략 2026-06-10 표(정기변경·cap), FnGuide 반도체TOP10 방법론(2024-05 v1.0), 한국경제 2026-03-30·08-05, 비즈워치 2026-06, 신한투자증권 집계 인용 기사(2026 5~7월)</div>
+<div class="hubnav">현행 판정은 <a href="반도체ETF리밸런싱_허브.html">허브</a>가 듭니다. 이 파트는 커버리지 층 industry(산업과 경쟁 — 여기서는 '패시브 자금의 지형과 다른 지수들의 정기변경')를 맡고, 허브 논쟁 5(편출입·유동비율 차이·여타 패시브가 cap 조정보다 큰 변수인가)에 답합니다. 파트 1이 9/10 하루의 산식이라면 이 파트는 그 하루가 끝난 뒤 10·12월에 이어지는 다른 지수의 정기변경을 같은 자로 잽니다.</div>
+
+<p>이 파트가 커버리지에서 맡는 자리입니다. 허브의 판정 가설은 9월 10일 종가에 KRX 반도체를 완전복제하는 6조 6,707억이 하이닉스 11,293억<span class="est">E</span>·삼성전자 2,083억<span class="est">E</span>을 팔고 그 돈을 소부장 33종에 안분한다는 것이고, 파트 1·2·3이 그 하루의 산식·흡수력·선반영을 다룹니다. 그런데 국내에서 반도체라는 이름을 달고 삼성전자·SK하이닉스를 담은 패시브는 KODEX·TIGER 반도체 두 개가 아닙니다. 순자산으로는 TIGER 반도체TOP10 9조 20억이 KODEX 반도체보다 크고, SOL·KODEX의 TOP2플러스 두 개가 5조 2,930억·3조 7,829억이며, 이들은 각자 다른 지수·다른 달·다른 cap으로 정기변경을 합니다. 이 파트는 그 지형을 한 장의 표로 놓고, 하반기(9~12월)에 어느 날 어느 돈이 삼성전자·하이닉스·삼성전기·한미반도체를 사고 파는지를 이벤트별로 합산합니다. 결론을 먼저 적으면, 9/10의 하이닉스 매도는 9~12월 전체 패시브 연쇄에서 유일한 큰 매도이고 10월부터는 오히려 하이닉스가 순매수 쪽으로 돌아서며(10~12월 합산 +2,857억<span class="est">E</span>), 삼성전자는 9/10보다 10월 TOP10 정기변경(-3,727억<span class="est">E</span>)이 더 큰 매도 이벤트입니다. 삼성전기는 6월에 9,200억을 맞은 뒤 지금은 어느 지수에서도 cap 아래라 하반기 연쇄에서 방향을 바꿀 금액이 없습니다.</p>
+
+<div class="gloss">
+<b>정기변경 D+1·D+2</b><span>D는 그 달 코스피200 선물옵션 동시만기일(둘째 목요일)입니다. 정기변경일이 D+1이면 지수는 만기 다음 영업일부터 새 비중으로 산출되고, ETF의 실제 매매는 그 직전 영업일, 즉 만기일 종가에 이뤄집니다(삼성증권 ETP전략 2026-06-10 원문: "ETF의 실제 리밸런싱은 정기변경일 직전일 종가기준"). KRX 반도체는 9월 D+1, TIGER 반도체TOP10은 4·10월 D+2, HANARO Fn K-반도체는 6·12월 D+4입니다. 2026년 10월은 10/9 한글날 휴장 때문에 D+1이 10/12(월), D+2가 10/13(화)로 갈립니다.</span>
+<b>수시개편</b><span>정기변경 사이에 지수 규칙이 발동하는 비중 재계산입니다. FnGuide 반도체TOP10은 월말 4영업일 전부터 월말까지 5일 연속 한 종목이 30%를 넘으면 월말 종가로 재계산해 T+3에 반영한다고 방법론에 적혀 있으나, 2025년 12월·2026년 1·2월에 하이닉스가 30%를 넘고도 보유 수량이 바뀌지 않아 3월 말 논란이 됐습니다(한국경제 2026-03-30). 자본시장법 시행령의 30% 상한은 인덱스 펀드에 지수 비중까지 예외를 둡니다.</span>
+<b>상위 2종 cap</b><span>TOP2플러스·TOP10 계열이 쓰는 방식으로, 시총 상위 2종(삼성전자·SK하이닉스)에 각각 25%를 고정 배정하고 나머지 50%를 하위 종목에 유동시총 가중 또는 키워드 점수로 나눕니다. KRX 반도체의 cap 20%<span class="est">E</span>가 "초과분을 잘라 나머지에 안분"인 것과 달리, 상위 2종 cap은 두 종목이 25% 아래에 있어도 정기변경일에 25%로 끌어올립니다. 그래서 지금처럼 하이닉스가 23.8%(TOP10)·22.4%(SOL)인 상태에서는 하이닉스 매수가 나옵니다.</span>
+<b>TR 지수</b><span>Total Return, 배당을 재투자한 지수입니다. 삼성증권 표의 KODEX Top5PlusTR·TIGER MSCI Korea TR이 그 예이고, PR(Price Return)은 배당을 빼고 가격만 봅니다. 정기변경 산식에는 영향이 없고 ETF 이름의 꼬리표를 읽을 때만 필요합니다.</span>
+<b>커버드콜 타겟</b><span>현물을 100% 들고 콜옵션을 팔아 분배금을 만드는 구조에서, "타겟 9%"처럼 연 분배율 목표를 정해 두고 옵션 매도 비율을 조절하는 방식입니다. KODEX 반도체타겟위클리커버드콜(1,628억)은 KRX 반도체 현물 100%라 9/10 정기변경을 KODEX 반도체와 똑같이 집행하며, 허브의 6조 6,707억 안에 이미 들어 있습니다. TIGER 반도체TOP10커버드콜액티브(7,529억)는 액티브라 cap 25%에 구속되지 않습니다.</span>
+<b>레버리지 스왑</b><span>일간 2배 ETF는 현물 주식과 기초 ETF, 그리고 증권사와 맺은 스왑·선물로 200% 노출을 맞춥니다. KODEX 반도체레버리지(8,662억)는 순자산 대비 하이닉스 47.0%·KODEX 반도체 29.0%·삼성전자 25.7%를 직접 들고 나머지 노출은 스왑입니다. 정기변경 때 현물 슬리브는 운용사가, 스왑 노출은 거래상대방(증권사)이 각자 헤지를 바꾸므로 "순자산 × 비중 변화"로 매매액을 셀 수 없습니다(5절).</span>
+<b>완전복제·부분복제</b><span>완전복제는 지수 구성종목 전부를 지수 비중대로 담는 것이고, 부분복제는 추적오차 한도 안에서 일부 종목을 빼거나 비중을 달리하는 것입니다. KODEX·TIGER 반도체는 35종목을 소수 둘째 자리까지 같은 비중으로 담고 있어(9-04 PDF) 완전복제로 판정했고, 그래서 같은 날 같은 목표비중으로 집행한다는 전제가 섭니다. 액티브 ETF는 상관 0.7 이상만 지키면 되어 정기변경일 자체가 재량입니다.</span>
+</div>
+
+<h2>1. 국내 반도체 ETF 지형 — 23개 28조, 그리고 이름에 반도체가 없는 63개</h2>
+<p><b>순수 코스피 반도체 ETF는 23개, 순자산 약 28조원이고 평균 비중은 SK하이닉스 27.5%·삼성전자 21.9%입니다(신한투자증권 집계, 2026년 5~7월 기사 인용, 기준일 미확인).</b> packet의 여타ETF 표(네이버 ETF 9-03)에 든 27개만 합쳐도 35조 149억이며, 그 가운데 현물 지수형이 31조 5,111억, 레버리지 1조 8,027억, 커버드콜 9,157억, 액티브 7,854억입니다. 상위 10종목 안에서 삼성전자와 하이닉스의 합이 50%를 넘는 ETF가 11개(TIGER 반도체TOP10, KODEX 반도체, KODEX AI반도체TOP2플러스, HANARO Fn K-반도체, TIGER 반도체, ACE AI반도체TOP3+ 등)이고, 시사저널e(2026-06)는 6/10 기준으로 두 종목 합산 50% 초과 ETF가 63개, 그중 56개는 이름에 '반도체'가 없다고 셌습니다. 반도체 ETF의 정기변경을 셀 때 이름만 보고 세면 절반도 못 센다는 뜻입니다. 다만 이 파트는 cap이 있는 반도체 지수만 다루고, 코스피200처럼 cap이 없는 대표지수는 '유동비율·편출입'의 자리에서만 봅니다.</p>
+<p>ETF가 들고 있는 두 종목의 절대 금액이 이 지형의 바닥입니다. 비즈워치(2026-06)에 따르면 6/17 기준 ETF 보유 SK하이닉스는 60조 5,300억(시총의 3.37%), 삼성전자는 60조 3,000억(2.98%)으로 합쳐 120조를 넘었습니다. packet이 9-04 시점에 44종 ETF 비중으로 다시 센 값은 하이닉스 27조 2,969억·삼성전자 31조 6,833억으로, 3M -27%의 평가손과 8월 레버리지 환매를 거치며 6월보다 작아졌지만 유통시총 대비 3.0%·2.8%로 여전히 2~3%대입니다. 이 숫자가 뜻하는 것은, 어느 반도체 지수 하나의 정기변경이 하이닉스 유통물량의 0.1~0.2%를 움직이는 이벤트라는 점입니다 — 9/10의 11,293억<span class="est">E</span>은 하이닉스 ADTV20 6조 1,513억의 0.18일이고, 10월 TOP10의 삼성전자 3,727억<span class="est">E</span>은 삼성전자 ADTV20 5조 4,265억의 0.07일입니다. 대형주 쪽에서 이 연쇄는 방향이 아니라 종가 단일가 몇 분의 소음이고, 이 파트의 관심도 그 소음의 날짜와 부호를 정확히 적는 데 있습니다.</p>
+<p>코스피200은 이 지도에서 따로 서 있습니다. 코스피200 안 삼성전자 비중은 33.1%, SK하이닉스 26.5%, 합 59.6%이고 3위는 3% 미만이며 개별 종목 비중 상한이 없습니다(한국경제 2026-08-05; packet의 KODEX 200 9-03 비중은 삼성전자 33.0%·하이닉스 26.2%). 코스피200·코스닥150 추종 ETF는 삼성증권 6/10 표 본문 기준 약 70조·6조로 반도체 ETF 전체보다 크지만, cap이 없으므로 12월 정기변경(12/10 만기 종가 실매매, 12/11 적용)에서 두 종목의 매매는 유동비율 갱신분과 편출입에 따른 안분 조정뿐입니다. 30% cap 도입 논의가 보도됐으나 시행은 미확인이고, 그것이 시행되면 코스피200에서 삼성전자 하나로 약 3%p, 70조 기준 2조원대의 매도가 나오는 셈이지만 이 파트는 미확인 규칙으로 금액을 세지 않습니다.</p>
+<figure class=""><figcaption>장표 1. 국내 반도체 ETF 순자산(9-03, 1,000억 이상 22개) — 구조별 색</figcaption><svg viewBox="0 0 880 450" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="210.0" y1="22" x2="210.0" y2="444" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="210.0" y="18" text-anchor="middle" font-size="10" fill="#8a857c">0조</text>
+<line x1="326.0" y1="22" x2="326.0" y2="444" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="326.0" y="18" text-anchor="middle" font-size="10" fill="#8a857c">2조</text>
+<line x1="442.0" y1="22" x2="442.0" y2="444" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="442.0" y="18" text-anchor="middle" font-size="10" fill="#8a857c">4조</text>
+<line x1="558.0" y1="22" x2="558.0" y2="444" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="558.0" y="18" text-anchor="middle" font-size="10" fill="#8a857c">6조</text>
+<line x1="674.0" y1="22" x2="674.0" y2="444" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="674.0" y="18" text-anchor="middle" font-size="10" fill="#8a857c">8조</text>
+<line x1="790.0" y1="22" x2="790.0" y2="444" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="790.0" y="18" text-anchor="middle" font-size="10" fill="#8a857c">10조</text>
+<text x="204" y="39.5" text-anchor="end" font-size="10.5" fill="#3a3630">TIGER 반도체TOP10</text>
+<rect x="210" y="29" width="522.1" height="13" fill="#1f3a5f" opacity="0.9"/>
+<text x="736.1" y="39.5" font-size="9.5" fill="#1f3a5f">9조 20억</text>
+<text x="204" y="58.5" text-anchor="end" font-size="10.5" fill="#3a3630">SOL AI반도체TOP2플러스</text>
+<rect x="210" y="48" width="307.0" height="13" fill="#1f3a5f" opacity="0.9"/>
+<text x="521.0" y="58.5" font-size="9.5" fill="#1f3a5f">5조 2,930억</text>
+<text x="204" y="77.5" text-anchor="end" font-size="10.5" fill="#3a3630">KODEX 반도체</text>
+<rect x="210" y="67" width="304.0" height="13" fill="#1f3a5f" opacity="0.9"/>
+<text x="518.0" y="77.5" font-size="9.5" fill="#1f3a5f">5조 2,416억</text>
+<text x="204" y="96.5" text-anchor="end" font-size="10.5" fill="#3a3630">KODEX AI반도체TOP2플러스</text>
+<rect x="210" y="86" width="219.4" height="13" fill="#1f3a5f" opacity="0.9"/>
+<text x="433.4" y="96.5" font-size="9.5" fill="#1f3a5f">3조 7,829억</text>
+<text x="204" y="115.5" text-anchor="end" font-size="10.5" fill="#3a3630">HANARO Fn K-반도체</text>
+<rect x="210" y="105" width="193.2" height="13" fill="#1f3a5f" opacity="0.9"/>
+<text x="407.2" y="115.5" font-size="9.5" fill="#1f3a5f">3조 3,302억</text>
+<text x="204" y="134.5" text-anchor="end" font-size="10.5" fill="#3a3630">TIGER 반도체</text>
+<rect x="210" y="124" width="73.4" height="13" fill="#1f3a5f" opacity="0.9"/>
+<text x="287.4" y="134.5" font-size="9.5" fill="#1f3a5f">1조 2,663억</text>
+<text x="204" y="153.5" text-anchor="end" font-size="10.5" fill="#3a3630">ACE AI반도체TOP3+</text>
+<rect x="210" y="143" width="62.5" height="13" fill="#1f3a5f" opacity="0.9"/>
+<text x="276.5" y="153.5" font-size="9.5" fill="#1f3a5f">1조 773억</text>
+<text x="204" y="172.5" text-anchor="end" font-size="10.5" fill="#3a3630">SOL AI반도체소부장</text>
+<rect x="210" y="162" width="56.6" height="13" fill="#1f3a5f" opacity="0.9"/>
+<text x="270.6" y="172.5" font-size="9.5" fill="#1f3a5f">9,754억</text>
+<text x="204" y="191.5" text-anchor="end" font-size="10.5" fill="#3a3630">KODEX 반도체레버리지</text>
+<rect x="210" y="181" width="50.2" height="13" fill="#a44a3f" opacity="0.9"/>
+<text x="264.2" y="191.5" font-size="9.5" fill="#a44a3f">8,662억</text>
+<text x="204" y="210.5" text-anchor="end" font-size="10.5" fill="#3a3630">TIGER 반도체TOP10커버드콜액티브</text>
+<rect x="210" y="200" width="43.7" height="13" fill="#b07d2b" opacity="0.9"/>
+<text x="257.7" y="210.5" font-size="9.5" fill="#b07d2b">7,529억</text>
+<text x="204" y="229.5" text-anchor="end" font-size="10.5" fill="#3a3630">TIGER 반도체TOP10레버리지</text>
+<rect x="210" y="219" width="29.9" height="13" fill="#a44a3f" opacity="0.9"/>
+<text x="243.9" y="229.5" font-size="9.5" fill="#a44a3f">5,163억</text>
+<text x="204" y="248.5" text-anchor="end" font-size="10.5" fill="#3a3630">TIGER 200IT레버리지</text>
+<rect x="210" y="238" width="24.4" height="13" fill="#a44a3f" opacity="0.9"/>
+<text x="238.4" y="248.5" font-size="9.5" fill="#a44a3f">4,202억</text>
+<text x="204" y="267.5" text-anchor="end" font-size="10.5" fill="#3a3630">KODEX AI반도체핵심장비</text>
+<rect x="210" y="257" width="22.1" height="13" fill="#1f3a5f" opacity="0.9"/>
+<text x="236.1" y="267.5" font-size="9.5" fill="#1f3a5f">3,817억</text>
+<text x="204" y="286.5" text-anchor="end" font-size="10.5" fill="#3a3630">WON 반도체밸류체인액티브</text>
+<rect x="210" y="276" width="18.8" height="13" fill="#2b7a78" opacity="0.9"/>
+<text x="232.8" y="286.5" font-size="9.5" fill="#2b7a78">3,248억</text>
+<text x="204" y="305.5" text-anchor="end" font-size="10.5" fill="#3a3630">1Q K반도체TOP2+</text>
+<rect x="210" y="295" width="18.4" height="13" fill="#1f3a5f" opacity="0.9"/>
+<text x="232.4" y="305.5" font-size="9.5" fill="#1f3a5f">3,168억</text>
+<text x="204" y="324.5" text-anchor="end" font-size="10.5" fill="#3a3630">SOL 반도체전공정</text>
+<rect x="210" y="314" width="15.1" height="13" fill="#1f3a5f" opacity="0.9"/>
+<text x="229.1" y="324.5" font-size="9.5" fill="#1f3a5f">2,602억</text>
+<text x="204" y="343.5" text-anchor="end" font-size="10.5" fill="#3a3630">RISE 비메모리반도체액티브</text>
+<rect x="210" y="333" width="12.8" height="13" fill="#2b7a78" opacity="0.9"/>
+<text x="226.8" y="343.5" font-size="9.5" fill="#2b7a78">2,213억</text>
+<text x="204" y="362.5" text-anchor="end" font-size="10.5" fill="#3a3630">RISE AI반도체TOP10</text>
+<rect x="210" y="352" width="9.7" height="13" fill="#1f3a5f" opacity="0.9"/>
+<text x="223.7" y="362.5" font-size="9.5" fill="#1f3a5f">1,674억</text>
+<text x="204" y="381.5" text-anchor="end" font-size="10.5" fill="#3a3630">IBK K-AI반도체코어테크</text>
+<rect x="210" y="371" width="9.7" height="13" fill="#1f3a5f" opacity="0.9"/>
+<text x="223.7" y="381.5" font-size="9.5" fill="#1f3a5f">1,667억</text>
+<text x="204" y="400.5" text-anchor="end" font-size="10.5" fill="#3a3630">KODEX 반도체타겟위클리커버드콜</text>
+<rect x="210" y="390" width="9.4" height="13" fill="#b07d2b" opacity="0.9"/>
+<text x="223.4" y="400.5" font-size="9.5" fill="#b07d2b">1,628억</text>
+<text x="204" y="419.5" text-anchor="end" font-size="10.5" fill="#3a3630">UNICORN SK하이닉스밸류체인액티브</text>
+<rect x="210" y="409" width="9.0" height="13" fill="#2b7a78" opacity="0.9"/>
+<text x="223.0" y="419.5" font-size="9.5" fill="#2b7a78">1,548억</text>
+<text x="204" y="438.5" text-anchor="end" font-size="10.5" fill="#3a3630">TIGER AI반도체핵심공정</text>
+<rect x="210" y="428" width="7.3" height="13" fill="#1f3a5f" opacity="0.9"/>
+<text x="221.3" y="438.5" font-size="9.5" fill="#1f3a5f">1,256억</text>
+<rect x="780" y="20" width="10" height="10" fill="#1f3a5f"/><text x="794" y="29" font-size="10" fill="#8a857c">현물 지수형</text>
+<rect x="780" y="35" width="10" height="10" fill="#a44a3f"/><text x="794" y="44" font-size="10" fill="#8a857c">레버리지</text>
+<rect x="780" y="50" width="10" height="10" fill="#b07d2b"/><text x="794" y="59" font-size="10" fill="#8a857c">커버드콜</text>
+<rect x="780" y="65" width="10" height="10" fill="#2b7a78"/><text x="794" y="74" font-size="10" fill="#8a857c">액티브</text>
+</svg><div class="src">자료: packet.json 여타ETF(네이버 ETF 9-03 순자산). 레버리지는 순자산 기준이라 노출은 2배. KODEX 반도체·TIGER 반도체·타겟위클리커버드콜 3종이 허브의 6조 6,707억</div></figure>
+<p class="reading"><b>관찰.</b> 1) TIGER 반도체TOP10 9조 20억이 KODEX 반도체 5조 2,416억보다 크고, SOL TOP2플러스 5조 2,930억·KODEX TOP2플러스 3조 7,829억·HANARO 3조 3,302억이 그 뒤를 잇습니다. 2) 레버리지 3종(KODEX 반도체레버리지 8,662억·TIGER TOP10레버리지 5,163억·TIGER 200IT레버리지 4,202억)은 순자산 1조 8,027억이지만 노출은 두 배입니다. 3) 소부장 전용(SOL AI반도체소부장 9,754억·KODEX AI반도체핵심장비 3,817억·SOL 전공정 2,602억)은 다 합쳐도 1.7조 안팎으로, 삼성전자·하이닉스가 없는 대신 한미반도체·이수페타시스·주성엔지니어링에 10~20%씩 몰려 있습니다. <b>원인.</b> 순자산 순서가 곧 정기변경의 크기 순서는 아닙니다. 매매액은 순자산 × (cap − 현재 비중)이므로, 순자산이 큰 TOP10은 삼성전자 초과폭 4.1%p로 3,727억<span class="est">E</span>이 나오고, 순자산이 그 절반인 KODEX 반도체는 하이닉스 초과폭 16.9%p로 11,293억<span class="est">E</span>이 나옵니다. cap과의 거리가 순자산보다 먼저입니다. <b>함의.</b> KODEX 반도체 순유입은 YTD 1조 4,760억·1M -272억이고 TIGER 반도체TOP10은 YTD 3조 4,666억·1M 1,300억, 레버리지는 YTD -1조 542억입니다. 정기변경 금액의 분모(순자산)는 집행 직전까지 움직이므로, 9-09·10-07 순자산을 다시 읽는 것이 이 파트 숫자의 첫 갱신 트리거입니다.</p>
+<div style="overflow-x:auto"><table class=""><tr><th>ETF</th><th>순자산(9-03)</th><th>구조</th><th>정기변경</th><th>종목 cap</th><th>하이닉스 %</th><th>삼성전자 %</th><th>합 %</th></tr><tr><td>TIGER 반도체TOP10</td><td>9조 20억</td><td>현물 지수형</td><td>4·10월 D+2</td><td>25%</td><td>23.8</td><td>29.1</td><td>52.9</td></tr><tr><td>SOL AI반도체TOP2플러스</td><td>5조 2,930억</td><td>현물 지수형</td><td>1·4·7·10월 D+2</td><td>25%</td><td>22.4</td><td>25.9</td><td>48.3</td></tr><tr><td>KODEX 반도체</td><td>5조 2,416억</td><td>현물 지수형</td><td>9월 D+1</td><td>20%</td><td>36.9</td><td>23.1</td><td>60.0</td></tr><tr><td>KODEX AI반도체TOP2플러스</td><td>3조 7,829억</td><td>현물 지수형</td><td>6·12월 D+2</td><td>25%</td><td>23.9</td><td>26.5</td><td>50.4</td></tr><tr><td>HANARO Fn K-반도체</td><td>3조 3,302억</td><td>현물 지수형</td><td>6·12월 D+4</td><td>25%</td><td>25.1</td><td>26.1</td><td>51.1</td></tr><tr><td>TIGER 반도체</td><td>1조 2,663억</td><td>현물 지수형</td><td>9월 D+1</td><td>20%</td><td>36.9</td><td>23.1</td><td>60.0</td></tr><tr><td>ACE AI반도체TOP3+</td><td>1조 773억</td><td>현물 지수형</td><td>3·6·9·12월 D+2~4</td><td>25%</td><td>24.9</td><td>27.4</td><td>52.4</td></tr><tr><td>SOL AI반도체소부장</td><td>9,754억</td><td>현물 지수형</td><td>6·12월 D+2</td><td>20%</td><td>0.0</td><td>0.0</td><td>0.0</td></tr><tr><td>KODEX 반도체레버리지</td><td>8,662억</td><td>레버리지</td><td>9월 D+1</td><td>20%</td><td>57.7</td><td>32.4</td><td>90.0</td></tr><tr><td>TIGER 반도체TOP10커버드콜액티브</td><td>7,529억</td><td>커버드콜</td><td>4·10월(액티브)</td><td>없음(액티브)</td><td>25.4</td><td>23.5</td><td>49.0</td></tr><tr><td>TIGER 반도체TOP10레버리지</td><td>5,163억</td><td>레버리지</td><td>4·10월 D+2</td><td>25%</td><td>39.6</td><td>49.7</td><td>89.3</td></tr><tr><td>TIGER 200IT레버리지</td><td>4,202억</td><td>레버리지</td><td>6·12월 D+1</td><td>20%</td><td>37.8</td><td>32.8</td><td>70.6</td></tr><tr><td>KODEX AI반도체핵심장비</td><td>3,817억</td><td>현물 지수형</td><td>미확인</td><td>미확인</td><td>0.0</td><td>0.0</td><td>0.0</td></tr><tr><td>WON 반도체밸류체인액티브</td><td>3,248억</td><td>액티브</td><td>액티브</td><td>없음(액티브)</td><td>22.0</td><td>24.7</td><td>46.7</td></tr><tr><td>1Q K반도체TOP2+</td><td>3,168억</td><td>현물 지수형</td><td>6·12월(추정)</td><td>미확인</td><td>26.6</td><td>27.3</td><td>53.9</td></tr><tr><td>SOL 반도체전공정</td><td>2,602억</td><td>현물 지수형</td><td>미확인</td><td>미확인</td><td>0.0</td><td>0.0</td><td>0.0</td></tr><tr><td>RISE 비메모리반도체액티브</td><td>2,213억</td><td>액티브</td><td>액티브</td><td>없음(액티브)</td><td>17.6</td><td>28.5</td><td>46.1</td></tr><tr><td>RISE AI반도체TOP10</td><td>1,674억</td><td>현물 지수형</td><td>미확인</td><td>미확인</td><td>11.8</td><td>14.6</td><td>26.4</td></tr><tr><td>IBK K-AI반도체코어테크</td><td>1,667억</td><td>현물 지수형</td><td>미확인</td><td>미확인</td><td>19.8</td><td>21.3</td><td>41.1</td></tr><tr><td>KODEX 반도체타겟위클리커버드콜</td><td>1,628억</td><td>커버드콜</td><td>9월 D+1</td><td>20%</td><td>36.9</td><td>23.7</td><td>60.6</td></tr><tr><td>UNICORN SK하이닉스밸류체인액티브</td><td>1,548억</td><td>액티브</td><td>액티브</td><td>없음(액티브)</td><td>21.6</td><td>0.0</td><td>21.6</td></tr><tr><td>TIGER AI반도체핵심공정</td><td>1,256억</td><td>현물 지수형</td><td>미확인</td><td>미확인</td><td>0.0</td><td>0.0</td><td>0.0</td></tr></table></div>
+<div class="src">자료: packet.json 여타ETF(순자산·상위 10 비중, 네이버 ETF 9-03). 정기변경·cap은 삼성증권 ETP전략 2026-06-10 표와 FnGuide 반도체TOP10 방법론(2024-05). 레버리지 3종의 비중은 기초 ETF 보유분을 풀어 합산한 노출(packet 편입ETF비중). '미확인'은 삼성증권 표에 없고 운용사 페이지에서도 주기를 확인하지 못한 것</div>
+
+<h2>2. 하이닉스·삼성전자 비중 대 cap — 어느 지수가 지금 무엇을 초과하고 있나</h2>
+<p><b>cap 이벤트의 부호는 '현재 비중 − cap'이 정합니다. 9-03 비중으로 보면 KRX 반도체(cap 20%<span class="est">E</span>)는 하이닉스 36.9%·삼성전자 23.1%로 둘 다 초과이고, TOP10·TOP2플러스·TOP3+ 계열(cap 25%)은 삼성전자만 초과이며 하이닉스는 전부 25% 아래입니다.</b> 이 비대칭이 하반기 연쇄의 핵심입니다. TIGER 반도체TOP10은 삼성전자 29.1%·하이닉스 23.8%, SOL TOP2플러스는 25.9%·22.4%, KODEX TOP2플러스는 26.5%·23.9%, HANARO Fn K-반도체는 26.1%·25.1%, ACE AI반도체TOP3+는 27.4%·24.9%(한미반도체 23.7%)입니다. 6/9 삼성증권 표에서는 ACE에서 하이닉스 36%·삼성전자 26%, HANARO에서 삼성전기 36%·하이닉스 26%, KODEX Top5PlusTR에서 하이닉스 41%가 초과였는데, 6월 정기변경(25%로 리셋)과 그 뒤 석 달의 상대 주가(하이닉스 6-11 이후 -21.6%·삼성전자 -14.7%)가 초과 종목을 하이닉스에서 삼성전자로 바꿔 놓았습니다.</p>
+<p>왜 KRX 반도체만 하이닉스가 36.9%까지 부풀었는지는 파트 0이 다루지만 한 줄로 다시 적으면, 연 1회(9월) 정기변경과 cap 20%의 조합입니다. 직전 정기변경(2025-09-11) 시점의 드리프트 역산은 하이닉스 21.39%·삼성전자 20.68%로 20% cap에 정합하고, 그 뒤 하이닉스 +436%가 1년 동안 비중을 밀어 올렸습니다. 분기 정기변경을 하는 TOP2플러스 계열은 같은 기간 네 번 25%로 리셋됐기 때문에 지금 초과폭이 1~4%p에 그칩니다. 그래서 같은 '반도체 ETF cap 이벤트'라도 KRX 반도체의 9/10은 1년치가 한 번에 풀리는 이벤트이고, 10·12월의 나머지는 한 분기치입니다.</p>
+<figure class=""><figcaption>장표 2. ETF별 SK하이닉스·삼성전자 비중(9-03)과 종목 cap — 점선 위가 매도, 아래가 매수</figcaption><svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="50" y1="246.0" x2="750" y2="246.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="44" y="250.0" text-anchor="end" font-size="11" fill="#8a857c">0%</text>
+<line x1="50" y1="189.5" x2="750" y2="189.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="44" y="193.5" text-anchor="end" font-size="11" fill="#8a857c">10%</text>
+<line x1="50" y1="133.0" x2="750" y2="133.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="44" y="137.0" text-anchor="end" font-size="11" fill="#8a857c">20%</text>
+<line x1="50" y1="76.5" x2="750" y2="76.5" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="44" y="80.5" text-anchor="end" font-size="11" fill="#8a857c">30%</text>
+<line x1="50" y1="20.0" x2="750" y2="20.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="44" y="24.0" text-anchor="end" font-size="11" fill="#8a857c">40%</text>
+<rect x="67.5" y="37.5" width="24.2" height="208.5" fill="#1f3a5f" opacity="0.9"/>
+<text x="79.6" y="33.5" text-anchor="middle" font-size="9.5" fill="#1f3a5f">36.9</text>
+<rect x="93.8" y="115.5" width="24.2" height="130.5" fill="#b07d2b" opacity="0.9"/>
+<text x="105.9" y="111.5" text-anchor="middle" font-size="9.5" fill="#b07d2b">23.1</text>
+<line x1="61.5" y1="133.0" x2="126.0" y2="133.0" stroke="#a44a3f" stroke-width="2" stroke-dasharray="4 2"/>
+<text x="128.0" y="136.0" font-size="9" fill="#a44a3f">cap 20</text>
+<text x="93.8" y="262.0" text-anchor="middle" font-size="10" fill="#8a857c">KODEX 반도체</text>
+<rect x="155.0" y="111.5" width="24.2" height="134.5" fill="#1f3a5f" opacity="0.9"/>
+<text x="167.1" y="107.5" text-anchor="middle" font-size="9.5" fill="#1f3a5f">23.8</text>
+<rect x="181.2" y="81.4" width="24.2" height="164.6" fill="#b07d2b" opacity="0.9"/>
+<text x="193.4" y="77.4" text-anchor="middle" font-size="9.5" fill="#b07d2b">29.1</text>
+<line x1="149.0" y1="104.8" x2="213.5" y2="104.8" stroke="#a44a3f" stroke-width="2" stroke-dasharray="4 2"/>
+<text x="215.5" y="107.8" font-size="9" fill="#a44a3f">cap 25</text>
+<text x="181.2" y="262.0" text-anchor="middle" font-size="10" fill="#8a857c">TIGER 반도체TOP10</text>
+<rect x="242.5" y="119.4" width="24.2" height="126.6" fill="#1f3a5f" opacity="0.9"/>
+<text x="254.6" y="115.4" text-anchor="middle" font-size="9.5" fill="#1f3a5f">22.4</text>
+<rect x="268.8" y="99.7" width="24.2" height="146.3" fill="#b07d2b" opacity="0.9"/>
+<text x="280.9" y="95.7" text-anchor="middle" font-size="9.5" fill="#b07d2b">25.9</text>
+<line x1="236.5" y1="104.8" x2="301.0" y2="104.8" stroke="#a44a3f" stroke-width="2" stroke-dasharray="4 2"/>
+<text x="303.0" y="107.8" font-size="9" fill="#a44a3f">cap 25</text>
+<text x="268.8" y="262.0" text-anchor="middle" font-size="10" fill="#8a857c">SOL TOP2플러스</text>
+<rect x="330.0" y="111.1" width="24.2" height="134.9" fill="#1f3a5f" opacity="0.9"/>
+<text x="342.1" y="107.1" text-anchor="middle" font-size="9.5" fill="#1f3a5f">23.9</text>
+<rect x="356.2" y="96.0" width="24.2" height="150.0" fill="#b07d2b" opacity="0.9"/>
+<text x="368.4" y="92.0" text-anchor="middle" font-size="9.5" fill="#b07d2b">26.5</text>
+<line x1="324.0" y1="104.8" x2="388.5" y2="104.8" stroke="#a44a3f" stroke-width="2" stroke-dasharray="4 2"/>
+<text x="390.5" y="107.8" font-size="9" fill="#a44a3f">cap 25</text>
+<text x="356.2" y="262.0" text-anchor="middle" font-size="10" fill="#8a857c">KODEX TOP2플러스</text>
+<rect x="417.5" y="104.3" width="24.2" height="141.7" fill="#1f3a5f" opacity="0.9"/>
+<text x="429.6" y="100.3" text-anchor="middle" font-size="9.5" fill="#1f3a5f">25.1</text>
+<rect x="443.8" y="98.8" width="24.2" height="147.2" fill="#b07d2b" opacity="0.9"/>
+<text x="455.9" y="94.8" text-anchor="middle" font-size="9.5" fill="#b07d2b">26.1</text>
+<line x1="411.5" y1="104.8" x2="476.0" y2="104.8" stroke="#a44a3f" stroke-width="2" stroke-dasharray="4 2"/>
+<text x="478.0" y="107.8" font-size="9" fill="#a44a3f">cap 25</text>
+<text x="443.8" y="262.0" text-anchor="middle" font-size="10" fill="#8a857c">HANARO K-반도체</text>
+<rect x="505.0" y="105.2" width="24.2" height="140.8" fill="#1f3a5f" opacity="0.9"/>
+<text x="517.1" y="101.2" text-anchor="middle" font-size="9.5" fill="#1f3a5f">24.9</text>
+<rect x="531.2" y="91.0" width="24.2" height="155.0" fill="#b07d2b" opacity="0.9"/>
+<text x="543.4" y="87.0" text-anchor="middle" font-size="9.5" fill="#b07d2b">27.4</text>
+<line x1="499.0" y1="104.8" x2="563.5" y2="104.8" stroke="#a44a3f" stroke-width="2" stroke-dasharray="4 2"/>
+<text x="565.5" y="107.8" font-size="9" fill="#a44a3f">cap 25</text>
+<text x="531.2" y="262.0" text-anchor="middle" font-size="10" fill="#8a857c">ACE TOP3+</text>
+<rect x="592.5" y="95.7" width="24.2" height="150.3" fill="#1f3a5f" opacity="0.9"/>
+<text x="604.6" y="91.7" text-anchor="middle" font-size="9.5" fill="#1f3a5f">26.6</text>
+<rect x="618.8" y="91.5" width="24.2" height="154.5" fill="#b07d2b" opacity="0.9"/>
+<text x="630.9" y="87.5" text-anchor="middle" font-size="9.5" fill="#b07d2b">27.3</text>
+<text x="618.8" y="276.0" text-anchor="middle" font-size="9" fill="#a44a3f">cap 미확인</text>
+<text x="618.8" y="262.0" text-anchor="middle" font-size="10" fill="#8a857c">1Q K반도체TOP2+</text>
+<rect x="680.0" y="97.8" width="24.2" height="148.2" fill="#1f3a5f" opacity="0.9"/>
+<text x="692.1" y="93.8" text-anchor="middle" font-size="9.5" fill="#1f3a5f">26.2</text>
+<rect x="706.2" y="59.8" width="24.2" height="186.2" fill="#b07d2b" opacity="0.9"/>
+<text x="718.4" y="55.8" text-anchor="middle" font-size="9.5" fill="#b07d2b">33.0</text>
+<text x="706.2" y="276.0" text-anchor="middle" font-size="9" fill="#a44a3f">cap 없음</text>
+<text x="706.2" y="262.0" text-anchor="middle" font-size="10" fill="#8a857c">KODEX 200</text>
+<rect x="756" y="20" width="10" height="10" fill="#1f3a5f"/><text x="770" y="29" font-size="11" fill="#8a857c">SK하이닉스 비중</text>
+<rect x="756" y="36" width="10" height="10" fill="#b07d2b"/><text x="770" y="45" font-size="11" fill="#8a857c">삼성전자 비중</text>
+<rect x="756" y="52" width="10" height="10" fill="#a44a3f"/><text x="770" y="61" font-size="11" fill="#8a857c">종목 cap(점선)</text>
+</svg><div class="src">자료: packet.json 여타ETF 상위 10 비중, KODEX 200은 packet 편입ETF비중. cap은 삼성증권 ETP전략 2026-06-10 표(KRX 반도체 20%·나머지 25%). 1Q K반도체TOP2+는 상품 설명상 상위 2종 각 약 27.5%이나 방법론 원문 미확인이라 cap 미표기</div></figure>
+<p class="reading"><b>관찰.</b> 1) KRX 반도체는 하이닉스가 cap 위로 16.9%p, 삼성전자가 3.1%p이고, 나머지 25% cap 지수들은 삼성전자가 1.1~4.1%p 위, 하이닉스가 2.6~-0.1%p 아래입니다. 2) KODEX 200은 삼성전자 33.0%·하이닉스 26.2%로 어느 반도체 ETF보다 두 종목 합이 높지만 cap이 없어 정기변경 매매가 없습니다. 3) ACE TOP3+는 세 종목이 각 25%를 목표로 하므로 한미반도체 23.7%는 매수 쪽입니다. <b>원인.</b> 상위 2종 cap은 '초과분 절삭'이 아니라 '25% 고정'이라 하이닉스처럼 cap 아래로 내려온 종목도 정기변경일에 25%로 끌어올립니다. 9/10에 하이닉스를 파는 지수는 KRX 반도체 하나이고, 10·12월의 세 지수는 하이닉스를 삽니다. <b>함의.</b> 허브 논쟁 5의 채점에서 '어느 지수가 무엇을 초과하는가'는 9-03 스냅샷이 아니라 각 지수의 비중 확정 종가(TOP10은 정기변경일 2영업일 전, SOL은 10/12<span class="est">E</span>)로 다시 재야 합니다. 삼성전자와 하이닉스의 상대 주가가 10월 초까지 5.3%p 차이를 뒤집으면 10월 TOP10의 부호가 바뀌는데, 그 뒤집기에는 하이닉스가 삼성전자 대비 약 22% 더 올라야 하므로 4주 안에는 가능성이 낮다고 봅니다.</p>
+
+<h2>3. TIGER 반도체TOP10 10월 정기변경 — 삼성전자 3,727억<span class="est">E</span> 매도, 하이닉스 1,080억<span class="est">E</span> 매수</h2>
+<p><b>TIGER 반도체TOP10은 FnGuide 반도체TOP10 지수를 추종하며, 방법론(2024-05 v1.0, 키움 ETN 룰북으로 공개)은 종목 선정을 "매년 3·9월 말 마지막 영업일 기준 최근 1개월 평균 단순시가총액 상위 10종목", 비중을 "상위 2종목 각 25%, 하위 8종목 나머지 50%에 유동시가총액 가중", 정기변경을 "매년 4·10월 선물옵션 만기일 익주 첫 영업일", 비중 확정을 "정기변경일 기준 2영업일 전 종가"로 정합니다.</b> 유동비율은 5월 말·11월 말 보고서 기준으로 연 2회 정기변경일에 반영하되 5%p 초과 변동 시만 바꿉니다. 삼성증권 6/10 표는 같은 ETF를 "4/10월 D+2, cap 25%"로 적었는데, 평소에는 목요일 만기의 익주 첫 영업일이 곧 D+2(월요일)라 둘이 같습니다. 2026년 10월은 10/8(목) 만기 다음 날 10/9(금)가 한글날 휴장이라 '익주 첫 영업일'은 10/12(월)이고 'D+2'를 영업일로 세면 10/13(화)입니다. 실매매는 그 직전 영업일 종가이므로 10/8(목) 종가 또는 10/12(월) 종가 가운데 하나이고, 미래에셋 공지로 확정되기 전까지 이 파트는 둘을 나란히 둡니다(미결 A). 비중 확정 종가는 정기변경일 2영업일 전이므로 각각 10/7 또는 10/8입니다.</p>
+<p>이 ETF의 3월 말 논란이 10월을 읽는 데 필요한 배경입니다. 한국경제(2026-03-30)에 따르면 방법론상 월말 5일 연속 30% 초과 시 수시 재계산 조항이 있음에도 2025년 12월·2026년 1월 말·2월에 SK하이닉스 비중이 30%를 넘고도 보유 수량이 바뀌지 않았고, 미래에셋은 "수시 변경은 지수위원회 검토를 통해 결정"하며 정기변경은 4월이라고 답했습니다. 그때 순자산은 8.8조, 연초 이후 유입 1.6조, 개인 누적 순매수 2조 돌파, 3개월 +61.95%·1개월 -12.86%였고, 이데일리 마켓인은 하이닉스 32.68%·삼성전자 25.37%, 두 종목 합 58%로 국내 반도체 ETF 중 최고라고 적었습니다. 4월 정기변경에서 25/25로 리셋된 뒤 순자산은 6/9 12조 9,920억(삼성증권)까지 불었다가 9/2 9조 781억(연합 인용)·9/3 9조 20억(네이버)으로 줄었고, 그사이 삼성전자 상대 강세가 초과 종목을 하이닉스에서 삼성전자로 바꿨습니다. 이 경위가 주는 교훈은 두 가지입니다. 수시개편 조항은 문서에 있어도 발동이 재량이라 '정기변경일 하루'에 걸어 두는 것이 맞고, 지금 비중은 4월에 25/25였던 것이 다섯 달 드리프트한 결과라 10월의 초과폭은 KRX 반도체의 1년치 드리프트보다 훨씬 작다는 것입니다.</p>
+<p>10월 재배분을 가정·근거·식·교차검증의 네 단으로 셉니다. 가정은 네 가지입니다. ①비중 확정 종가의 비중이 9-03 비중(삼성전자 29.14%·하이닉스 23.8%·하위 8종 47.06%)과 같다. ②순자산이 집행일까지 9조 20억으로 유지된다. ③9/30 기준 1개월 평균 단순시총 상위 2종은 삼성전자·하이닉스이고(3위 SK스퀘어 시총과의 격차로 확정적), 하위 8종 구성이 바뀌지 않는다. ④하위 8종 안 재배분은 현재 비중 비례로 근사한다(현재 비중이 4월 유동시총 가중의 드리프트이므로 유동비율이 그대로면 비례와 유동시총 가중이 같습니다). 근거는 방법론 원문(각 25%·나머지 50%)과 네이버 9-03 비중입니다. 식은 삼성전자 (25 − 29.14)% × 9조 20억 = -3,727억<span class="est">E</span>, 하이닉스 (25 − 23.8)% × 순자산 = +1,080억<span class="est">E</span>, 하위 8종 (50 − 47.06)% × 순자산 = +2,647억<span class="est">E</span>이며, 매도 합과 매수 합이 3,727억으로 일치합니다. 교차검증은 research 노트 C가 같은 자료로 독립 계산한 '삼성전자 약 3,700억 매도·하이닉스 약 1,100억 매수·하위 8종 약 2,600억 매수'와 부호·자릿수가 같고, 한국경제TV(6/2)가 6월 삼성전기 사례에서 쓴 '순자산 × 초과폭' 산식과 같은 방법이라는 점입니다.</p>
+<table class=""><tr><th>종목</th><th>현재 %(9-03)</th><th>목표 %(E)</th><th>Δ%p</th><th>금액(억, E)</th><th>ADTV20(억)</th><th>ADTV 배수(일)</th></tr><tr><td>삼성전자</td><td>29.14</td><td>25.00</td><td>-4.14</td><td>-3,727</td><td>54,265</td><td>0.07</td></tr><tr><td>SK하이닉스</td><td>23.80</td><td>25.00</td><td>+1.20</td><td>1,080</td><td>61,513</td><td>0.02</td></tr><tr><td>SK스퀘어</td><td>20.43</td><td>21.71</td><td>+1.28</td><td>1,149</td><td>-</td><td>-</td></tr><tr><td>한미반도체</td><td>6.28</td><td>6.67</td><td>+0.39</td><td>353</td><td>1,150</td><td>0.31</td></tr><tr><td>이수페타시스</td><td>4.91</td><td>5.22</td><td>+0.31</td><td>276</td><td>-</td><td>-</td></tr><tr><td>주성엔지니어링</td><td>4.79</td><td>5.09</td><td>+0.30</td><td>269</td><td>1,983</td><td>0.14</td></tr><tr><td>원익IPS</td><td>2.92</td><td>3.10</td><td>+0.18</td><td>164</td><td>847</td><td>0.19</td></tr><tr><td>이오테크닉스</td><td>2.92</td><td>3.10</td><td>+0.18</td><td>164</td><td>456</td><td>0.36</td></tr><tr><td>리노공업</td><td>2.42</td><td>2.57</td><td>+0.15</td><td>136</td><td>323</td><td>0.42</td></tr><tr><td>DB하이텍</td><td>2.26</td><td>2.40</td><td>+0.14</td><td>127</td><td>275</td><td>0.46</td></tr></table>
+<div class="src">자료: packet.json 여타ETF 396500 상위 10 비중(9-03)·종목 ADTV20(키움 20일). 목표 %는 상위 2종 25 고정, 하위 8종은 현재 비중 비례로 50에 맞춘 값(E). SK스퀘어·이수페타시스는 35종목 패킷 밖이라 ADTV 미표기</div>
+<figure class=""><figcaption>장표 3. TIGER 반도체TOP10 10월 정기변경 종목별 재배분 금액(억, E) — 9-03 비중·순자산 9조 20억 기준</figcaption><svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="256.0" x2="860" y2="256.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="260.0" text-anchor="end" font-size="11" fill="#8a857c">-4,000</text>
+<line x1="62" y1="216.3" x2="860" y2="216.3" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="220.3" text-anchor="end" font-size="11" fill="#8a857c">-3,000</text>
+<line x1="62" y1="176.7" x2="860" y2="176.7" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="180.7" text-anchor="end" font-size="11" fill="#8a857c">-2,000</text>
+<line x1="62" y1="137.0" x2="860" y2="137.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="141.0" text-anchor="end" font-size="11" fill="#8a857c">-1,000</text>
+<line x1="62" y1="97.3" x2="860" y2="97.3" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="101.3" text-anchor="end" font-size="11" fill="#8a857c">0</text>
+<line x1="62" y1="57.7" x2="860" y2="57.7" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="61.7" text-anchor="end" font-size="11" fill="#8a857c">1,000</text>
+<line x1="62" y1="18.0" x2="860" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">2,000</text>
+<text x="101.9" y="274" text-anchor="middle" font-size="10" fill="#8a857c">삼성전자</text>
+<text x="181.7" y="274" text-anchor="middle" font-size="10" fill="#8a857c">SK하이닉스</text>
+<text x="261.5" y="274" text-anchor="middle" font-size="10" fill="#8a857c">SK스퀘어</text>
+<text x="341.3" y="274" text-anchor="middle" font-size="10" fill="#8a857c">한미반도체</text>
+<text x="421.1" y="274" text-anchor="middle" font-size="10" fill="#8a857c">이수페타시스</text>
+<text x="500.9" y="274" text-anchor="middle" font-size="10" fill="#8a857c">주성엔지</text>
+<text x="580.7" y="274" text-anchor="middle" font-size="10" fill="#8a857c">원익IPS</text>
+<text x="660.5" y="274" text-anchor="middle" font-size="10" fill="#8a857c">이오테크닉스</text>
+<text x="740.3" y="274" text-anchor="middle" font-size="10" fill="#8a857c">리노공업</text>
+<text x="820.1" y="274" text-anchor="middle" font-size="10" fill="#8a857c">DB하이텍</text>
+<rect x="74.0" y="97.3" width="54.9" height="147.8" fill="#1f3a5f" opacity="0.9"/>
+<text x="101.9" y="256.2" text-anchor="middle" font-size="9.5" fill="#1f3a5f">-3,727</text>
+<rect x="153.8" y="54.5" width="54.9" height="42.8" fill="#1f3a5f" opacity="0.9"/>
+<text x="181.7" y="50.5" text-anchor="middle" font-size="9.5" fill="#1f3a5f">1,080</text>
+<rect x="233.6" y="51.8" width="54.9" height="45.6" fill="#1f3a5f" opacity="0.9"/>
+<text x="261.5" y="47.8" text-anchor="middle" font-size="9.5" fill="#1f3a5f">1,149</text>
+<rect x="313.4" y="83.3" width="54.9" height="14.0" fill="#1f3a5f" opacity="0.9"/>
+<text x="341.3" y="79.3" text-anchor="middle" font-size="9.5" fill="#1f3a5f">353</text>
+<rect x="393.2" y="86.4" width="54.9" height="10.9" fill="#1f3a5f" opacity="0.9"/>
+<text x="421.1" y="82.4" text-anchor="middle" font-size="9.5" fill="#1f3a5f">276</text>
+<rect x="473.0" y="86.7" width="54.9" height="10.7" fill="#1f3a5f" opacity="0.9"/>
+<text x="500.9" y="82.7" text-anchor="middle" font-size="9.5" fill="#1f3a5f">269</text>
+<rect x="552.8" y="90.8" width="54.9" height="6.5" fill="#1f3a5f" opacity="0.9"/>
+<text x="580.7" y="86.8" text-anchor="middle" font-size="9.5" fill="#1f3a5f">164</text>
+<rect x="632.6" y="90.8" width="54.9" height="6.5" fill="#1f3a5f" opacity="0.9"/>
+<text x="660.5" y="86.8" text-anchor="middle" font-size="9.5" fill="#1f3a5f">164</text>
+<rect x="712.4" y="91.9" width="54.9" height="5.4" fill="#1f3a5f" opacity="0.9"/>
+<text x="740.3" y="87.9" text-anchor="middle" font-size="9.5" fill="#1f3a5f">136</text>
+<rect x="792.2" y="92.3" width="54.9" height="5.0" fill="#1f3a5f" opacity="0.9"/>
+<text x="820.1" y="88.3" text-anchor="middle" font-size="9.5" fill="#1f3a5f">127</text>
+</svg><div class="src">자료: 위 표. 실매매일은 10/8 또는 10/12 종가(미확인), 비중 확정 종가는 정기변경일 2영업일 전</div></figure>
+<p class="reading"><b>관찰.</b> 1) 삼성전자 -3,727억<span class="est">E</span> 매도 하나가 나머지 아홉 종목 매수의 합과 같습니다. 2) 매수는 하이닉스 +1,080억<span class="est">E</span>과 SK스퀘어 +1,149억<span class="est">E</span>이 절반 이상이고, 한미반도체 +353억<span class="est">E</span>·이수페타시스 +276억<span class="est">E</span>·주성엔지니어링 +269억<span class="est">E</span>이 그다음입니다. 3) ADTV20 배수는 삼성전자 0.07일·하이닉스 0.02일·한미반도체 0.31일로, 9/10 KRX 반도체의 한미반도체 1.77일보다 한 자릿수 작습니다. <b>원인.</b> TOP10은 상위 2종이 50%를 고정으로 가져가 하위 8종에 남는 50%가 유동시총 가중이므로, 하위군 안에서는 시총이 큰 SK스퀘어(20.43%)가 재배분의 대부분을 받습니다. KRX 반도체의 소부장 33종 안분과 달리 소형주에 닿는 금액이 작고, 그래서 10월 TOP10은 대형주 이벤트입니다. <b>함의.</b> 9/10과 10월을 한 종목에서 이어 보면, 한미반도체는 9/10에 +2,034억<span class="est">E</span>(ADTV 1.77일)을 받고 ACE 9/14~16에 +136억<span class="est">E</span>, 10월 TOP10에 +353억<span class="est">E</span>을 더 받아 하반기 패시브 합산 +2,546억<span class="est">E</span>입니다. 반대로 삼성전자는 9/10 -2,083억<span class="est">E</span>보다 10월 -3,727억<span class="est">E</span>이 크고, 이 두 날짜 사이 4주가 삼성전자 쪽 패시브 매도의 창입니다.</p>
+<div class="panel">
+<div style="font-weight:700;margin-bottom:4px">조정판 — TIGER 반도체TOP10 10월 정기변경 재배분(전부 E)</div>
+<div style="margin:6px 0 2px"><label for="m_aum">TOP10 순자산(집행 직전): <b><span id="l_aum">9.002</span>조</b> <span style="color:#8a857c">(5.0~13.0조)</span></label><input type="range" id="m_aum" min="5.0" max="13.0" step="0.001" value="9.002"></div>
+<div style="margin:6px 0 2px"><label for="m_ss">삼성전자 비중(비중 확정 종가): <b><span id="l_ss">29.14</span>%</b> <span style="color:#8a857c">(22.0~34.0%)</span></label><input type="range" id="m_ss" min="22.0" max="34.0" step="0.1" value="29.14"></div>
+<div style="margin:6px 0 2px"><label for="m_hx">SK하이닉스 비중(비중 확정 종가): <b><span id="l_hx">23.8</span>%</b> <span style="color:#8a857c">(18.0~32.0%)</span></label><input type="range" id="m_hx" min="18.0" max="32.0" step="0.1" value="23.8"></div>
+<div class="out" id="m_out">조정판은 자바스크립트가 켜진 브라우저에서 계산됩니다. 기본값 결과는 본문 3절 표와 같습니다.</div>
+<div class="note">식. 삼성전자·하이닉스 각 (25% − 현재 비중) × 순자산, 하위 8종 합계 (50% − (100% − 두 종목 비중 합)) × 순자산. 하위 8종 안 배분은 현재 비중 비례(9-03 SK스퀘어 20.43%·한미반도체 6.28%·이수페타시스 4.91%…)로 근사하며, 실제는 유동시총 가중이라 FnGuide 유동비율이 갱신되면 종목별 값이 달라집니다(미결 B). 레버리지 5,163억·커버드콜액티브 7,529억은 별도(5절).</div>
+</div>
+<p>조정판의 쓰임은 순자산과 비중 두 변수의 감도를 보는 것입니다. 순자산이 6/9 수준 13조로 돌아가면 같은 비중에서 삼성전자 매도는 5,382억<span class="est">E</span>이 되고, 5조로 줄면 2,070억<span class="est">E</span>이 됩니다. 삼성전자 비중이 비중 확정 종가에 27%로 내려오면(하이닉스 대비 약 -7% 상대 약세) 매도는 -1,800억<span class="est">E</span>으로 절반이 되고, 반대로 31%까지 오르면 -5,401억<span class="est">E</span>으로 커집니다. 부호가 바뀌려면 삼성전자가 25% 아래로 내려와야 하는데, 그것은 4주 동안 하이닉스 대비 14% 이상의 상대 약세를 뜻하므로 기본 시나리오 밖에 둡니다. 레버리지(TIGER 반도체TOP10레버리지 5,163억)는 같은 지수를 2배로 따르며 순자산 대비 삼성전자 39.5%·기초 ETF 34.9%·하이닉스 31.3%를 들고 있어, 기초 ETF 보유분(1,800억)은 위 9조 안에 이미 있고 직접 보유 현물의 조정은 5절의 KODEX 반도체레버리지와 같은 이유로 순자산 비례가 아닙니다. 커버드콜액티브(7,529억)는 액티브라 정기변경일과 비중이 재량이며 4/28 개편에서 이미 SK스퀘어·삼성전기를 넣고 한미반도체를 16%에서 9%로 줄인 전례가 있어(이투데이·헤럴드 5/6) 이 파트의 합산에서 뺐습니다.</p>
+
+<h2>4. TOP2플러스·TOP3+ 계열 — 9/14~16 ACE, 10/13 SOL, 12월 KODEX·HANARO, 그리고 삼성전기 6월 교본의 연결</h2>
+<p><b>ACE AI반도체TOP3+(1조 773억)가 하반기 연쇄의 첫 번째입니다.</b> 이 ETF는 한미반도체·삼성전자·SK하이닉스에 각 25%(합 75%), 나머지 17종목에 약 1.47%씩을 배정하고 3·6·9·12월 D+2~4에 정기변경합니다(삼성증권 표 cap 25%). 9월은 9/14(월)~16(수) 적용, 실매매 9/11~15 종가입니다. 9-03 비중은 삼성전자 27.44%·하이닉스 24.92%·한미반도체 23.74%라 삼성전자 -263억<span class="est">E</span> 매도, 하이닉스 +9억<span class="est">E</span>, 한미반도체 +136억<span class="est">E</span>, 나머지 17종목 합 +119억<span class="est">E</span>입니다. 순자산이 연초 1,336억에서 3/18 5,294억, 6/8 7,317억, 9/3 1조 773억으로 커진 ETF이지만(아시아경제 3/18·6/9), 분기 리셋 덕에 초과폭이 작아 금액은 KRX 반도체의 2~3% 수준입니다. 6/9 삼성증권 표에서는 하이닉스 36%·삼성전자 26% 초과로 하이닉스 약 1,410억 매도(6/17)가 있었고, 그 뒤 하이닉스가 24.9%까지 내려온 것이 이번엔 매수 쪽에 서는 이유입니다. 이 이벤트가 9/10과 같은 주에 있다는 점이 중요합니다 — 9/10에 KRX 반도체가 판 하이닉스를 9/11~15에 ACE가 아주 조금 되사고, 한미반도체는 9/10 +2,034억<span class="est">E</span>에 +136억<span class="est">E</span>이 덧붙습니다.</p>
+<p><b>SOL AI반도체TOP2플러스(5조 2,930억)는 1·4·7·10월 D+2 정기변경이라 10/13(화) 적용, 실매매 10/12(월) 종가입니다.</b> 삼성전자·하이닉스 각 25% + 키워드·모멘텀 8종목 50% 구조이고, 7/14 정기변경에서 원익IPS·대덕전자·피에스케이·브이엠·테스를 넣고 LG이노텍·ISC·RFHIC·코리아써키트·엑시콘을 뺐으며 편입일에 피에스케이 +10.24%·브이엠 +18.98%·테스 +16.68%, 편출 코리아써키트 급락이 보도됐습니다(한국일보 2026-07-14). 9-03 비중은 삼성전자 25.9%·하이닉스 22.41%·삼성전기 15.66%·SK스퀘어 13.3%이고, cap 조정만 세면 삼성전자 -476억<span class="est">E</span> 매도, 하이닉스 +1,371억<span class="est">E</span> 매수, 하위 8종 합 -895억<span class="est">E</span>(51.7%에서 50%로)입니다. 그러나 이 ETF의 하위 8종은 시총이 아니라 키워드·모멘텀으로 다시 뽑히므로 7월처럼 5종목이 통째로 바뀔 수 있고, 그때 편출 종목 하나의 매도는 순자산 5.3조 × 2~4% = 1,000~2,000억<span class="est">E</span>으로 cap 조정보다 큽니다. 이것이 허브 논쟁 5(편출입이 cap보다 큰 변수인가)의 답이 지수마다 다른 이유이며, SOL에서는 '그렇다'입니다. 10/12(월) 종가는 TOP10의 실매매 후보 B이기도 해서, 그날이 확정되면 삼성전자 -4,203억<span class="est">E</span>·하이닉스 +2,451억<span class="est">E</span>이 한 종가에 겹칩니다.</p>
+<p><b>KODEX AI반도체TOP2플러스(3조 7,829억)는 6·12월 D+2, HANARO Fn K-반도체(3조 3,302억)는 6·12월 D+4입니다.</b> 12월 만기가 12/10(목)이므로 KODEX는 12/14(월) 적용·12/11(금) 종가 실매매, HANARO는 12/16(수) 적용·12/15(화) 종가 실매매입니다. 9-03 비중으로 KODEX는 삼성전자 -583억<span class="est">E</span>·하이닉스 +424억<span class="est">E</span>·하위군 +159억<span class="est">E</span>, HANARO는 삼성전자 -350억<span class="est">E</span>·하이닉스 -27억<span class="est">E</span>·하위군 +376억<span class="est">E</span>으로 둘 다 수백억대입니다. 다만 KODEX TOP2플러스는 SK스퀘어 22.57%·삼성전기 18.9%가 하위군 안에 있고, "TOP2 50% + 소부장 50%" 구조에서 소부장 개별 종목에 cap이 따로 있는지 지수 규칙을 확인하지 못했습니다(미결 B). 만약 하위군에도 개별 25% cap이 있다면 지금은 초과가 없고, 없다면 SK스퀘어가 지금처럼 22.6%까지 커져도 12월에 잘리지 않습니다. 1Q K반도체TOP2+(3,168억)는 상위 2종 각 약 27.5%(합 55%) 구조로 삼성전자 27.34%·하이닉스 26.6%라 둘 다 목표 근처이고, 정기변경 주기는 6월 SK스퀘어·삼성전기 편입 보도(FETV 7/1)로 6·12월로 추정하되 NICE 방법론 원문이 미확인이라 캘린더에는 넣고 금액은 세지 않습니다.</p>
+<p>삼성전기 6월 교본이 이 절에 닿는 자리는 '지금은 어디에도 초과가 없다'는 사실입니다. 6월 초 삼성전기는 KODEX TOP2플러스 39.69%·HANARO 35.15%·SOL 27.29%로 세 지수에서 cap 25%를 넘겼고, 한국경제TV(6/2)가 KODEX 약 4,900억(6/15)·HANARO 약 4,360억(6/17) 매도를 예고한 뒤 6/2 기관 2,961억 순매도에 -9.58%, 6/12 집행일 기관 9,621억 순매도·외국인 +4,085억, 6/15 외국인 +9,601억에 +16.63%, 6/17 종가 203.2만원 고점이라는 경로를 밟았습니다(packet 교본_6월·research B). 정기변경 뒤 비중은 KODEX 19.27%·HANARO 16.7%대로 내려왔고 9-03에는 KODEX 18.9%·HANARO 16.74%·SOL 15.66%·1Q 18.91%입니다. 전부 25% 아래이므로 12월 정기변경에서 삼성전기는 cap 매도 대상이 아니고, 하위군 50% 안분에서 KODEX +61억<span class="est">E</span>·HANARO +129억<span class="est">E</span>, 10월 SOL 하위군 축소에서 -271억<span class="est">E</span>이 붙어 하반기 합산 -82억<span class="est">E</span>입니다. 삼성전기는 TIGER 반도체TOP10에는 FICS 중분류가 '반도체'가 아니라 아예 들어 있지 않습니다. 6월 교본이 9월 KRX 반도체에 주는 교훈(집행 10일 전 기관 선매도·집행일 되돌림)은 파트 3이 다루고, 이 파트가 보태는 것은 '삼성전기의 다음 cap 이벤트는 하반기 캘린더에 없다'는 부재의 확인입니다.</p>
+
+<h2>5. 하반기 정기변경 캘린더와 종목별 합산 유출입 시계열</h2>
+<p><b>9월부터 12월까지 반도체 관련 정기변경은 실매매 기준으로 여섯 번이고, 그 가운데 KRX 반도체 9/10과 TIGER 반도체TOP10 10월 두 번이 금액의 대부분입니다.</b> 만기일은 9/10·10/8·11/12·12/10(전부 목요일)이고 11월에는 반도체 지수 정기변경이 없습니다. 아래 타임라인은 실매매 종가일(남색)·지수 적용일(청록)·정보 이벤트(회색)를 나눠 그렸고 원 크기는 관련 순자산입니다. 캘린더의 두 갈림길은 10월 TOP10의 10/8 대 10/12(휴장 문제)와 코스피200·코스닥150 12월 변경 명단(11월 말 발표 추정)이며, 둘 다 이 파트가 아니라 운용사·거래소 공지가 닫습니다.</p>
+<figure class=""><figcaption>장표 4. 2026년 하반기 반도체 ETF 정기변경 타임라인(9/1~12/31) — 실매매 종가일 기준</figcaption><svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="30" y1="170" x2="850" y2="170" stroke="#8a857c" stroke-width="1.2"/>
+<line x1="30.0" y1="164" x2="30.0" y2="176" stroke="#8a857c"/>
+<text x="33.0" y="190" font-size="11" fill="#8a857c">9월</text>
+<line x1="233.3" y1="164" x2="233.3" y2="176" stroke="#8a857c"/>
+<text x="236.3" y="190" font-size="11" fill="#8a857c">10월</text>
+<line x1="443.4" y1="164" x2="443.4" y2="176" stroke="#8a857c"/>
+<text x="446.4" y="190" font-size="11" fill="#8a857c">11월</text>
+<line x1="646.7" y1="164" x2="646.7" y2="176" stroke="#8a857c"/>
+<text x="649.7" y="190" font-size="11" fill="#8a857c">12월</text>
+<rect x="285.5" y="160" width="4" height="20" fill="#e9e2d2"/><text x="287.5" y="204" text-anchor="middle" font-size="9" fill="#8a857c">10/9 휴장</text>
+<line x1="91.0" y1="170" x2="91.0" y2="134" stroke="#1f3a5f" stroke-width="0.8" stroke-dasharray="2 2"/>
+<circle cx="91.0" cy="170" r="10.7" fill="#1f3a5f" opacity="0.85"/>
+<text x="95.0" y="130" text-anchor="start" font-size="10" fill="#1f3a5f">9/10 만기 · KRX 반도체 3종 실매매 종가(6.67조)</text>
+<line x1="97.8" y1="170" x2="97.8" y2="250" stroke="#2b7a78" stroke-width="0.8" stroke-dasharray="2 2"/>
+<circle cx="97.8" cy="170" r="3.0" fill="#2b7a78" opacity="0.85"/>
+<text x="101.8" y="262" text-anchor="start" font-size="10" fill="#2b7a78">9/11 KRX 반도체 정기변경 적용(D+1)</text>
+<line x1="118.1" y1="170" x2="118.1" y2="66" stroke="#1f3a5f" stroke-width="0.8" stroke-dasharray="2 2"/>
+<circle cx="118.1" cy="170" r="6.1" fill="#1f3a5f" opacity="0.85"/>
+<text x="122.1" y="62" text-anchor="start" font-size="10" fill="#1f3a5f">9/14~16 ACE AI반도체TOP3+ 정기변경(1.08조)</text>
+<line x1="226.5" y1="170" x2="226.5" y2="216" stroke="#8a857c" stroke-width="0.8" stroke-dasharray="2 2"/>
+<circle cx="226.5" cy="170" r="3.0" fill="#8a857c" opacity="0.85"/>
+<text x="230.5" y="228" text-anchor="start" font-size="10" fill="#8a857c">9/30 FnGuide 반도체TOP10 종목선정 기준일</text>
+<line x1="280.7" y1="170" x2="280.7" y2="100" stroke="#1f3a5f" stroke-width="0.8" stroke-dasharray="2 2"/>
+<circle cx="280.7" cy="170" r="12.0" fill="#1f3a5f" opacity="0.85"/>
+<text x="284.7" y="96" text-anchor="start" font-size="10" fill="#1f3a5f">10/8 만기 · TOP10 실매매 후보 A(9.0조)</text>
+<line x1="307.9" y1="170" x2="307.9" y2="284" stroke="#1f3a5f" stroke-width="0.8" stroke-dasharray="2 2"/>
+<circle cx="307.9" cy="170" r="9.9" fill="#1f3a5f" opacity="0.85"/>
+<text x="311.9" y="296" text-anchor="start" font-size="10" fill="#1f3a5f">10/12 TOP10 후보 B 실매매 · SOL TOP2플러스 실매매(5.29조)</text>
+<line x1="314.6" y1="170" x2="314.6" y2="134" stroke="#2b7a78" stroke-width="0.8" stroke-dasharray="2 2"/>
+<circle cx="314.6" cy="170" r="3.0" fill="#2b7a78" opacity="0.85"/>
+<text x="318.6" y="130" text-anchor="start" font-size="10" fill="#2b7a78">10/13 SOL 적용(D+2)</text>
+<line x1="517.9" y1="170" x2="517.9" y2="250" stroke="#8a857c" stroke-width="0.8" stroke-dasharray="2 2"/>
+<circle cx="517.9" cy="170" r="3.0" fill="#8a857c" opacity="0.85"/>
+<text x="521.9" y="262" text-anchor="start" font-size="10" fill="#8a857c">11/12 만기(반도체 정기변경 없음)</text>
+<line x1="619.6" y1="170" x2="619.6" y2="66" stroke="#8a857c" stroke-width="0.8" stroke-dasharray="2 2"/>
+<circle cx="619.6" cy="170" r="3.0" fill="#8a857c" opacity="0.85"/>
+<text x="615.6" y="62" text-anchor="end" font-size="10" fill="#8a857c">11월 말 코스피200·코스닥150 12월 변경 발표(추정)</text>
+<line x1="707.7" y1="170" x2="707.7" y2="216" stroke="#1f3a5f" stroke-width="0.8" stroke-dasharray="2 2"/>
+<circle cx="707.7" cy="170" r="3.0" fill="#1f3a5f" opacity="0.85"/>
+<text x="703.7" y="228" text-anchor="end" font-size="10" fill="#1f3a5f">12/10 만기 · 코스피200·코스닥150 실매매 종가(cap 없음)</text>
+<line x1="714.5" y1="170" x2="714.5" y2="100" stroke="#1f3a5f" stroke-width="0.8" stroke-dasharray="2 2"/>
+<circle cx="714.5" cy="170" r="8.8" fill="#1f3a5f" opacity="0.85"/>
+<text x="710.5" y="96" text-anchor="end" font-size="10" fill="#1f3a5f">12/11 KODEX TOP2플러스 실매매(3.78조)</text>
+<line x1="741.6" y1="170" x2="741.6" y2="284" stroke="#1f3a5f" stroke-width="0.8" stroke-dasharray="2 2"/>
+<circle cx="741.6" cy="170" r="8.5" fill="#1f3a5f" opacity="0.85"/>
+<text x="737.6" y="296" text-anchor="end" font-size="10" fill="#1f3a5f">12/15 HANARO K-반도체 실매매(3.33조)</text>
+<text x="30" y="322" font-size="10" fill="#8a857c">원 크기 = 해당 ETF 순자산(9-03) 제곱근 비례. 남색 = 실매매 종가일, 청록 = 지수 적용일, 회색 = 정보 이벤트</text>
+</svg><div class="src">자료: 삼성증권 ETP전략 2026-06-10 표(정기변경 주기), FnGuide 반도체TOP10 방법론, 만기일 달력 계산(9/10·10/8·11/12·12/10), 한글날 10/9 휴장. 코스피200·코스닥150 12월 발표일은 6월분(5/22) 관행에서 추정</div></figure>
+<p class="reading"><b>관찰.</b> 1) 실매매 종가일은 9/10·9/11~15·10/8 또는 10/12·10/12·12/11·12/15의 여섯 자리이고, 10/12(월)에는 SOL과 TOP10 후보 B가 겹칩니다. 2) 순자산이 큰 순서(TOP10 9.0조·KRX 반도체 3종 6.67조·SOL 5.29조)와 날짜 순서가 다르므로 '9/10이 끝나면 끝'이 아닙니다. 3) 12/10 코스피200·코스닥150은 관련 순자산이 가장 크지만 cap이 없어 삼성전자·하이닉스 매매는 유동비율·편출입 안분뿐입니다. <b>원인.</b> 정기변경 주기가 지수마다 다른 것은 각 지수 산출기관(KRX·FnGuide·NICE·iSelect)의 방법론이 따로 정해져 있기 때문이고, 그래서 같은 두 종목이 넉 달 동안 여섯 번 다른 손에 의해 매매됩니다. 삼성증권 표는 그 주기를 한 장에 모은 유일한 공개 자료이며 6/9 시점 값이라 순자산은 갱신이 필요합니다. <b>함의.</b> 채점은 날짜마다 합니다 — 각 실매매 종가일의 15:30 체결 대금과 등락, 그리고 다음 날 PDF의 비중이 목표 비중(20 또는 25%)에 닿았는지를 보면, 그 지수의 cap과 집행 방식(종가 일괄 대 분할)이 실측으로 확정됩니다. 9/10이 그 첫 채점이고 10월 TOP10이 두 번째입니다.</p>
+<table class=""><tr><th>날짜</th><th>이벤트</th><th>비고</th><th>관련 순자산</th><th>재배분 방향(억, E)</th></tr><tr><td>9/10(목) D</td><td>9월 선물옵션 만기</td><td>KRX 반도체(KODEX·TIGER·타겟위클리커버드콜) 실매매 종가</td><td>6조 6,707억</td><td>하이닉스 -11,293·삼성전자 -2,083·소부장 +13,379</td></tr><tr><td>9/11(금) D+1</td><td>KRX 반도체·증권·은행·자동차 정기변경 적용</td><td>레버리지 8,662억 동반(현물 슬리브 별도)</td><td></td><td>cap 20%<span class="est">E</span></td></tr><tr><td>9/11~15 종가</td><td>ACE AI반도체TOP3+ D+2~4</td><td>9/14~16 적용</td><td>1조 773억</td><td>삼성전자 -263·한미 +136</td></tr><tr><td>9/30(수)</td><td>FnGuide 반도체TOP10 종목선정 기준일</td><td>1개월 평균 단순시총 상위 10</td><td></td><td>상위 2종=삼성전자·하이닉스 확정적</td></tr><tr><td>10/8(목) D</td><td>10월 만기</td><td>TOP10 실매매 후보 A(방법론 '익주 첫 영업일'=10/12 적용)</td><td>9조 20억</td><td>삼성전자 -3,727·하이닉스 +1,080·하위 8 +2,647</td></tr><tr><td>10/9(금)</td><td>한글날 휴장</td><td>D+1과 D+2가 갈리는 원인</td><td></td><td></td></tr><tr><td>10/12(월)</td><td>TOP10 실매매 후보 B(삼성증권 표 'D+2'=10/13 적용) · SOL TOP2플러스 실매매</td><td>SOL 적용 10/13</td><td>5조 2,930억</td><td>SOL: 삼성전자 -476·하이닉스 +1,371·하위 8 -895(편출입 별도)</td></tr><tr><td>11/12(목) D</td><td>11월 만기</td><td>반도체 정기변경 없음 · MSCI 11월 반기 리뷰는 월말</td><td></td><td></td></tr><tr><td>11월 말</td><td>코스피200·코스닥150 12월 변경 발표(추정, 6월분은 5/22)</td><td>편출입 명단</td><td></td><td>cap 없음</td></tr><tr><td>12/10(목) D</td><td>12월 만기 · 코스피200·코스닥150 실매매 종가</td><td>12/11 적용(D+1)</td><td>약 70조+6조(삼성증권 6/10)</td><td>cap 없음 · 유동비율·편출입만</td></tr><tr><td>12/11(금)</td><td>KODEX AI반도체TOP2플러스 실매매</td><td>12/14 적용(D+2)</td><td>3조 7,829억</td><td>삼성전자 -583·하이닉스 +424</td></tr><tr><td>12/15(화)</td><td>HANARO Fn K-반도체 실매매</td><td>12/16 적용(D+4)</td><td>3조 3,302억</td><td>삼성전자 -350·하이닉스 -27·하위군 +376</td></tr></table>
+<div class="src">자료: 삼성증권 ETP전략 2026-06-10 표·FnGuide 방법론·순자산 packet(9-03). 재배분 금액은 전부 9-03 비중·순자산 기준 E이며 9/10 KRX 반도체 값은 파트 1 정본(시나리오 S2, cap 20%·집행 100%). 코스피200·코스닥150 순자산은 삼성증권 6/10 본문의 어림값</div>
+<p>종목별로 합치면 그림이 달라집니다. SK하이닉스는 9/10에 -11,293억<span class="est">E</span>을 맞고 그 뒤 ACE +9억<span class="est">E</span>·TOP10 +1,080억<span class="est">E</span>·SOL +1,371억<span class="est">E</span>·KODEX TOP2플러스 +424억<span class="est">E</span>·HANARO -27억<span class="est">E</span>으로 10~12월 합산 +2,857억<span class="est">E</span>을 돌려받아 9~12월 순합은 -8,436억<span class="est">E</span>입니다. 삼성전자는 9/10 -2,083억<span class="est">E</span> 뒤에도 ACE -263억<span class="est">E</span>·TOP10 -3,727억<span class="est">E</span>·SOL -476억<span class="est">E</span>·KODEX -583억<span class="est">E</span>·HANARO -350억<span class="est">E</span>으로 여섯 번 전부 매도 쪽이라 9~12월 합산 -7,481억<span class="est">E</span>이고, 그 가운데 10월 TOP10 하나가 절반입니다. 한미반도체는 9/10 +2,034억<span class="est">E</span>에 ACE·TOP10·12월 안분이 더해져 +2,546억<span class="est">E</span>, 삼성전기는 -82억<span class="est">E</span>입니다. 이 합산은 cap 조정만 센 것이고 편출입·유동비율 차이·순자산 변동은 들어 있지 않으므로, 각 날짜가 가까워질 때 그 지수의 비중 확정 종가로 다시 계산해야 합니다.</p>
+<table class=""><tr><th>이벤트(실매매 기준)</th><th>순자산</th><th>SK하이닉스</th><th>삼성전자</th><th>삼성전기</th><th>한미반도체</th></tr><tr><td>9/10 KRX 반도체(KODEX·TIGER·커버드콜)</td><td>6조 6,707억</td><td>-11,293</td><td>-2,083</td><td>0</td><td>2,034</td></tr><tr><td>9/11~15 ACE AI반도체TOP3+</td><td>1조 773억</td><td>9</td><td>-263</td><td>0</td><td>136</td></tr><tr><td>10/8 또는 10/12 TIGER 반도체TOP10</td><td>9조 20억</td><td>1,080</td><td>-3,727</td><td>0</td><td>353</td></tr><tr><td>10/12 SOL AI반도체TOP2플러스</td><td>5조 2,930억</td><td>1,371</td><td>-476</td><td>-271</td><td>0</td></tr><tr><td>12/11 KODEX AI반도체TOP2플러스</td><td>3조 7,829억</td><td>424</td><td>-583</td><td>61</td><td>7</td></tr><tr><td>12/15 HANARO Fn K-반도체</td><td>3조 3,302억</td><td>-27</td><td>-350</td><td>129</td><td>15</td></tr><tr><td><b>9~12월 합산</b></td><td></td><td><b>-8,436</b></td><td><b>-7,481</b></td><td><b>-82</b></td><td><b>2,546</b></td></tr><tr><td>9/10 제외 합산(10~12월 연쇄)</td><td></td><td>2,857</td><td>-5,398</td><td>-82</td><td>512</td></tr></table>
+<div class="src">자료: 위 이벤트별 계산(E). 삼성전기는 KRX 반도체·TOP10·ACE 미편입이라 0, 하위군 안분 몫만 표시. '0'은 절대값 0.5억 미만</div>
+<figure class=""><figcaption>장표 5. SK하이닉스·삼성전자 9~12월 정기변경 이벤트별 재배분 금액(억, E) — 실매매 종가일 순</figcaption><svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="256.0" x2="730" y2="256.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="260.0" text-anchor="end" font-size="11" fill="#8a857c">-12,500</text>
+<line x1="62" y1="216.3" x2="730" y2="216.3" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="220.3" text-anchor="end" font-size="11" fill="#8a857c">-10,000</text>
+<line x1="62" y1="176.7" x2="730" y2="176.7" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="180.7" text-anchor="end" font-size="11" fill="#8a857c">-7,500</text>
+<line x1="62" y1="137.0" x2="730" y2="137.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="141.0" text-anchor="end" font-size="11" fill="#8a857c">-5,000</text>
+<line x1="62" y1="97.3" x2="730" y2="97.3" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="101.3" text-anchor="end" font-size="11" fill="#8a857c">-2,500</text>
+<line x1="62" y1="57.7" x2="730" y2="57.7" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="61.7" text-anchor="end" font-size="11" fill="#8a857c">0</text>
+<line x1="62" y1="18.0" x2="730" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">2,500</text>
+<text x="117.7" y="274" text-anchor="middle" font-size="10" fill="#8a857c">9/10 KRX 3종</text>
+<text x="229.0" y="274" text-anchor="middle" font-size="10" fill="#8a857c">9/11~15 ACE</text>
+<text x="340.3" y="274" text-anchor="middle" font-size="10" fill="#8a857c">10월 TOP10</text>
+<text x="451.7" y="274" text-anchor="middle" font-size="10" fill="#8a857c">10/12 SOL</text>
+<text x="563.0" y="274" text-anchor="middle" font-size="10" fill="#8a857c">12/11 KODEX TOP2+</text>
+<text x="674.3" y="274" text-anchor="middle" font-size="10" fill="#8a857c">12/15 HANARO</text>
+<rect x="78.7" y="57.7" width="38.0" height="179.2" fill="#1f3a5f" opacity="0.9"/>
+<text x="98.2" y="247.8" text-anchor="middle" font-size="9.5" fill="#1f3a5f">-11,293</text>
+<rect x="117.7" y="57.7" width="38.0" height="33.1" fill="#b07d2b" opacity="0.9"/>
+<text x="137.1" y="101.7" text-anchor="middle" font-size="9.5" fill="#b07d2b">-2,083</text>
+<rect x="190.0" y="57.5" width="38.0" height="0.1" fill="#1f3a5f" opacity="0.9"/>
+<text x="209.5" y="53.5" text-anchor="middle" font-size="9.5" fill="#1f3a5f">9</text>
+<rect x="229.0" y="57.7" width="38.0" height="4.2" fill="#b07d2b" opacity="0.9"/>
+<text x="248.5" y="72.8" text-anchor="middle" font-size="9.5" fill="#b07d2b">-263</text>
+<rect x="301.4" y="40.5" width="38.0" height="17.1" fill="#1f3a5f" opacity="0.9"/>
+<text x="320.9" y="36.5" text-anchor="middle" font-size="9.5" fill="#1f3a5f">1,080</text>
+<rect x="340.3" y="57.7" width="38.0" height="59.1" fill="#b07d2b" opacity="0.9"/>
+<text x="359.8" y="127.8" text-anchor="middle" font-size="9.5" fill="#b07d2b">-3,727</text>
+<rect x="412.7" y="35.9" width="38.0" height="21.8" fill="#1f3a5f" opacity="0.9"/>
+<text x="432.2" y="31.9" text-anchor="middle" font-size="9.5" fill="#1f3a5f">1,371</text>
+<rect x="451.7" y="57.7" width="38.0" height="7.6" fill="#b07d2b" opacity="0.9"/>
+<text x="471.1" y="76.2" text-anchor="middle" font-size="9.5" fill="#b07d2b">-476</text>
+<rect x="524.0" y="50.9" width="38.0" height="6.7" fill="#1f3a5f" opacity="0.9"/>
+<text x="543.5" y="46.9" text-anchor="middle" font-size="9.5" fill="#1f3a5f">424</text>
+<rect x="563.0" y="57.7" width="38.0" height="9.3" fill="#b07d2b" opacity="0.9"/>
+<text x="582.5" y="77.9" text-anchor="middle" font-size="9.5" fill="#b07d2b">-583</text>
+<rect x="635.4" y="57.7" width="38.0" height="0.4" fill="#1f3a5f" opacity="0.9"/>
+<text x="654.8" y="69.1" text-anchor="middle" font-size="9.5" fill="#1f3a5f">-27</text>
+<rect x="674.3" y="57.7" width="38.0" height="5.6" fill="#b07d2b" opacity="0.9"/>
+<text x="693.8" y="74.2" text-anchor="middle" font-size="9.5" fill="#b07d2b">-350</text>
+<rect x="736" y="18" width="10" height="10" fill="#1f3a5f"/>
+<text x="750" y="27" font-size="11" fill="#8a857c">SK하이닉스</text>
+<rect x="736" y="34" width="10" height="10" fill="#b07d2b"/>
+<text x="750" y="43" font-size="11" fill="#8a857c">삼성전자</text>
+</svg><div class="src">자료: 위 표. 9/10 KRX 3종은 파트 1 시나리오 S2(cap 20%·6조 6,707억), 나머지는 9-03 비중·순자산 × (cap − 비중)</div></figure>
+<p class="reading"><b>관찰.</b> 1) 하이닉스의 여섯 막대 가운데 음수는 9/10(-11,293억<span class="est">E</span>)과 HANARO(-27억<span class="est">E</span>) 둘뿐이고 나머지 넷은 양수라 10~12월 합산 +2,857억<span class="est">E</span>입니다. 2) 삼성전자는 여섯 막대가 전부 음수이고 10월 TOP10 -3,727억<span class="est">E</span>이 9/10 -2,083억<span class="est">E</span>의 1.8배입니다. 3) 두 종목 합으로는 9/10 -13,376억<span class="est">E</span>, 10월(TOP10+SOL) -1,752억<span class="est">E</span>, 12월 -535억<span class="est">E</span>입니다. <b>원인.</b> 두 종목의 부호가 갈리는 것은 KRX 반도체만 cap이 20%이고 하이닉스가 그 위로 크게 올라가 있는 반면, 25% cap 지수들에서는 하이닉스가 아래·삼성전자가 위에 있기 때문입니다. 9/10 이후 하이닉스가 삼성전자보다 상대 강세면 10월의 하이닉스 매수는 줄고 삼성전자 매도는 늘어나며, 그 반대면 둘 다 줄어듭니다. <b>함의.</b> 허브가 인용할 수 있는 한 줄은 이것입니다 — 패시브 cap 연쇄만 놓고 보면 하이닉스의 매도 압력은 9/10 하루에 몰려 있고 그 뒤 넉 달은 순매수이며, 삼성전자는 9/10보다 10월 초가 크고 넉 달 내내 매도 쪽입니다. 다만 하이닉스 ADTV20 6조 1,513억·삼성전자 5조 4,265억 앞에서 이 금액은 어느 날짜도 0.2일을 넘지 않으므로, 방향이 아니라 종가 단일가의 두께(파트 2)로 읽어야 합니다.</p>
+
+<h2>6. 레버리지·커버드콜의 9/10 취급 — 현물 조정이 순자산 비례가 아닌 이유</h2>
+<p><b>KODEX 반도체레버리지(8,662억)는 KRX 반도체 레버리지 지수(일간 2배)를 따르며, 9-03 상위 10 보유는 순자산 대비 SK하이닉스 47.0%·KODEX 반도체 28.96%·삼성전자 25.67%·이오테크닉스 3.38%·한미반도체 3.1% 순입니다.</b> 이 구성이 순자산 비례 셈법을 막는 이유는 세 겹입니다. 첫째, 200% 노출 가운데 현물 주식과 기초 ETF로 든 부분은 상위 10 합계 기준 약 121%p이고 나머지 약 79%p<span class="est">E</span>는 스왑·선물이라 거래상대방(증권사)의 장부에서 헤지가 바뀝니다. 둘째, 직접 보유 현물의 하이닉스 대 삼성전자 비율(47.0 대 25.7, 1.83배)이 지수 비율(36.9 대 23.1, 1.60배)과 다릅니다 — 현물 슬리브가 지수의 축소판이 아니라는 뜻이고, 그러면 "순자산 × 비중 변화"는 애초에 정의되지 않습니다. 셋째, KODEX 반도체 보유분 2,509억은 KODEX 반도체 순자산 5조 2,416억 안에 이미 들어 있어 9/10 정기변경이 그 안에서 집행되므로 따로 더하면 이중 계산입니다. packet의 편입ETF비중이 기초 ETF를 풀어 합산한 노출은 하이닉스 57.7%·삼성전자 32.4%입니다.</p>
+<p>그래서 이 파트는 레버리지의 9/10 현물 매매를 점이 아니라 구간으로 적습니다. 하한은 0입니다 — 운용사가 현물 슬리브를 그대로 두고 스왑 노출만 새 지수 비중으로 바꾸면 ETF 자체의 현물 매매는 없고, 거래상대방의 헤지 조정이 언제 어떻게 나오는지는 공개되지 않습니다. 중간값<span class="est">E</span>은 직접 보유 현물이 지수 비중 변화율(하이닉스 20/36.93, 삼성전자 20/23.12)만큼 같은 비율로 줄어든다고 볼 때의 값으로, 하이닉스 -1,866억<span class="est">E</span>·삼성전자 -300억<span class="est">E</span>입니다. 상한<span class="est">E</span>은 200% 노출 전체가 순자산 비례로 재조정된다고 볼 때의 값으로 하이닉스 -2,933억<span class="est">E</span>·삼성전자 -541억<span class="est">E</span>이며, 이 경우에도 그 절반 이상은 스왑 쪽 헤지라 종가 단일가에 반드시 나오는 것은 아닙니다. 허브 상수 블록이 레버리지를 '제외 +α'로 둔 것은 이 구간의 하한이 0이기 때문이고, 이 파트의 권고는 9/10 종가 단일가의 하이닉스 체결 대금에서 KRX 반도체 3종의 11,293억<span class="est">E</span>을 뺀 잔여가 이 α의 실측치라는 것입니다. 참고로 레버리지 순자산은 4/30 1조 8,511억(Kodex 가이드)에서 9/3 8,662억으로 반년 새 절반 이하가 됐고 순유입 6M -1조 110억·YTD -1조 542억이므로, α의 크기도 6월에 셌다면 지금의 두 배였을 것입니다.</p>
+<p>커버드콜은 두 종류로 나뉩니다. KODEX 반도체타겟위클리커버드콜(1,628억)은 KRX 반도체 타겟 9% 분배 위클리 커버드콜 지수를 따르고 현물을 100% 들고 있으며 9-03 상위 10이 하이닉스 36.88%·삼성전자 23.69%·한미반도체 6.17%로 KODEX 반도체와 소수점 아래에서만 다릅니다. 따라서 9/10 정기변경을 KODEX 반도체와 같은 날 같은 목표비중으로 집행하며, 허브의 6조 6,707억은 이 1,628억을 이미 포함합니다. 옵션 매도 부분은 현물 비중을 바꾸지 않으므로 정기변경 산식에 들어오지 않습니다. 반면 TIGER 반도체TOP10커버드콜액티브(7,529억)는 액티브라 cap 25%에 묶이지 않고 4/28 개편에서 12종목으로 늘리며 삼성전기를 넣었으며 9-03 비중이 하이닉스 25.45%·삼성전자 23.51%·기초 ETF 10.59%입니다. 10월 TOP10 정기변경일에 기초 ETF 보유분(797억)만 자동으로 따라가고 직접 보유 현물은 운용사 재량이므로 이 파트의 합산 밖입니다. 정리하면 9/10에 '반드시' 나오는 현물 매매는 KRX 반도체 3종 6조 6,707억의 것이고, 레버리지 8,662억은 0에서 2,933억<span class="est">E</span> 사이의 α이며, 액티브 커버드콜은 날짜조차 재량입니다.</p>
+
+<h2>논쟁에 주는 답</h2>
+<p><b>허브 논쟁 5 — 편출입·유동비율 차이·여타 패시브가 cap 조정보다 큰 변수인가.</b> 이 파트의 답은 '지수에 따라 다르고, KRX 반도체에서는 cap이 먼저, SOL TOP2플러스 같은 키워드형에서는 편출입이 먼저'입니다. KRX 반도체의 cap 조정은 1조 3,376억<span class="est">E</span>(파트 1 정본)이고 종목당 유동비율 차이은 ±수백억(파트 1의 S3 시나리오: 리노공업 977억 대 734억, 파두 733억 대 511억)이라 cap이 한 자릿수 큽니다. 신규 편입 종목이 있다면 그 종목에는 안분 물량(수십~수백억)과 비교되지 않는 '0에서 지수 비중까지'의 매수가 붙지만, KRX 반도체의 9월 편출입 명단은 공표 전이라 종목을 특정할 수 없습니다(미결 A). 반면 SOL TOP2플러스는 하위 8종이 키워드·모멘텀으로 다시 뽑히므로 7월처럼 5종목이 바뀌면 편출 종목당 1,000~2,000억<span class="est">E</span>의 매도가 cap 조정(삼성전자 -476억<span class="est">E</span>)보다 큽니다. TIGER 반도체TOP10은 시총 상위 10이 안정적이라 편출입 가능성이 낮고 유동비율(11월 말 보고서 기준, 5%p 버퍼)이 10월에는 반영되지 않으므로 cap이 전부입니다. 코스피200·코스닥150은 cap이 없어 편출입·유동비율이 전부이며 삼성전자·하이닉스에는 유동비율 갱신분(자사주 매입 40조·15조가 유동비율에 언제 반영되는지 미확인)만 닿습니다.</p>
+<p>채점 KPI는 셋입니다. ①KRX 정기변경 공표(편출입 명단·유동비율) — 편출입이 0이면 논쟁 5는 'cap이 전부'로 닫히고, 신규 편입이 있으면 그 종목의 지수 비중 × 6조 6,707억이 안분 최대치(한미반도체 +2,034억<span class="est">E</span>)와 비교됩니다. ②9/11 PDF 종목 수와 각 종목 비중 — 35종목이 유지되고 하이닉스가 20% 근처면 cap 20%·편출입 0이 동시에 확정됩니다. ③10/12·10/13 전후 SOL의 편출입 공지와 편출 종목의 당일 등락 — 7월의 편입 +10~19%·편출 급락이 재현되면 '키워드형에서는 편출입이 먼저'가 실측으로 섭니다. 반증 조건은 KRX 반도체에서 시총 상위권 신규 편입(예: SK스퀘어처럼 반도체 지주가 유니버스에 들어오는 경우)이 확인돼 그 한 종목의 매수가 5,000억<span class="est">E</span>을 넘는 경우이며, 그때는 KRX 반도체에서도 편출입이 cap보다 큰 변수가 됩니다. 이 파트는 SK스퀘어의 KRX 반도체 편입 여부를 확인하지 못했고(미결 A), TOP10·TOP2플러스·HANARO·1Q에는 이미 13~23%로 들어 있다는 사실만 적어 둡니다.</p>
+<p>이 파트가 다른 논쟁에 보태는 것도 있습니다. 논쟁 2(금액은 1.5조인가 1.13조인가)에는 '9/10 하루만 보면 1.13조<span class="est">E</span>이지만 삼성전자는 10월 TOP10에서 3,727억<span class="est">E</span>이 더 나오고, 하이닉스는 10~12월에 +2,857억<span class="est">E</span>을 돌려받는다'는 시계열을, 논쟁 3(소부장 매수는 흡수되는가)에는 '한미반도체는 9/10 뒤 ACE·TOP10에서 +489억<span class="est">E</span>이 더 붙는 유일한 소부장'이라는 사실을 보탭니다. 수혜라는 말은 쓰지 않습니다 — 한미반도체의 하반기 합산 +2,546억<span class="est">E</span>은 ADTV20 1,150억의 2.2일치이고 ETF 보유가 이미 유통물량의 20.7%이며, 6월 삼성전기가 보여 준 것처럼 집행 전 선매도와 집행 후 되돌림이 같은 무게로 붙는 자리입니다.</p>
+
+<h2>미결</h2>
+<p><b>A급(답이 있어야 판정이 바뀌는 것).</b> ①TIGER 반도체TOP10 10월 정기변경 확정일 — 10/12(방법론 '익주 첫 영업일') 대 10/13(삼성증권 'D+2'), 실매매 10/8 대 10/12. 미래에셋 TIGER 공지(투자설명서 변경·정기변경 안내)와 FnGuide 지수 공지에서 구하며, 10/12로 확정되면 SOL과 같은 종가에 삼성전자 -4,203억<span class="est">E</span> 매도가 겹칩니다. ②KRX 반도체 9월 편출입 명단과 유동비율 — KRX 정기변경 공표(통상 만기 1~2주 전)에서 구하고, SK스퀘어 편입 여부가 논쟁 5의 반증 조건입니다. ③각 ETF의 비중 확정 종가 비중 — TOP10은 정기변경일 2영업일 전, SOL은 10/12<span class="est">E</span>, KODEX·HANARO는 12/9~12/11<span class="est">E</span>이며 그날의 네이버·운용사 PDF로 이 파트의 표 3·4를 다시 계산해야 합니다.</p>
+<p><b>B급(서술이 바뀌는 것).</b> ④FnGuide 반도체TOP10 종목별 유동비율 — 하위 8종 재배분을 현재 비중 비례로 근사했는데 유동시총 가중 정본은 유동비율이 있어야 합니다. 특히 SK스퀘어(9-03 20.43%)의 유동비율이 낮으면 +1,149억<span class="est">E</span>이 줄고 한미반도체·이수페타시스 몫이 늡니다. FnGuide 지수 팩트시트나 미래에셋 PDF의 주식 수 대 시총 역산으로 구합니다. ⑤KODEX AI반도체TOP2플러스의 하위군 개별 cap 유무 — SK스퀘어 22.6%가 12월에 잘리는지가 달라집니다. 삼성자산운용 상품 페이지의 지수 방법론에서 구합니다. ⑥NICE K반도체 TOP2 MAX+(1Q)와 iSelect·FnGuide 전/후공정 지수의 정기변경 주기 — 캘린더에 날짜 없이 올라 있습니다. ⑦코스닥150 안 반도체 업종 비중 — 12월 코스닥150 정기변경이 소부장 소형주(주성엔지니어링 등 코스닥 종목)에 닿는 크기를 세려면 필요하며, KRX 지수 팩트시트에서 구합니다. ⑧신한투자증권 집계 '23개 28조·평균 27.5%·21.9%'의 기준일 — 기사 발행일이 5~7월로만 좁혀져 있어 packet 9-03 값과 나란히 놓을 때 빈티지 차이를 안고 있습니다.</p>
+<p><b>C급(있으면 좋은 것).</b> ⑨레버리지 ETF의 스왑 거래상대방 헤지 관행 — 5절의 α 구간(0에서 2,933억<span class="est">E</span>)을 좁히려면 운용보고서의 스왑 명세와 9/10 종가 단일가 실측을 대조해야 합니다. ⑩코스피200 30% cap 도입 논의의 진행 — 시행되면 12월 이후 삼성전자에 2조원대<span class="est">E</span>의 새 매도 이벤트가 생기지만 지금은 보도 단계입니다. ⑪MSCI 11월 반기 리뷰의 하이닉스 ADR 3자배정 반영(패시브 유입 약 1.45조 추정, 서울경제 8/5) — 이 파트의 캘린더는 국내 지수만 다뤘고 MSCI·FTSE는 파트 6의 몫으로 남깁니다. ⑫TIGER 반도체TOP10의 3월 말 '30% 초과 미집행'이 4월 정기변경 뒤 어떻게 정리됐는지(지수위원회 결정문) — 수시개편 조항의 실효성을 판단하는 데 필요합니다.</p>
+
+<p class="foot">파트 4 끝. 다음 파트: 파트 5 주가추이. 이 파트가 허브에 보태는 항목: 반도체 ETF 지형표(27개 35조 149억), 하반기 정기변경 캘린더(실매매 6회), 10월 TOP10 재배분(삼성전자 -3,727억E·하이닉스 +1,080억E·하위 8 +2,647억E), 종목별 9~12월 합산(하이닉스 -8,436억E·삼성전자 -7,481억E·한미반도체 +2,546억E·삼성전기 -82억E), 레버리지 α 구간, 조정판, 미결 A3·B5·C4. 작성 Claude · 검증: 이벤트별 매도 합 = 매수 합 검산(TOP10 3,727 = 3,727), research C 독립 계산과 대조(3,700·1,100·2,600억) 완료</p>
+
+<script>
+(function(){
+  var L8=[{"n": "SK스퀘어", "w": 20.43}, {"n": "한미반도체", "w": 6.28}, {"n": "이수페타시스", "w": 4.91}, {"n": "주성엔지니어링", "w": 4.79}, {"n": "원익IPS", "w": 2.92}, {"n": "이오테크닉스", "w": 2.92}, {"n": "리노공업", "w": 2.42}, {"n": "DB하이텍", "w": 2.26}];
+  var ids=["aum","ss","hx"];
+  function v(id){return parseFloat(document.getElementById("m_"+id).value);}
+  function f0(x){return Math.round(x).toLocaleString("ko-KR");}
+  function calc(){
+    var m={}; ids.forEach(function(k){m[k]=v(k); var lab=document.getElementById("l_"+k); if(lab) lab.textContent=(k==="aum"?m[k].toFixed(3):m[k].toFixed(1));});
+    var aum=m.aum*10000;
+    var dss=(25-m.ss)/100*aum, dhx=(25-m.hx)/100*aum;
+    var lowerNow=100-m.ss-m.hx, dlow=(50-lowerNow)/100*aum;
+    var s="<div>삼성전자 "+(dss>=0?"매수 +":"매도 ")+f0(dss)+"억 · SK하이닉스 "+(dhx>=0?"매수 +":"매도 ")+f0(dhx)+"억 · 하위 8종 합계 "+(dlow>=0?"+":"")+f0(dlow)+"억 (현재 하위 8종 합 "+lowerNow.toFixed(1)+"%)</div>";
+    s+="<div style='font-weight:400;margin-top:4px'>하위 8종 안분(현재 비중 비례): ";
+    var tot=0; L8.forEach(function(r){tot+=r.w;});
+    L8.forEach(function(r,i){ s+=r.n+" "+(dlow>=0?"+":"")+f0(r.w/tot*dlow)+"억"+(i<L8.length-1?" · ":""); });
+    s+="</div>";
+    document.getElementById("m_out").innerHTML=s;
+  }
+  ids.forEach(function(k){document.getElementById("m_"+k).addEventListener("input",calc);});
+  calc();
+})();
+</script>
+
+
+</main></body></html>

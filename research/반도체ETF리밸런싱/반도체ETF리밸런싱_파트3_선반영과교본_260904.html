@@ -1,0 +1,682 @@
+<!doctype html><html lang="ko" data-rl="p"><head><meta charset="utf-8">
+<meta name="coverage" content="debate,stock">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>반도체 ETF 리밸런싱 파트 3 — 선반영과 교본 · 2026-09-04</title>
+<style>
+body{margin:0;background:#faf8f4;color:#3a3630;font-family:'Noto Serif KR','Apple SD Gothic Neo','Malgun Gothic',serif;line-height:1.78;word-break:keep-all}
+main{max-width:920px;margin:0 auto;padding:44px 28px 80px}
+h1{font-size:23px;margin:0 0 6px;line-height:1.35} .sub{color:#8a857c;font-size:13px;margin-bottom:10px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;line-height:1.6}
+h2{font-size:17.5px;margin:36px 0 8px;padding-top:16px;border-top:1px solid #e3ded4}
+h3{font-size:15px;margin:22px 0 6px}
+p{max-width:700px;font-size:15px;margin:0 0 1.25em}
+p.reading{font-size:14px;color:#4a463f;background:#f4f0e8;border-radius:6px;padding:10px 14px;max-width:700px}
+figure{margin:14px 0 6px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px}
+figcaption{font-size:13px;font-weight:600;margin-bottom:8px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+svg{width:100%;height:auto;display:block}
+.src{font-size:11.5px;color:#8a857c;margin-top:6px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif}
+table{border-collapse:collapse;font-size:13px;margin:10px 0 16px;font-family:Pretendard,'Apple SD Gothic Neo',-apple-system,sans-serif;background:#fff}
+td,th{border:1px solid #e0dbd0;padding:5px 10px;text-align:right;vertical-align:top} td:first-child,th:first-child{text-align:left} th{background:#f1ede4;font-weight:600;color:#5a5650}
+.gloss{display:grid;grid-template-columns:160px 1fr;gap:6px 14px;background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px;font-size:13.5px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;max-width:740px;line-height:1.55}
+.gloss b{font-size:13px}
+.judge{background:#f1ede4;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.ourview{background:#eef2f7;border-left:3px solid #1f3a5f;padding:12px 16px;max-width:672px;font-size:15px}
+.panel{background:#fff;border:1px solid #e7e2d8;border-radius:6px;padding:14px 16px;max-width:700px;font-family:Pretendard,'Apple SD Gothic Neo',sans-serif;font-size:14px;margin:12px 0 18px}
+.panel input[type=range]{width:100%}
+.panel .out{margin-top:8px;font-weight:700}
+.panel .note{color:#8a857c;font-size:12.5px;margin-top:6px}
+.est{font-size:.72em;vertical-align:super;color:#a44a3f;font-weight:700}
+.foot{font-size:12px;color:#8a857c;max-width:700px;margin-top:30px;border-top:1px solid #e3ded4;padding-top:12px}
+.segdive{border:1px solid #e0dbd0;border-radius:8px;padding:6px 18px 4px;margin:14px 0 20px;background:#fdfcf9}
+.leadchain{background:#fff8ea;border:1px solid #e8d9b5;border-radius:6px;padding:12px 16px;max-width:700px;font-size:14px}
+.hubnav{font-size:12.5px;color:#8a857c;font-family:Pretendard,sans-serif;margin-bottom:14px}
+.hubnav a{color:#1f3a5f}
+a{color:#1f3a5f}
+@media print{.panel input{display:none}}
+</style><link rel="stylesheet" href="../theme.css"><script src="../theme.js"></script></head><body><main>
+
+<h1>반도체 ETF 리밸런싱 파트 3 — 선반영과 교본: 6월 cap 이벤트가 남긴 순서, 8월 이후 35종 수급, 인덱스 효과의 기저율</h1>
+<div class="sub">파트제 커버리지 8편 · 작성 2026-09-04 · 기준 순자산 6조 6,707억(KODEX 5조 2,416억 + TIGER 1조 2,663억 + 타겟위클리커버드콜 1,628억, 9-03) · 통화 ₩(억원) · 집행일 2026-09-10 종가<span class="est">E</span> · 다음 갱신 트리거: 9/10 종가 단일가 체결 대금·9/11 시가 갭·9/11 이후 5·20 거래일 기관 순매수 방향, KRX 정기변경 공표 · 숫자 정본: 허브 상수 블록 · 소스: packet.json(KODEX·TIGER PDF 9-04, 키움 일봉·ka10059 수급·1분봉 종가 단일가), research/B_뉴스와교본.md(한국경제TV 6/2·뉴스1 6/16·파이낸셜뉴스 6/18·삼성증권 ETFun 6/10), research/D_인덱스효과실증.md(Lynch·Mendenhall 1997, Madhavan 2003, Greenwood·Sammon 2023, KIF 2013, 메리츠 2023-03-29, 유진 2024-05-17)</div>
+<div class="hubnav">현행 판정은 <a href="반도체ETF리밸런싱_허브.html">허브</a>가 듭니다. 이 파트는 커버리지 층 debate·stock을 맡고, 허브 논쟁 4(선반영은 얼마나 됐나)에 답합니다. 재배분 금액은 <a href="반도체ETF리밸런싱_파트1_재배분산식_260904.html">파트 1</a>, 종가 단일가 두께는 <a href="반도체ETF리밸런싱_파트2_유동성흡수력_260904.html">파트 2</a>, 35종 주가 궤적은 <a href="반도체ETF리밸런싱_파트5_주가추이_260904.html">파트 5</a>가 정본입니다.</div>
+
+<p>이 파트가 커버리지에서 맡는 자리는 "돈이 언제 움직였나"입니다. 허브의 판정 가설은 9월 10일 종가<span class="est">E</span>에 6조 6,707억이 SK하이닉스 1조 1,293억<span class="est">E</span>·삼성전자 2,083억<span class="est">E</span>을 팔고 소부장 33종을 1조 3,379억<span class="est">E</span>만큼 산다는 것인데, 이 금액은 파트 1이 계산하고 파트 2가 흡수력을 잽니다. 우리가 여기서 묻는 것은 그 앞뒤입니다. 시장이 이 돈을 미리 움직였다면 집행일에는 남은 것이 없고, 미리 움직이지 않았다면 집행일 종가가 변곡이 됩니다. 이 물음에 답하는 재료는 셋입니다. 첫째, 석 달 전 같은 구조로 일어난 6월 cap 이벤트(삼성전기·SK하이닉스·삼성전자·현대차)의 날짜별 주가와 투자자별 수급을 패킷 실측으로 다시 셉니다. 둘째, 8월 1일 이후 35종목의 기관·외국인·개인·사모·투신·연금 순매수를 cap 20% 리밸런싱 금액과 나눠 "선반영 비율"을 만듭니다. 셋째, 인덱스 효과 실증 문헌에서 발표와 실행 사이의 초과수익과 실행 후 되돌림의 기저율을 가져와 이번 이벤트의 조건에 맞춰 놓습니다. 결론을 먼저 적으면, 6월 교본에서 매도는 집행일 10거래일 전에 났고 집행일 종가는 오히려 저점이었으며, 8월 이후 소부장 33종에서 기관과 외국인의 선취매 흔적은 13종목에만 있고 20종목은 오히려 순매도라서, 이번 이벤트는 "이미 반영됐다"와 "아직 아니다"가 종목별로 갈리는 상태로 읽습니다.</p>
+
+<div class="gloss">
+<b>선반영</b><span>이벤트가 일으킬 매매를 시장이 미리 가격에 넣는 것입니다. 이 파트에서는 "8월 이후 기관+외국인 순매수 ÷ cap 20% 리밸런싱 금액<span class="est">E</span>"을 선반영 비율이라 부르고, 1.0배면 리밸런싱 금액만큼 이미 샀다는 뜻으로 씁니다. 비율이 음수면 오히려 팔았다는 뜻입니다.</span>
+<b>선취매(front-running)</b><span>예측 가능한 패시브 매매보다 먼저 같은 방향으로 사고, 패시브가 집행할 때 넘기는 매매입니다. 6월 삼성전기에서는 방향이 반대라 "선매도"였고, 투신·연기금이 6/1~12에 1조 5,000억 넘게 먼저 팔았습니다(뉴스1 6/16).</span>
+<b>되돌림(reversal)</b><span>실행일 전후로 가격이 사전 구간의 움직임을 되감는 것입니다. 실증에서는 실행 후 1주 안팎에 사전 초과수익의 절반에서 대부분이 지워지는 것으로 측정됩니다(KRX 2008~10 변경 후 1주 -4.56%p).</span>
+<b>일시 효과 대 영구 효과</b><span>일시 효과는 주문 불균형이 만든 가격 압력이라 되돌아오고, 영구 효과는 유동성·투자자 인지의 변화라 남습니다. Madhavan 2003은 Russell 2000 편입에서 일시 +5.79%p·영구 +1.41%p로 나눴습니다.</span>
+<b>인덱스 효과</b><span>지수 편입·편출·비중 조정이 기업 가치와 무관하게 주가를 움직이는 현상입니다. 미국은 1990년대 7.4%에서 2010년대 1.0%로 줄었고(Greenwood·Sammon 2023), 예측 가능해질수록 작아집니다.</span>
+<b>발표일 / 정기변경일 / 실매매일</b><span>발표일은 정보가 공개된 날, 정기변경일은 지수가 새 비중으로 바뀌는 날, 실매매일은 ETF가 실제로 사고파는 날(정기변경일 직전 거래일 종가, 삼성증권 ETFun 6/10)입니다. 이번 이벤트는 발표 6/2(한국경제TV), 실매매 9/10<span class="est">E</span>, 정기변경 9/11<span class="est">E</span>입니다.</span>
+<b>종가 단일가</b><span>15:20~15:30 마감 동시호가에서 한 가격으로 체결되는 거래입니다. 패시브 ETF는 추적오차를 줄이려 여기서 집행하므로, 이 구간의 체결 대금이 리밸런싱 금액을 받아내는 두께입니다(파트 2).</span>
+</div>
+
+<h2>1. 6월 교본 — 삼성전기, 보도에서 집행까지 열흘의 순서</h2>
+<p>6월 삼성전기 사례는 이번 9월 이벤트와 구조가 같고 방향만 반대입니다. cap이 있는 ETF에서 한 종목의 비중이 cap을 크게 넘었고, 정기변경일에 그 초과분을 기계적으로 팔아야 했습니다. 한국경제TV가 6월 2일에 6월 1일 종가 기준 비중을 보도했는데 KODEX AI반도체TOP2플러스 39.69%, HANARO Fn K-반도체 35.15%, RISE 네트워크인프라 33.04%, ACE 코리아AI테크핵심산업 32.90%, IBK K-AI반도체핵심테크 32.72%, HANARO Fn K-메타버스MZ 32.48%였고, 앞의 두 ETF에서만 약 9,200억(4,900억+4,360억)이 6/15~18에 나온다는 계산이 같은 기사에 실렸습니다(research/B, 한국경제TV 2026-06-02). 이 숫자가 공개된 날 삼성전기는 -9.6%를 기록했고, 투자자별로는 기관 -2,961억 순매도, 외국인 +1,960억·개인 +993억 순매수였습니다. 기관 안에서는 투신 -1,608억·사모 -499억이었습니다. 실적이 아니라 수급 계산이 주가를 움직인 날이었고, 한국경제 6/3 기사도 급락 원인을 "cap 초과 ETF의 기계적 매도 우려"로 적었습니다.</p>
+<p>중요한 것은 그 다음 열흘입니다. 패킷의 투자자별 일별 수급을 6/1부터 실매매일 6/12까지 더하면 기관 -11,176억, 그중 투신 -10,463억·사모 -2,483억이고 외국인은 -2,242억, 개인은 +13,294억 순매수입니다. 뉴스1 6/16 보도의 "6/1~12 투신 1조 462억·연기금 4,749억 순매도"와 투신 숫자가 1억 차이로 맞습니다. 즉 ETF가 팔기로 예정된 9,200억보다 큰 돈이 집행 전 열흘 동안 투신과 연기금 계정에서 먼저 나갔습니다. 여기서 투신에는 ETF 운용사 계정도 들어 있으므로 일부는 패시브의 분할 집행일 수 있고, 일부는 액티브 펀드의 선매도일 수 있는데 패킷으로는 둘을 가르지 못합니다. 다만 6/12 하루의 투신 -5,970억·사모 -2,745억은 보도된 "KODEX·RISE 두 ETF 약 3,140억 매도"보다 크고, 그 앞 열흘의 투신 매도도 개별 집행일의 규모를 넘으므로, 열흘 전부터 이미 누군가가 패시브보다 앞서 팔았다는 서술은 실측과 맞습니다. 주가는 5/29 고점 212.7만원에서 6/12 171.4만원까지 -19.4%를 빠졌습니다.</p>
+<p>집행일과 그 뒤는 정반대로 움직였습니다. 실매매일 6/12에 기관은 -9,621억을 팔았지만 외국인이 +4,085억·개인이 +5,584억을 받았고 주가는 -5.0%로 마감했습니다. 이날의 종가 단일가 체결은 1,282억, 하루 거래대금의 3.6%에 그쳤습니다. 보도된 두 ETF 매도액 3,140억이 전부 종가에 나왔다면 종가 단일가는 이보다 두 배 넘게 커야 하므로, 실제 집행은 종가 한 번이 아니라 장중으로 나뉘었거나 며칠에 걸쳤다고 읽는 것이 실측에 가깝습니다. 그 다음 거래일 6/15에 주가는 +16.6%로 튀었고 외국인 +9,601억 순매수(뉴스1 보도 9,550억과 부합)·개인 -8,630억 순매도였습니다. 6/16 +2.5%, 6/17 종가 203.2만원으로 5/29 고점을 넘어섰고 6/19에는 227.0만원까지 갔습니다. 실매매일 종가에서 6/17까지 +18.6%, 6/19까지 +32.4%입니다. 6/12~17 나흘의 외국인 순매수 합은 +21,176억으로 집행 전 열흘 동안 기관이 판 -11,176억을 넘습니다.</p>
+<figure class=""><figcaption>장표 1. 삼성전기 5/20~7/10 — 종가(우축, 만원)와 기관·외국인 일별 순매수(좌축, 억)</figcaption><svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="66" y1="296.0" x2="810" y2="296.0" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="60" y="300.0" text-anchor="end" font-size="10.5" fill="#8a857c">-10,000</text>
+<line x1="66" y1="227.5" x2="810" y2="227.5" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="60" y="231.5" text-anchor="end" font-size="10.5" fill="#8a857c">-5,000</text>
+<line x1="66" y1="159.0" x2="810" y2="159.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="60" y="163.0" text-anchor="end" font-size="10.5" fill="#8a857c">0</text>
+<line x1="66" y1="90.5" x2="810" y2="90.5" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="60" y="94.5" text-anchor="end" font-size="10.5" fill="#8a857c">5,000</text>
+<line x1="66" y1="22.0" x2="810" y2="22.0" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="60" y="26.0" text-anchor="end" font-size="10.5" fill="#8a857c">10,000</text>
+<text x="816" y="300.0" font-size="10.5" fill="#a44a3f">100</text>
+<text x="816" y="254.3" font-size="10.5" fill="#a44a3f">125</text>
+<text x="816" y="208.7" font-size="10.5" fill="#a44a3f">150</text>
+<text x="816" y="163.0" font-size="10.5" fill="#a44a3f">175</text>
+<text x="816" y="117.3" font-size="10.5" fill="#a44a3f">200</text>
+<text x="816" y="71.7" font-size="10.5" fill="#a44a3f">225</text>
+<text x="816" y="26.0" font-size="10.5" fill="#a44a3f">250</text>
+<text x="60" y="14" text-anchor="end" font-size="10" fill="#8a857c">억</text>
+<text x="816" y="14" font-size="10" fill="#a44a3f">만원</text>
+<text x="76.3" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">5/20</text>
+<text x="138.3" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">5/26</text>
+<text x="200.3" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">5/29</text>
+<text x="262.3" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/4</text>
+<text x="324.3" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/9</text>
+<text x="386.3" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/12</text>
+<text x="448.3" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/17</text>
+<text x="510.3" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/22</text>
+<text x="572.3" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/25</text>
+<text x="634.3" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/30</text>
+<text x="696.3" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">7/3</text>
+<text x="758.3" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">7/8</text>
+<text x="799.7" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">7/10</text>
+<rect x="68.9" y="147.5" width="6.4" height="11.5" fill="#1f3a5f" opacity="0.85"/>
+<rect x="76.3" y="159.0" width="6.4" height="15.9" fill="#b07d2b" opacity="0.85"/>
+<rect x="89.6" y="153.9" width="6.4" height="5.1" fill="#1f3a5f" opacity="0.85"/>
+<rect x="97.0" y="153.1" width="6.4" height="5.9" fill="#b07d2b" opacity="0.85"/>
+<rect x="110.2" y="159.0" width="6.4" height="12.1" fill="#1f3a5f" opacity="0.85"/>
+<rect x="117.7" y="156.6" width="6.4" height="2.4" fill="#b07d2b" opacity="0.85"/>
+<rect x="130.9" y="159.0" width="6.4" height="14.9" fill="#1f3a5f" opacity="0.85"/>
+<rect x="138.3" y="159.0" width="6.4" height="28.8" fill="#b07d2b" opacity="0.85"/>
+<rect x="151.6" y="159.0" width="6.4" height="12.7" fill="#1f3a5f" opacity="0.85"/>
+<rect x="159.0" y="150.1" width="6.4" height="8.9" fill="#b07d2b" opacity="0.85"/>
+<rect x="172.2" y="153.5" width="6.4" height="5.5" fill="#1f3a5f" opacity="0.85"/>
+<rect x="179.7" y="126.1" width="6.4" height="32.9" fill="#b07d2b" opacity="0.85"/>
+<rect x="192.9" y="159.0" width="6.4" height="7.5" fill="#1f3a5f" opacity="0.85"/>
+<rect x="200.3" y="152.0" width="6.4" height="7.0" fill="#b07d2b" opacity="0.85"/>
+<rect x="213.6" y="159.0" width="6.4" height="6.3" fill="#1f3a5f" opacity="0.85"/>
+<rect x="221.0" y="159.0" width="6.4" height="23.3" fill="#b07d2b" opacity="0.85"/>
+<rect x="234.2" y="159.0" width="6.4" height="40.6" fill="#1f3a5f" opacity="0.85"/>
+<rect x="241.7" y="132.1" width="6.4" height="26.9" fill="#b07d2b" opacity="0.85"/>
+<rect x="254.9" y="150.6" width="6.4" height="8.4" fill="#1f3a5f" opacity="0.85"/>
+<rect x="262.3" y="159.0" width="6.4" height="55.8" fill="#b07d2b" opacity="0.85"/>
+<rect x="275.6" y="135.7" width="6.4" height="23.3" fill="#1f3a5f" opacity="0.85"/>
+<rect x="283.0" y="159.0" width="6.4" height="13.7" fill="#b07d2b" opacity="0.85"/>
+<rect x="296.2" y="148.6" width="6.4" height="10.4" fill="#1f3a5f" opacity="0.85"/>
+<rect x="303.7" y="159.0" width="6.4" height="15.5" fill="#b07d2b" opacity="0.85"/>
+<rect x="316.9" y="153.3" width="6.4" height="5.7" fill="#1f3a5f" opacity="0.85"/>
+<rect x="324.3" y="120.7" width="6.4" height="38.3" fill="#b07d2b" opacity="0.85"/>
+<rect x="337.6" y="159.0" width="6.4" height="11.9" fill="#1f3a5f" opacity="0.85"/>
+<rect x="345.0" y="159.0" width="6.4" height="34.4" fill="#b07d2b" opacity="0.85"/>
+<rect x="358.2" y="159.0" width="6.4" height="10.3" fill="#1f3a5f" opacity="0.85"/>
+<rect x="365.7" y="159.0" width="6.4" height="9.2" fill="#b07d2b" opacity="0.85"/>
+<rect x="378.9" y="159.0" width="6.4" height="131.8" fill="#1f3a5f" opacity="0.85"/>
+<rect x="386.3" y="103.0" width="6.4" height="56.0" fill="#b07d2b" opacity="0.85"/>
+<rect x="399.6" y="159.0" width="6.4" height="9.9" fill="#1f3a5f" opacity="0.85"/>
+<rect x="407.0" y="27.5" width="6.4" height="131.5" fill="#b07d2b" opacity="0.85"/>
+<rect x="420.2" y="159.0" width="6.4" height="28.3" fill="#1f3a5f" opacity="0.85"/>
+<rect x="427.7" y="79.3" width="6.4" height="79.7" fill="#b07d2b" opacity="0.85"/>
+<rect x="440.9" y="159.0" width="6.4" height="29.3" fill="#1f3a5f" opacity="0.85"/>
+<rect x="448.3" y="136.0" width="6.4" height="23.0" fill="#b07d2b" opacity="0.85"/>
+<rect x="461.6" y="145.5" width="6.4" height="13.5" fill="#1f3a5f" opacity="0.85"/>
+<rect x="469.0" y="101.0" width="6.4" height="58.0" fill="#b07d2b" opacity="0.85"/>
+<rect x="482.2" y="153.3" width="6.4" height="5.7" fill="#1f3a5f" opacity="0.85"/>
+<rect x="489.7" y="121.6" width="6.4" height="37.4" fill="#b07d2b" opacity="0.85"/>
+<rect x="502.9" y="143.6" width="6.4" height="15.4" fill="#1f3a5f" opacity="0.85"/>
+<rect x="510.3" y="159.0" width="6.4" height="34.9" fill="#b07d2b" opacity="0.85"/>
+<rect x="523.6" y="159.0" width="6.4" height="1.7" fill="#1f3a5f" opacity="0.85"/>
+<rect x="531.0" y="150.9" width="6.4" height="8.1" fill="#b07d2b" opacity="0.85"/>
+<rect x="544.2" y="145.6" width="6.4" height="13.4" fill="#1f3a5f" opacity="0.85"/>
+<rect x="551.7" y="159.0" width="6.4" height="14.0" fill="#b07d2b" opacity="0.85"/>
+<rect x="564.9" y="159.0" width="6.4" height="0.5" fill="#1f3a5f" opacity="0.85"/>
+<rect x="572.3" y="159.0" width="6.4" height="16.4" fill="#b07d2b" opacity="0.85"/>
+<rect x="585.6" y="143.3" width="6.4" height="15.7" fill="#1f3a5f" opacity="0.85"/>
+<rect x="593.0" y="142.5" width="6.4" height="16.5" fill="#b07d2b" opacity="0.85"/>
+<rect x="606.2" y="153.1" width="6.4" height="5.9" fill="#1f3a5f" opacity="0.85"/>
+<rect x="613.7" y="144.8" width="6.4" height="14.2" fill="#b07d2b" opacity="0.85"/>
+<rect x="626.9" y="130.1" width="6.4" height="28.9" fill="#1f3a5f" opacity="0.85"/>
+<rect x="634.3" y="100.5" width="6.4" height="58.5" fill="#b07d2b" opacity="0.85"/>
+<rect x="647.6" y="153.1" width="6.4" height="5.9" fill="#1f3a5f" opacity="0.85"/>
+<rect x="655.0" y="143.4" width="6.4" height="15.6" fill="#b07d2b" opacity="0.85"/>
+<rect x="668.2" y="159.0" width="6.4" height="2.2" fill="#1f3a5f" opacity="0.85"/>
+<rect x="675.7" y="159.0" width="6.4" height="44.9" fill="#b07d2b" opacity="0.85"/>
+<rect x="688.9" y="159.0" width="6.4" height="13.4" fill="#1f3a5f" opacity="0.85"/>
+<rect x="696.3" y="141.4" width="6.4" height="17.6" fill="#b07d2b" opacity="0.85"/>
+<rect x="709.6" y="159.0" width="6.4" height="26.2" fill="#1f3a5f" opacity="0.85"/>
+<rect x="717.0" y="159.0" width="6.4" height="23.0" fill="#b07d2b" opacity="0.85"/>
+<rect x="730.2" y="159.0" width="6.4" height="32.0" fill="#1f3a5f" opacity="0.85"/>
+<rect x="737.7" y="143.9" width="6.4" height="15.1" fill="#b07d2b" opacity="0.85"/>
+<rect x="750.9" y="159.0" width="6.4" height="9.4" fill="#1f3a5f" opacity="0.85"/>
+<rect x="758.3" y="137.4" width="6.4" height="21.6" fill="#b07d2b" opacity="0.85"/>
+<rect x="771.6" y="159.0" width="6.4" height="20.2" fill="#1f3a5f" opacity="0.85"/>
+<rect x="779.0" y="132.9" width="6.4" height="26.1" fill="#b07d2b" opacity="0.85"/>
+<rect x="792.2" y="159.0" width="6.4" height="23.6" fill="#1f3a5f" opacity="0.85"/>
+<rect x="799.7" y="138.4" width="6.4" height="20.6" fill="#b07d2b" opacity="0.85"/>
+<polyline points="76.3,284.9 97.0,258.7 117.7,233.9 138.3,191.5 159.0,180.9 179.7,140.9 200.3,90.1 221.0,112.4 241.7,147.5 262.3,165.2 283.0,157.7 303.7,174.7 324.3,118.8 345.0,149.0 365.7,149.0 386.3,165.6 407.0,113.5 427.7,104.6 448.3,107.5 469.0,76.8 489.7,64.0 510.3,71.7 531.0,115.2 551.7,119.9 572.3,113.9 593.0,114.6 613.7,106.4 634.3,79.7 655.0,75.9 675.7,126.9 696.3,115.3 717.0,144.8 737.7,177.6 758.3,208.5 779.0,205.9 799.7,189.3" fill="none" stroke="#a44a3f" stroke-width="2.2"/>
+<circle cx="76.3" cy="284.9" r="2.2" fill="#a44a3f"/>
+<circle cx="97.0" cy="258.7" r="2.2" fill="#a44a3f"/>
+<circle cx="117.7" cy="233.9" r="2.2" fill="#a44a3f"/>
+<circle cx="138.3" cy="191.5" r="2.2" fill="#a44a3f"/>
+<circle cx="159.0" cy="180.9" r="2.2" fill="#a44a3f"/>
+<circle cx="179.7" cy="140.9" r="2.2" fill="#a44a3f"/>
+<circle cx="200.3" cy="90.1" r="2.2" fill="#a44a3f"/>
+<circle cx="221.0" cy="112.4" r="2.2" fill="#a44a3f"/>
+<circle cx="241.7" cy="147.5" r="2.2" fill="#a44a3f"/>
+<circle cx="262.3" cy="165.2" r="2.2" fill="#a44a3f"/>
+<circle cx="283.0" cy="157.7" r="2.2" fill="#a44a3f"/>
+<circle cx="303.7" cy="174.7" r="2.2" fill="#a44a3f"/>
+<circle cx="324.3" cy="118.8" r="2.2" fill="#a44a3f"/>
+<circle cx="345.0" cy="149.0" r="2.2" fill="#a44a3f"/>
+<circle cx="365.7" cy="149.0" r="2.2" fill="#a44a3f"/>
+<circle cx="386.3" cy="165.6" r="2.2" fill="#a44a3f"/>
+<circle cx="407.0" cy="113.5" r="2.2" fill="#a44a3f"/>
+<circle cx="427.7" cy="104.6" r="2.2" fill="#a44a3f"/>
+<circle cx="448.3" cy="107.5" r="2.2" fill="#a44a3f"/>
+<circle cx="469.0" cy="76.8" r="2.2" fill="#a44a3f"/>
+<circle cx="489.7" cy="64.0" r="2.2" fill="#a44a3f"/>
+<circle cx="510.3" cy="71.7" r="2.2" fill="#a44a3f"/>
+<circle cx="531.0" cy="115.2" r="2.2" fill="#a44a3f"/>
+<circle cx="551.7" cy="119.9" r="2.2" fill="#a44a3f"/>
+<circle cx="572.3" cy="113.9" r="2.2" fill="#a44a3f"/>
+<circle cx="593.0" cy="114.6" r="2.2" fill="#a44a3f"/>
+<circle cx="613.7" cy="106.4" r="2.2" fill="#a44a3f"/>
+<circle cx="634.3" cy="79.7" r="2.2" fill="#a44a3f"/>
+<circle cx="655.0" cy="75.9" r="2.2" fill="#a44a3f"/>
+<circle cx="675.7" cy="126.9" r="2.2" fill="#a44a3f"/>
+<circle cx="696.3" cy="115.3" r="2.2" fill="#a44a3f"/>
+<circle cx="717.0" cy="144.8" r="2.2" fill="#a44a3f"/>
+<circle cx="737.7" cy="177.6" r="2.2" fill="#a44a3f"/>
+<circle cx="758.3" cy="208.5" r="2.2" fill="#a44a3f"/>
+<circle cx="779.0" cy="205.9" r="2.2" fill="#a44a3f"/>
+<circle cx="799.7" cy="189.3" r="2.2" fill="#a44a3f"/>
+<text x="200.3" y="78.1" text-anchor="middle" font-size="10" fill="#a44a3f">5/29 고점 212.7만</text>
+<text x="241.7" y="169.5" text-anchor="start" font-size="10" fill="#a44a3f">6/2 보도일 -9.6%</text>
+<text x="386.3" y="191.6" text-anchor="middle" font-size="10" fill="#a44a3f">6/12 실매매 -5.0%</text>
+<text x="407.0" y="99.5" text-anchor="start" font-size="10" fill="#a44a3f">6/15 +16.6%</text>
+<text x="489.7" y="52.0" text-anchor="middle" font-size="10" fill="#a44a3f">6/19 227.0만</text>
+<rect x="66" y="323" width="10" height="10" fill="#1f3a5f"/>
+<text x="80" y="332" font-size="10.5" fill="#8a857c">기관 순매수(억)</text>
+<rect x="166.8" y="323" width="10" height="10" fill="#b07d2b"/>
+<text x="180.8" y="332" font-size="10.5" fill="#8a857c">외국인 순매수(억)</text>
+<rect x="274.8" y="323" width="10" height="10" fill="#a44a3f"/>
+<text x="288.8" y="332" font-size="10.5" fill="#8a857c">종가(만원)</text>
+</svg><div class="src">packet.json 교본_6월 009150(키움 일봉·ka10059). 실매매일 6/12(KODEX AI·RISE), 6/16E(HANARO). 사건 라벨은 research/B 보도 일자.</div></figure>
+<p class="reading"><b>관찰.</b> 보도일 6/2(-9.6%)부터 실매매일 6/12까지 기관 막대가 아래로 쏠리고 주가는 -19.4%(5/29 고점 대비) 내려갔으며, 6/12를 저점으로 6/15 +16.6%·6/17 고점 경신·6/19 227.0만원까지 외국인 막대가 위로 쏠렸습니다. <b>원인.</b> 9,200억이라는 숫자가 공개된 순간부터 투신·연기금이 패시브보다 먼저 팔았고, 집행일에는 팔 사람이 이미 다 판 뒤라 외국인의 매수가 가격을 밀어 올렸습니다. 6월 물량은 실매매일 하루의 종가 단일가로 흡수된 것이 아니라 열흘에 걸쳐 시장에 녹았습니다. <b>함의.</b> cap 이벤트의 변곡은 발표일과 실매매일 두 곳이고, 실매매일은 '물량이 나오는 날'이 아니라 '선반영이 끝나는 날'로 작동했습니다. 9월에 이 순서가 반복된다면 소부장의 매수 압력은 9/10 종가 이전에 나타나야 하고, 9/10 종가는 되돌림의 시작점이 됩니다. 다만 6/17 이후 7/10까지 {p1(kret('009150','20260617','20260710'))}%를 다시 빠졌으므로 되돌림 뒤에도 방향이 유지된 것은 아닙니다.</p>
+<table class=""><tr><th>일자</th><th>사건</th><th>종가(만원)</th><th>등락%</th><th>외국인</th><th>기관</th><th>투신</th><th>사모</th><th>개인</th><th>종가 단일가 억(비중)</th></tr><tr><td>5/29</td><td>5월 고점(연초 이후 +571%, 한국경제 6/3)</td><td>212.7</td><td>+15.0</td><td>+512</td><td>-547</td><td>-2,494</td><td>-290</td><td>-103</td><td>-</td></tr><tr><td>6/1</td><td>한국경제TV 비중 산정 기준일(KODEX AI 39.69%·HANARO 35.15%)</td><td>200.5</td><td>-5.7</td><td>-1,700</td><td>-461</td><td>-1,425</td><td>-84</td><td>+2,201</td><td>815 (3.3%)</td></tr><tr><td>6/2</td><td>급락 보도일 — cap 초과·기계적 매도 경고</td><td>181.3</td><td>-9.6</td><td>+1,960</td><td>-2,961</td><td>-1,608</td><td>-499</td><td>+993</td><td>1,167 (3.4%)</td></tr><tr><td>6/4</td><td>보도 다음 날</td><td>171.6</td><td>-5.4</td><td>-4,071</td><td>+613</td><td>-34</td><td>-348</td><td>+3,424</td><td>906 (3.6%)</td></tr><tr><td>6/5</td><td>1Q 실적 재확인 보도(인사이트)</td><td>175.7</td><td>+2.4</td><td>-999</td><td>+1,704</td><td>-178</td><td>+593</td><td>-741</td><td>492 (1.8%)</td></tr><tr><td>6/8</td><td>선매도 구간 저점 1차</td><td>166.4</td><td>-5.3</td><td>-1,131</td><td>+756</td><td>-568</td><td>+377</td><td>+261</td><td>940 (4.4%)</td></tr><tr><td>6/9</td><td>삼성증권 ETFun 표 기준일(6/9 종가), +18.4%</td><td>197.0</td><td>+18.4</td><td>+2,795</td><td>+414</td><td>-600</td><td>+399</td><td>-3,221</td><td>1,131 (3.7%)</td></tr><tr><td>6/10</td><td>삼성증권 ETFun 발간·후속 보도(7개 상품 초과)</td><td>180.5</td><td>-8.4</td><td>-2,509</td><td>-871</td><td>-307</td><td>+1</td><td>+3,492</td><td>759 (3.2%)</td></tr><tr><td>6/11</td><td>9월물 아닌 6월물 선물옵션 만기·코스피200 정기변경 실매매일</td><td>180.5</td><td>+0.0</td><td>-672</td><td>-749</td><td>+227</td><td>-177</td><td>+1,301</td><td>2,156 (10.7%)</td></tr><tr><td>6/12</td><td>KODEX AI·RISE 실매매(보도 3,140억)·코스피200 정기변경 D+1</td><td>171.4</td><td>-5.0</td><td>+4,085</td><td>-9,621</td><td>-5,970</td><td>-2,745</td><td>+5,584</td><td>1,282 (3.6%)</td></tr><tr><td>6/15</td><td>KODEX AI 정기변경일(D+2)·비중 19.69% 확인</td><td>199.9</td><td>+16.6</td><td>+9,601</td><td>-721</td><td>+213</td><td>-1,732</td><td>-8,630</td><td>1,143 (4.0%)</td></tr><tr><td>6/16</td><td>HANARO 실매매 추정일<span class="est">E</span></td><td>204.8</td><td>+2.5</td><td>+5,814</td><td>-2,069</td><td>-1,491</td><td>+92</td><td>-3,731</td><td>687 (3.1%)</td></tr><tr><td>6/17</td><td>HANARO 정기변경일(D+4)·종가 203.2만원 고점 경신</td><td>203.2</td><td>-0.8</td><td>+1,676</td><td>-2,138</td><td>-213</td><td>-1,542</td><td>+507</td><td>527 (4.4%)</td></tr><tr><td>6/18</td><td>파이낸셜뉴스 외국인 6/1~16 1조 3,170억 순매수 보도</td><td>220.0</td><td>+8.3</td><td>+4,233</td><td>+988</td><td>+563</td><td>+245</td><td>-5,231</td><td>1,308 (3.7%)</td></tr><tr><td>6/19</td><td>FTSE Korea 정기변경·6월 고점</td><td>227.0</td><td>+3.2</td><td>+2,733</td><td>+419</td><td>+431</td><td>-335</td><td>-3,023</td><td>1,992 (5.1%)</td></tr></table>
+<p>표의 종가 단일가 열이 6월의 또 하나의 실측입니다. 6/11은 코스피200 정기변경의 실매매일(6월물 만기)이어서 삼성전기 종가 단일가가 2,156억(10.7%)으로 커졌지만, 정작 cap 리밸런싱 실매매일인 6/12에는 1,282억(3.6%)이었고 6/15 1,143억·6/17 527억이었습니다. 보도된 집행 금액(6/12 3,140억, 6/17 HANARO 약 4,364억)이 종가 단일가 체결액을 몇 배씩 넘는다는 것은, 테마 ETF의 cap 조정이 코스피200 정기변경처럼 종가 한 번에 몰리지 않았거나 상대 매수가 그만큼 두꺼웠거나 둘 중 하나이고, 어느 쪽이든 "집행일 종가 급락"은 6월에 일어나지 않았습니다. 파트 2가 재는 9/10 종가 두께는 이 점을 함께 봐야 합니다. KRX 반도체를 완전복제하는 KODEX·TIGER는 코스피200과 같은 D+1 구조라 종가 집행이 기본이지만, 6월 테마 ETF의 실측은 운용사가 종가 하나에 전부를 걸지 않을 수도 있음을 보여 줍니다.</p>
+
+<h2>2. 같은 6월의 SK하이닉스·삼성전자·현대차 — 방향이 같은 세 사례</h2>
+<p>삼성전기만 cap을 넘긴 것이 아니었습니다. 삼성증권 ETFun 6/10 표(6/9 종가)에 따르면 SK하이닉스는 KODEX Top5PlusTR 41%(cap 25%)·ACE AI반도체TOP3+ 36%·코리아밸류업 3종 30%(cap 15%)·HANARO Fn K-반도체 26%·TIGER 200 IT 24%(cap 20%)·RISE 네트워크인프라 22%에서 초과였고, 삼성전자는 Top5PlusTR 31%·밸류업 27%, 현대차는 TIGER 현대차그룹플러스 35%였습니다. 패킷의 이벤트 표는 이 가운데 규모가 큰 것을 정리한 것으로 하이닉스 약 6,000억 넘게(Top5PlusTR 약 3,070억·밸류업 약 1,650억·ACE 약 1,410억), 삼성전자 약 1,300억 넘게, 현대차 약 940억입니다. research/B의 역산은 하이닉스 전체를 약 1조로 보므로 6,000억은 일부 ETF만 더한 값입니다.</p>
+<table class=""><tr><th>종목</th><th>ETF</th><th>cap</th><th>비중(6/9)</th><th>초과</th><th>추정 매도(보도·역산)</th><th>정기변경일</th></tr><tr><td>삼성전기</td><td>KODEX AI반도체TOP2플러스</td><td>25%</td><td>39.7%</td><td>+14.7%p</td><td>~4,900억</td><td>2026-06-15</td></tr><tr><td>삼성전기</td><td>HANARO Fn K-반도체</td><td>25%</td><td>35.2%</td><td>+10.2%p</td><td>~4,364억</td><td>2026-06-17</td></tr><tr><td>삼성전기</td><td>RISE 네트워크인프라</td><td>20%</td><td>34%</td><td>+14%p</td><td>소형</td><td>2026-06-25</td></tr><tr><td>SK하이닉스</td><td>KODEX Top5PlusTR</td><td>25%</td><td>41%</td><td>+16%p</td><td>~3,070억</td><td>2026-06-15</td></tr><tr><td>SK하이닉스</td><td>RISE·KODEX 코리아밸류업</td><td>15%</td><td>30%</td><td>+15%p</td><td>~1,650억</td><td>2026-06-12</td></tr><tr><td>SK하이닉스</td><td>ACE AI반도체TOP3+</td><td>25%</td><td>36%</td><td>+11%p</td><td>~1,410억</td><td>2026-06-17</td></tr><tr><td>삼성전자</td><td>RISE·KODEX 코리아밸류업</td><td>15%</td><td>27%</td><td>+12%p</td><td>~1,320억</td><td>2026-06-12</td></tr><tr><td>현대차</td><td>TIGER 현대차그룹플러스</td><td>25%</td><td>35.1%</td><td>+10.1%p</td><td>~940억</td><td>2026-06-12</td></tr></table>
+<p>하이닉스의 6월은 삼성전기보다 잡음이 많습니다. 6/1 236.3만원에서 6/8 191.1만원까지 -19.1%를 빠졌는데 이 구간의 외국인 순매도는 -50,259억으로 cap 물량 1조와 자릿수가 다르고, 같은 기간 국민연금의 6월 누적 2조 3,053억 순매도(서울경제)와 FTSE Korea 6/19 정기변경의 하이닉스 매도 수요 1조 237억 추정(유안타)까지 겹쳐 있어서 cap 조정만 따로 떼어 읽을 수 없습니다. 그래도 순서는 삼성전기와 같습니다. 6/1~6/12 외국인 -51,475억·투신 -9,472억 순매도, 개인 +45,652억 순매수였고, 6월물 만기 6/11에는 종가 단일가 비중이 21.8%(28,768억)까지 올라가 기관 -10,717억(투신 -4,315억)이 나갔으며, 6/12에도 종가 비중 12.9%에 투신 -14,292억이 나갔습니다. 그리고 6/12 종가 215.0만원에서 6/17 252.1만원까지 +17.3%, 6/22 291.9만원까지 +35.8%를 올랐습니다. 6/12~17 나흘 동안 외국인 +27,464억·기관 +12,428억 순매수였습니다.</p>
+<figure class=""><figcaption>장표 2. SK하이닉스 2026년 6월 — 종가(우축, 만원)와 기관·외국인 일별 순매수(좌축, 억)</figcaption><svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="66" y1="296.0" x2="810" y2="296.0" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="60" y="300.0" text-anchor="end" font-size="10.5" fill="#8a857c">-40,000</text>
+<line x1="66" y1="227.5" x2="810" y2="227.5" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="60" y="231.5" text-anchor="end" font-size="10.5" fill="#8a857c">-20,000</text>
+<line x1="66" y1="159.0" x2="810" y2="159.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="60" y="163.0" text-anchor="end" font-size="10.5" fill="#8a857c">0</text>
+<line x1="66" y1="90.5" x2="810" y2="90.5" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="60" y="94.5" text-anchor="end" font-size="10.5" fill="#8a857c">20,000</text>
+<line x1="66" y1="22.0" x2="810" y2="22.0" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="60" y="26.0" text-anchor="end" font-size="10.5" fill="#8a857c">40,000</text>
+<text x="816" y="300.0" font-size="10.5" fill="#a44a3f">180</text>
+<text x="816" y="254.3" font-size="10.5" fill="#a44a3f">200</text>
+<text x="816" y="208.7" font-size="10.5" fill="#a44a3f">220</text>
+<text x="816" y="163.0" font-size="10.5" fill="#a44a3f">240</text>
+<text x="816" y="117.3" font-size="10.5" fill="#a44a3f">260</text>
+<text x="816" y="71.7" font-size="10.5" fill="#a44a3f">280</text>
+<text x="816" y="26.0" font-size="10.5" fill="#a44a3f">300</text>
+<text x="60" y="14" text-anchor="end" font-size="10" fill="#8a857c">억</text>
+<text x="816" y="14" font-size="10" fill="#a44a3f">만원</text>
+<text x="83.7" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/1</text>
+<text x="119.1" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/2</text>
+<text x="154.6" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/4</text>
+<text x="190.0" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/5</text>
+<text x="225.4" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/8</text>
+<text x="260.9" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/9</text>
+<text x="296.3" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/10</text>
+<text x="331.7" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/11</text>
+<text x="367.1" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/12</text>
+<text x="402.6" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/15</text>
+<text x="438.0" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/16</text>
+<text x="473.4" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/17</text>
+<text x="508.9" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/18</text>
+<text x="544.3" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/19</text>
+<text x="579.7" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/22</text>
+<text x="615.1" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/23</text>
+<text x="650.6" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/24</text>
+<text x="686.0" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/25</text>
+<text x="721.4" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/26</text>
+<text x="756.9" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/29</text>
+<text x="792.3" y="312" text-anchor="middle" font-size="9.5" fill="#8a857c">6/30</text>
+<rect x="71.0" y="89.5" width="11.8" height="69.5" fill="#1f3a5f" opacity="0.85"/>
+<rect x="83.7" y="159.0" width="11.8" height="58.7" fill="#b07d2b" opacity="0.85"/>
+<rect x="106.4" y="152.1" width="11.8" height="6.9" fill="#1f3a5f" opacity="0.85"/>
+<rect x="119.1" y="159.0" width="11.8" height="32.5" fill="#b07d2b" opacity="0.85"/>
+<rect x="141.8" y="150.0" width="11.8" height="9.0" fill="#1f3a5f" opacity="0.85"/>
+<rect x="154.6" y="159.0" width="11.8" height="25.4" fill="#b07d2b" opacity="0.85"/>
+<rect x="177.2" y="159.0" width="11.8" height="29.1" fill="#1f3a5f" opacity="0.85"/>
+<rect x="190.0" y="159.0" width="11.8" height="44.7" fill="#b07d2b" opacity="0.85"/>
+<rect x="212.7" y="159.0" width="11.8" height="5.3" fill="#1f3a5f" opacity="0.85"/>
+<rect x="225.4" y="159.0" width="11.8" height="10.7" fill="#b07d2b" opacity="0.85"/>
+<rect x="248.1" y="95.9" width="11.8" height="63.1" fill="#1f3a5f" opacity="0.85"/>
+<rect x="260.9" y="159.0" width="11.8" height="46.6" fill="#b07d2b" opacity="0.85"/>
+<rect x="283.5" y="159.0" width="11.8" height="48.8" fill="#1f3a5f" opacity="0.85"/>
+<rect x="296.3" y="159.0" width="11.8" height="20.6" fill="#b07d2b" opacity="0.85"/>
+<rect x="319.0" y="159.0" width="11.8" height="36.7" fill="#1f3a5f" opacity="0.85"/>
+<rect x="331.7" y="140.1" width="11.8" height="18.9" fill="#b07d2b" opacity="0.85"/>
+<rect x="354.4" y="159.0" width="11.8" height="18.9" fill="#1f3a5f" opacity="0.85"/>
+<rect x="367.1" y="114.9" width="11.8" height="44.1" fill="#b07d2b" opacity="0.85"/>
+<rect x="389.8" y="145.9" width="11.8" height="13.1" fill="#1f3a5f" opacity="0.85"/>
+<rect x="402.6" y="144.4" width="11.8" height="14.6" fill="#b07d2b" opacity="0.85"/>
+<rect x="425.2" y="139.7" width="11.8" height="19.3" fill="#1f3a5f" opacity="0.85"/>
+<rect x="438.0" y="130.1" width="11.8" height="28.9" fill="#b07d2b" opacity="0.85"/>
+<rect x="460.7" y="129.9" width="11.8" height="29.1" fill="#1f3a5f" opacity="0.85"/>
+<rect x="473.4" y="152.6" width="11.8" height="6.4" fill="#b07d2b" opacity="0.85"/>
+<rect x="496.1" y="155.8" width="11.8" height="3.2" fill="#1f3a5f" opacity="0.85"/>
+<rect x="508.9" y="156.1" width="11.8" height="2.9" fill="#b07d2b" opacity="0.85"/>
+<rect x="531.5" y="134.3" width="11.8" height="24.7" fill="#1f3a5f" opacity="0.85"/>
+<rect x="544.3" y="159.0" width="11.8" height="29.8" fill="#b07d2b" opacity="0.85"/>
+<rect x="567.0" y="117.4" width="11.8" height="41.6" fill="#1f3a5f" opacity="0.85"/>
+<rect x="579.7" y="159.0" width="11.8" height="49.1" fill="#b07d2b" opacity="0.85"/>
+<rect x="602.4" y="159.0" width="11.8" height="83.7" fill="#1f3a5f" opacity="0.85"/>
+<rect x="615.1" y="159.0" width="11.8" height="90.8" fill="#b07d2b" opacity="0.85"/>
+<rect x="637.8" y="128.2" width="11.8" height="30.8" fill="#1f3a5f" opacity="0.85"/>
+<rect x="650.6" y="159.0" width="11.8" height="124.6" fill="#b07d2b" opacity="0.85"/>
+<rect x="673.2" y="73.8" width="11.8" height="85.2" fill="#1f3a5f" opacity="0.85"/>
+<rect x="686.0" y="159.0" width="11.8" height="10.1" fill="#b07d2b" opacity="0.85"/>
+<rect x="708.7" y="159.0" width="11.8" height="97.1" fill="#1f3a5f" opacity="0.85"/>
+<rect x="721.4" y="159.0" width="11.8" height="80.2" fill="#b07d2b" opacity="0.85"/>
+<rect x="744.1" y="134.1" width="11.8" height="24.9" fill="#1f3a5f" opacity="0.85"/>
+<rect x="756.9" y="159.0" width="11.8" height="113.0" fill="#b07d2b" opacity="0.85"/>
+<rect x="779.5" y="133.0" width="11.8" height="26.0" fill="#1f3a5f" opacity="0.85"/>
+<rect x="792.3" y="159.0" width="11.8" height="54.1" fill="#b07d2b" opacity="0.85"/>
+<polyline points="83.7,167.4 119.1,168.1 154.6,182.3 190.0,234.3 225.4,270.7 260.9,201.2 296.3,239.4 331.7,227.3 367.1,216.1 402.6,184.6 438.0,163.1 473.4,131.4 508.9,93.9 544.3,75.9 579.7,40.5 615.1,123.6 650.6,117.9 686.0,41.0 721.4,96.7 756.9,106.9 792.3,101.9" fill="none" stroke="#a44a3f" stroke-width="2.2"/>
+<circle cx="83.7" cy="167.4" r="2.2" fill="#a44a3f"/>
+<circle cx="119.1" cy="168.1" r="2.2" fill="#a44a3f"/>
+<circle cx="154.6" cy="182.3" r="2.2" fill="#a44a3f"/>
+<circle cx="190.0" cy="234.3" r="2.2" fill="#a44a3f"/>
+<circle cx="225.4" cy="270.7" r="2.2" fill="#a44a3f"/>
+<circle cx="260.9" cy="201.2" r="2.2" fill="#a44a3f"/>
+<circle cx="296.3" cy="239.4" r="2.2" fill="#a44a3f"/>
+<circle cx="331.7" cy="227.3" r="2.2" fill="#a44a3f"/>
+<circle cx="367.1" cy="216.1" r="2.2" fill="#a44a3f"/>
+<circle cx="402.6" cy="184.6" r="2.2" fill="#a44a3f"/>
+<circle cx="438.0" cy="163.1" r="2.2" fill="#a44a3f"/>
+<circle cx="473.4" cy="131.4" r="2.2" fill="#a44a3f"/>
+<circle cx="508.9" cy="93.9" r="2.2" fill="#a44a3f"/>
+<circle cx="544.3" cy="75.9" r="2.2" fill="#a44a3f"/>
+<circle cx="579.7" cy="40.5" r="2.2" fill="#a44a3f"/>
+<circle cx="615.1" cy="123.6" r="2.2" fill="#a44a3f"/>
+<circle cx="650.6" cy="117.9" r="2.2" fill="#a44a3f"/>
+<circle cx="686.0" cy="41.0" r="2.2" fill="#a44a3f"/>
+<circle cx="721.4" cy="96.7" r="2.2" fill="#a44a3f"/>
+<circle cx="756.9" cy="106.9" r="2.2" fill="#a44a3f"/>
+<circle cx="792.3" cy="101.9" r="2.2" fill="#a44a3f"/>
+<text x="331.7" y="251.3" text-anchor="middle" font-size="10" fill="#a44a3f">6/11 만기 종가비중 21.8%</text>
+<text x="225.4" y="290.7" text-anchor="middle" font-size="10" fill="#a44a3f">6/8 191.1만</text>
+<text x="473.4" y="117.4" text-anchor="middle" font-size="10" fill="#a44a3f">6/17 +17.3% (6/12 대비)</text>
+<text x="579.7" y="28.5" text-anchor="middle" font-size="10" fill="#a44a3f">6/22 고점 291.9만</text>
+<rect x="66" y="323" width="10" height="10" fill="#1f3a5f"/>
+<text x="80" y="332" font-size="10.5" fill="#8a857c">기관 순매수(억)</text>
+<rect x="166.8" y="323" width="10" height="10" fill="#b07d2b"/>
+<text x="180.8" y="332" font-size="10.5" fill="#8a857c">외국인 순매수(억)</text>
+<rect x="274.8" y="323" width="10" height="10" fill="#a44a3f"/>
+<text x="288.8" y="332" font-size="10.5" fill="#8a857c">종가(만원)</text>
+</svg><div class="src">packet.json 교본_6월 000660. 6/11 6월물 만기(코스피200 정기변경·밸류업 cap 실매매), 6/12 Top5PlusTR 실매매E, 6/16 ACE·HANARO 실매매E.</div></figure>
+<p class="reading"><b>관찰.</b> 6/11 만기일에 종가 단일가 비중 21.8%로 기관 -10,717억이 나갔고 6/12에도 투신 -14,292억이 나갔지만, 주가는 6/8 저점 191.1만원을 집행일 전에 찍고 집행 주간에 +17.3%를 올랐습니다. <b>원인.</b> 외국인이 6월 첫 두 주에 {sg(HYX_pre['외'])}억을 판 것이 cap 물량(약 1조)을 몇 배 넘는 선매도였고, 집행일 종가의 패시브 매도는 개인과 외국인의 되돌림 매수에 흡수됐습니다. 다만 국민연금 6월 순매도·FTSE 6/19가 겹쳐 있어 cap 효과만의 크기는 분리되지 않습니다. <b>함의.</b> 하이닉스에서도 실매매일은 저점 근처였고 급락일이 아니었습니다. 9월 하이닉스 매도 1조 1,293억E는 ADTV의 0.18일이라 파트 1이 소음으로 분류했는데, 6월 실측도 그 분류를 지지합니다. 대형주 쪽에서 리밸런싱을 매매 근거로 삼을 자리는 6월에도 없었습니다.</p>
+<p>삼성전자는 6/11 만기일 종가 단일가 비중이 24.5%(21,872억)로 올라가고 기관 -16,244억(투신 -6,627억)이 나갔지만 다음 날 6/12에 +7.9%를 기록했고, 6/11에서 6/17까지 +15.9%를 올랐습니다. 이날은 코스피가 +8.04%로 오른 날이어서(research/B) 지수 효과와 되돌림이 구분되지 않지만, 방향은 같습니다. 현대차는 세 사례 가운데 교훈이 다릅니다. 6/1 75.0만원에서 6/11 59.7만원까지 -20.4%를 빠지며 외국인 -11,523억·기관 -2,578억이 나갔고, 6/15에 +6.6%로 되돌렸지만 그 되돌림은 이틀을 못 갔습니다. 6/17 61.8만원, 6/26 48.0만원, 7/10 45.8만원으로 실매매일 대비 -24.6%입니다. cap 물량이 940억으로 작았고 그 뒤 주가를 결정한 것은 리밸런싱이 아니라 다른 요인이었습니다. 되돌림은 집행일 직후 며칠의 현상이지 추세가 아니라는 것을 현대차가 보여 줍니다.</p>
+
+<h2>3. 교본의 교훈과 9월 — 같은 점 세 가지, 다른 점 세 가지</h2>
+<p>6월 네 사례에서 공통으로 남는 순서는 이렇습니다. 숫자가 공개되면 그날 주가가 먼저 반응하고(삼성전기 -9.6%), 공개일부터 실매매일까지 열흘 안팎에 액티브 기관과 외국인이 패시브보다 먼저 같은 방향으로 움직이며, 실매매일 종가에는 패시브가 남은 물량을 처리하지만 이미 상대편이 준비돼 있어 가격은 반대로 움직이고, 그 되돌림은 3~5거래일 안에 사전 구간의 상당 부분을 지운 뒤 다시 종목 고유의 흐름으로 돌아갑니다. 삼성전기는 실매매일 종가 대비 6/17까지 +18.6%를 되돌렸고 7/10까지는 다시 -22.0%를 내줬습니다. 하이닉스는 +17.3% 되돌린 뒤 6/22 고점에서 7/10까지 -25.3%였습니다. 현대차는 되돌림 자체가 이틀이었습니다.</p>
+<p>9월과 같은 점은 셋입니다. 첫째, 정보가 공개돼 있습니다. 한국경제TV 6/2 기사가 KODEX·TIGER 반도체의 하이닉스 비중 39.21%와 9월 정기변경을 이미 적었고, 삼성증권 ETFun 6/10 표가 "KODEX 반도체 9월 D+1·cap 20%"를 명시했습니다. 둘째, 기계적 집행입니다. 완전복제 ETF는 정기변경일 직전 거래일 종가에 집행하는 것이 원칙이고, 이 원칙은 6월과 9월이 같습니다. 셋째, 종가 단일가가 통로입니다. 6/11 만기일의 하이닉스 종가 비중 21.8%·삼성전자 24.5%는 패시브가 종가에 몰릴 때 대형주에서도 두께가 3배로 부푼다는 실측이고, 이번에는 그 통로를 소부장 33종이 지나야 합니다.</p>
+<p>다른 점도 셋입니다. 첫째, 방향입니다. 6월은 한 종목을 파는 이벤트였고 선매도가 앞섰습니다. 9월은 두 종목을 팔고 33종을 사는 이벤트라 소부장 쪽에서는 선매수가 앞서야 교본과 같은 순서가 됩니다. 매도 쪽의 선매도는 공매도·차익실현으로 쉽게 이뤄지지만 매수 쪽의 선취매는 자금이 필요하고 33종에 분산돼야 하므로, 6월만큼 뚜렷하게 나타나지 않을 수 있습니다. 둘째, 분산입니다. 6월 삼성전기는 한 종목에 9,200억이었고 9월은 33종에 1조 3,379억<span class="est">E</span>이라 종목당 52억에서 2,034억입니다. 유통시총 대비로는 33종이 거의 같은 2.2% 안팎이어서(파트 1) 종목 간 차이는 회전율과 선반영에서만 납니다. 셋째, 시간입니다. 6월은 발표에서 실매매까지 8거래일이었지만 9월은 6/2 보도부터 9/10<span class="est">E</span>까지 석 달이 넘습니다. 실증 문헌의 "발표 후~실행 전" 창은 1주(S&amp;P500)에서 3개월(메리츠 KOSPI200)까지인데, 이번 창은 그 상단이라 선반영이 있었다면 8월 이전에 시작됐을 수 있고, 반대로 창이 너무 길어 시장이 잊었을 수도 있습니다. 4절의 8월 이후 수급이 이 둘을 가르는 자입니다.</p>
+
+<h2>4. 8월 이후 35종 수급 대 리밸런싱 금액 — 선반영 비율</h2>
+<p>선반영 비율은 [가정] 리밸런싱을 미리 사는 주체는 기관(투신·사모·연금 포함)과 외국인이고 개인은 아니다, [근거] 6월 삼성전기에서 선매도의 주체가 투신·연기금이었고 되돌림의 주체가 외국인이었으며 개인은 양쪽에서 반대편이었다, [식] 8/1~9/4(23거래일) 기관+외국인 순매수(억) ÷ cap 20% 시나리오의 종목별 매수 금액<span class="est">E</span>(억), [교차검증] 같은 비율을 20거래일(8/7~9/4)과 60거래일(6/2~9/4) 창으로도 계산해 방향이 같은지 본다, 의 4단으로 만들었습니다. 8/1은 6월 보도 이후 두 달이 지나 자사주 매입 공시(하이닉스 8/19·삼성전자 8/21)와 MSCI 8월 리뷰가 시작되기 직전이라, 소부장에 리밸런싱 이외의 큰 이벤트가 적은 창입니다.</p>
+<p>결과는 갈립니다. 소부장 33종 가운데 선반영 비율이 양수인 종목이 13개, 음수가 20개이고 중위값은 -0.29배입니다. 0.5배를 넘는 종목은 HPSP +2.29·고영 +0.97·테크윙 +0.79·ISC +0.54로 넷뿐이며, HPSP는 리밸런싱 금액 752억<span class="est">E</span>의 2.29배인 +1,721억을 기관(투신 +735억·연금 +425억)과 외국인이 이미 샀습니다. 반대편 끝은 RFHIC -3.80·와이씨 -2.85·제주반도체 -2.79·에스앤에스텍 -2.10·두산테스나 -1.77로, 이 종목들은 리밸런싱으로 들어올 돈의 1~4배를 8월 한 달 동안 기관과 외국인이 팔았습니다. 33종을 다 더하면 기관 -2,079억·외국인 -727억으로 둘 다 순매도이고, 개인만 +2,668억 순매수입니다. 기관 안에서 투신은 +1,939억 순매수인데 사모 -1,762억·연금 -294억이 그것을 지웠습니다. 리밸런싱 매수 총액 1조 3,379억<span class="est">E</span>에 견주면 기관+외국인 합계 -2,807억은 선반영이라 부를 크기가 아닙니다.</p>
+<figure class=""><figcaption>장표 3. 소부장 33종 선반영 비율 — 8/1~9/4 기관+외국인 순매수 ÷ cap 20% 리밸런싱 금액E(배), 라벨은 순매수액/리밸런싱 금액</figcaption><svg viewBox="0 0 880 566" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="120.0" y1="26" x2="120.0" y2="558" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="120.0" y="22" text-anchor="middle" font-size="10" fill="#8a857c">-4.0배</text>
+<line x1="222.9" y1="26" x2="222.9" y2="558" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="222.9" y="22" text-anchor="middle" font-size="10" fill="#8a857c">-3.0배</text>
+<line x1="325.7" y1="26" x2="325.7" y2="558" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="325.7" y="22" text-anchor="middle" font-size="10" fill="#8a857c">-2.0배</text>
+<line x1="428.6" y1="26" x2="428.6" y2="558" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="428.6" y="22" text-anchor="middle" font-size="10" fill="#8a857c">-1.0배</text>
+<line x1="531.4" y1="26" x2="531.4" y2="558" stroke="#d8d4cc" stroke-width="1.2"/>
+<text x="531.4" y="22" text-anchor="middle" font-size="10" fill="#8a857c">0.0배</text>
+<line x1="634.3" y1="26" x2="634.3" y2="558" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="634.3" y="22" text-anchor="middle" font-size="10" fill="#8a857c">1.0배</text>
+<line x1="737.1" y1="26" x2="737.1" y2="558" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="737.1" y="22" text-anchor="middle" font-size="10" fill="#8a857c">2.0배</text>
+<line x1="840.0" y1="26" x2="840.0" y2="558" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="840.0" y="22" text-anchor="middle" font-size="10" fill="#8a857c">3.0배</text>
+<text x="114" y="42.0" text-anchor="end" font-size="10.5" fill="#3a3630">HPSP</text>
+<rect x="531.4" y="32.0" width="235.5" height="12.0" fill="#2b7a78" opacity="0.9"/>
+<text x="771.0" y="41.5" text-anchor="start" font-size="9.5" fill="#2b7a78">+2.29 · +1,721억/752억</text>
+<text x="114" y="58.0" text-anchor="end" font-size="10.5" fill="#3a3630">고영</text>
+<rect x="531.4" y="48.0" width="99.8" height="12.0" fill="#2b7a78" opacity="0.9"/>
+<text x="635.2" y="57.5" text-anchor="start" font-size="9.5" fill="#2b7a78">+0.97 · +313억/325억</text>
+<text x="114" y="74.0" text-anchor="end" font-size="10.5" fill="#3a3630">테크윙</text>
+<rect x="531.4" y="64.0" width="81.3" height="12.0" fill="#2b7a78" opacity="0.9"/>
+<text x="616.7" y="73.5" text-anchor="start" font-size="9.5" fill="#2b7a78">+0.79 · +225억/284억</text>
+<text x="114" y="90.0" text-anchor="end" font-size="10.5" fill="#3a3630">ISC</text>
+<rect x="531.4" y="80.0" width="55.5" height="12.0" fill="#2b7a78" opacity="0.9"/>
+<text x="591.0" y="89.5" text-anchor="start" font-size="9.5" fill="#2b7a78">+0.54 · +217억/403억</text>
+<text x="114" y="106.0" text-anchor="end" font-size="10.5" fill="#3a3630">피에스케이홀딩스</text>
+<rect x="531.4" y="96.0" width="46.3" height="12.0" fill="#2b7a78" opacity="0.9"/>
+<text x="581.7" y="105.5" text-anchor="start" font-size="9.5" fill="#2b7a78">+0.45 · +95억/212억</text>
+<text x="114" y="122.0" text-anchor="end" font-size="10.5" fill="#3a3630">HD현대에너지솔루션</text>
+<rect x="531.4" y="112.0" width="44.2" height="12.0" fill="#2b7a78" opacity="0.9"/>
+<text x="579.7" y="121.5" text-anchor="start" font-size="9.5" fill="#2b7a78">+0.43 · +66억/154억</text>
+<text x="114" y="138.0" text-anchor="end" font-size="10.5" fill="#3a3630">SFA반도체</text>
+<rect x="531.4" y="128.0" width="44.2" height="12.0" fill="#2b7a78" opacity="0.9"/>
+<text x="579.7" y="137.5" text-anchor="start" font-size="9.5" fill="#2b7a78">+0.43 · +41억/96억</text>
+<text x="114" y="154.0" text-anchor="end" font-size="10.5" fill="#3a3630">파두</text>
+<rect x="531.4" y="144.0" width="27.8" height="12.0" fill="#2b7a78" opacity="0.9"/>
+<text x="563.2" y="153.5" text-anchor="start" font-size="9.5" fill="#2b7a78">+0.27 · +138억/511억</text>
+<text x="114" y="170.0" text-anchor="end" font-size="10.5" fill="#3a3630">유진테크</text>
+<rect x="531.4" y="160.0" width="25.7" height="12.0" fill="#2b7a78" opacity="0.9"/>
+<text x="561.1" y="169.5" text-anchor="start" font-size="9.5" fill="#2b7a78">+0.25 · +105억/414억</text>
+<text x="114" y="186.0" text-anchor="end" font-size="10.5" fill="#3a3630">한미반도체</text>
+<rect x="531.4" y="176.0" width="23.7" height="12.0" fill="#2b7a78" opacity="0.9"/>
+<text x="559.1" y="185.5" text-anchor="start" font-size="9.5" fill="#2b7a78">+0.23 · +471억/2,034억</text>
+<text x="114" y="202.0" text-anchor="end" font-size="10.5" fill="#3a3630">티씨케이</text>
+<rect x="531.4" y="192.0" width="12.3" height="12.0" fill="#2b7a78" opacity="0.9"/>
+<text x="547.8" y="201.5" text-anchor="start" font-size="9.5" fill="#2b7a78">+0.12 · +39억/310억</text>
+<text x="114" y="218.0" text-anchor="end" font-size="10.5" fill="#3a3630">이오테크닉스</text>
+<rect x="531.4" y="208.0" width="6.2" height="12.0" fill="#2b7a78" opacity="0.9"/>
+<text x="541.6" y="217.5" text-anchor="start" font-size="9.5" fill="#2b7a78">+0.06 · +50억/807억</text>
+<text x="114" y="234.0" text-anchor="end" font-size="10.5" fill="#3a3630">원익IPS</text>
+<rect x="531.4" y="224.0" width="2.1" height="12.0" fill="#2b7a78" opacity="0.9"/>
+<text x="537.5" y="233.5" text-anchor="start" font-size="9.5" fill="#2b7a78">+0.02 · +16억/796억</text>
+<text x="114" y="250.0" text-anchor="end" font-size="10.5" fill="#3a3630">주성엔지니어링</text>
+<rect x="520.1" y="240.0" width="11.3" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="249.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-0.11 · -137억/1,206억</text>
+<text x="114" y="266.0" text-anchor="end" font-size="10.5" fill="#3a3630">필옵틱스</text>
+<rect x="509.8" y="256.0" width="21.6" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="265.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-0.21 · -21억/98억</text>
+<text x="114" y="282.0" text-anchor="end" font-size="10.5" fill="#3a3630">피에스케이</text>
+<rect x="505.7" y="272.0" width="25.7" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="281.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-0.25 · -136억/556억</text>
+<text x="114" y="298.0" text-anchor="end" font-size="10.5" fill="#3a3630">넥스틴</text>
+<rect x="501.6" y="288.0" width="29.8" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="297.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-0.29 · -15억/52억</text>
+<text x="114" y="314.0" text-anchor="end" font-size="10.5" fill="#3a3630">DB하이텍</text>
+<rect x="474.9" y="304.0" width="56.6" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="313.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-0.55 · -340억/618억</text>
+<text x="114" y="330.0" text-anchor="end" font-size="10.5" fill="#3a3630">LX세미콘</text>
+<rect x="470.7" y="320.0" width="60.7" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="329.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-0.59 · -52억/89억</text>
+<text x="114" y="346.0" text-anchor="end" font-size="10.5" fill="#3a3630">덕산네오룩스</text>
+<rect x="464.6" y="336.0" width="66.9" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="345.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-0.65 · -60억/92억</text>
+<text x="114" y="362.0" text-anchor="end" font-size="10.5" fill="#3a3630">리노공업</text>
+<rect x="452.2" y="352.0" width="79.2" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="361.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-0.77 · -562억/734억</text>
+<text x="114" y="378.0" text-anchor="end" font-size="10.5" fill="#3a3630">코미코</text>
+<rect x="447.1" y="368.0" width="84.3" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="377.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-0.82 · -133억/161억</text>
+<text x="114" y="394.0" text-anchor="end" font-size="10.5" fill="#3a3630">심텍</text>
+<rect x="437.8" y="384.0" width="93.6" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="393.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-0.91 · -608억/670억</text>
+<text x="114" y="410.0" text-anchor="end" font-size="10.5" fill="#3a3630">태성</text>
+<rect x="416.2" y="400.0" width="115.2" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="409.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-1.12 · -241억/214억</text>
+<text x="114" y="426.0" text-anchor="end" font-size="10.5" fill="#3a3630">가온칩스</text>
+<rect x="402.9" y="416.0" width="128.6" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="425.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-1.25 · -72억/57억</text>
+<text x="114" y="442.0" text-anchor="end" font-size="10.5" fill="#3a3630">하나머티리얼즈</text>
+<rect x="400.8" y="432.0" width="130.6" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="441.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-1.27 · -151억/120억</text>
+<text x="114" y="458.0" text-anchor="end" font-size="10.5" fill="#3a3630">케이씨텍</text>
+<rect x="394.6" y="448.0" width="136.8" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="457.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-1.33 · -155억/117억</text>
+<text x="114" y="474.0" text-anchor="end" font-size="10.5" fill="#3a3630">하나마이크론</text>
+<rect x="359.7" y="464.0" width="171.8" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="473.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-1.67 · -639억/383억</text>
+<text x="114" y="490.0" text-anchor="end" font-size="10.5" fill="#3a3630">두산테스나</text>
+<rect x="349.4" y="480.0" width="182.1" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="489.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-1.77 · -359억/203억</text>
+<text x="114" y="506.0" text-anchor="end" font-size="10.5" fill="#3a3630">에스앤에스텍</text>
+<rect x="315.4" y="496.0" width="216.0" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="505.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-2.10 · -308억/147억</text>
+<text x="114" y="522.0" text-anchor="end" font-size="10.5" fill="#3a3630">제주반도체</text>
+<rect x="244.5" y="512.0" width="287.0" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="521.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-2.79 · -1,343억/481억</text>
+<text x="114" y="538.0" text-anchor="end" font-size="10.5" fill="#3a3630">와이씨</text>
+<rect x="238.3" y="528.0" width="293.1" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="537.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-2.85 · -303억/107억</text>
+<text x="114" y="554.0" text-anchor="end" font-size="10.5" fill="#3a3630">RFHIC</text>
+<rect x="140.6" y="544.0" width="390.9" height="12.0" fill="#a44a3f" opacity="0.9"/>
+<text x="535.4" y="553.5" text-anchor="start" font-size="9.5" fill="#a44a3f">-3.80 · -669억/176억</text>
+</svg><div class="src">packet.json 시나리오 S2_cap20·수급_8월이후_억(키움 ka10059, 23거래일). 하이닉스 +10.56배·삼성전자 +32.88배는 매도 방향이라 별도 서술.</div></figure>
+<p class="reading"><b>관찰.</b> 양수 13종목·음수 20종목으로 음수가 많고, 0.5배를 넘는 종목은 HPSP 2.29·고영 0.97·테크윙 0.79·ISC 0.54뿐이며, 꼬리에는 RFHIC -3.80·와이씨 -2.85·제주반도체 -2.79·에스앤에스텍 -2.10가 있습니다. <b>원인.</b> 투신이 산 종목(HPSP·이오테크닉스·ISC·티씨케이·한미반도체)에는 ETF 설정과 액티브 매수가 섞여 있고, 사모와 연금은 8월 소부장 반등을 차익실현의 기회로 썼습니다. 리밸런싱을 겨냥한 선취매라면 33종에 고르게 나타나야 하는데 실측은 종목별 실적·개별 재료 쪽으로 쏠려 있습니다. <b>함의.</b> 6월 교본의 '선매도 D-10'에 대응하는 '선매수 D-10'은 8월 소부장 전체에서는 관측되지 않았고 네 종목에서만 관측됐습니다. 집행일 종가에 물량을 받을 상대가 미리 준비돼 있지 않다는 뜻이므로, 9/10 종가에서는 6월과 달리 가격이 매수 방향으로 움직일 여지가 남아 있고 그만큼 9/11 이후 되돌림도 남아 있습니다. 어느 쪽이 크냐는 파트 2의 종가 두께가 정합니다.</p>
+<p>하이닉스와 삼성전자의 8월 숫자는 다른 이야기입니다. 하이닉스는 8/1 이후 외국인 -76,790억·기관 -42,410억으로 합계 11조 9,199억 순매도이고 삼성전자는 외국인 -13,142억·기관 -55,324억으로 6조 8,465억 순매도인데, 이것을 리밸런싱 금액으로 나누면 10.56배·32.88배가 됩니다. 이 배수는 리밸런싱 선반영이 아닙니다. 같은 기간에 하이닉스 40조(2,407만주, 8/20~11/19)와 삼성전자 15조(5,328만주, 8/24~11/21) 자사주 매입이 시작돼 기타법인이 8/20~9/2 약 15조 860억을 사들였고(헤럴드경제 9/3), 외국인은 같은 창에서 9조 8,280억을 팔았으며 코스피 8월 전체로도 외국인 -10조 1,756억·기관 -5조 642억·기타법인 +11조 9,944억이었습니다(research/B). 즉 8월 대형 2종의 기관·외국인 매도는 자사주 매입에 물량을 넘긴 차익실현이 대부분이고, 리밸런싱 1조 1,293억<span class="est">E</span>은 그 안에서 10분의 1 크기입니다. 유통시총 대비로 보면 하이닉스 -1.33%·삼성전자 -0.61%로, 소부장 33종의 리밸런싱 유입 2.2% 안팎과 비교해도 작습니다. 대형 2종에 대해 우리는 "선반영됐다"도 "안 됐다"도 말하지 않고, 리밸런싱이 이 종목들의 8월 수급을 설명하는 변수가 아니었다고만 적습니다.</p>
+<table class=""><tr><th>종목</th><th>cap20 금액E</th><th>기관 8월~</th><th>외국인 8월~</th><th>개인 8월~</th><th>사모</th><th>투신</th><th>연금</th><th>선반영(배)</th><th>기관+외인 20일</th><th>기관+외인 60일</th><th>8/1~ 수익률%</th><th>1W%</th></tr><tr><td>SK하이닉스</td><td>-11,293</td><td>-42,410</td><td>-76,790</td><td>+1,948</td><td>-3,157</td><td>-9,225</td><td>+2,549</td><td>+10.56</td><td>-97,074</td><td>-375,335</td><td>-4.1</td><td>-0.4</td></tr><tr><td>삼성전자</td><td>-2,083</td><td>-55,324</td><td>-13,142</td><td>+20,644</td><td>-18,034</td><td>-17,241</td><td>-8,870</td><td>+32.88</td><td>-40,100</td><td>-293,439</td><td>-2.9</td><td>-0.8</td></tr><tr><td>한미반도체</td><td>+2,034</td><td>+135</td><td>+335</td><td>-472</td><td>-1,136</td><td>+1,097</td><td>+7</td><td>+0.23</td><td>+1,034</td><td>-3,424</td><td>+6.5</td><td>+4.1</td></tr><tr><td>주성엔지니어링</td><td>+1,206</td><td>-412</td><td>+276</td><td>+101</td><td>-169</td><td>-109</td><td>-96</td><td>-0.11</td><td>+219</td><td>+1,597</td><td>+42.5</td><td>+0.3</td></tr><tr><td>이오테크닉스</td><td>+807</td><td>+991</td><td>-941</td><td>-56</td><td>-48</td><td>+746</td><td>+259</td><td>+0.06</td><td>+37</td><td>-453</td><td>+49.7</td><td>+11.2</td></tr><tr><td>원익IPS</td><td>+796</td><td>-936</td><td>+952</td><td>-34</td><td>-636</td><td>-82</td><td>-300</td><td>+0.02</td><td>+362</td><td>-614</td><td>+14.9</td><td>+0.9</td></tr><tr><td>HPSP</td><td>+752</td><td>+1,173</td><td>+548</td><td>-1,692</td><td>+120</td><td>+735</td><td>+425</td><td>+2.29</td><td>+1,822</td><td>-25</td><td>+44.8</td><td>-2.0</td></tr><tr><td>리노공업</td><td>+734</td><td>-239</td><td>-323</td><td>+557</td><td>-96</td><td>-144</td><td>+26</td><td>-0.77</td><td>-520</td><td>+4,687</td><td>+3.4</td><td>-0.7</td></tr><tr><td>심텍</td><td>+670</td><td>-913</td><td>+305</td><td>+547</td><td>+66</td><td>-16</td><td>-216</td><td>-0.91</td><td>-498</td><td>+332</td><td>+39.4</td><td>-5.9</td></tr><tr><td>DB하이텍</td><td>+618</td><td>-621</td><td>+282</td><td>+337</td><td>+14</td><td>-98</td><td>-332</td><td>-0.55</td><td>-145</td><td>+1,022</td><td>+7.0</td><td>-5.3</td></tr><tr><td>피에스케이</td><td>+556</td><td>-672</td><td>+535</td><td>+137</td><td>-195</td><td>-322</td><td>-49</td><td>-0.25</td><td>+72</td><td>+374</td><td>-3.9</td><td>-3.2</td></tr><tr><td>파두</td><td>+511</td><td>-58</td><td>+196</td><td>-211</td><td>+11</td><td>-90</td><td>+22</td><td>+0.27</td><td>+168</td><td>+1,703</td><td>+2.4</td><td>+2.5</td></tr><tr><td>제주반도체</td><td>+481</td><td>-488</td><td>-856</td><td>+1,338</td><td>-130</td><td>-158</td><td>-40</td><td>-2.79</td><td>-1,051</td><td>-2,708</td><td>+8.8</td><td>-7.7</td></tr><tr><td>유진테크</td><td>+414</td><td>-239</td><td>+344</td><td>-94</td><td>+23</td><td>-18</td><td>-82</td><td>+0.25</td><td>+81</td><td>+581</td><td>+19.4</td><td>+0.1</td></tr><tr><td>ISC</td><td>+403</td><td>+596</td><td>-380</td><td>-211</td><td>+81</td><td>+422</td><td>+116</td><td>+0.54</td><td>+318</td><td>+412</td><td>+38.1</td><td>+3.2</td></tr><tr><td>하나마이크론</td><td>+383</td><td>-486</td><td>-152</td><td>+626</td><td>+5</td><td>-174</td><td>-243</td><td>-1.67</td><td>-591</td><td>-732</td><td>+17.0</td><td>-1.7</td></tr><tr><td>고영</td><td>+325</td><td>-75</td><td>+388</td><td>-270</td><td>-4</td><td>-108</td><td>+43</td><td>+0.97</td><td>+116</td><td>+708</td><td>+2.8</td><td>-2.4</td></tr><tr><td>티씨케이</td><td>+310</td><td>+522</td><td>-483</td><td>-37</td><td>+120</td><td>+398</td><td>+123</td><td>+0.12</td><td>+42</td><td>+81</td><td>+52.0</td><td>+5.5</td></tr><tr><td>테크윙</td><td>+284</td><td>-83</td><td>+308</td><td>-217</td><td>-24</td><td>-14</td><td>+13</td><td>+0.79</td><td>+173</td><td>+1,547</td><td>+12.8</td><td>-6.3</td></tr><tr><td>태성</td><td>+214</td><td>-98</td><td>-143</td><td>+237</td><td>-16</td><td>-13</td><td>+1</td><td>-1.12</td><td>-141</td><td>-174</td><td>+41.3</td><td>-10.7</td></tr><tr><td>피에스케이홀딩스</td><td>+212</td><td>+254</td><td>-159</td><td>-109</td><td>-10</td><td>+149</td><td>+123</td><td>+0.45</td><td>+117</td><td>+808</td><td>+43.3</td><td>+16.7</td></tr><tr><td>두산테스나</td><td>+203</td><td>-79</td><td>-280</td><td>+341</td><td>+14</td><td>-99</td><td>+60</td><td>-1.77</td><td>-328</td><td>+402</td><td>+17.0</td><td>-8.2</td></tr><tr><td>RFHIC</td><td>+176</td><td>-42</td><td>-627</td><td>+666</td><td>-14</td><td>+39</td><td>-43</td><td>-3.80</td><td>-399</td><td>-387</td><td>+12.3</td><td>+2.5</td></tr><tr><td>코미코</td><td>+161</td><td>-6</td><td>-126</td><td>+127</td><td>+30</td><td>+18</td><td>-38</td><td>-0.82</td><td>-133</td><td>-34</td><td>+16.1</td><td>-0.4</td></tr><tr><td>HD현대에너지솔루션</td><td>+154</td><td>+90</td><td>-24</td><td>-48</td><td>+149</td><td>-232</td><td>+130</td><td>+0.43</td><td>+79</td><td>+222</td><td>+22.9</td><td>+1.3</td></tr><tr><td>에스앤에스텍</td><td>+147</td><td>-165</td><td>-143</td><td>+305</td><td>-12</td><td>-67</td><td>-25</td><td>-2.10</td><td>-274</td><td>-622</td><td>-1.3</td><td>-2.2</td></tr><tr><td>하나머티리얼즈</td><td>+120</td><td>-110</td><td>-42</td><td>+175</td><td>+13</td><td>+13</td><td>-111</td><td>-1.27</td><td>-114</td><td>-210</td><td>-5.7</td><td>-5.7</td></tr><tr><td>케이씨텍</td><td>+117</td><td>-306</td><td>+151</td><td>+146</td><td>+12</td><td>-32</td><td>-220</td><td>-1.33</td><td>-112</td><td>-388</td><td>-5.2</td><td>-0.7</td></tr><tr><td>와이씨</td><td>+107</td><td>+169</td><td>-472</td><td>+296</td><td>+64</td><td>+66</td><td>+34</td><td>-2.85</td><td>-303</td><td>-477</td><td>+37.0</td><td>+4.3</td></tr><tr><td>필옵틱스</td><td>+98</td><td>-31</td><td>+10</td><td>+22</td><td>+0</td><td>-4</td><td>+0</td><td>-0.21</td><td>-22</td><td>-59</td><td>+6.2</td><td>-7.9</td></tr><tr><td>SFA반도체</td><td>+96</td><td>+102</td><td>-61</td><td>-42</td><td>+3</td><td>+95</td><td>+24</td><td>+0.43</td><td>+35</td><td>-3</td><td>+15.2</td><td>+0.0</td></tr><tr><td>덕산네오룩스</td><td>+92</td><td>+44</td><td>-104</td><td>+61</td><td>+2</td><td>-26</td><td>+96</td><td>-0.65</td><td>-65</td><td>-206</td><td>+8.0</td><td>+0.6</td></tr><tr><td>LX세미콘</td><td>+89</td><td>-10</td><td>-42</td><td>+59</td><td>-1</td><td>-4</td><td>-1</td><td>-0.59</td><td>-55</td><td>-209</td><td>+5.0</td><td>-3.5</td></tr><tr><td>가온칩스</td><td>+57</td><td>-54</td><td>-18</td><td>+70</td><td>+1</td><td>-21</td><td>+7</td><td>-1.25</td><td>-63</td><td>-14</td><td>-13.9</td><td>-6.3</td></tr><tr><td>넥스틴</td><td>+52</td><td>-32</td><td>+17</td><td>+13</td><td>+2</td><td>-8</td><td>-8</td><td>-0.29</td><td>-25</td><td>-128</td><td>+9.0</td><td>-2.6</td></tr></table>
+<p>표의 오른쪽 두 열이 교차검증입니다. 20거래일 창에서 기관+외국인이 양수인 소부장은 15종목, 60거래일 창에서는 14종목으로 8월 창의 13종목과 큰 차이가 없습니다. 창을 바꿔도 "절반 이하"라는 결론은 같습니다. 창 사이의 부호가 바뀐 종목이 더 흥미롭습니다. 60일은 양수인데 20일은 음수인 종목은 리노공업·심텍·DB하이텍·두산테스나로, 이 종목들은 6월 보도 이후 여름에 기관·외국인이 샀다가 8월 중순 이후 팔았습니다. 6월 보도가 선취매의 출발이었다면 이 종목들이 그 흔적이고, 8월 하순의 매도는 집행일 앞의 차익실현으로 읽을 수 있습니다. 반대로 60일은 음수인데 20일은 양수인 종목은 한미반도체·이오테크닉스·원익IPS·HPSP·SFA반도체로, 여름에 팔렸다가 최근 4주에 다시 담긴 종목입니다. 두 묶음 모두 확정이 아니라 창 의존적인 관찰이고, 9/10 이후 수급이 어느 쪽으로 이어지는지가 판정을 대신합니다.</p>
+<p>60거래일 창의 합계는 소부장 33종 기관 -13,517억·외국인 +17,126억·개인 -4,286억입니다. 6월 초부터 석 달 동안 외국인은 소부장을 샀고 기관은 팔았으며, 8월 한 달만 떼면 외국인도 순매도(-727억)로 돌아섰습니다. 6월 보도가 외국인의 소부장 매수를 자극했다는 해석과, 6월 만기 이후 반도체 업황 반등에 외국인이 소부장을 산 것이라는 해석이 같은 숫자를 두고 경쟁하고, 우리는 후자를 더 무겁게 봅니다. 이유는 리밸런싱 선취매라면 리밸런싱 금액이 큰 종목(한미반도체 2,034억<span class="est">E</span>·주성 1,206억<span class="est">E</span>·이오테크닉스 807억<span class="est">E</span>)에 집중돼야 하는데 60일 외국인 순매수는 리노공업 +7,718억·한미반도체 +6,541억·파두 +3,160억·ISC +3,157억으로 금액 순위와 어긋나기 때문입니다.</p>
+
+<h2>5. 인덱스 효과 실증 — 이번 이벤트의 기저율</h2>
+<p>인덱스 효과 문헌은 "발표 후~실행 전 초과수익"과 "실행 후 되돌림"을 짝으로 재 왔고, 그 크기는 시장·시대·창에 따라 다르지만 부호는 거의 언제나 같습니다. Lynch·Mendenhall 1997은 S&amp;P500이 1주 전 사전 공시를 시작한 1990년 3월부터 1995년 4월까지의 편입에서 발표 당일 +3.158%, 발표 익일부터 실행 전일까지 +3.807%, 실행일부터 거래량이 정상화되는 7일까지 -2.106%를 측정했고, 실행 전일의 비정상 거래량이 11.6%로 가장 컸다는 것을 함께 적었습니다. 인덱스펀드가 추적오차를 줄이려 실행 전일에 대부분을 산다는 해석이 여기서 나왔고, 한국의 "정기변경일 직전 거래일 종가" 관행과 같은 구조입니다. Madhavan 2003은 Russell 2000 편입(1996~2002)에서 일시 효과 +5.79%p·영구 효과 +1.41%p로 나눠 되돌아오는 부분이 남는 부분의 네 배라고 했고, 유동성이 낮은 종목일수록 일시 효과가 크다는 모형을 붙였습니다. 이것이 소부장 꼬리 종목(종가 배수 80~106배, 파트 2)에 대응하는 기저율입니다.</p>
+<p>한국 실증은 미국보다 되돌림이 큽니다. KRX가 2010년에 2008~10년 KOSPI200 편입을 분석한 결과(KIF 2013 재인용)는 발표 후 1주 시장 대비 +5.41%p, 정기변경 후 1주 -4.56%p로, 사전 초과수익 5.41%p 가운데 4.56%p, 곧 84%에 해당하는 폭이 1주 안에 지워졌습니다. 메리츠 이정연·최병욱 2023-03-29는 2010년 이후 16회 정기변경에서 3개월 전부터 변경일까지 편입 종목 선취매가 10회 유효했고 코스피 대비 중간값 +5.2%p, 변경 당일 -2%p, 그 뒤 2개월 +1.1%p로 적었습니다. 당일 하락은 액티브의 차익실현과 패시브 매수가 종가에서 교차하기 때문이고, 외국인이 3개월 동안 시총 대비 0.7%를 샀다가 당일 넘긴다는 수급 그림이 붙어 있습니다. 유진 강송철 2024-05-17의 MSCI 편입 14건 표는 발표 45일 전부터 발표일까지 +58.0%(에코프로)·+55.5%(한미반도체)처럼 사전 상승이 큰 종목이 편입 후 30일에 -28.3%·-11.9%로 되돌렸고, 14건 가운데 9건이 편입 후 30일 음수였다는 것을 보여 줍니다.</p>
+<figure class=""><figcaption>장표 4. 실증 문헌의 사전 구간 대 사후 구간(위, %·%p) · S&amp;P500 편입 효과의 연대별 소멸(아래, Greenwood·Sammon 2023)</figcaption><svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="206.0" x2="730" y2="206.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="210.0" text-anchor="end" font-size="11" fill="#8a857c">-6.0</text>
+<line x1="62" y1="174.7" x2="730" y2="174.7" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="178.7" text-anchor="end" font-size="11" fill="#8a857c">-4.0</text>
+<line x1="62" y1="143.3" x2="730" y2="143.3" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="147.3" text-anchor="end" font-size="11" fill="#8a857c">-2.0</text>
+<line x1="62" y1="112.0" x2="730" y2="112.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="116.0" text-anchor="end" font-size="11" fill="#8a857c">0.0</text>
+<line x1="62" y1="80.7" x2="730" y2="80.7" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="84.7" text-anchor="end" font-size="11" fill="#8a857c">2.0</text>
+<line x1="62" y1="49.3" x2="730" y2="49.3" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="53.3" text-anchor="end" font-size="11" fill="#8a857c">4.0</text>
+<line x1="62" y1="18.0" x2="730" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">6.0</text>
+<text x="145.5" y="224" text-anchor="middle" font-size="10" fill="#8a857c">S&amp;P500 편입 90~95(LM)</text>
+<text x="312.5" y="224" text-anchor="middle" font-size="10" fill="#8a857c">KOSPI200 편입 08~10(KRX)</text>
+<text x="479.5" y="224" text-anchor="middle" font-size="10" fill="#8a857c">KOSPI200 편입 10~23(메리츠)</text>
+<text x="646.5" y="224" text-anchor="middle" font-size="10" fill="#8a857c">Russell2000 96~02(Madhavan)</text>
+<rect x="87.1" y="52.4" width="57.4" height="59.6" fill="#2b7a78" opacity="0.9"/>
+<text x="116.3" y="48.4" text-anchor="middle" font-size="9.5" fill="#2b7a78">3.8</text>
+<rect x="145.5" y="112.0" width="57.4" height="33.0" fill="#a44a3f" opacity="0.9"/>
+<text x="174.7" y="156.0" text-anchor="middle" font-size="9.5" fill="#a44a3f">-2.1</text>
+<rect x="254.1" y="27.2" width="57.4" height="84.8" fill="#2b7a78" opacity="0.9"/>
+<text x="283.3" y="23.2" text-anchor="middle" font-size="9.5" fill="#2b7a78">5.4</text>
+<rect x="312.5" y="112.0" width="57.4" height="71.4" fill="#a44a3f" opacity="0.9"/>
+<text x="341.7" y="194.4" text-anchor="middle" font-size="9.5" fill="#a44a3f">-4.6</text>
+<rect x="421.1" y="30.5" width="57.4" height="81.5" fill="#2b7a78" opacity="0.9"/>
+<text x="450.3" y="26.5" text-anchor="middle" font-size="9.5" fill="#2b7a78">5.2</text>
+<rect x="479.5" y="112.0" width="57.4" height="31.3" fill="#a44a3f" opacity="0.9"/>
+<text x="508.7" y="154.3" text-anchor="middle" font-size="9.5" fill="#a44a3f">-2.0</text>
+<rect x="588.0" y="21.3" width="57.4" height="90.7" fill="#2b7a78" opacity="0.9"/>
+<text x="617.3" y="17.3" text-anchor="middle" font-size="9.5" fill="#2b7a78">5.8</text>
+<rect x="646.5" y="89.9" width="57.4" height="22.1" fill="#a44a3f" opacity="0.9"/>
+<text x="675.7" y="85.9" text-anchor="middle" font-size="9.5" fill="#a44a3f">1.4</text>
+<rect x="736" y="18" width="10" height="10" fill="#2b7a78"/>
+<text x="750" y="27" font-size="11" fill="#8a857c">사전 구간(발표 후~실행 전) %</text>
+<rect x="736" y="34" width="10" height="10" fill="#a44a3f"/>
+<text x="750" y="43" font-size="11" fill="#8a857c">사후 구간(실행 후 1주 안팎) %</text>
+</svg><svg viewBox="0 0 880 230" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62" y1="186.0" x2="730" y2="186.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="190.0" text-anchor="end" font-size="11" fill="#8a857c">-20.0</text>
+<line x1="62" y1="158.0" x2="730" y2="158.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="162.0" text-anchor="end" font-size="11" fill="#8a857c">-15.0</text>
+<line x1="62" y1="130.0" x2="730" y2="130.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="134.0" text-anchor="end" font-size="11" fill="#8a857c">-10.0</text>
+<line x1="62" y1="102.0" x2="730" y2="102.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="106.0" text-anchor="end" font-size="11" fill="#8a857c">-5.0</text>
+<line x1="62" y1="74.0" x2="730" y2="74.0" stroke="#d8d4cc" stroke-width="1.1"/>
+<text x="56" y="78.0" text-anchor="end" font-size="11" fill="#8a857c">0.0</text>
+<line x1="62" y1="46.0" x2="730" y2="46.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="50.0" text-anchor="end" font-size="11" fill="#8a857c">5.0</text>
+<line x1="62" y1="18.0" x2="730" y2="18.0" stroke="#d8d4cc" stroke-width="0.7"/>
+<text x="56" y="22.0" text-anchor="end" font-size="11" fill="#8a857c">10.0</text>
+<text x="145.5" y="204" text-anchor="middle" font-size="10" fill="#8a857c">1980년대</text>
+<text x="312.5" y="204" text-anchor="middle" font-size="10" fill="#8a857c">1990년대</text>
+<text x="479.5" y="204" text-anchor="middle" font-size="10" fill="#8a857c">2000년대</text>
+<text x="646.5" y="204" text-anchor="middle" font-size="10" fill="#8a857c">2010년대</text>
+<rect x="87.1" y="55.0" width="57.4" height="19.0" fill="#1f3a5f" opacity="0.9"/>
+<text x="116.3" y="51.0" text-anchor="middle" font-size="9.5" fill="#1f3a5f">3.4</text>
+<rect x="145.5" y="74.0" width="57.4" height="25.8" fill="#8a857c" opacity="0.9"/>
+<text x="174.7" y="110.8" text-anchor="middle" font-size="9.5" fill="#8a857c">-4.6</text>
+<rect x="254.1" y="32.6" width="57.4" height="41.4" fill="#1f3a5f" opacity="0.9"/>
+<text x="283.3" y="28.6" text-anchor="middle" font-size="9.5" fill="#1f3a5f">7.4</text>
+<rect x="312.5" y="74.0" width="57.4" height="90.2" fill="#8a857c" opacity="0.9"/>
+<text x="341.7" y="175.2" text-anchor="middle" font-size="9.5" fill="#8a857c">-16.1</text>
+<rect x="421.1" y="44.9" width="57.4" height="29.1" fill="#1f3a5f" opacity="0.9"/>
+<text x="450.3" y="40.9" text-anchor="middle" font-size="9.5" fill="#1f3a5f">5.2</text>
+<rect x="479.5" y="74.0" width="57.4" height="69.4" fill="#8a857c" opacity="0.9"/>
+<text x="508.7" y="154.4" text-anchor="middle" font-size="9.5" fill="#8a857c">-12.4</text>
+<rect x="588.0" y="68.4" width="57.4" height="5.6" fill="#1f3a5f" opacity="0.9"/>
+<text x="617.3" y="64.4" text-anchor="middle" font-size="9.5" fill="#1f3a5f">1.0</text>
+<rect x="646.5" y="74.0" width="57.4" height="3.4" fill="#8a857c" opacity="0.9"/>
+<text x="675.7" y="88.4" text-anchor="middle" font-size="9.5" fill="#8a857c">-0.6</text>
+<rect x="736" y="18" width="10" height="10" fill="#1f3a5f"/>
+<text x="750" y="27" font-size="11" fill="#8a857c">편입 총효과 %</text>
+<rect x="736" y="34" width="10" height="10" fill="#8a857c"/>
+<text x="750" y="43" font-size="11" fill="#8a857c">편출 총효과 %</text>
+</svg><div class="src">research/D_인덱스효과실증.md — Lynch·Mendenhall 1997(JB), KRX 2010(KIF 2013 재인용), 메리츠 2023-03-29, Madhavan 2003(FAJ, 일시/영구), Greenwood·Sammon 2023(HBS WP 23-025). Madhavan의 두 막대는 사전·사후가 아니라 일시·영구 분해.</div></figure>
+<p class="reading"><b>관찰.</b> 네 실증 모두 사전 구간이 양수이고 사후 구간이 음수이며, 한국(KRX 2008~10)의 되돌림 -4.56%p가 사전 이익 +5.41%p의 대부분을 지웁니다. 아래 그림에서 S&amp;P500 편입 효과는 1990년대 7.4%에서 2010년대 1.0%로 줄었습니다. <b>원인.</b> 실행이 예측 가능해질수록 선취매와 유동성 공급이 앞당겨져 실행일 효과가 사라지고, 되돌림도 함께 줄어듭니다. 한국은 패시브 비중이 늘고 공매도가 재개된 2025년 이후에도 정기변경 당일 -2%p 패턴이 남아 있어 미국보다 늦은 단계에 있습니다. <b>함의.</b> 이번 이벤트의 기저율은 '실매매일 앞 초과수익 +5% 안팎, 실매매일 당일 -2%p, 이후 1주 되돌림 -2~-4.6%p'입니다. 다만 이 기저율은 신규 편입 종목의 것이고, 이번은 이미 보유 중인 33종의 비중 상향이라 편입 효과의 영구 부분(투자자 인지·유동성 개선)이 거의 없습니다. 일시 효과만 남는 이벤트이므로 되돌림 쪽 가중치를 문헌보다 더 두는 것이 맞습니다.</p>
+<table class=""><tr><th>실증</th><th>표본·창</th><th>사전 구간</th><th>사후 구간·되돌림</th><th>이번 이벤트에의 대응</th></tr><tr><td>Lynch·Mendenhall 1997</td><td>S&amp;P500 편입 1990.3~95.4, 1주 사전공시</td><td>발표 당일 +3.16%, 발표 익일~실행 전일 +3.81%</td><td>실행일~CD+7 -2.11%, 실행 전일 거래량 최대</td><td>발표~실행 1주 창. 이번은 발표(6월 보도)~실행 3개월이라 사전 창이 훨씬 김</td></tr><tr><td>Madhavan 2003</td><td>Russell 2000 편입 1996~2002</td><td>일시 효과 +5.79%p, 영구 +1.41%p</td><td>7월 스프레드 -4.97%(7년 중 5년 음수)</td><td>저유동 소형주일수록 일시 효과 큼. 소부장 꼬리 종목에 대응</td></tr><tr><td>Greenwood·Sammon 2023</td><td>S&amp;P500 편입 1980~2020</td><td>1990년대 7.4%, 2010년대 1.0%(비유의)</td><td>실행일 효과 2010년대 0 근처</td><td>예측 가능한 패시브 수요는 선반영·유동성 공급으로 흡수. 기대치의 상한을 낮춤</td></tr><tr><td>KRX 2010(KIF 2013 재인용)</td><td>KOSPI200 편입 2008~10</td><td>발표 후 1주 +5.41%p</td><td>변경 후 1주 -4.56%p</td><td>한국 기저율. 변경 후 1주 되돌림이 사전 이익의 대부분을 지움</td></tr><tr><td>메리츠 2023-03-29</td><td>KOSPI200 편입 2010~23, 16회</td><td>3개월 전~변경일 중간값 +5.2%p(10/16 유효)</td><td>변경 당일 -2%p, 이후 2개월 +1.1%p</td><td>당일 액티브 차익실현 대 패시브 매수의 교차. 9/10 종가·9/11 시가에 대응</td></tr><tr><td>유진 2024-05-17</td><td>MSCI 편입 2023.2~24.2, 14건</td><td>발표 45일 전~발표일 +58%(에코프로)·+55.5%(한미) 등</td><td>편입 후 30일 14건 중 9건 음수</td><td>사전 상승이 클수록 사후 되돌림 큼. 8월 +40% 이상 오른 소부장에 대응</td></tr><tr><td>6월 삼성전기(패킷 실측)</td><td>cap 25% 초과 매도, 2026-06</td><td>보도일 -9.6%, 고점~실매매일 -19.4%</td><td>실매매일~6/17 +18.6%, 6/17~7/10 -22.0%</td><td>방향이 반대인 같은 구조. 선반영 뒤 집행일이 변곡</td></tr></table>
+<p>이번 이벤트에 기저율을 맞출 때 세 가지를 조정해야 합니다. 첫째, 문헌은 신규 편입이고 이번은 비중 상향입니다. 편입은 종목이 인덱스 유니버스에 처음 들어가므로 영구 효과(Madhavan +1.41%p, 인지·유동성)가 붙지만, 소부장 33종은 이미 KRX 반도체 안에 있고 ETF 보유가 유통물량의 7~31%(원익IPS 31.0%·주성 25.1%·이오테크닉스 23.2%, 파트 2)까지 올라와 있어 인지 효과는 없습니다. 남는 것은 일시 효과, 곧 되돌아오는 부분입니다. 둘째, 문헌의 사전 창은 1주에서 3개월인데 이번은 3개월 이상입니다. Greenwood·Sammon이 지적한 대로 창이 길고 예측 가능하면 효과는 발표 직후와 실행 직전 두 곳으로 흩어지고 크기는 줄어듭니다. 6월 보도 직후 소부장 주가에 뚜렷한 반응이 없었다는 것(6/11 이후 33종 중위 -21.5%, 양수 1종목)은 첫 번째 자리가 비어 있었다는 뜻이고, 그렇다면 실행 직전 자리(9월 첫 주~9/10)에 반응이 몰릴 수 있습니다. 셋째, 되돌림의 주체입니다. 메리츠의 그림에서 당일 -2%p는 외국인 선취매의 차익실현인데, 4절에서 본 대로 소부장 33종에 외국인 선취매가 얇으므로 차익실현할 물량도 얇습니다. 되돌림이 온다면 그 주체는 8월에 개인이 산 물량(+2,668억)의 이탈이거나, 9/10 종가에 튄 종목의 9/11 시가 갭일 것입니다.</p>
+
+<h2>6. 8월 이후 주가와 수급의 동행 — 두 묶음</h2>
+<p>8/1 이후 소부장 33종 수익률은 중위 +12.8%, 양수 28종목으로 반등 국면이었습니다. 6월 만기 이후로 넓히면 중위 -21.5%, 양수 1종목이어서 3개월 -27%(KODEX 반도체 NAV)의 하락 뒤 8월에 일부를 회복한 모양입니다. 이 반등이 리밸런싱 선반영인지 업황 반등인지가 논쟁 4의 핵심이고, 수급과 주가의 동행이 그 자입니다. 8/1 이후 기관+외국인 순매수를 유통시총으로 나눈 값과 8/1 이후 수익률의 상관계수는 33종에서 +0.25이고, 선반영 비율과의 상관도 +0.26입니다. 약한 양의 관계입니다. 개인 순매수 비율과의 상관은 -0.26로 부호가 반대인데, 개인은 오른 종목을 팔고 빠진 종목을 샀다는 뜻입니다. 20거래일 기관+외국인 비율과 1개월 수익률의 상관은 +0.36로 조금 더 높습니다.</p>
+<figure class=""><figcaption>장표 5. 소부장 33종 — 8/1 이후 기관+외국인 순매수 ÷ 유통시총(%) 대 8/1 이후 수익률(%)</figcaption><svg viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif">
+<line x1="62.0" y1="24" x2="62.0" y2="374" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="62.0" y="390" text-anchor="middle" font-size="10" fill="#8a857c">-8.0%</text>
+<line x1="174.6" y1="24" x2="174.6" y2="374" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="174.6" y="390" text-anchor="middle" font-size="10" fill="#8a857c">-6.0%</text>
+<line x1="287.1" y1="24" x2="287.1" y2="374" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="287.1" y="390" text-anchor="middle" font-size="10" fill="#8a857c">-4.0%</text>
+<line x1="399.7" y1="24" x2="399.7" y2="374" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="399.7" y="390" text-anchor="middle" font-size="10" fill="#8a857c">-2.0%</text>
+<line x1="512.3" y1="24" x2="512.3" y2="374" stroke="#d8d4cc" stroke-width="1.2"/>
+<text x="512.3" y="390" text-anchor="middle" font-size="10" fill="#8a857c">0.0%</text>
+<line x1="624.9" y1="24" x2="624.9" y2="374" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="624.9" y="390" text-anchor="middle" font-size="10" fill="#8a857c">2.0%</text>
+<line x1="737.4" y1="24" x2="737.4" y2="374" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="737.4" y="390" text-anchor="middle" font-size="10" fill="#8a857c">4.0%</text>
+<line x1="850.0" y1="24" x2="850.0" y2="374" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="850.0" y="390" text-anchor="middle" font-size="10" fill="#8a857c">6.0%</text>
+<line x1="62" y1="374.0" x2="850" y2="374.0" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="56" y="378.0" text-anchor="end" font-size="10" fill="#8a857c">-20%</text>
+<line x1="62" y1="330.2" x2="850" y2="330.2" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="56" y="334.2" text-anchor="end" font-size="10" fill="#8a857c">-10%</text>
+<line x1="62" y1="286.5" x2="850" y2="286.5" stroke="#d8d4cc" stroke-width="1.2"/>
+<text x="56" y="290.5" text-anchor="end" font-size="10" fill="#8a857c">0%</text>
+<line x1="62" y1="242.8" x2="850" y2="242.8" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="56" y="246.8" text-anchor="end" font-size="10" fill="#8a857c">10%</text>
+<line x1="62" y1="199.0" x2="850" y2="199.0" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="56" y="203.0" text-anchor="end" font-size="10" fill="#8a857c">20%</text>
+<line x1="62" y1="155.2" x2="850" y2="155.2" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="56" y="159.2" text-anchor="end" font-size="10" fill="#8a857c">30%</text>
+<line x1="62" y1="111.5" x2="850" y2="111.5" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="56" y="115.5" text-anchor="end" font-size="10" fill="#8a857c">40%</text>
+<line x1="62" y1="67.8" x2="850" y2="67.8" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="56" y="71.8" text-anchor="end" font-size="10" fill="#8a857c">50%</text>
+<line x1="62" y1="24.0" x2="850" y2="24.0" stroke="#d8d4cc" stroke-width="0.6"/>
+<text x="56" y="28.0" text-anchor="end" font-size="10" fill="#8a857c">60%</text>
+<text x="850" y="406" text-anchor="end" font-size="10.5" fill="#8a857c">8월 이후(8/1~9/4) 기관+외국인 순매수 ÷ 유통시총(%) — 초록 선반영 0.5배 이상·적색 -0.5배 이하·회색 중간</text>
+<text x="62" y="16" font-size="10.5" fill="#8a857c">8/1 이후 수익률(%)</text>
+<circle cx="365.0" cy="347.3" r="4" fill="#a44a3f" opacity="0.85"/>
+<text x="370.0" y="341.3" font-size="9.5" fill="#3a3630">가온칩스</text>
+<circle cx="349.0" cy="311.4" r="4" fill="#a44a3f" opacity="0.85"/>
+<text x="354.0" y="305.4" font-size="9.5" fill="#3a3630">하나머티리얼즈</text>
+<circle cx="358.3" cy="309.2" r="4" fill="#a44a3f" opacity="0.85"/>
+<text x="363.3" y="292.2" font-size="9.5" fill="#3a3630">케이씨텍</text>
+<circle cx="480.5" cy="303.6" r="4" fill="#8a857c" opacity="0.85"/>
+<text x="485.5" y="297.6" font-size="9.5" fill="#3a3630">피에스케이</text>
+<circle cx="249.2" cy="292.2" r="4" fill="#a44a3f" opacity="0.85"/>
+<text x="254.2" y="286.2" font-size="9.5" fill="#3a3630">에스앤에스텍</text>
+<circle cx="541.1" cy="276.0" r="4" fill="#8a857c" opacity="0.85"/>
+<text x="546.1" y="270.0" font-size="9.5" fill="#3a3630">파두</text>
+<circle cx="633.3" cy="274.2" r="4" fill="#2b7a78" opacity="0.85"/>
+<text x="638.3" y="268.2" font-size="9.5" fill="#3a3630">고영</text>
+<circle cx="427.9" cy="271.6" r="4" fill="#a44a3f" opacity="0.85"/>
+<text x="432.9" y="265.6" font-size="9.5" fill="#3a3630">리노공업</text>
+<circle cx="436.8" cy="264.6" r="4" fill="#a44a3f" opacity="0.85"/>
+<text x="441.8" y="247.6" font-size="9.5" fill="#3a3630">LX세미콘</text>
+<circle cx="486.0" cy="259.4" r="4" fill="#8a857c" opacity="0.85"/>
+<text x="491.0" y="231.4" font-size="9.5" fill="#3a3630">필옵틱스</text>
+<circle cx="540.1" cy="258.1" r="4" fill="#8a857c" opacity="0.85"/>
+<text x="545.1" y="252.1" font-size="9.5" fill="#3a3630">한미반도체</text>
+<circle cx="444.1" cy="255.9" r="4" fill="#a44a3f" opacity="0.85"/>
+<text x="449.1" y="216.9" font-size="9.5" fill="#3a3630">DB하이텍</text>
+<circle cx="435.6" cy="251.5" r="4" fill="#a44a3f" opacity="0.85"/>
+<text x="440.6" y="201.5" font-size="9.5" fill="#3a3630">덕산네오룩스</text>
+<circle cx="152.2" cy="248.0" r="4" fill="#a44a3f" opacity="0.85"/>
+<text x="157.2" y="242.0" font-size="9.5" fill="#3a3630">제주반도체</text>
+<circle cx="476.3" cy="247.1" r="4" fill="#8a857c" opacity="0.85"/>
+<text x="481.3" y="186.1" font-size="9.5" fill="#3a3630">넥스틴</text>
+<circle cx="62.4" cy="232.7" r="4" fill="#a44a3f" opacity="0.85"/>
+<text x="67.4" y="226.7" font-size="9.5" fill="#3a3630">RFHIC</text>
+<circle cx="613.4" cy="230.5" r="4" fill="#2b7a78" opacity="0.85"/>
+<text x="618.4" y="224.5" font-size="9.5" fill="#3a3630">테크윙</text>
+<circle cx="514.8" cy="221.3" r="4" fill="#8a857c" opacity="0.85"/>
+<text x="519.8" y="215.3" font-size="9.5" fill="#3a3630">원익IPS</text>
+<circle cx="568.5" cy="220.0" r="4" fill="#8a857c" opacity="0.85"/>
+<text x="573.5" y="203.0" font-size="9.5" fill="#3a3630">SFA반도체</text>
+<circle cx="406.4" cy="216.1" r="4" fill="#a44a3f" opacity="0.85"/>
+<text x="411.4" y="188.1" font-size="9.5" fill="#3a3630">코미코</text>
+<circle cx="281.5" cy="212.1" r="4" fill="#a44a3f" opacity="0.85"/>
+<text x="286.5" y="206.1" font-size="9.5" fill="#3a3630">두산테스나</text>
+<circle cx="302.9" cy="212.1" r="4" fill="#a44a3f" opacity="0.85"/>
+<text x="307.9" y="195.1" font-size="9.5" fill="#3a3630">하나마이크론</text>
+<circle cx="543.2" cy="201.6" r="4" fill="#8a857c" opacity="0.85"/>
+<text x="548.2" y="184.6" font-size="9.5" fill="#3a3630">유진테크</text>
+<circle cx="565.5" cy="186.3" r="4" fill="#8a857c" opacity="0.85"/>
+<text x="570.5" y="169.3" font-size="9.5" fill="#3a3630">HD현대에너지솔루션</text>
+<circle cx="141.4" cy="124.6" r="4" fill="#a44a3f" opacity="0.85"/>
+<text x="146.4" y="118.6" font-size="9.5" fill="#3a3630">와이씨</text>
+<circle cx="575.2" cy="119.8" r="4" fill="#2b7a78" opacity="0.85"/>
+<text x="580.2" y="113.8" font-size="9.5" fill="#3a3630">ISC</text>
+<circle cx="397.5" cy="114.1" r="4" fill="#a44a3f" opacity="0.85"/>
+<text x="402.5" y="108.1" font-size="9.5" fill="#3a3630">심텍</text>
+<circle cx="366.6" cy="105.8" r="4" fill="#a44a3f" opacity="0.85"/>
+<text x="371.6" y="99.8" font-size="9.5" fill="#3a3630">태성</text>
+<circle cx="498.4" cy="100.6" r="4" fill="#8a857c" opacity="0.85"/>
+<text x="503.4" y="94.6" font-size="9.5" fill="#3a3630">주성엔지니어링</text>
+<circle cx="563.7" cy="97.1" r="4" fill="#8a857c" opacity="0.85"/>
+<text x="568.7" y="80.1" font-size="9.5" fill="#3a3630">피에스케이홀딩스</text>
+<circle cx="811.3" cy="90.5" r="4" fill="#2b7a78" opacity="0.85"/>
+<text x="816.3" y="84.5" font-size="9.5" fill="#3a3630">HPSP</text>
+<circle cx="519.7" cy="69.1" r="4" fill="#8a857c" opacity="0.85"/>
+<text x="524.7" y="63.1" font-size="9.5" fill="#3a3630">이오테크닉스</text>
+<circle cx="528.6" cy="59.0" r="4" fill="#8a857c" opacity="0.85"/>
+<text x="533.6" y="42.0" font-size="9.5" fill="#3a3630">티씨케이</text>
+</svg><div class="src">packet.json 수급_8월이후_억·유통시총_억·수익률%. 상관계수 +0.25. 색은 선반영 비율 구간.</div></figure>
+<p class="reading"><b>관찰.</b> 오른쪽 위(기관·외국인이 샀고 올랐다)에는 HPSP(+44.8%)·ISC(+38.1%)·피에스케이홀딩스(+43.3%)가 있고, 왼쪽 위(기관·외국인이 팔았는데도 올랐다)에는 주성엔지니어링(+42.5%)·심텍(+39.4%)·태성(+41.3%)·와이씨(+37.0%)가 있으며, 왼쪽 아래(팔았고 빠졌다)에는 가온칩스·케이씨텍·하나머티리얼즈·에스앤에스텍이 있습니다. 상관계수 +0.25입니다. <b>원인.</b> 왼쪽 위 종목의 8월 상승은 개인 매수와 개별 재료(실적·수주)로 설명되고 기관·외국인은 그 상승에 물량을 넘겼습니다. 오른쪽 위 종목만 기관·외국인이 주가를 밀었고 그 매수에 투신·연금 계정이 들어 있어 리밸런싱 선취매와 실적 매수가 섞여 있습니다. <b>함의.</b> 주가가 올랐다고 선반영된 것이 아니고, 기관·외국인이 샀을 때만 선반영의 후보입니다. 왼쪽 위 종목은 9/10 종가에 들어올 패시브 매수를 받을 상대가 개인뿐이라 종가 두께가 얇으면 위로 튀기 쉽고, 그만큼 9/11 이후 되돌림도 큽니다. 오른쪽 위 종목은 이미 산 기관이 9/10 종가에 넘길 물량을 들고 있어 흡수는 쉽지만 되돌림 주체도 정해져 있습니다.</p>
+<p>두 묶음을 조건부로 적습니다. 단정이 아니라 "이 조건이 맞으면"의 서술이고, 조건은 9/10 종가 이후 5·20거래일 상대수익으로 채점됩니다. 첫 묶음은 "이미 반영됐을 가능성이 큰 종목"입니다. 기준은 선반영 비율 0.5배 이상이면서 8/1 이후 수익률이 33종 중위(+12.8%) 이상인 종목 HPSP·ISC·테크윙과, 기관+외국인 선반영 비율이 0.5배 미만인데도 8/1 이후 30% 넘게 오른 종목 주성엔지니어링·이오테크닉스·심텍·티씨케이·태성·피에스케이홀딩스·와이씨입니다. 앞의 것은 살 사람이 이미 샀고, 뒤의 것은 리밸런싱과 무관하게 이미 올라 있어서 9/10 종가에 매수가 들어와도 되돌림의 자가 깁니다. 둘째 묶음은 "아직 반영되지 않았을 가능성이 큰 종목"으로, 선반영 비율 -0.5배 이하이면서 8/1 이후 수익률이 중위 미만인 리노공업·DB하이텍·제주반도체·RFHIC·에스앤에스텍·하나머티리얼즈·케이씨텍·덕산네오룩스·LX세미콘·가온칩스입니다. 기관·외국인이 8월에 팔았고 주가도 뒤처져 있어 9/10 종가의 매수가 새 정보처럼 작용할 수 있지만, 같은 이유로 이 종목들을 8월에 판 주체가 9/10 종가에 다시 넘길 물량을 들고 있고, 리노공업(ADTV 배수 2.27일·종가 배수 50배)·DB하이텍(2.24일·35배)처럼 회전율이 낮은 종목은 되돌림보다 종가 급등 쪽 위험이 큽니다.</p>
+<h3>이미 반영됐을 가능성이 큰 묶음(조건부)</h3>
+<table class=""><tr><th>종목</th><th>cap20 금액E</th><th>기관+외인 8월~</th><th>개인 8월~</th><th>선반영(배)</th><th>8/1~ 수익률%</th><th>1M%</th><th>1W%</th><th>ADTV 배수(일)</th><th>종가 배수</th></tr><tr><td>HPSP</td><td>752</td><td>+1,721</td><td>-1,692</td><td>+2.29</td><td>+44.8</td><td>+41.5</td><td>-2.0</td><td>0.62</td><td>44</td></tr><tr><td>ISC</td><td>403</td><td>+217</td><td>-211</td><td>+0.54</td><td>+38.1</td><td>+36.1</td><td>+3.2</td><td>1.56</td><td>62</td></tr><tr><td>테크윙</td><td>284</td><td>+225</td><td>-217</td><td>+0.79</td><td>+12.8</td><td>-2.8</td><td>-6.3</td><td>1.33</td><td>56</td></tr><tr><td>주성엔지니어링</td><td>1,206</td><td>-137</td><td>+101</td><td>-0.11</td><td>+42.5</td><td>+30.4</td><td>+0.3</td><td>0.61</td><td>34</td></tr><tr><td>이오테크닉스</td><td>807</td><td>+50</td><td>-56</td><td>+0.06</td><td>+49.7</td><td>+43.4</td><td>+11.2</td><td>1.77</td><td>55</td></tr><tr><td>심텍</td><td>670</td><td>-608</td><td>+547</td><td>-0.91</td><td>+39.4</td><td>+19.1</td><td>-5.9</td><td>0.64</td><td>35</td></tr><tr><td>티씨케이</td><td>310</td><td>+39</td><td>-37</td><td>+0.12</td><td>+52.0</td><td>+42.1</td><td>+5.5</td><td>1.93</td><td>84</td></tr><tr><td>태성</td><td>214</td><td>-241</td><td>+237</td><td>-1.12</td><td>+41.3</td><td>+10.2</td><td>-10.7</td><td>1.74</td><td>47</td></tr><tr><td>피에스케이홀딩스</td><td>212</td><td>+95</td><td>-109</td><td>+0.45</td><td>+43.3</td><td>+36.0</td><td>+16.7</td><td>1.04</td><td>70</td></tr><tr><td>와이씨</td><td>107</td><td>-303</td><td>+296</td><td>-2.85</td><td>+37.0</td><td>+29.4</td><td>+4.3</td><td>0.50</td><td>26</td></tr></table>
+<h3>아직 반영되지 않았을 가능성이 큰 묶음(조건부)</h3>
+<table class=""><tr><th>종목</th><th>cap20 금액E</th><th>기관+외인 8월~</th><th>개인 8월~</th><th>선반영(배)</th><th>8/1~ 수익률%</th><th>1M%</th><th>1W%</th><th>ADTV 배수(일)</th><th>종가 배수</th></tr><tr><td>리노공업</td><td>734</td><td>-562</td><td>+557</td><td>-0.77</td><td>+3.4</td><td>+3.0</td><td>-0.7</td><td>2.27</td><td>50</td></tr><tr><td>DB하이텍</td><td>618</td><td>-340</td><td>+337</td><td>-0.55</td><td>+7.0</td><td>+4.6</td><td>-5.3</td><td>2.24</td><td>35</td></tr><tr><td>제주반도체</td><td>481</td><td>-1,343</td><td>+1,338</td><td>-2.79</td><td>+8.8</td><td>+1.1</td><td>-7.7</td><td>0.34</td><td>22</td></tr><tr><td>RFHIC</td><td>176</td><td>-669</td><td>+666</td><td>-3.80</td><td>+12.3</td><td>-1.6</td><td>+2.5</td><td>1.07</td><td>38</td></tr><tr><td>에스앤에스텍</td><td>147</td><td>-308</td><td>+305</td><td>-2.10</td><td>-1.3</td><td>-3.8</td><td>-2.2</td><td>1.88</td><td>60</td></tr><tr><td>하나머티리얼즈</td><td>120</td><td>-151</td><td>+175</td><td>-1.27</td><td>-5.7</td><td>-9.7</td><td>-5.7</td><td>1.21</td><td>45</td></tr><tr><td>케이씨텍</td><td>117</td><td>-155</td><td>+146</td><td>-1.33</td><td>-5.2</td><td>-5.7</td><td>-0.7</td><td>1.05</td><td>48</td></tr><tr><td>덕산네오룩스</td><td>92</td><td>-60</td><td>+61</td><td>-0.65</td><td>+8.0</td><td>+3.3</td><td>+0.6</td><td>1.91</td><td>48</td></tr><tr><td>LX세미콘</td><td>89</td><td>-52</td><td>+59</td><td>-0.59</td><td>+5.0</td><td>+2.9</td><td>-3.5</td><td>2.70</td><td>68</td></tr><tr><td>가온칩스</td><td>57</td><td>-72</td><td>+70</td><td>-1.25</td><td>-13.9</td><td>-12.6</td><td>-6.3</td><td>1.60</td><td>59</td></tr></table>
+<p>나머지 13종목은 두 조건 어디에도 들지 않는 중간 지대입니다. 한미반도체(선반영 +0.23배, 8/1 이후 +6.5%)와 주성엔지니어링(-0.11배, +42.5%)이 여기 들어 있는데, 두 종목은 리밸런싱 금액이 가장 커서(2,034억<span class="est">E</span>·1,206억<span class="est">E</span>) 중간 지대라는 판정 자체가 중요합니다. 한미반도체는 외국인이 60일 +6,541억을 샀지만 기관은 -9,965억을 팔았고 8월에는 둘 다 작은 양수라, 리밸런싱을 겨냥한 매집도 매도도 없이 ADTV 1.77일치 매수를 9/10 종가에 맞게 됩니다. 주성은 8/1 이후 +42.5% 올랐지만 기관 -412억 순매도라 상승의 주체가 개인·외국인이고 ADTV 배수는 0.61일로 낮습니다. 이 두 종목의 9/10 종가 등락과 9/11 시가 갭이 논쟁 3·4의 가장 큰 관측치가 됩니다.</p>
+<p>이 절의 분류에는 한계가 있습니다. 첫째, 기관·외국인 순매수에는 리밸런싱과 무관한 실적 매수와 ETF 설정에 따른 투신 매수가 섞여 있고 패킷은 이를 가르지 못합니다. 둘째, 8/1 이후 창은 23거래일이라 한두 날의 블록 거래(예: HPSP 8월 투신 +735억)가 비율을 좌우합니다. 셋째, 1주 수익률은 33종 중위 -0.7%로 최근 한 주에 소부장이 전반적으로 밀렸는데, 이것이 집행일 앞 차익실현의 시작인지 9/2 코스피 -3.99%(research/B)의 지수 효과인지 아직 모릅니다. 9/5~9/9 사흘의 기관·외국인 방향이 이 셋을 한꺼번에 줄여 줍니다.</p>
+
+<h2>논쟁에 주는 답</h2>
+<div class="judge"><p><b>허브 논쟁 4 — 선반영은 얼마나 됐나.</b> 우리의 답은 "대형 2종은 판단 불가, 소부장 33종은 종목별로 갈리며 전체로는 아직 얇다"입니다. 근거는 셋입니다. 첫째, 6월 삼성전기 교본에서 선매도는 실매매일 10거래일 전(6/2)에 났고 6/1~12 투신 -10,463억·기관 -11,176억이 먼저 나갔으며 실매매일 6/12는 저점이었고 6/17까지 +18.6% 되돌렸습니다. 둘째, 8/1 이후 소부장 33종의 기관+외국인 순매수는 합계 -2,807억으로 리밸런싱 매수 1조 3,379억<span class="est">E</span>에 견줘 선반영이라 부를 크기가 아니고, 선반영 비율 양수는 13종목·0.5배 이상은 4종목(HPSP 2.29·고영 0.97·테크윙 0.79·ISC 0.54)뿐이며 20종목은 오히려 순매도(제주반도체 -2.79·RFHIC -3.80·하나마이크론 -1.67·심텍 -0.91·리노공업 -0.77)입니다. 셋째, 하이닉스·삼성전자의 8월 기관·외국인 순매도 11조 9,199억·6조 8,465억은 자사주 매입(8/20~9/2 기타법인 약 15조 860억)에 넘긴 차익실현이 대부분이라 리밸런싱 선반영으로 읽지 않습니다.</p>
+<p><b>채점 KPI.</b> ① 9/10 종가 이후 5거래일·20거래일 소부장 33종의 KRX 반도체 대비 상대수익 — 실증 기저율(변경 후 1주 -4.56%p, 당일 -2%p)대로 음수이면 "선반영 뒤 되돌림", 양수이면 "미선반영"입니다. 두 묶음이 갈리면(첫 묶음 음수·둘째 묶음 양수) 이 파트의 조건부 분류가 맞은 것입니다. ② 9/11 이후 기관 순매도 전환 여부 — 8월에 산 종목(HPSP·ISC·티씨케이·이오테크닉스)에서 9/11~15 기관이 순매도로 돌아서면 6월 교본의 "집행일에 넘긴다"가 재현된 것입니다. ③ 9/5~9/9 기관+외국인 순매수 — 이 사흘에 33종 합계가 양수로 돌아서면 선취매가 6월 교본처럼 D-10이 아니라 D-3에 몰린 것이고, 선반영 비율을 9/9 종가로 다시 계산해야 합니다.</p>
+<p><b>반증 조건.</b> 9/10 종가 이후 5거래일 상대수익이 33종 중위로 양수이고 20거래일에도 양수로 남으면 "선반영이 얇았고 되돌림도 없었다"가 되어 이 파트의 되돌림 가중치는 틀린 것입니다. 반대로 9/10 종가 당일 33종이 KRX 반도체 대비 유의하게 오르지 못하면(중위 상대수익 0 이하) 선반영이 우리가 잰 것보다 두꺼웠거나 운용사가 분할 집행한 것이고, 그때는 4절의 비율이 아니라 파트 6의 분할 집행 가설이 맞습니다.</p></div>
+
+<h2>미결</h2>
+<p><b>A급(판정이 바뀌는 것).</b> ①9/5~9/9 사흘의 종목별 기관·외국인 순매수 — 6월 교본의 D-10 선매도에 대응하는 D-3 선매수가 있는지가 4절의 비율을 바꿉니다. 키움 ka10059 일별 수급으로 9/9 장 마감 후 갱신합니다. ②9/10 종가 단일가 체결 대금과 9/11 시가 갭 — 이 파트의 되돌림 가중치는 파트 2의 두께 실측과 짝이고, 1분봉으로 9/10 15:30에 확정됩니다. ③6월 교본 수급의 정본 — 패킷(ka10059)과 뉴스1·한국경제TV 보도가 같은 값입니다: 6/12 기관 -9,621·외국인 +4,085, 6/15 외국인 +9,601(보도 9,550억), 6/16 외국인 +5,814. 허브 상수 블록도 이 값으로 맞췄으며, 남은 미결은 6/12 기관 매도 가운데 cap 집행분(KODEX·RISE 3,140억)과 그 밖의 선매도를 가르는 운용사별 내역입니다.</p>
+<p><b>B급(크기를 바꾸는 것).</b> ④투신 순매수 안의 ETF 설정분 분리 — KODEX 반도체 8월 설정 +585억(삼성증권 8/7)이 35종에 비중대로 흩어졌다면 소부장 33종 투신 순매수 +1,939억 가운데 약 230억<span class="est">E</span>이 패시브 설정분이고 나머지가 액티브인데, 종목별 배분은 PDF 일별 변화로만 역산할 수 있어 미완입니다. ⑤6월 테마 ETF의 실제 집행 시간대 — 6/12 삼성전기 종가 단일가 1,282억 대 보도 매도액 3,140억의 괴리가 분할 집행 때문인지 장중 집행 때문인지 확인하려면 6/12 1분봉 시간대별 체결과 KODEX AI반도체TOP2플러스 6/12~15 PDF 변화가 필요합니다. ⑥연기금 일별 수급 — 패킷 교본 수급에는 연금 열이 없어 뉴스1의 "연기금 4,749억"을 보도값으로만 썼습니다. ka10059의 연기금 구분을 6월 교본 4종목에 소급 적재하면 투신·연기금·사모의 선매도 순서를 나눌 수 있습니다.</p>
+<p><b>C급(있으면 좋은 것).</b> ⑦2025년 9월 정기변경 당시 35종의 D-10~D+10 주가·수급 — research/B는 당시 기사를 찾지 못했고 순자산이 1조 중반이라 이슈가 되지 않았을 것으로 봤지만, 패킷 일봉이 2025-08-01부터 있으므로 2025-09-11 전후 10거래일의 소부장 상대수익을 계산하면 이 지수 고유의 기저율이 하나 생깁니다. ⑧한국 종가 단일가 비중의 공식 시계열 — research/D가 KRX·KCMI 공개 통계를 찾지 못했고 우리 1분봉 실측(8/18~9/4)이 대체하고 있습니다. ⑨거래대금 대비 배수와 실행일 초과수익의 한국 회귀 계수 — 공개 리포트에 없어 Madhavan의 방향(저유동일수록 일시 효과 큼)만 빌려 썼습니다. ⑩research/A_지수방법론.md — 작성 시점에 파일이 없어 cap 20%·9월 D+1은 삼성증권 ETFun 6/10 표와 드리프트 역산(허브)으로 썼습니다. 파일이 생기면 3절의 "같은 점" 서술에 KRX 원문 조항을 붙입니다.</p>
+
+<p class="foot">파트 3 끝. 다음 파트: 파트 4 여타 패시브 지도. 이 파트가 허브에 보태는 항목: 6월 삼성전기 교본 실측(6/1~12 투신 -10,463억·기관 -11,176억 선매도, 고점 대비 -19.4%, 실매매일~6/17 +18.6%), 하이닉스 6/11 종가 비중 21.8%·6/12~17 +17.3%, 소부장 33종 선반영 비율(양수 13·음수 20·중위 -0.29배, 기관+외국인 합계 -2,807억), 실증 기저율(사전 +3.8~5.4%·사후 -2~-4.6%p), 조건부 두 묶음, 미결 10건. 작성 Claude · 검증: 삼성전기 6/1~12 투신 합계 대 뉴스1 보도값(1조 462억) 일치, 6/2·6/15 투자자별 대 한국경제TV·뉴스1 보도값 일치, 선반영 비율 35종 재계산(패킷 시나리오 값과 동일) 완료</p>
+
+</main></body></html>
